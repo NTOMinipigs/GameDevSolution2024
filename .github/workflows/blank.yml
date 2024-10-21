@@ -1,0 +1,37 @@
+name: 'Build Unity'
+on: [ pull_request, push, workflow_dispatch ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
+      # Cache Unity installation
+      - name: 'Cache Unity'
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/unity3d
+          key: unity-${{ runner.os }}-${{ hashFiles('**/*.cs') }}
+
+      # Install Unity
+      - name: 'Setup Unity'
+        uses: game-ci/unity-builder@v2
+        with:
+          unityVersion: '2023.1.0f1'  # Specify your Unity version here
+          targetPlatform: 'StandaloneLinux64'  # Set your target build platform
+
+      # Run the build
+      - name: 'Build Unity project'
+        uses: game-ci/unity-builder@v2
+        with:
+          projectPath: '.'  # Adjust if your Unity project is not in the root
+          targetPlatform: 'StandaloneLinux64'
+
+      # Archive the build
+      - name: 'Archive build'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build
+          path: build/StandaloneLinux64/  # Path to the build artifacts
