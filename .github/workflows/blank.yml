@@ -1,5 +1,8 @@
 name: 'Build Unity'
 on: [ pull_request, push, workflow_dispatch ]
+UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}  # License secret
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,10 +21,6 @@ jobs:
       # Activate Unity with Personal license
       - name: 'Activate Unity License'
         uses: game-ci/unity-activate@v1
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}  # License secret
 
       # Install Unity
       - name: 'Setup Unity'
