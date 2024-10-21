@@ -15,6 +15,12 @@ jobs:
           path: ~/.local/share/unity3d
           key: unity-${{ runner.os }}-${{ hashFiles('**/*.cs') }}
 
+      # Activate Unity with Personal license
+      - name: 'Activate Unity License'
+        uses: game-ci/unity-activate@v1
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}  # License secret
+
       # Install Unity
       - name: 'Setup Unity'
         uses: game-ci/unity-builder@v2
