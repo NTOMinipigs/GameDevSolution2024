@@ -1,18 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class clicksHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float sensitivity;
+    public bool blockMove;
+    private bool isDragging;
+    private Vector3 lastMousePosition;
+    private Vector3 delta;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            isDragging = true;
+            lastMousePosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+            isDragging = false;
+
+        if (isDragging && !blockMove)
+        {
+            delta = (Input.mousePosition - lastMousePosition) * sensitivity * Time.deltaTime;
+
+            transform.position += new Vector3(-delta.x, 0, -delta.y);
+            lastMousePosition = Input.mousePosition;
+        }
     }
 }
