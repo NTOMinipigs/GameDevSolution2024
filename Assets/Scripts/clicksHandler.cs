@@ -6,8 +6,7 @@ public class clicksHandler : MonoBehaviour
     public float sensitivity;
     public bool blockMove;
     private bool isDragging;
-    private Vector3 lastMousePosition;
-    private Vector3 delta;
+    private Vector3 lastMousePosition, delta;
 
     private void Update()
     {

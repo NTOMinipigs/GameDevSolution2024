@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class allScripts : MonoBehaviour
 {
-    public clickHandler clickHandler;
+    public clicksHandler clicksHandler;
     public colonyManager colonyManager;
     public dialogManager dialogManager;
 }
