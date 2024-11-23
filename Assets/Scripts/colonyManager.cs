@@ -73,8 +73,7 @@ public class colonyManager : MonoBehaviour
     private void Start()
     {
         dayText.text = totalDay.ToString() + " день";
-        GenerateNewBear("", bear.traditions.beekeepers);
-        scripts.dialogManager.ActivateDialog("test");
+        GenerateNewBear("", bear.traditions.beekeepers); // Потом перенести
     }
 
     public void GenerateNewBear(string gameName, bear.traditions tradition)
@@ -111,6 +110,7 @@ public class bear
     public enum traditions { none, beekeepers, constructors, programmers, bioEngineers, special, chrom }
     public traditions tradition;
     public float lvl = 0f;
+    public float hungry, tired;
 
     public bear()
     {

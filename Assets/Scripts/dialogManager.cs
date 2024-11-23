@@ -26,7 +26,7 @@ public class dialogManager : MonoBehaviour
                 {
                     _activatedDialog = totalDialog;
                     dialogMenu.gameObject.SetActive(true);
-
+                    scripts.clicksHandler.blockMove = true;
                     _selectedStep = _activatedDialog.steps[0];
                     DialogUpdateAction();
                     break;
@@ -61,6 +61,7 @@ public class dialogManager : MonoBehaviour
         totalStep = 0;
         dialogMenu.gameObject.SetActive(false);
         _activatedDialog = null;
+        scripts.clicksHandler.blockMove = false;
     }
 
     private void Update()
