@@ -2,13 +2,11 @@
 
 public class Building : MonoBehaviour
 {
-    public Renderer MainRenderer;
+    [SerializeField] private Renderer MainRenderer;
+    public float materialsNeed, specMaterialsNeed;
     public Vector2Int Size = Vector2Int.one;
 
-    public void SetTransparent(bool available)
-    {
-        MainRenderer.material.color = available ? Color.green : Color.red;
-    }
+    public void SetTransparent(bool available) => MainRenderer.material.color = available ? Color.green : Color.red;
 
     public void SetNormal() => MainRenderer.material.color = Color.white;
 
