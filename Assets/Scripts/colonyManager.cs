@@ -47,6 +47,17 @@ public class colonyManager : MonoBehaviour
             materialsText.text = _materials.ToString();
         }
     }
+    [SerializeField] private TextMeshProUGUI materialsPlusText;
+    private float _materialsPlus;
+    public float materialsPlus
+    {
+        get { return _materialsPlus; }
+        set
+        {
+            _materialsPlus = value;
+            materialsPlusText.text = _materialsPlus.ToString();
+        }
+    }
 
     [Header("-food")]
     [SerializeField] private TextMeshProUGUI foodText;
