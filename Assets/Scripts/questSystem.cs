@@ -41,7 +41,7 @@ public class questSystem : MonoBehaviour
             totalStep++;
             if (totalQuest.steps.Length == totalStep + 1)
             {
-                totalQuest == null;
+                totalQuest = null;
                 return;
             }
             DoStep(totalStep);
