@@ -21,6 +21,7 @@ public class questSystem : MonoBehaviour
         return null;
     }
 
+    // TODO: Сделать начальный квест + начальные ресурсы
     public void ActivateQuest(string questName)
     {
         quest newQuest = FindQuest(questName);
@@ -34,6 +35,7 @@ public class questSystem : MonoBehaviour
         }
     }
 
+    //TODO: Сделать обработчик действия для движения квеста
     public void MoveNextStep()
     {
         if (totalQuest != null)
@@ -75,6 +77,7 @@ public class questSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             questMenu.gameObject.SetActive(!questMenu.activeSelf);
+            scripts.clicksHandler.blockMove = questMenu.activeSelf;
             UpdateQuestUI();
         }
     }

@@ -6,9 +6,6 @@ using TMPro;
 
 public class colonyManager : MonoBehaviour
 {
-    public int totalDay = 1;
-    public TextMeshProUGUI dayText;
-
     [Header("Main resources")]
     [Header("-Honey")]
     [SerializeField] private TextMeshProUGUI honeyText;
@@ -87,7 +84,6 @@ public class colonyManager : MonoBehaviour
 
     private void Start()
     {
-        dayText.text = totalDay.ToString() + " день";
         // Чисто для тестов
         GenerateNewBear("", bear.traditions.beekeepers);
         GenerateNewBear("", bear.traditions.programmers);
@@ -97,8 +93,10 @@ public class colonyManager : MonoBehaviour
 
     public void GenerateNewBear(string gameName, bear.traditions tradition)
     {
+        // Имя не зависит от гендера
         string bearName = firstnamesForBears[Random.Range(0, firstnamesForBears.Length - 1)] + " " + secondnamesForBears[Random.Range(0, secondnamesForBears.Length - 1)];
         Sprite newIcon = null;
+        // Здесь ставятся иконки. Все икноки, не завися от гендера, в одном месте
         switch (tradition)
         {
             case bear.traditions.beekeepers:
@@ -124,6 +122,7 @@ public class colonyManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
+            scripts.clicksHandler.blockMove = bearsListMenu.activeSelf;
             if (bearsListMenu.activeSelf)
             {
                 foreach (Transform child in bearsListContainer.transform)
