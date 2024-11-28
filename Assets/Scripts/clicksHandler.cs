@@ -7,13 +7,26 @@ public class clicksHandler : MonoBehaviour
     public bool blockMove;
     private bool isDragging;
     private Vector3 lastMousePosition, delta;
+    [SerializeField] private LayerMask layerMaskInteract;
+    [SerializeField] private allScripts scripts;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            isDragging = true;
-            lastMousePosition = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
+            {
+                // TODO: изменить на НЕ ТОЛЬКО медведей + обработчик взаимодейтсвий
+                bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                Debug.Log(selectedBear.bearName);
+            }
+            else
+            {
+                isDragging = true;
+                lastMousePosition = Input.mousePosition;                
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
