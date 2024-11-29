@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class BuildingSystem : MonoBehaviour
 {
-    public Vector2Int GridSize = new Vector2Int(10, 10);
+    [SerializeField] private GameObject buildingMenu;
+    [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10);
     private Building[,] grid;
     private Building flyingBuilding;
     private Camera mainCamera;
+    [SerializeField] private allScripts scripts;
 
     private void Awake()
     {
@@ -23,6 +27,21 @@ public class BuildingSystem : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            buildingMenu.gameObject.SetActive(!buildingMenu.activeSelf);
+            foreach (Transform child in buildingMenu.transform.Find("Scroll View").transform.Find("Viewport").transform.Find("Content"))
+            {
+                child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.materials;
+                if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.materials)
+                    child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.black;
+                else
+                    child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.red;
+            }
+            if (!buildingMenu.activeSelf)
+                Destroy(flyingBuilding.gameObject);
+        }
+
         if (flyingBuilding != null)
         {
             var groundPlane = new Plane(Vector3.up, Vector3.zero);
