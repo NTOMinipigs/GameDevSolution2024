@@ -68,7 +68,7 @@ public class dialogManager : MonoBehaviour
         }
         else
             _selectedStep.SetBear(scripts.colonyManager);
-        _textName.text = _selectedStep.nameBear;
+        _textName.text = _selectedStep.nameBear + " | " + _selectedBear.traditionStr;
         StartCoroutine(SetText(_selectedStep.text));
         _iconImage.sprite = _selectedStep.icon;
         _iconImage.SetNativeSize();
@@ -94,6 +94,13 @@ public class dialogManager : MonoBehaviour
         scripts.clicksHandler.blockMove = false;
     }
 
+    private string CodeTextReplace(string text)
+    {
+        if (text.Contains("{activity}"))
+            return text.Replace("{activity}", _selectedBear.activityStr);
+        return "";
+    }
+
     private void Update()
     {
         if (_activatedDialog != null)
@@ -104,7 +111,8 @@ public class dialogManager : MonoBehaviour
                 {
                     _animatingText = false;
                     StopAllCoroutines();
-                    _textDialog.text = _selectedStep.text;
+                    string newText = CodeTextReplace(_selectedStep.text);
+                    _textDialog.text = newText;
                 }
                 else
                     DialogMoveNext();
@@ -116,8 +124,7 @@ public class dialogManager : MonoBehaviour
     {
         _textDialog.text = "";
         _animatingText = true;
-        if (text.Contains("{activity}"))
-            text = text.Replace("{activity}", scripts.colonyManager.GetBear(_selectedStep.nameBear).activityStr);
+        text = CodeTextReplace(text);
         char[] textChar = text.ToCharArray();
         foreach (char tChar in textChar)
         {

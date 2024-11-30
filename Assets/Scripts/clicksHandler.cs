@@ -7,15 +7,48 @@ public class clicksHandler : MonoBehaviour
     public bool blockMove;
     private bool isDragging;
     private Vector3 lastMousePosition, delta;
+    private GameObject choicedBear;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private allScripts scripts;
 
     private void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Выделение медведя
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
+        {
+            if (hit.collider.gameObject.CompareTag("bear"))
+            {
+                if (choicedBear != hit.collider.gameObject)
+                {
+                    if (choicedBear != null)
+                        choicedBear.GetComponent<bearMovement>().SetNormal();
+                    choicedBear = hit.collider.gameObject;
+                    choicedBear.GetComponent<bearMovement>().SetChoiced();
+                }
+            }
+            else
+            {
+                if (choicedBear != null)
+                {
+                    choicedBear.GetComponent<bearMovement>().SetNormal();
+                    choicedBear = null;
+                }
+            }
+        }
+        else
+        {
+            if (choicedBear != null)
+            {
+                choicedBear.GetComponent<bearMovement>().SetNormal();
+                choicedBear = null;
+            }
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
             {
                 if (hit.collider.gameObject.tag == "bear")

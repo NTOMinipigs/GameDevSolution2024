@@ -72,7 +72,7 @@ public class colonyManager : MonoBehaviour
 
     [Header("Bears")]
     public List<bear> bearsInColony = new List<bear>();
-    [SerializeField] private GameObject bearPrefab, spawnBears; // Потом сделать spawnBears более рандомным
+    [SerializeField] private GameObject bearProgerPrefab, bearBeekeepersPrefab, bearConstructorPrefab, spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] firstnamesForBears, secondnamesForBears = new string[0];
     [SerializeField] private Sprite[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new Sprite[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
@@ -88,8 +88,8 @@ public class colonyManager : MonoBehaviour
         // Чисто для тестов
         GenerateNewBear(bear.traditions.beekeepers);
         GenerateNewBear(bear.traditions.programmers);
-        GenerateNewBear(bear.traditions.beekeepers);
-        GenerateNewBear(bear.traditions.programmers);
+        GenerateNewBear(bear.traditions.bioEngineers);
+        GenerateNewBear(bear.traditions.constructors);
     }
 
     public bear GetBear(string gameName)
@@ -99,6 +99,7 @@ public class colonyManager : MonoBehaviour
             if (bear.gameName == gameName)
                 return bear;
         }
+        Debug.Log(gameName + " dont finded");
         return null;
     }
 
@@ -107,20 +108,25 @@ public class colonyManager : MonoBehaviour
         // Имя не зависит от гендера
         string bearName = firstnamesForBears[Random.Range(0, firstnamesForBears.Length - 1)] + " " + secondnamesForBears[Random.Range(0, secondnamesForBears.Length - 1)];
         Sprite newIcon = null;
-        // Здесь ставятся иконки. Все икноки, не завися от гендера, в одном месте
+        GameObject bearPrefab = null;
         switch (tradition)
         {
             case bear.traditions.beekeepers:
                 newIcon = spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)];
+                bearPrefab = bearBeekeepersPrefab;
                 break;
             case bear.traditions.constructors:
                 newIcon = spriteConstructors[Random.Range(0, spriteConstructors.Length - 1)];
+                bearPrefab = bearConstructorPrefab;
+
                 break;
             case bear.traditions.programmers:
                 newIcon = spriteProgrammers[Random.Range(0, spriteProgrammers.Length - 1)];
+                bearPrefab = bearProgerPrefab;
                 break;
             case bear.traditions.bioEngineers:
                 newIcon = spriteBioengineers[Random.Range(0, spriteBioengineers.Length - 1)];
+                bearPrefab = bearProgerPrefab;
                 break;
         }
         // TODO: сделать норм индексацию
@@ -206,11 +212,11 @@ public class bear
             switch (activity)
             {
                 case activities.chill:
-                    return "Отдыхает";
+                    return "отдыхаю";
                 case activities.work:
-                    return "Работает";
+                    return "работаю";
                 case activities.eat:
-                    return "Ест";
+                    return "ем";
             }
             return "";
         }
