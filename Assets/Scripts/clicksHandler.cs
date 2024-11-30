@@ -17,12 +17,14 @@ public class clicksHandler : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
-            {                
+            {
                 if (hit.collider.gameObject.tag == "bear")
                 {
                     bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear);
                 }
+                else if (hit.collider.gameObject.tag == "materialStack")
+                    hit.collider.gameObject.GetComponent<materialStack>().ActivateInteraction();
             }
             isDragging = true;
             lastMousePosition = Input.mousePosition;

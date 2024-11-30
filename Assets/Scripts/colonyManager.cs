@@ -72,7 +72,7 @@ public class colonyManager : MonoBehaviour
 
     [Header("Bears")]
     public List<bear> bearsInColony = new List<bear>();
-    [SerializeField]private GameObject bearPrefab, spawnBears; // Потом сделать spawnBears более рандомным
+    [SerializeField] private GameObject bearPrefab, spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] firstnamesForBears, secondnamesForBears = new string[0];
     [SerializeField] private Sprite[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new Sprite[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
@@ -126,8 +126,9 @@ public class colonyManager : MonoBehaviour
         // TODO: сделать норм индексацию
         bear newBear = new bear(tradition.ToString() + Random.Range(0, 1000).ToString(), bearName, tradition, newIcon);
         bearsInColony.Add(newBear);
-        GameObject bearObj = Instantiate(bearPrefab, spawnBears.transform.position, Quaternion.identity);
+        GameObject bearObj = Instantiate(bearPrefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
         bearObj.name = newBear.gameName;
+        bearObj.GetComponent<bearMovement>().totalBear = newBear;
         bearsCountText.text = bearsInColony.Count.ToString();
     }
 
@@ -145,12 +146,23 @@ public class colonyManager : MonoBehaviour
                 foreach (bear bear in bearsInColony)
                 {
                     GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity, bearsListContainer.transform);
+                    newObj.name = bear.gameName;
                     newObj.transform.Find("Icon").GetComponent<Image>().sprite = bear.sprite;
                     newObj.transform.Find("Icon").GetComponent<Image>().SetNativeSize();
-                    newObj.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.traditionStr + "\nТекущее дело" + "\nУсталость/голод: " + bear.tired + "/" + bear.hungry;
                 }
-                // Почему-то при ПЕРВОМ открытии - метод нормально не срабатывает и sizeDelta.y == 0. При дальнейших открытиях все норм
                 bearsListAS.UpdateContentSize();
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (bearsListMenu.activeSelf)
+        {
+            foreach (Transform child in bearsListContainer.transform)
+            {
+                bear bear = GetBear(child.name);
+                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.traditionStr + "\nТекущее дело: " + bear.activityStr + "\nУсталость/голод: " + (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
             }
         }
     }
@@ -181,6 +193,24 @@ public class bear
                     return "Биоинженер";
                 case traditions.chrom:
                     return "Первопроходец";
+            }
+            return "";
+        }
+    }
+    public enum activities { chill, work, eat }
+    public activities activity;
+    public string activityStr
+    {
+        get
+        {
+            switch (activity)
+            {
+                case activities.chill:
+                    return "Отдыхает";
+                case activities.work:
+                    return "Работает";
+                case activities.eat:
+                    return "Ест";
             }
             return "";
         }

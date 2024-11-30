@@ -13,6 +13,7 @@ public class dialogManager : MonoBehaviour
     [SerializeField] private int totalStep;
     private dialog _activatedDialog;
     private dialogStep _selectedStep;
+    private bear _selectedBear;
     private bool _animatingText, _canStepNext;
     [SerializeField] private allScripts scripts;
 
@@ -26,7 +27,7 @@ public class dialogManager : MonoBehaviour
         return null;
     }
 
-    public void ActivateDialog(string name) // Старт диалога
+    public void ActivateDialog(string name, string gameNameBear = "") // Старт диалога
     {
         if (_activatedDialog == null)
         {
@@ -34,6 +35,8 @@ public class dialogManager : MonoBehaviour
             dialogMenu.gameObject.SetActive(true);
             scripts.clicksHandler.blockMove = true;
             _selectedStep = _activatedDialog.steps[0];
+            if (gameNameBear != "")
+                _selectedBear = scripts.colonyManager.GetBear((gameNameBear));
             DialogUpdateAction();
         }
     }
@@ -42,22 +45,29 @@ public class dialogManager : MonoBehaviour
     public void ActivateBearInteractionDialog(bear selectedBear)
     {
         if (selectedBear.tired > 10)
-            ActivateDialog("bearTired");
+            ActivateDialog("bearTired", selectedBear.gameName);
         else if (selectedBear.hungry > 10)
-            ActivateDialog("bearHungry");
+            ActivateDialog("bearHungry", selectedBear.gameName);
         else
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 3));
+                ActivateDialog("bearTalk" + Random.Range(0, 3), selectedBear.gameName);
             else if (mode == 1)
-                ActivateDialog("bearActivity");
+                ActivateDialog("bearActivity", selectedBear.gameName);
         }
     }
 
     private void DialogUpdateAction()
     {
-        _selectedStep.SetBear(scripts.colonyManager);
+        if (_selectedBear != null)
+        {
+            _selectedStep.nameBear = _selectedBear.bearName;
+            _selectedStep.traditionBear = _selectedBear.tradition;
+            _selectedStep.icon = _selectedBear.sprite;
+        }
+        else
+            _selectedStep.SetBear(scripts.colonyManager);
         _textName.text = _selectedStep.nameBear;
         StartCoroutine(SetText(_selectedStep.text));
         _iconImage.sprite = _selectedStep.icon;
@@ -106,6 +116,8 @@ public class dialogManager : MonoBehaviour
     {
         _textDialog.text = "";
         _animatingText = true;
+        if (text.Contains("{activity}"))
+            text = text.Replace("{activity}", scripts.colonyManager.GetBear(_selectedStep.nameBear).activityStr);
         char[] textChar = text.ToCharArray();
         foreach (char tChar in textChar)
         {

@@ -9098,6 +9098,7 @@ MonoBehaviour:
     bearName: "\u0425\u0440\u043E\u043C"
     sprite: {fileID: 21300000, guid: 15b42002a82f1c0459fbdef4c14c7ed2, type: 3}
     tradition: 6
+    activity: 0
     lvl: 0
     hungry: 0
     tired: 0
@@ -9154,18 +9155,17 @@ MonoBehaviour:
   _iconImage: {fileID: 45634956}
   dialogMenu: {fileID: 121036676}
   dialogs:
-  - nameDialog: test
+  - nameDialog: bearTired
     steps:
-    - traditionBear: 1
+    - traditionBear: 0
       nameBear: 
-      text: "\u0419\u043E\u043E\u043E\u043E\u0443"
+      text: "\u041E\u0445... \u0422\u044F\u0436\u0435\u043B\u043E."
       icon: {fileID: 0}
       cameraTarget: {fileID: 0}
-    - traditionBear: 1
+    - traditionBear: 0
       nameBear: 
-      text: "\u0422\u044B \u0432\u0438\u0434\u0435\u0448\u044C \u043A\u0430\u043A\u0438\u0435
-        \u0443 \u043C\u0435\u043D\u044F \u043E\u0433\u0440\u043E\u043C\u043D\u044B\u0435
-        \u044F\u0439\u0446\u0430?"
+      text: "\u041C\u043D\u0435 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u043B\u043E
+        \u0431\u044B \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C."
       icon: {fileID: 0}
       cameraTarget: {fileID: 0}
   totalStep: 0

@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 114076069288614840}
   m_Layer: 6
   m_Name: bear
-  m_TagString: Untagged
+  m_TagString: bear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -706,7 +706,7 @@ Transform:
   - {fileID: 3108887345475075058}
   - {fileID: 8904561311419959093}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6845855815503303559
 BoxCollider:
@@ -741,6 +741,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4db1d2c2ff76b48b554632a60c6ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalBear:
+    gameName: 
+    bearName: 
+    sprite: {fileID: 0}
+    tradition: 0
+    activity: 0
+    lvl: 0
+    hungry: 0
+    tired: 0
+  speed: 10
+  startWaitTime: 5
+  moveTarget: {x: 0, y: 0, z: 0}
 --- !u!54 &114076069288614840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -766,7 +778,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &7326742107130894486
 GameObject:
