@@ -1,4 +1,4 @@
-/*
+
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
@@ -472,4 +472,4 @@ class APIClient : MonoBehaviour
         return await SendGetAsync<List<ShopLogs>>("logs/");
     }
 }
-*/
+
