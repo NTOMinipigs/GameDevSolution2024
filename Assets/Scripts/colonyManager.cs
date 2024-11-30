@@ -1,16 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using Random = UnityEngine.Random;
 
-public class colonyManager : MonoBehaviour
+public class ColonyManager : MonoBehaviour
 {
     [Header("Main resources")]
     [Header("-Honey")]
     [SerializeField] private TextMeshProUGUI honeyText;
     private float _honey;
-    public float honey
+    public float Honey
     {
         get { return _honey; }
         set
@@ -23,7 +24,7 @@ public class colonyManager : MonoBehaviour
     [Header("-Biofuel")]
     [SerializeField] private TextMeshProUGUI biofuelText;
     private float _biofuel;
-    public float biofuel
+    public float Biofuel
     {
         get { return _biofuel; }
         set
@@ -36,7 +37,7 @@ public class colonyManager : MonoBehaviour
     [Header("-materials")]
     [SerializeField] private TextMeshProUGUI materialsText;
     private float _materials;
-    public float materials
+    public float Materials
     {
         get { return _materials; }
         set
@@ -60,7 +61,7 @@ public class colonyManager : MonoBehaviour
     [Header("-food")]
     [SerializeField] private TextMeshProUGUI foodText;
     private float _food;
-    public float food
+    public float Food
     {
         get { return _food; }
         set
@@ -71,9 +72,10 @@ public class colonyManager : MonoBehaviour
     }
 
     [Header("Bears")]
-    public List<bear> bearsInColony = new List<bear>();
+    public List<Bear> bearsInColony = new List<Bear>();
     [SerializeField]private GameObject bearPrefab, spawnBears; // Потом сделать spawnBears более рандомным
-    [SerializeField] private string[] firstnamesForBears, secondnamesForBears = new string[0];
+    [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
+    
     [SerializeField] private Sprite[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new Sprite[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
     [SerializeField] private GameObject bearsListMenu, bearsListContainer;
@@ -85,16 +87,21 @@ public class colonyManager : MonoBehaviour
 
     private void Start()
     {
-        // Чисто для тестов
-        GenerateNewBear(bear.traditions.beekeepers);
-        GenerateNewBear(bear.traditions.programmers);
-        GenerateNewBear(bear.traditions.beekeepers);
-        GenerateNewBear(bear.traditions.programmers);
+        // Чисто для тестов firstnamesForBears
+        GenerateNewBear(Bear.Traditions.Beekeepers);
+        GenerateNewBear(Bear.Traditions.Programmers);
+        GenerateNewBear(Bear.Traditions.Beekeepers);
+        GenerateNewBear(Bear.Traditions.Programmers);
     }
 
-    public bear GetBear(string gameName)
+    /// <summary>
+    /// Получаем медведя по названию игры? 
+    /// </summary>
+    /// <param name="gameName">Название игры? (спасибо за чистый код)</param>
+    /// <returns>Возвращает медведя по названию игры</returns>
+    public Bear GetBear(string gameName)
     {
-        foreach (bear bear in bearsInColony)
+        foreach (Bear bear in bearsInColony)
         {
             if (bear.gameName == gameName)
                 return bear;
@@ -102,33 +109,59 @@ public class colonyManager : MonoBehaviour
         return null;
     }
 
-    public void GenerateNewBear(bear.traditions tradition)
+    /// <summary>
+    /// Генерирует нового медведя
+    /// </summary>
+    /// <param name="tradition"></param>
+    /// <exception cref="ArgumentException"></exception>
+    private void GenerateNewBear(Bear.Traditions tradition)
     {
-        // Имя не зависит от гендера
-        string bearName = firstnamesForBears[Random.Range(0, firstnamesForBears.Length - 1)] + " " + secondnamesForBears[Random.Range(0, secondnamesForBears.Length - 1)];
-        Sprite newIcon = null;
+        bool gender = GetBearGender();
+        string bearName = GetBearName(gender);
+
         // Здесь ставятся иконки. Все икноки, не завися от гендера, в одном месте
-        switch (tradition)
+        Sprite[] selectedSprites = tradition switch
         {
-            case bear.traditions.beekeepers:
-                newIcon = spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)];
-                break;
-            case bear.traditions.constructors:
-                newIcon = spriteConstructors[Random.Range(0, spriteConstructors.Length - 1)];
-                break;
-            case bear.traditions.programmers:
-                newIcon = spriteProgrammers[Random.Range(0, spriteProgrammers.Length - 1)];
-                break;
-            case bear.traditions.bioEngineers:
-                newIcon = spriteBioengineers[Random.Range(0, spriteBioengineers.Length - 1)];
-                break;
+            Bear.Traditions.Beekeepers => spriteBeekeepers,
+            Bear.Traditions.Constructors => spriteConstructors,
+            Bear.Traditions.Programmers => spriteProgrammers,
+            Bear.Traditions.BioEngineers => spriteBioengineers,
+        };
+
+        Sprite newIcon = selectedSprites[Random.Range(0, selectedSprites.Length - 1)];
+
+        if (newIcon == null) {
+            throw new ArgumentException("No found tradition " + tradition);
         }
+
         // TODO: сделать норм индексацию
-        bear newBear = new bear(tradition.ToString() + Random.Range(0, 1000).ToString(), bearName, tradition, newIcon);
+        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition, newIcon);
+        newBear.gender = gender;
         bearsInColony.Add(newBear);
         GameObject bearObj = Instantiate(bearPrefab, spawnBears.transform.position, Quaternion.identity);
         bearObj.name = newBear.gameName;
         bearsCountText.text = bearsInColony.Count.ToString();
+    }
+
+    /// <summary>
+    /// Возвращает случайный гендер медведя
+    /// </summary>
+    /// <returns>true если медведь мужчина, иначе false</returns>
+    private bool GetBearGender()
+    {
+        return Random.value > 0.5f;
+    }
+
+    /// <summary>
+    /// Получить имя медведя основываясь на гендере
+    /// </summary>
+    /// <returns>ФИ медведя</returns>
+    private string GetBearName(bool gender)
+    {
+        string firstName = gender ? menBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)] : womanBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)];
+        string lastName = bearsLastnames[Random.Range(0, bearsLastnames.Length - 1)];
+        
+        return firstName + " " + lastName;
     }
 
     private void Update()
@@ -142,11 +175,14 @@ public class colonyManager : MonoBehaviour
                 foreach (Transform child in bearsListContainer.transform)
                     Destroy(child.gameObject);
 
-                foreach (bear bear in bearsInColony)
+                foreach (Bear bear in bearsInColony)
                 {
                     GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity, bearsListContainer.transform);
-                    newObj.transform.Find("Icon").GetComponent<Image>().sprite = bear.sprite;
-                    newObj.transform.Find("Icon").GetComponent<Image>().SetNativeSize();
+
+                    Image image = newObj.transform.Find("Icon").GetComponent<Image>();
+                    image.sprite = bear.sprite;
+                    image.SetNativeSize();
+
                     newObj.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.traditionStr + "\nТекущее дело" + "\nУсталость/голод: " + bear.tired + "/" + bear.hungry;
                 }
                 // Почему-то при ПЕРВОМ открытии - метод нормально не срабатывает и sizeDelta.y == 0. При дальнейших открытиях все норм
@@ -156,44 +192,36 @@ public class colonyManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public class bear
+[Serializable]
+public class Bear
 {
+
+    public bool gender; // Если гендер true - мужской пол, иначе женский
     public string gameName;
     public string bearName;
     public Sprite sprite;
-    public enum traditions { none, beekeepers, constructors, programmers, bioEngineers, special, chrom }
-    public traditions tradition;
+    public enum Traditions { None, Beekeepers, Constructors, Programmers, BioEngineers, Special, Chrom }
+    public Traditions tradition;
     [HideInInspector]
     public string traditionStr
     {
         get
         {
-            switch (tradition)
-            {
-                case traditions.beekeepers:
-                    return "Пасечник";
-                case traditions.constructors:
-                    return "Конструктор";
-                case traditions.programmers:
-                    return "Программист";
-                case traditions.bioEngineers:
-                    return "Биоинженер";
-                case traditions.chrom:
-                    return "Первопроходец";
-            }
-            return "";
+        return tradition switch
+        {
+            Traditions.Beekeepers => "Пасечник",
+            Traditions.Constructors => "Конструктор",
+            Traditions.Programmers => "Программист",
+            Traditions.BioEngineers => "Биоинженер",
+            Traditions.Chrom => "Первопроходец",
+            _ => throw new ArgumentException("Tradition " + tradition + " not found!")
+        };
         }
     }
     public float lvl = 0f;
     public float hungry, tired;
 
-    public bear()
-    {
-
-    }
-
-    public bear(string _gameName, string _bearName, traditions _tradition, Sprite _sprite)
+    public Bear(string _gameName, string _bearName, Traditions _tradition, Sprite _sprite)
     {
         gameName = _gameName;
         bearName = _bearName;

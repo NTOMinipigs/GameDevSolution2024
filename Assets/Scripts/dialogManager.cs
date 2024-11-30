@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class dialogManager : MonoBehaviour
+public class DialogManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textName, _textDialog;
     [SerializeField] private Image _iconImage;
     [SerializeField] private GameObject dialogMenu;
-    public dialog[] dialogs = new dialog[0];
+    public Dialog[] dialogs = new Dialog[0];
     [SerializeField] private int totalStep;
-    private dialog _activatedDialog;
-    private dialogStep _selectedStep;
+    private Dialog _activatedDialog;
+    private DialogStep _selectedStep;
     private bool _animatingText, _canStepNext;
     [SerializeField] private allScripts scripts;
 
@@ -20,7 +20,7 @@ public class dialogManager : MonoBehaviour
     {
         if (_activatedDialog == null)
         {
-            foreach (dialog totalDialog in dialogs)
+            foreach (Dialog totalDialog in dialogs)
             {
                 if (totalDialog.nameDialog == name)
                 {
@@ -100,25 +100,25 @@ public class dialogManager : MonoBehaviour
 }
 
 [System.Serializable]
-public class dialog
+public class Dialog
 {
     [Header("Main")]
     public string nameDialog;
-    public dialogStep[] steps = new dialogStep[0];
+    public DialogStep[] steps = new DialogStep[0];
 }
 
 [System.Serializable]
-public class dialogStep
+public class DialogStep
 {
-    public bear.traditions traditionBear;
+    public Bear.Traditions traditionBear;
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;
     public Transform cameraTarget;
 
-    public void SetBear(colonyManager CM)
+    public void SetBear(ColonyManager CM)
     {
-        foreach (bear totalBear in CM.bearsInColony)
+        foreach (Bear totalBear in CM.bearsInColony)
         {
             if (totalBear.tradition == traditionBear)
             {

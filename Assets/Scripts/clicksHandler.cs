@@ -1,12 +1,11 @@
-using System.Collections;
 using UnityEngine;
 
-public class clicksHandler : MonoBehaviour
+public class ClicksHandler : MonoBehaviour
 {
     public float sensitivity;
     public bool blockMove;
-    private bool isDragging;
-    private Vector3 lastMousePosition, delta;
+    private bool _isDragging;
+    private Vector3 _lastMousePosition, delta;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private allScripts scripts;
 
@@ -19,25 +18,25 @@ public class clicksHandler : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
             {
                 // TODO: изменить на НЕ ТОЛЬКО медведей + обработчик взаимодейтсвий
-                bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
                 Debug.Log(selectedBear.bearName);
             }
             else
             {
-                isDragging = true;
-                lastMousePosition = Input.mousePosition;                
+                _isDragging = true;
+                _lastMousePosition = Input.mousePosition;                
             }
         }
 
         if (Input.GetMouseButtonUp(0))
-            isDragging = false;
+            _isDragging = false;
 
-        if (isDragging && !blockMove)
+        if (_isDragging && !blockMove)
         {
-            delta = (Input.mousePosition - lastMousePosition) * sensitivity * Time.deltaTime;
+            delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.deltaTime;
 
             transform.position += new Vector3(-delta.x, 0, -delta.y);
-            lastMousePosition = Input.mousePosition;
+            _lastMousePosition = Input.mousePosition;
         }
     }
 }

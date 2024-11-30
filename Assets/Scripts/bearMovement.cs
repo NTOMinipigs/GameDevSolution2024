@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class bearMovement : MonoBehaviour
+public class BearMovement : MonoBehaviour
 {
 }
