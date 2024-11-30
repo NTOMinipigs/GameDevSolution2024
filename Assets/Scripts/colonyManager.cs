@@ -72,7 +72,7 @@ public class colonyManager : MonoBehaviour
 
     [Header("Bears")]
     public List<bear> bearsInColony = new List<bear>();
-    [SerializeField]private GameObject bearPrefab, spawnBears; // Потом сделать spawnBears более рандомным
+    [SerializeField] private GameObject bearProgerPrefab, bearBeekeepersPrefab, bearConstructorPrefab, spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] firstnamesForBears, secondnamesForBears = new string[0];
     [SerializeField] private Sprite[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new Sprite[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
@@ -88,8 +88,8 @@ public class colonyManager : MonoBehaviour
         // Чисто для тестов
         GenerateNewBear(bear.traditions.beekeepers);
         GenerateNewBear(bear.traditions.programmers);
-        GenerateNewBear(bear.traditions.beekeepers);
-        GenerateNewBear(bear.traditions.programmers);
+        GenerateNewBear(bear.traditions.bioEngineers);
+        GenerateNewBear(bear.traditions.constructors);
     }
 
     public bear GetBear(string gameName)
@@ -99,6 +99,7 @@ public class colonyManager : MonoBehaviour
             if (bear.gameName == gameName)
                 return bear;
         }
+        Debug.Log(gameName + " dont finded");
         return null;
     }
 
@@ -107,27 +108,33 @@ public class colonyManager : MonoBehaviour
         // Имя не зависит от гендера
         string bearName = firstnamesForBears[Random.Range(0, firstnamesForBears.Length - 1)] + " " + secondnamesForBears[Random.Range(0, secondnamesForBears.Length - 1)];
         Sprite newIcon = null;
-        // Здесь ставятся иконки. Все икноки, не завися от гендера, в одном месте
+        GameObject bearPrefab = null;
         switch (tradition)
         {
             case bear.traditions.beekeepers:
                 newIcon = spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)];
+                bearPrefab = bearBeekeepersPrefab;
                 break;
             case bear.traditions.constructors:
                 newIcon = spriteConstructors[Random.Range(0, spriteConstructors.Length - 1)];
+                bearPrefab = bearConstructorPrefab;
+
                 break;
             case bear.traditions.programmers:
                 newIcon = spriteProgrammers[Random.Range(0, spriteProgrammers.Length - 1)];
+                bearPrefab = bearProgerPrefab;
                 break;
             case bear.traditions.bioEngineers:
                 newIcon = spriteBioengineers[Random.Range(0, spriteBioengineers.Length - 1)];
+                bearPrefab = bearProgerPrefab;
                 break;
         }
         // TODO: сделать норм индексацию
         bear newBear = new bear(tradition.ToString() + Random.Range(0, 1000).ToString(), bearName, tradition, newIcon);
         bearsInColony.Add(newBear);
-        GameObject bearObj = Instantiate(bearPrefab, spawnBears.transform.position, Quaternion.identity);
+        GameObject bearObj = Instantiate(bearPrefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
         bearObj.name = newBear.gameName;
+        bearObj.GetComponent<bearMovement>().totalBear = newBear;
         bearsCountText.text = bearsInColony.Count.ToString();
     }
 
@@ -145,12 +152,23 @@ public class colonyManager : MonoBehaviour
                 foreach (bear bear in bearsInColony)
                 {
                     GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity, bearsListContainer.transform);
+                    newObj.name = bear.gameName;
                     newObj.transform.Find("Icon").GetComponent<Image>().sprite = bear.sprite;
                     newObj.transform.Find("Icon").GetComponent<Image>().SetNativeSize();
-                    newObj.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.traditionStr + "\nТекущее дело" + "\nУсталость/голод: " + bear.tired + "/" + bear.hungry;
                 }
-                // Почему-то при ПЕРВОМ открытии - метод нормально не срабатывает и sizeDelta.y == 0. При дальнейших открытиях все норм
                 bearsListAS.UpdateContentSize();
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (bearsListMenu.activeSelf)
+        {
+            foreach (Transform child in bearsListContainer.transform)
+            {
+                bear bear = GetBear(child.name);
+                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.traditionStr + "\nТекущее дело: " + bear.activityStr + "\nУсталость/голод: " + (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
             }
         }
     }
@@ -181,6 +199,24 @@ public class bear
                     return "Биоинженер";
                 case traditions.chrom:
                     return "Первопроходец";
+            }
+            return "";
+        }
+    }
+    public enum activities { chill, work, eat }
+    public activities activity;
+    public string activityStr
+    {
+        get
+        {
+            switch (activity)
+            {
+                case activities.chill:
+                    return "отдыхаю";
+                case activities.work:
+                    return "работаю";
+                case activities.eat:
+                    return "ем";
             }
             return "";
         }
