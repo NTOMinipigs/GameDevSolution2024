@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -74,9 +73,9 @@ public class ColonyManager : MonoBehaviour
 
     [Header("Bears")]
     public List<Bear> bearsInColony = new List<Bear>();
-    [SerializeField] private GameObject bearProgerPrefab, bearBeekeepersPrefab, bearConstructorPrefab, spawnBears; // Потом сделать spawnBears более рандомным
+    [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
-    [SerializeField] private Sprite[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new Sprite[0];
+    [SerializeField] private SerializableBear[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new SerializableBear[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
     [SerializeField] private GameObject bearsListMenu, bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
@@ -111,67 +110,49 @@ public class ColonyManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Вернет случайного медведя в обмен на традицию (вынесено из метода GenerateNewBear)
+    /// </summary>
+    /// <param name="tradition">Традиция</param>
+    /// <returns>Объект SerailizeBear (см документацию этого класса)</returns>
+    /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
+    private SerializableBear GetSerializableBear(Bear.Traditions tradition)
+    {
+        return tradition switch  // Упростил выражение
+        {
+            Bear.Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
+            Bear.Traditions.Constructors => spriteConstructors[Random.Range(0, spriteConstructors.Length - 1)],
+            Bear.Traditions.Programmers => spriteProgrammers[Random.Range(0, spriteProgrammers.Length - 1)],
+            Bear.Traditions.BioEngineers => spriteBioengineers[Random.Range(0, spriteBioengineers.Length - 1)],
+            _ => throw new ArgumentException("Tradition " + tradition + " not found!")
+        };
+    }
+
+    /// <summary>
     /// Генерирует нового медведя
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
     private void GenerateNewBear(Bear.Traditions tradition)
     {
-        // Имя не зависит от гендера
-        bool gender = GetBearGender();
-        string bearName = GetBearName(gender);        Sprite newIcon = null;
-        GameObject bearPrefab = null;
-        switch (tradition)
-        {
-            case Bear.Traditions.Beekeepers:
-                newIcon = spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)];
-                bearPrefab = bearBeekeepersPrefab;
-                break;
-            case Bear.Traditions.Constructors:
-                newIcon = spriteConstructors[Random.Range(0, spriteConstructors.Length - 1)];
-                bearPrefab = bearConstructorPrefab;
-
-                break;
-            case Bear.Traditions.Programmers:
-                newIcon = spriteProgrammers[Random.Range(0, spriteProgrammers.Length - 1)];
-                bearPrefab = bearProgerPrefab;
-                break;
-            case Bear.Traditions.BioEngineers:
-                newIcon = spriteBioengineers[Random.Range(0, spriteBioengineers.Length - 1)];
-                bearPrefab = bearProgerPrefab;
-                break;
-        }
+        SerializableBear serializableBear = GetSerializableBear(tradition);
+        string bearName = GetBearName(serializableBear.gender);
         
-        if (newIcon == null) {
-            throw new System.ArgumentException("No found tradition " + tradition);
-        }
-
         // TODO: сделать норм индексацию
-        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition, newIcon);
-        newBear.gender = gender;
+        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName , tradition, serializableBear.sprite);
         bearsInColony.Add(newBear);
-        GameObject bearObj = Instantiate(bearPrefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
+        GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
         bearObj.name = newBear.gameName;
         bearObj.GetComponent<BearMovement>().totalBear = newBear;
         bearsCountText.text = bearsInColony.Count.ToString();
     }
 
     /// <summary>
-    /// Возвращает случайный гендер медведя
-    /// </summary>
-    /// <returns>true если медведь мужчина, иначе false</returns>
-    private bool GetBearGender()
-    {
-        return Random.value > 0.5f;
-    }
-
-    /// <summary>
-    /// Получить имя медведя основываясь на гендере
+    /// Сгенерировать имя основываясь на гендере
     /// </summary>
     /// <returns>ФИ медведя</returns>
-    private string GetBearName(bool gender)
+    private string GetBearName(SerializableBear.Gender gender)
     {
-        string firstName = gender ? menBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)] : womanBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)];
+        string firstName = gender == SerializableBear.Gender.Men ? menBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)] : womanBearsFirstnames[Random.Range(0, womanBearsFirstnames.Length - 1)];
         string lastName = bearsLastnames[Random.Range(0, bearsLastnames.Length - 1)];
         
         return firstName + " " + lastName;
@@ -209,66 +190,9 @@ public class ColonyManager : MonoBehaviour
             foreach (Transform child in bearsListContainer.transform)
             {
                 Bear bear = GetBear(child.name);
-                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.traditionStr + "\nТекущее дело: " + bear.activityStr + "\nУсталость/голод: " + (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
+                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.TraditionStr + "\nТекущее дело: " + bear.ActivityStr + "\nУсталость/голод: " + (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
             }
         }
     }
 }
 
-[Serializable]
-public class Bear
-{
-
-    public bool gender; // Если гендер true - мужской пол, иначе женский
-    public string gameName;
-    public string bearName;
-    public Sprite sprite;
-    public enum Traditions { None, Beekeepers, Constructors, Programmers, BioEngineers, Special, Chrom }
-    public Traditions tradition;
-    [HideInInspector]
-    public string traditionStr
-    {
-        get
-        {
-        return tradition switch
-        {
-            Traditions.Beekeepers => "Пасечник",
-            Traditions.Constructors => "Конструктор",
-            Traditions.Programmers => "Программист",
-            Traditions.BioEngineers => "Биоинженер",
-            Traditions.Chrom => "Первопроходец",
-            _ => throw new System.ArgumentException("Tradition " + tradition + " not found!")
-        };
-        }
-    }
-    
-    public enum activities { chill, work, eat }
-    public activities activity;
-    public string activityStr
-    {
-        get
-        {
-            switch (activity)
-            {
-                case activities.chill:
-                    return "отдыхаю";
-                case activities.work:
-                    return "работаю";
-                case activities.eat:
-                    return "ем";
-            }
-            return "";
-        }
-    }
-    
-    public float lvl = 0f;
-    public float hungry, tired;
-
-    public Bear(string _gameName, string _bearName, Traditions _tradition, Sprite _sprite)
-    {
-        gameName = _gameName;
-        bearName = _bearName;
-        tradition = _tradition;
-        sprite = _sprite;
-    }
-}

@@ -67,7 +67,7 @@ public class DialogManager : MonoBehaviour
         }
         else
             _selectedStep.SetBear(scripts.colonyManager);
-        _textName.text = _selectedStep.nameBear + " | " + _selectedBear.traditionStr;
+        _textName.text = _selectedStep.nameBear + " | " + _selectedBear.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));
         _iconImage.sprite = _selectedStep.icon;
         _iconImage.SetNativeSize();
@@ -96,7 +96,7 @@ public class DialogManager : MonoBehaviour
     private string CodeTextReplace(string text)
     {
         if (text.Contains("{activity}"))
-            return text.Replace("{activity}", _selectedBear.activityStr);
+            return text.Replace("{activity}", _selectedBear.ActivityStr);
         return "";
     }
 
