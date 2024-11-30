@@ -17,16 +17,15 @@ public class clicksHandler : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
-            {
-                // TODO: изменить на НЕ ТОЛЬКО медведей + обработчик взаимодейтсвий
-                bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
-                Debug.Log(selectedBear.bearName);
+            {                
+                if (hit.collider.gameObject.tag == "bear")
+                {
+                    bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                    scripts.dialogManager.ActivateBearInteractionDialog(selectedBear);
+                }
             }
-            else
-            {
-                isDragging = true;
-                lastMousePosition = Input.mousePosition;                
-            }
+            isDragging = true;
+            lastMousePosition = Input.mousePosition;
         }
 
         if (Input.GetMouseButtonUp(0))

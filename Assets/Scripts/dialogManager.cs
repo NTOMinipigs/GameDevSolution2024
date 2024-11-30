@@ -16,22 +16,42 @@ public class dialogManager : MonoBehaviour
     private bool _animatingText, _canStepNext;
     [SerializeField] private allScripts scripts;
 
+    private dialog GetDialog(string name)
+    {
+        foreach (dialog totalDialog in dialogs)
+        {
+            if (totalDialog.nameDialog == name)
+                return totalDialog;
+        }
+        return null;
+    }
+
     public void ActivateDialog(string name) // Старт диалога
     {
         if (_activatedDialog == null)
         {
-            foreach (dialog totalDialog in dialogs)
-            {
-                if (totalDialog.nameDialog == name)
-                {
-                    _activatedDialog = totalDialog;
-                    dialogMenu.gameObject.SetActive(true);
-                    scripts.clicksHandler.blockMove = true;
-                    _selectedStep = _activatedDialog.steps[0];
-                    DialogUpdateAction();
-                    break;
-                }
-            }
+            _activatedDialog = GetDialog(name);
+            dialogMenu.gameObject.SetActive(true);
+            scripts.clicksHandler.blockMove = true;
+            _selectedStep = _activatedDialog.steps[0];
+            DialogUpdateAction();
+        }
+    }
+
+    // Старт диалога при взаимодействии с медведем
+    public void ActivateBearInteractionDialog(bear selectedBear)
+    {
+        if (selectedBear.tired > 10)
+            ActivateDialog("bearTired");
+        else if (selectedBear.hungry > 10)
+            ActivateDialog("bearHungry");
+        else
+        {
+            int mode = Random.Range(0, 2);
+            if (mode == 0)
+                ActivateDialog("bearTalk" + Random.Range(0, 3));
+            else if (mode == 1)
+                ActivateDialog("bearActivity");
         }
     }
 
