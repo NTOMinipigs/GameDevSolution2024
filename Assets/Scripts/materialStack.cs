@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class materialStack : MonoBehaviour
+public class MaterialStack : MonoBehaviour
 {
     [SerializeField] private GameObject canvas;
 

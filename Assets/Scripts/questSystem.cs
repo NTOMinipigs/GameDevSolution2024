@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class questSystem : MonoBehaviour
+public class QuestSystem : MonoBehaviour
 {
     [SerializeField] private GameObject questMenu;
     private TextMeshProUGUI textName, textDescription, textStep;

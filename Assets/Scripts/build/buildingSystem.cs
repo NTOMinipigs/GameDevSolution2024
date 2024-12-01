@@ -32,8 +32,8 @@ public class BuildingSystem : MonoBehaviour
             buildingMenu.gameObject.SetActive(!buildingMenu.activeSelf);
             foreach (Transform child in buildingMenu.transform.Find("Scroll View").transform.Find("Viewport").transform.Find("Content"))
             {
-                child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.materials;
-                if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.materials)
+                child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials;
+                if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials)
                     child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.black;
                 else
                     child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.red;

@@ -1,25 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class dialogManager : MonoBehaviour
+public class DialogManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textName, _textDialog;
     [SerializeField] private Image _iconImage;
     [SerializeField] private GameObject dialogMenu;
-    public dialog[] dialogs = new dialog[0];
+    public Dialog[] dialogs = new Dialog[0];
     [SerializeField] private int totalStep;
-    private dialog _activatedDialog;
-    private dialogStep _selectedStep;
-    private bear _selectedBear;
+    private Dialog _activatedDialog;
+    private DialogStep _selectedStep;
+    private Bear _selectedBear;
     private bool _animatingText, _canStepNext;
     [SerializeField] private allScripts scripts;
 
-    private dialog GetDialog(string name)
+    private Dialog GetDialog(string name)
     {
-        foreach (dialog totalDialog in dialogs)
+        foreach (Dialog totalDialog in dialogs)
         {
             if (totalDialog.nameDialog == name)
                 return totalDialog;
@@ -42,7 +41,7 @@ public class dialogManager : MonoBehaviour
     }
 
     // Старт диалога при взаимодействии с медведем
-    public void ActivateBearInteractionDialog(bear selectedBear)
+    public void ActivateBearInteractionDialog(Bear selectedBear)
     {
         if (selectedBear.tired > 10)
             ActivateDialog("bearTired", selectedBear.gameName);
@@ -68,7 +67,7 @@ public class dialogManager : MonoBehaviour
         }
         else
             _selectedStep.SetBear(scripts.colonyManager);
-        _textName.text = _selectedStep.nameBear + " | " + _selectedBear.traditionStr;
+        _textName.text = _selectedStep.nameBear + " | " + _selectedBear.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));
         _iconImage.sprite = _selectedStep.icon;
         _iconImage.SetNativeSize();
@@ -97,7 +96,7 @@ public class dialogManager : MonoBehaviour
     private string CodeTextReplace(string text)
     {
         if (text.Contains("{activity}"))
-            return text.Replace("{activity}", _selectedBear.activityStr);
+            return text.Replace("{activity}", _selectedBear.ActivityStr);
         return "";
     }
 
@@ -139,25 +138,25 @@ public class dialogManager : MonoBehaviour
 }
 
 [System.Serializable]
-public class dialog
+public class Dialog
 {
     [Header("Main")]
     public string nameDialog;
-    public dialogStep[] steps = new dialogStep[0];
+    public DialogStep[] steps = new DialogStep[0];
 }
 
 [System.Serializable]
-public class dialogStep
+public class DialogStep
 {
-    public bear.traditions traditionBear;
+    public Bear.Traditions traditionBear;
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;
     public Transform cameraTarget;
 
-    public void SetBear(colonyManager CM)
+    public void SetBear(ColonyManager CM)
     {
-        foreach (bear totalBear in CM.bearsInColony)
+        foreach (Bear totalBear in CM.bearsInColony)
         {
             if (totalBear.tradition == traditionBear)
             {

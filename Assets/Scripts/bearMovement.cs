@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class bearMovement : MonoBehaviour
+public class BearMovement : MonoBehaviour
 {// Новое
-    public bear totalBear;
+    public Bear totalBear;
     public float speed;
     private float waitTime;
     public float startWaitTime;
@@ -28,7 +28,7 @@ public class bearMovement : MonoBehaviour
             if (waitTime < 0)
             {
                 wait = false;
-                if (totalBear.activity == bear.activities.chill)
+                if (totalBear.activity == Bear.Activities.chill)
                     moveTarget = new Vector3(transform.position.x + Random.Range(-100f, 100f), transform.position.y, transform.position.z + Random.Range(-100f, 100f));
             }
         }
@@ -46,12 +46,12 @@ public class bearMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Говно реализация, переделать
-        if (totalBear.activity == bear.activities.work)
+        if (totalBear.activity == Bear.Activities.work)
         {
             totalBear.tired += 0.0015f;
             totalBear.hungry += 0.00065f;
         }
-        else if (totalBear.activity == bear.activities.chill)
+        else if (totalBear.activity == Bear.Activities.chill)
         {
             if (totalBear.hungry >= 5)
             {
