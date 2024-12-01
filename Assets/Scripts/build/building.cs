@@ -6,10 +6,13 @@ public class Building : MonoBehaviour
     public float materialsNeed, specMaterialsNeed;
     public Vector2Int Size = Vector2Int.one;
 
+    // Смена цвета по возможности расстановки
     public void SetTransparent(bool available) => MainRenderer.material.color = available ? Color.green : Color.red;
 
+    // Смена цвета на нормальный
     public void SetNormal() => MainRenderer.material.color = Color.white;
 
+    // Это ебать не должно
     private void OnDrawGizmosSelected()
     {
         Vector3 offset = new Vector3(-Size.x * 0.5f + 0.5f, 0, -Size.y * 0.5f + 0.5f);

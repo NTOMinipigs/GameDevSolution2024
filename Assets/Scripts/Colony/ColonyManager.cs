@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using ArgumentException = System.ArgumentException;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
-using Random = UnityEngine.Random;
 
 public class ColonyManager : MonoBehaviour
 {
     [Header("Main resources")]
+    // Структура каждого ресурса: _ресурсText _ресурсPrivate Ресурс _максимумРесурсаПриват МаксимумРесурса
+    // _ресурс/_максимумРесурсаПриват
     [Header("-Honey")]
     [SerializeField] private TextMeshProUGUI honeyText;
     private float _honey;
@@ -17,7 +18,17 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _honey = value;
-            honeyText.text = _honey.ToString();
+            honeyText.text = _honey.ToString() + "/" + _maxHoney.ToString();
+        }
+    }
+    private float _maxHoney;
+    public float MaxHoney
+    {
+        get { return _maxHoney; }
+        set
+        {
+            _maxHoney = value;
+            honeyText.text = _honey.ToString() + "/" + _maxHoney.ToString();
         }
     }
 
@@ -30,7 +41,17 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _biofuel = value;
-            biofuelText.text = _biofuel.ToString();
+            biofuelText.text = _biofuel.ToString() + "/" + _maxBiofuel.ToString();
+        }
+    }
+    private float _maxBiofuel;
+    public float MaxBiofuel
+    {
+        get { return _maxBiofuel; }
+        set
+        {
+            _maxBiofuel = value;
+            biofuelText.text = _biofuel.ToString() + "/" + _maxBiofuel.ToString();
         }
     }
 
@@ -43,9 +64,21 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _materials = value;
-            materialsText.text = _materials.ToString();
+            materialsText.text = _materials.ToString() + "/" + _maxMaterials.ToString();
         }
     }
+
+    private float _maxMaterials;
+    public float MaxMaterials
+    {
+        get { return _maxMaterials; }
+        set
+        {
+            _maxMaterials = value;
+            materialsText.text = _materials.ToString() + "/" + _maxMaterials.ToString();
+        }
+    }
+
     [SerializeField] private TextMeshProUGUI materialsPlusText;
     private float _materialsPlus;
     public float materialsPlus
@@ -58,6 +91,17 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
+    private float _maxMaterialsPlus;
+    public float MaxMaterialsPlus
+    {
+        get { return _maxMaterialsPlus; }
+        set
+        {
+            _maxMaterialsPlus = value;
+            materialsText.text = _materialsPlus.ToString() + "/" + _maxMaterialsPlus.ToString();
+        }
+    }
+
     [Header("-food")]
     [SerializeField] private TextMeshProUGUI foodText;
     private float _food;
@@ -67,12 +111,23 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _food = value;
-            foodText.text = _food.ToString();
+            foodText.text = _food.ToString() + "/" + _maxFood.ToString();
+        }
+    }
+    private float _maxFood;
+    public float MaxFood
+    {
+        get { return _maxFood; }
+        set
+        {
+            _maxFood = value;
+            foodText.text = _food.ToString() + "/" + _maxFood.ToString();
         }
     }
 
     [Header("Bears")]
     public List<Bear> bearsInColony = new List<Bear>();
+    public int maxBears;
     [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
     [SerializeField] private SerializableBear[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new SerializableBear[0];
@@ -86,7 +141,7 @@ public class ColonyManager : MonoBehaviour
 
     private void Start()
     {
-        // Чисто для тестов firstnamesForBears
+        // Чисто для тестов
         GenerateNewBear(Bear.Traditions.Beekeepers);
         GenerateNewBear(Bear.Traditions.Programmers);
         GenerateNewBear(Bear.Traditions.Beekeepers);
@@ -136,14 +191,14 @@ public class ColonyManager : MonoBehaviour
     {
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
-        
+
         // TODO: сделать норм индексацию
-        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName , tradition, serializableBear.sprite);
+        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition, serializableBear.sprite);
         bearsInColony.Add(newBear);
         GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
         bearObj.name = newBear.gameName;
         bearObj.GetComponent<BearMovement>().totalBear = newBear;
-        bearsCountText.text = bearsInColony.Count.ToString();
+        bearsCountText.text = bearsInColony.Count.ToString() + "/" + maxBears;
     }
 
     /// <summary>
@@ -154,7 +209,7 @@ public class ColonyManager : MonoBehaviour
     {
         string firstName = gender == SerializableBear.Gender.Men ? menBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)] : womanBearsFirstnames[Random.Range(0, womanBearsFirstnames.Length - 1)];
         string lastName = bearsLastnames[Random.Range(0, bearsLastnames.Length - 1)];
-        
+
         return firstName + " " + lastName;
     }
 
@@ -173,7 +228,7 @@ public class ColonyManager : MonoBehaviour
                 {
                     GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity, bearsListContainer.transform);
                     newObj.name = bear.gameName;
-                    
+
                     Image image = newObj.transform.Find("Icon").GetComponent<Image>();
                     image.sprite = bear.sprite;
                     image.SetNativeSize();

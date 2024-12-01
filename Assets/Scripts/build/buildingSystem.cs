@@ -5,9 +5,9 @@ using TMPro;
 public class BuildingSystem : MonoBehaviour
 {
     [SerializeField] private GameObject buildingMenu;
-    [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10);
-    private Building[,] grid;
-    private Building flyingBuilding;
+    [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
+    private Building[,] grid; // Размещение строений на сетке
+    private Building flyingBuilding; // Выделенное строение
     private Camera mainCamera;
     [SerializeField] private allScripts scripts;
 
@@ -17,7 +17,7 @@ public class BuildingSystem : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    public void StartPlacingBuilding(Building buildingPrefab)
+    public void StartPlacingBuilding(Building buildingPrefab) // Начинаем размещать объект. Метод для кнопки
     {
         if (flyingBuilding != null)
             Destroy(flyingBuilding.gameObject);
@@ -27,11 +27,13 @@ public class BuildingSystem : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab)) // Активация меню какое здание построить
         {
             buildingMenu.gameObject.SetActive(!buildingMenu.activeSelf);
+            // Генерация списка зданий к постройке
             foreach (Transform child in buildingMenu.transform.Find("Scroll View").transform.Find("Viewport").transform.Find("Content"))
             {
+                // Возможность нажать на кнопку. Значение в виде условия
                 child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials;
                 if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials)
                     child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.black;
@@ -42,12 +44,13 @@ public class BuildingSystem : MonoBehaviour
                 Destroy(flyingBuilding.gameObject);
         }
 
-        if (flyingBuilding != null)
+        // TODO: сделать отмену выбора текущего здания + смену выбранного здания на другое(оно мб работает)
+        if (flyingBuilding != null) // Если зданиее не выделено
         {
             var groundPlane = new Plane(Vector3.up, Vector3.zero);
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition); // Пускаем луч из камеры
 
-            if (groundPlane.Raycast(ray, out float position))
+            if (groundPlane.Raycast(ray, out float position)) // Хз это за хуйня
             {
                 Vector3 worldPosition = ray.GetPoint(position);
 
@@ -58,37 +61,24 @@ public class BuildingSystem : MonoBehaviour
                 y -= flyingBuilding.Size.y / 2;
 
                 bool available = true;
-
+                
+                // Если здание за сеткой - помечать расположение недействительным
                 if (x < -GridSize.x / 2 || x > GridSize.x / 2 - flyingBuilding.Size.x) available = false;
                 if (y < -GridSize.y / 2 || y > GridSize.y / 2 - flyingBuilding.Size.y) available = false;
 
+                // Если здание расположено на другом - помечать расположение недействительным
                 if (available && IsPlaceTaken(x, y)) available = false;
 
                 flyingBuilding.transform.position = new Vector3(x + flyingBuilding.Size.x / 2f, 0, y + flyingBuilding.Size.y / 2f);
-                flyingBuilding.SetTransparent(available);
+                flyingBuilding.SetTransparent(available); // Смена окраски
 
-                if (available && Input.GetMouseButtonDown(0))
-                    PlaceFlyingBuilding(x, y);
+                if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
+                    PlaceFlyingBuilding(x, y); 
             }
         }
     }
 
-    /*
-    private void OnDrawGizmosSelected()
-    {
-        // Визуализируем сетку
-        Gizmos.color = Color.green;
-        for (int x = -GridSize.x / 2; x < GridSize.x / 2; x++)
-        {
-            for (int y = -GridSize.y / 2; y < GridSize.y / 2; y++)
-            {
-                Vector3 position = new Vector3(x, 0, y);
-                Gizmos.DrawWireCube(position + new Vector3(0.5f, 0, 0.5f), new Vector3(1f, 0, 1f));
-            }
-        }
-    }
-    */
-
+    // Место занято?
     private bool IsPlaceTaken(int placeX, int placeY)
     {
         for (int x = 0; x < flyingBuilding.Size.x; x++)
@@ -100,6 +90,7 @@ public class BuildingSystem : MonoBehaviour
         return false;
     }
 
+    // Поставить здание
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
         for (int x = 0; x < flyingBuilding.Size.x; x++)
