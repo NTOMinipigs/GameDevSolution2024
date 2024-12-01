@@ -12,7 +12,7 @@ public class Bear
     public Sprite sprite;
     public enum Traditions { None, Beekeepers, Constructors, Programmers, BioEngineers, Special, Chrom }
     public Traditions tradition;
-    
+
     /// <summary>
     /// Получить строку традиции
     /// </summary>
@@ -22,21 +22,21 @@ public class Bear
     {
         get
         {
-        return tradition switch
-        {
-            Traditions.Beekeepers => "Пасечник",
-            Traditions.Constructors => "Конструктор",
-            Traditions.Programmers => "Программист",
-            Traditions.BioEngineers => "Биоинженер",
-            Traditions.Chrom => "Первопроходец",
-            _ => throw new System.ArgumentException("Tradition " + tradition + " not found!")
-        };
+            return tradition switch
+            {
+                Traditions.Beekeepers => "Пасечник",
+                Traditions.Constructors => "Конструктор",
+                Traditions.Programmers => "Программист",
+                Traditions.BioEngineers => "Биоинженер",
+                Traditions.Chrom => "Первопроходец",
+                _ => throw new System.ArgumentException("Tradition " + tradition + " not found!")
+            };
         }
     }
-    
+
     public enum Activities { chill, work, eat }
     public Activities activity;
-    
+
     /// <summary>
     /// Получить строку активности
     /// </summary>
@@ -54,7 +54,7 @@ public class Bear
             };
         }
     }
-    
+
     public float lvl = 0f;
     public float hungry, tired;
 
