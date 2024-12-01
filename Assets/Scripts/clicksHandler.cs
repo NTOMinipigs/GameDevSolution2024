@@ -1,13 +1,12 @@
-using System.Collections;
 using UnityEngine;
 
-public class clicksHandler : MonoBehaviour
+public class ClicksHandler : MonoBehaviour
 {
     public float sensitivity;
     public bool blockMove;
-    private bool isDragging;
-    private Vector3 lastMousePosition, delta;
-    private GameObject choicedBear;
+    private bool _isDragging;
+    private Vector3 _lastMousePosition, _delta;
+    private GameObject _choicedBear;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private allScripts scripts;
 
@@ -21,29 +20,29 @@ public class clicksHandler : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("bear"))
             {
-                if (choicedBear != hit.collider.gameObject)
+                if (_choicedBear != hit.collider.gameObject)
                 {
-                    if (choicedBear != null)
-                        choicedBear.GetComponent<bearMovement>().SetNormal();
-                    choicedBear = hit.collider.gameObject;
-                    choicedBear.GetComponent<bearMovement>().SetChoiced();
+                    if (_choicedBear != null)
+                        _choicedBear.GetComponent<BearMovement>().SetNormal();
+                    _choicedBear = hit.collider.gameObject;
+                    _choicedBear.GetComponent<BearMovement>().SetChoiced();
                 }
             }
             else
             {
-                if (choicedBear != null)
+                if (_choicedBear != null)
                 {
-                    choicedBear.GetComponent<bearMovement>().SetNormal();
-                    choicedBear = null;
+                    _choicedBear.GetComponent<BearMovement>().SetNormal();
+                    _choicedBear = null;
                 }
             }
         }
         else
         {
-            if (choicedBear != null)
+            if (_choicedBear != null)
             {
-                choicedBear.GetComponent<bearMovement>().SetNormal();
-                choicedBear = null;
+                _choicedBear.GetComponent<BearMovement>().SetNormal();
+                _choicedBear = null;
             }
         }
 
@@ -53,25 +52,25 @@ public class clicksHandler : MonoBehaviour
             {
                 if (hit.collider.gameObject.tag == "bear")
                 {
-                    bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                    Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear);
                 }
                 else if (hit.collider.gameObject.tag == "materialStack")
-                    hit.collider.gameObject.GetComponent<materialStack>().ActivateInteraction();
+                    hit.collider.gameObject.GetComponent<MaterialStack>().ActivateInteraction();
             }
-            isDragging = true;
-            lastMousePosition = Input.mousePosition;
+            _isDragging = true;
+            _lastMousePosition = Input.mousePosition;
         }
 
         if (Input.GetMouseButtonUp(0))
-            isDragging = false;
+            _isDragging = false;
 
-        if (isDragging && !blockMove)
+        if (_isDragging && !blockMove)
         {
-            delta = (Input.mousePosition - lastMousePosition) * sensitivity * Time.deltaTime;
+            _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.deltaTime;
 
-            transform.position += new Vector3(-delta.x, 0, -delta.y);
-            lastMousePosition = Input.mousePosition;
+            transform.position += new Vector3(-_delta.x, 0, -_delta.y);
+            _lastMousePosition = Input.mousePosition;
         }
     }
 }

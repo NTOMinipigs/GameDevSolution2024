@@ -244,6 +244,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28937324}
   m_CullTransparentMesh: 1
+--- !u!1 &40695105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 40695106}
+  - component: {fileID: 40695107}
+  m_Layer: 0
+  m_Name: BearBeekeeper_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &40695106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40695105}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 551481737}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40695107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40695105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 1
+  sprite: {fileID: -1737495317, guid: dceda856037d76f4abb9905a0d5c244c, type: 3}
+  prefab: {fileID: 2142770981057403608, guid: 83735ce69e75efe46b1167dedff5bae9, type: 3}
 --- !u!1 &45634954
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +570,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69142640}
   m_CullTransparentMesh: 1
+--- !u!1 &107743699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107743700}
+  - component: {fileID: 107743701}
+  m_Layer: 0
+  m_Name: BearProgrammer_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &107743700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107743699}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 751245469}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &107743701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107743699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 926015040, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 8f432c88f9697994b8309aea23f484b8, type: 3}
 --- !u!1 &109867981
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,6 +1021,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138378421}
   m_CullTransparentMesh: 1
+--- !u!1 &162274848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162274849}
+  - component: {fileID: 162274850}
+  m_Layer: 0
+  m_Name: BearBeekepeer_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162274849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162274848}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 551481737}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162274850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162274848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -1472634389, guid: dceda856037d76f4abb9905a0d5c244c, type: 3}
+  prefab: {fileID: 2142770981057403608, guid: 83735ce69e75efe46b1167dedff5bae9, type: 3}
 --- !u!1 &201997674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1403,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294536540}
   m_CullTransparentMesh: 1
+--- !u!1 &295978277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295978278}
+  - component: {fileID: 295978280}
+  - component: {fileID: 295978279}
+  m_Layer: 0
+  m_Name: BearBio_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &295978278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295978277}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.48816, y: 37.020973, z: -69.37717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 980575545}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &295978279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295978277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -1152040214, guid: 16664019c19900e4ea6e11e105d97c35, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 8f432c88f9697994b8309aea23f484b8, type: 3}
+--- !u!114 &295978280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295978277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 0}
+  prefab: {fileID: 0}
 --- !u!1 &355838911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1708,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479650603}
   m_CullTransparentMesh: 1
+--- !u!1 &551481736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 551481737}
+  m_Layer: 0
+  m_Name: Beekeepers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &551481737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551481736}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 162274849}
+  - {fileID: 40695106}
+  - {fileID: 827462436}
+  m_Father: {fileID: 560103192}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &558979975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,6 +1877,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558979975}
   m_CullTransparentMesh: 1
+--- !u!1 &560103191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560103192}
+  m_Layer: 0
+  m_Name: BearsSprites
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &560103192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560103191}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 551481737}
+  - {fileID: 980575545}
+  - {fileID: 630802917}
+  - {fileID: 751245469}
+  - {fileID: 873084289}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &577181050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,6 +2186,40 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &630802916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630802917}
+  m_Layer: 0
+  m_Name: Constructs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &630802917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630802916}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.48816, y: 37.020973, z: -69.37717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 823043234}
+  - {fileID: 1551360509}
+  - {fileID: 1241759303}
+  m_Father: {fileID: 560103192}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &666917790
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,6 +2577,40 @@ RectTransform:
   m_AnchoredPosition: {x: -144, y: -16}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &751245468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 751245469}
+  m_Layer: 0
+  m_Name: Programmers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &751245469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751245468}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.48816, y: 37.020973, z: -69.37717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1225036298}
+  - {fileID: 876889295}
+  - {fileID: 107743700}
+  m_Father: {fileID: 560103192}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766522106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,6 +2860,100 @@ RectTransform:
   m_AnchoredPosition: {x: -142, y: 177}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &823043233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 823043234}
+  - component: {fileID: 823043235}
+  m_Layer: 0
+  m_Name: BearConstructs_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &823043234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823043233}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 630802917}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &823043235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823043233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 1990260235, guid: 6522c4555b4e4364587d8942a63e7b93, type: 3}
+  prefab: {fileID: 8747976981384506643, guid: 2339c4ef4005014468de19df9bb0b6a4, type: 3}
+--- !u!1 &827462435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 827462436}
+  - component: {fileID: 827462437}
+  m_Layer: 0
+  m_Name: BearBeekeeper_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &827462436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827462435}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 551481737}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &827462437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827462435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -1046868799, guid: dceda856037d76f4abb9905a0d5c244c, type: 3}
+  prefab: {fileID: 2142770981057403608, guid: 83735ce69e75efe46b1167dedff5bae9, type: 3}
 --- !u!1 &833012227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,6 +3327,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &873084288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873084289}
+  m_Layer: 0
+  m_Name: Chrom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &873084289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873084288}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.48816, y: 37.020973, z: -69.37717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1582595363}
+  m_Father: {fileID: 560103192}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &876636261
 GameObject:
   m_ObjectHideFlags: 0
@@ -2967,6 +3435,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876636261}
   m_CullTransparentMesh: 1
+--- !u!1 &876889294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876889295}
+  - component: {fileID: 876889296}
+  m_Layer: 0
+  m_Name: BearProgrammer_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &876889295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876889294}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 751245469}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &876889296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876889294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -1804682130, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 8f432c88f9697994b8309aea23f484b8, type: 3}
 --- !u!1 &895485590
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,6 +4002,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964669719}
   m_CullTransparentMesh: 1
+--- !u!1 &980575544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980575545}
+  m_Layer: 0
+  m_Name: Bio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &980575545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980575544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1431031837}
+  - {fileID: 295978278}
+  - {fileID: 1916744352}
+  m_Father: {fileID: 560103192}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &999771901
 GameObject:
   m_ObjectHideFlags: 0
@@ -8933,6 +9482,100 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174191215}
   m_CullTransparentMesh: 1
+--- !u!1 &1225036297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225036298}
+  - component: {fileID: 1225036299}
+  m_Layer: 0
+  m_Name: BearProgrammer_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1225036298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225036297}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 751245469}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225036299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225036297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 1
+  sprite: {fileID: 1983470332, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 8f432c88f9697994b8309aea23f484b8, type: 3}
+--- !u!1 &1241759302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1241759303}
+  - component: {fileID: 1241759304}
+  m_Layer: 0
+  m_Name: BearConstructs_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1241759303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241759302}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 630802917}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1241759304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241759302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 1572131151, guid: 6522c4555b4e4364587d8942a63e7b93, type: 3}
+  prefab: {fileID: 8747976981384506643, guid: 2339c4ef4005014468de19df9bb0b6a4, type: 3}
 --- !u!1 &1242985832
 GameObject:
   m_ObjectHideFlags: 0
@@ -9374,44 +10017,46 @@ MonoBehaviour:
     lvl: 0
     hungry: 0
     tired: 0
-  bearProgerPrefab: {fileID: 5963445485985904587, guid: 166166b8e3ab4964386c9f4dee924ca8, type: 3}
-  bearBeekeepersPrefab: {fileID: 2142770981057403608, guid: 83735ce69e75efe46b1167dedff5bae9, type: 3}
-  bearConstructorPrefab: {fileID: 8747976981384506643, guid: 2339c4ef4005014468de19df9bb0b6a4, type: 3}
   spawnBears: {fileID: 478109593}
-  firstnamesForBears:
-  - "\u041C\u0438\u0445\u0430\u0438\u043B"
-  - "\u0410\u043D\u0434\u0440\u0435\u0439"
+  menBearsFirstnames:
+  - "\u041C\u0438\u0448\u0430"
+  - "\u0410\u0440\u0442\u0435\u043C"
+  - "\u0424\u0435\u043B\u0438\u043A\u0441"
+  - "\u041C\u0430\u043A\u0441\u0438\u043C"
+  - "\u0412\u044F\u0447\u0435\u0441\u043B\u0430\u0432"
+  womanBearsFirstnames:
+  - "\u041D\u0430\u0441\u0442\u044F"
   - "\u041F\u043E\u043B\u0438\u043D\u0430"
-  - "\u0415\u0444\u0438\u043C"
-  - "\u041C\u0430\u0439\u0430"
-  - "\u0417\u043E\u044F"
-  - "\u041C\u0438\u044F"
-  - "\u041C\u0430\u043A\u0441"
-  - "\u0420\u0443\u0441\u043B\u0430\u043D"
-  secondnamesForBears:
-  - "\u041F\u043E\u043B\u0435\u0432\u043E\u0439"
-  - "\u041B\u0435\u0441\u043D\u043E\u0439"
+  - "\u0414\u0430\u0448\u0430"
+  - "\u041A\u0430\u0442\u044F"
+  - "\u0412\u0430\u043D\u0435\u0441\u0441\u0430"
+  bearsLastnames:
+  - "\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0441\u0442"
+  - "\u0411\u0438\u043E\u0438\u043D\u0436\u0435\u043D\u0435\u0440"
+  - "\u0425\u0443\u0434\u043E\u0436\u043D\u0438\u043A"
+  - "\u0411\u0438\u043E\u043B\u043E\u0433"
+  - "\u0425\u0438\u043C\u0438\u043A"
+  - "\u0411\u043E\u0435\u0446"
   - "\u0428\u0442\u0443\u0440\u043C\u0430\u043D"
+  - "\u0417\u043E\u043E\u043B\u043E\u0433"
   - "\u041C\u0435\u0445\u0430\u043D\u0438\u043A"
-  - "\u0411\u0443\u0440\u044B\u0439"
-  - "\u041A\u043E\u0441\u043E\u043B\u0430\u043F"
-  - "\u041B\u0430\u0441\u043A\u0430"
+  - "\u0427\u0438\u043D\u0438\u043B\u0430"
   spriteBeekeepers:
-  - {fileID: -1472634389, guid: dceda856037d76f4abb9905a0d5c244c, type: 3}
-  - {fileID: -1737495317, guid: dceda856037d76f4abb9905a0d5c244c, type: 3}
-  - {fileID: -1046868799, guid: dceda856037d76f4abb9905a0d5c244c, type: 3}
+  - {fileID: 162274850}
+  - {fileID: 40695107}
+  - {fileID: 827462437}
   spriteConstructors:
-  - {fileID: 1990260235, guid: 6522c4555b4e4364587d8942a63e7b93, type: 3}
-  - {fileID: -977588543, guid: 6522c4555b4e4364587d8942a63e7b93, type: 3}
-  - {fileID: 1572131151, guid: 6522c4555b4e4364587d8942a63e7b93, type: 3}
+  - {fileID: 823043235}
+  - {fileID: 1551360510}
+  - {fileID: 1241759304}
   spriteProgrammers:
-  - {fileID: 1983470332, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
-  - {fileID: -1804682130, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
-  - {fileID: 926015040, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
+  - {fileID: 1225036299}
+  - {fileID: 876889296}
+  - {fileID: 107743701}
   spriteBioengineers:
-  - {fileID: -165242036, guid: 16664019c19900e4ea6e11e105d97c35, type: 3}
-  - {fileID: -1152040214, guid: 16664019c19900e4ea6e11e105d97c35, type: 3}
-  - {fileID: 814192956, guid: 16664019c19900e4ea6e11e105d97c35, type: 3}
+  - {fileID: 1431031838}
+  - {fileID: 295978280}
+  - {fileID: 1916744353}
   bearsCountText: {fileID: 355838913}
   bearsListMenu: {fileID: 1954224484}
   bearsListContainer: {fileID: 1033262483}
@@ -9519,6 +10164,53 @@ MonoBehaviour:
   questsInGame: []
   totalStep: 0
   scripts: {fileID: 1346596986}
+--- !u!1 &1431031836
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431031837}
+  - component: {fileID: 1431031838}
+  m_Layer: 0
+  m_Name: BearBio_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1431031837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431031836}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 980575545}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1431031838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431031836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -165242036, guid: 16664019c19900e4ea6e11e105d97c35, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 8f432c88f9697994b8309aea23f484b8, type: 3}
 --- !u!1 &1457570198
 GameObject:
   m_ObjectHideFlags: 0
@@ -9904,6 +10596,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542895606}
   m_CullTransparentMesh: 1
+--- !u!1 &1551360508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1551360509}
+  - component: {fileID: 1551360510}
+  m_Layer: 0
+  m_Name: BearConstructs_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1551360509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551360508}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 630802917}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1551360510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551360508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -977588543, guid: 6522c4555b4e4364587d8942a63e7b93, type: 3}
+  prefab: {fileID: 8747976981384506643, guid: 2339c4ef4005014468de19df9bb0b6a4, type: 3}
 --- !u!1 &1552024197
 GameObject:
   m_ObjectHideFlags: 0
@@ -10066,6 +10805,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1582595362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1582595363}
+  - component: {fileID: 1582595364}
+  m_Layer: 0
+  m_Name: BearChrom_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1582595363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582595362}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873084289}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1582595364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582595362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 21300000, guid: 15b42002a82f1c0459fbdef4c14c7ed2, type: 3}
+  prefab: {fileID: 0}
 --- !u!1 &1638234441
 GameObject:
   m_ObjectHideFlags: 0
@@ -11180,6 +11966,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830313222}
   m_CullTransparentMesh: 1
+--- !u!1 &1916744351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1916744352}
+  - component: {fileID: 1916744353}
+  m_Layer: 0
+  m_Name: BearBio_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1916744352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916744351}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.48816, y: 37.020973, z: -69.37717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 980575545}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1916744353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916744351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a818c55a141b43198c47cf3153f6917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 814192956, guid: 16664019c19900e4ea6e11e105d97c35, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 8f432c88f9697994b8309aea23f484b8, type: 3}
 --- !u!1 &1918164975
 GameObject:
   m_ObjectHideFlags: 0

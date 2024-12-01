@@ -1,10 +1,8 @@
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,42 +12,32 @@ using UnityEngine.Networking;
 /// </summary>
 class APIClient : MonoBehaviour
 {
-
-
     // HttpClient block
 
     /// <summary>
     /// Базовый урл для всех запросов
     /// </summary>
-    readonly string BASE_URI = "https://2025.nti-gamedev.ru/api/games";
+    readonly string _baseUri = "https://2025.nti-gamedev.ru/api/games";
 
     /// <summary>
     /// UUID игры
     /// </summary>
-    readonly string UUID = "a43ad0b2-c91a-408f-8247-79ec436532b4";
-
+    readonly string _uuid = "a43ad0b2-c91a-408f-8247-79ec436532b4";
+    
 
     // Singleton block
 
     /// <summary>
     /// Инстанция объекта, часть Singleton паттерна
     /// </summary>
-    readonly static APIClient instance = new();
+    private static APIClient Instance { get;  } = new();
 
     /// <summary>
     /// Приватим конструктор, так как это требует паттерн
     /// </summary>
     private APIClient () {}
-
-    /// <summary>
-    /// Геттер для получения инстанции объекта
-    /// </summary>
-    public static APIClient GetInstance
-    {
-        get {return instance;}
-    }
-
-
+    
+    
     // records block
     // Все эти record'ы, это удобное представление Http ответов
 
@@ -183,7 +171,7 @@ class APIClient : MonoBehaviour
     /// <returns>Сериализованный record class (T)</returns>
     private async Task<T> SendGetAsync<T>(string uri) where T : class
     {
-        using (UnityWebRequest unityWebRequest = new UnityWebRequest(BASE_URI + uri, "GET")) {
+        using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "GET")) {
             return await UnityWebRequestWrapper<T>(unityWebRequest);
         }
     }
@@ -198,10 +186,10 @@ class APIClient : MonoBehaviour
     private async Task<T> SendPostAsync<T>(string uri, object requestBody) where T : class
     {
 
-        string json_string = JsonConvert.SerializeObject(requestBody);
-        using (UnityWebRequest unityWebRequest = new UnityWebRequest(BASE_URI + uri, "POST"))
+        string jsonString = JsonConvert.SerializeObject(requestBody);
+        using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "POST"))
         {
-            byte[] jsonInBytes = new UTF8Encoding().GetBytes(json_string);
+            byte[] jsonInBytes = new UTF8Encoding().GetBytes(jsonString);
             unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonInBytes);
             unityWebRequest.SetRequestHeader("Content-Type", "application/json");
             return await UnityWebRequestWrapper<T>(unityWebRequest);
@@ -217,10 +205,10 @@ class APIClient : MonoBehaviour
     /// <returns>Сериализованный json в формате record class</returns>
     private async Task<T> SendPutAsync<T>(string uri, object? requestBody) where T : class
     {
-        string json_string = JsonConvert.SerializeObject(requestBody);
-        using (UnityWebRequest unityWebRequest = new UnityWebRequest(BASE_URI + uri, "PUT"))
+        string jsonString = JsonConvert.SerializeObject(requestBody);
+        using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "PUT"))
         {
-            byte[] jsonInBytes = new UTF8Encoding().GetBytes(json_string);
+            byte[] jsonInBytes = new UTF8Encoding().GetBytes(jsonString);
             unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonInBytes);
             unityWebRequest.SetRequestHeader("Content-Type", "application/json");
             return await UnityWebRequestWrapper<T>(unityWebRequest);
@@ -235,7 +223,7 @@ class APIClient : MonoBehaviour
     /// <returns>null</returns>
     private async Task SendDeleteAsync(string uri)
     {
-        using (UnityWebRequest unityWebRequest = new UnityWebRequest(BASE_URI + uri, "DELETE"))
+        using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "DELETE"))
         {
             UnityWebRequestAsyncOperation operation =  unityWebRequest.SendWebRequest();
 
@@ -371,19 +359,19 @@ class APIClient : MonoBehaviour
     /// <returns>ShopInfo record</returns>
     public async Task<ShopInfo?> CreateShopRequest(string requestLogin, string requestShopname, Dictionary<string, byte>? requestResourses)
     {
-        object resourses_object;
+        object resoursesObject;
 
         if (requestResourses == null)
         {
-            resourses_object = new {name = requestShopname};
+            resoursesObject = new {name = requestShopname};
         }
 
         else
         {
-            resourses_object = new {name = requestShopname, resourses = requestResourses};
+            resoursesObject = new {name = requestShopname, resourses = requestResourses};
         }
 
-        return  await SendPostAsync<ShopInfo>("players/" + requestLogin + "/shops/", resourses_object);
+        return  await SendPostAsync<ShopInfo>("players/" + requestLogin + "/shops/", resoursesObject);
     }
 
     /// <summary>
