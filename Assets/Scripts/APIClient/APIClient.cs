@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 ///     Базируется на паттерне Singleton (Одиночка)
 ///     Предоставляет удобный доступ к API, берет на себя полную ответственность за маршрутизацию запросов
 /// </summary>
-class APIClient : MonoBehaviour
+public class APIClient : MonoBehaviour
 {
     // HttpClient block
 
@@ -30,7 +30,7 @@ class APIClient : MonoBehaviour
     /// <summary>
     /// Инстанция объекта, часть Singleton паттерна
     /// </summary>
-    private static APIClient Instance { get;  } = new();
+    public static APIClient Instance = new();
 
     /// <summary>
     /// Приватим конструктор, так как это требует паттерн
