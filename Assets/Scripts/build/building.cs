@@ -2,6 +2,9 @@
 
 public class Building : MonoBehaviour
 {
+    public string buildingName;
+    public enum TypesOfBuilding {building, materials}
+    public TypesOfBuilding typeOfBuilding;
     [SerializeField] private Renderer MainRenderer;
     public float materialsNeed, specMaterialsNeed;
     public Vector2Int Size = Vector2Int.one;

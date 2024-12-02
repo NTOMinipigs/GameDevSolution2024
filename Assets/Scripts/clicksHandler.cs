@@ -55,8 +55,8 @@ public class ClicksHandler : MonoBehaviour
                     Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
-                else if (hit.collider.gameObject.tag == "materialStack")
-                    hit.collider.gameObject.GetComponent<MaterialStack>().ActivateInteraction(); // Начать добычу/взаимодействие с рудой
+                else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
+                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<Building>());
             }
             _isDragging = true;
             _lastMousePosition = Input.mousePosition;
