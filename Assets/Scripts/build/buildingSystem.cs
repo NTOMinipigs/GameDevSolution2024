@@ -34,7 +34,19 @@ public class BuildingSystem : MonoBehaviour
         {
             buildMenu.transform.Find("bg").transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = selectedBuild.buildingName;
             buildMenuStandartButtons.gameObject.SetActive(!materialsMode);
+            if (!materialsMode)
+                buildMenuStandartButtons.transform.Find("ButtonDestroy").transform.Find("TextResourceReturn").GetComponent<TextMeshProUGUI>().text = (selectedBuild.materialsNeed / 2).ToString();
             buildMenuMaterialsButtons.gameObject.SetActive(materialsMode);
+        }
+    }
+
+    public void PickUpResource(string nameOfResource)
+    {
+        // Переделать реализацию. Вообще это затычка.
+        if (nameOfResource == "materials")
+        {
+            scripts.colonyManager.Materials += Random.Range(10, 30);
+            DestroyBuilding();
         }
     }
 
@@ -46,6 +58,30 @@ public class BuildingSystem : MonoBehaviour
         flyingBuilding = Instantiate(buildingPrefab);
         noteBlock.gameObject.SetActive(true);
         textSelectedBuild.text = flyingBuilding.buildingName;
+    }
+
+
+    public void DestroyBuilding()
+    {
+        if (selectedBuild != null)
+        {
+            // Получаем координаты здания на сетке
+            int startX = Mathf.RoundToInt(selectedBuild.transform.position.x) - selectedBuild.Size.x / 2;
+            int startY = Mathf.RoundToInt(selectedBuild.transform.position.z) - selectedBuild.Size.y / 2;
+
+            // Удаляем здание из grid
+            for (int x = 0; x < selectedBuild.Size.x; x++)
+            {
+                for (int y = 0; y < selectedBuild.Size.y; y++)
+                    grid[startX + x, startY + y] = null; // Очищаем ячейку
+            }
+
+            // Уничтожаем объект
+            Destroy(selectedBuild.gameObject);
+            selectedBuild = null;
+            buildMenu.gameObject.SetActive(false);
+            scripts.colonyManager.Materials += selectedBuild.materialsNeed / 2;
+        }
     }
 
     private void Update()
@@ -135,5 +171,7 @@ public class BuildingSystem : MonoBehaviour
         flyingBuilding.SetNormal();
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
+        buildingCreateMenu.gameObject.SetActive(false);
+        buildMenu.gameObject.SetActive(false); // пОТОМУ ЧТО ГОВНОКОД
     }
 }
