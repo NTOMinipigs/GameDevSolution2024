@@ -8,6 +8,12 @@ using UnityEngine;
 /// </summary>
 public class MusicManager : MonoBehaviour
 {
+
+    public void Start()
+    {
+        StartCoroutine(StartPlaylist(_musicClips, true));
+    }
+    
     /// <summary>
     /// Текущий трек/звук. Нужен чтобы удобно взаимодействовать с текущим треком изнутри
     /// </summary>
@@ -18,7 +24,9 @@ public class MusicManager : MonoBehaviour
     /// </summary>
     private const float FadeDuration = 2.0f;
 
-    public bool IsPlaying = false;
+    public bool IsPlaying { get; } = false;
+
+    [SerializeField] private AudioSource[] _musicClips = new AudioSource[0];
 
     /// <summary>
     /// Запускает один трек
@@ -32,7 +40,7 @@ public class MusicManager : MonoBehaviour
         // Логика фейд эффекта
         if (fade)
         {
-            StartCoroutine(PlayWithFadeEffect());
+            StartCoroutine(PlayWithFadeEffect(_currentAudioSource));
             return;
         }
         
@@ -103,25 +111,29 @@ public class MusicManager : MonoBehaviour
             // Запускаем трек с фейдом/без фейда
             if (fade)
             {
-                yield return PlayWithFadeEffect();
+                // Запустим первый трек и начнем дожидаться фейд эффекта в конце
+                StartCoroutine(PlayWithFadeEffect(_currentAudioSource));
+                yield return new WaitForSeconds(_currentAudioSource.clip.length - 2); 
             }
 
+            // Иначе запускаем трек без фейд эффекта
             else
             {
                 _currentAudioSource.Play();
                 yield return new WaitForSeconds(_currentAudioSource.clip.length);
             }
-
-
+            
             // Если плейлист закончился, начать заново
             if (CurrentIndex == audioSources.Length - 1)
             {
                 CurrentIndex = 0;
+                _currentAudioSource = audioSources[CurrentIndex];
                 continue;
             }
             
             // Иначе идти дальше по трекам
             CurrentIndex++;
+            _currentAudioSource = audioSources[CurrentIndex];
         }
     }
     
@@ -150,26 +162,27 @@ public class MusicManager : MonoBehaviour
     /// Запустить звук с Fade эффектом в начале и в конце
     /// </summary>
     /// <returns></returns>
-    private IEnumerator PlayWithFadeEffect()
+    private IEnumerator PlayWithFadeEffect(AudioSource audioSource)
     {
-        _currentAudioSource.volume = 0f;
-        _currentAudioSource.Play();
-        yield return StartCoroutine(FadeEffect(_currentAudioSource, 1f)); // входной фейд эффект
+        audioSource.volume = 0f;
+        audioSource.Play();
+        yield return StartCoroutine(FadeEffect(audioSource, 1f)); // входной фейд эффект
         
         while ( // Ждем когда нужно будет уменьшать громкость
-            _currentAudioSource.time != 0
+               audioSource.time != 0
             &&
-            _currentAudioSource.time < _currentAudioSource.clip.length - FadeDuration * 2)
+            audioSource.time < audioSource.clip.length - FadeDuration * 2)
         {
             yield return null;
         }
 
         // Если трек остановился в точке 0, скорее всего к нему преминили метод .Stop(), в таком случае дальше продолжать не стоит
-        if (_currentAudioSource.time == 0)
+        if (audioSource.time == 0)
         {
             yield return null;
         }
         
         yield return StartCoroutine(FadeEffect(_currentAudioSource, 0f)); // Выходной эффект
+        audioSource.Stop();
     }
 }

@@ -12,12 +12,13 @@ using UnityEngine.Networking;
 /// </summary>
 public class APIClient : MonoBehaviour
 {
+    
     // HttpClient block
 
     /// <summary>
     /// Базовый урл для всех запросов
     /// </summary>
-    readonly string _baseUri = "https://2025.nti-gamedev.ru/api/games";
+    readonly string _baseUri = "https://2025.nti-gamedev.ru/api/games/a43ad0b2-c91a-408f-8247-79ec436532b4/";
 
     /// <summary>
     /// UUID игры
@@ -158,7 +159,7 @@ public class APIClient : MonoBehaviour
             return JsonConvert.DeserializeObject<T>(unityWebRequest.downloadHandler.text);
         }
 
-        string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " + unityWebRequest.downloadHandler.text;
+        string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " + unityWebRequest.downloadHandler;
         Debug.LogError(errorMessage);
         throw new HttpRequestException(errorMessage);
     }
@@ -172,6 +173,7 @@ public class APIClient : MonoBehaviour
     private async Task<T> SendGetAsync<T>(string uri) where T : class
     {
         using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "GET")) {
+            unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
             return await UnityWebRequestWrapper<T>(unityWebRequest);
         }
     }
@@ -185,12 +187,12 @@ public class APIClient : MonoBehaviour
     /// <returns>Сериализованный json в формате record class</returns>
     private async Task<T> SendPostAsync<T>(string uri, object requestBody) where T : class
     {
-
         string jsonString = JsonConvert.SerializeObject(requestBody);
         using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "POST"))
         {
             byte[] jsonInBytes = new UTF8Encoding().GetBytes(jsonString);
             unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonInBytes);
+            unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
             unityWebRequest.SetRequestHeader("Content-Type", "application/json");
             return await UnityWebRequestWrapper<T>(unityWebRequest);
         }
@@ -210,6 +212,7 @@ public class APIClient : MonoBehaviour
         {
             byte[] jsonInBytes = new UTF8Encoding().GetBytes(jsonString);
             unityWebRequest.uploadHandler = new UploadHandlerRaw(jsonInBytes);
+            unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
             unityWebRequest.SetRequestHeader("Content-Type", "application/json");
             return await UnityWebRequestWrapper<T>(unityWebRequest);
         }
@@ -290,7 +293,7 @@ public class APIClient : MonoBehaviour
     /// <returns>Инвентарь игрока</returns>
     public async Task<UserInventory?> GetUserInventoryRequest(string login)
     {
-        return await SendGetAsync<UserInventory>("players/" + login);
+        return await SendGetAsync<UserInventory>("players/" + login + "/");
     }
 
     /// <summary>
@@ -299,9 +302,9 @@ public class APIClient : MonoBehaviour
     /// <param name="login">никнейм игрока на сервере</param>
     /// <param name="inventory">инвентарь игрока</param>
     /// <returns>ChangeResoures record</returns>
-    public async Task<ChangeResources?> SetUserInventoryRequest(string login, Dictionary<string, byte> inventory)
+    public async Task<ChangeResources?> SetUserInventoryRequest(string login, Dictionary<string, int> inventory)
     {
-        return await SendPutAsync<ChangeResources>("players/" + login, new {name = login, resources = inventory});
+        return await SendPutAsync<ChangeResources>("players/" + login + "/", new {name = login, resources = inventory});
     }
 
     /// <summary>
@@ -311,7 +314,7 @@ public class APIClient : MonoBehaviour
     /// <returns>null</returns>
     public async Task DeletePlayerRequest(string login)
     {
-        await SendDeleteAsync("/players/" + login);
+        await SendDeleteAsync("players/" + login);
     }
 
     /// <summary>
@@ -324,12 +327,12 @@ public class APIClient : MonoBehaviour
     public async Task<SendResourcesLog?> CreateLogRequest(string requestComment, string requestLogin, Dictionary<string, int> requestResources)
     {
         return await SendPostAsync<SendResourcesLog>(
-            "/logs/",
+            "logs/",
             new
             {
                 comment = requestComment,
                 player_name = requestLogin,
-                resourses = requestResources
+                resources_changed = requestResources
             }
         );
     }
@@ -409,7 +412,7 @@ public class APIClient : MonoBehaviour
     /// <param name="shopname">название магазина</param>
     /// <param name="requestResourses">новые обновленные ресурсы</param>
     /// <returns>Ресурсы магазина</returns>
-    public async Task<ShopResourcesUpdate?> GetShopResoursesRequest(string login, string shopname, Dictionary<string, int> requestResourses)
+    public async Task<ShopResourcesUpdate?> SetShopResoursesRequest(string login, string shopname, Dictionary<string, int> requestResourses)
     {
         return await SendPutAsync<ShopResourcesUpdate>("players/" + login + "/shops/" + shopname + "/", new {resourses = requestResourses});
     }
@@ -421,7 +424,7 @@ public class APIClient : MonoBehaviour
     /// <param name="shopname">название магазина</param>
     /// <returns>void</returns>
     public async Task DeleteShop(string login, string shopname) {
-        await SendDeleteAsync("players/" + login + "/shops/" + shopname);
+        await SendDeleteAsync("players/" + login + "/shops/" + shopname + "/");
     }
 
     /// <summary>
