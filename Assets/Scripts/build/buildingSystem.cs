@@ -9,6 +9,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textSelectedBuild;
     [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
     public Building selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
+    public ColonyManager.typeOfResource selectedResource; // Выбранный ресурс(строение)
     private Building[,] grid; // Размещение строений на сетке
     private Building flyingBuilding; // Выделенное строение
     private Camera mainCamera;
@@ -25,7 +26,10 @@ public class BuildingSystem : MonoBehaviour
         if (scripts.CheckOpenedWindows(true)) // Если какая-то менюха уже открыта
             return;
         selectedBuild = building;
-        ManageBuildMenu(true, building.typeOfBuilding == Building.TypesOfBuilding.materials);
+        bool isResource = building.typeOfBuilding == Building.TypesOfBuilding.resource;
+        if (isResource)
+            selectedResource = building.typeResource;
+        ManageBuildMenu(true, isResource);
     }
 
     public void DisableBuildMenu() => ManageBuildMenu(false); // Для UI кнопки
@@ -33,24 +37,38 @@ public class BuildingSystem : MonoBehaviour
     public void ManageBuildMenu(bool open = true, bool materialsMode = false)
     {
         buildMenu.gameObject.SetActive(open);
-        if (buildMenu.activeSelf)
+        if (open)
         {
             buildMenu.transform.Find("bg").transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = selectedBuild.buildingName;
             buildMenuStandartButtons.gameObject.SetActive(!materialsMode);
             if (!materialsMode)
                 buildMenuStandartButtons.transform.Find("ButtonDestroy").transform.Find("TextResourceReturn").GetComponent<TextMeshProUGUI>().text = (selectedBuild.materialsNeed / 2).ToString();
+
             buildMenuMaterialsButtons.gameObject.SetActive(materialsMode);
         }
     }
 
-    public void PickUpResource(string nameOfResource)
+    public void PickUpResource()
     {
-        // Переделать реализацию. Вообще это затычка.
-        if (nameOfResource == "materials")
+        switch (selectedResource)
         {
-            scripts.colonyManager.Materials += Random.Range(10, 30);
-            DestroyBuilding();
+            case ColonyManager.typeOfResource.materials:
+                scripts.colonyManager.Materials += Random.Range(10, 30);
+                break;
+            case ColonyManager.typeOfResource.materialPlus:
+                scripts.colonyManager.materialsPlus += Random.Range(1, 5);
+                break;
+            case ColonyManager.typeOfResource.food:
+                scripts.colonyManager.Food += Random.Range(1, 10);
+                break;
+            case ColonyManager.typeOfResource.honey:
+                scripts.colonyManager.Honey += Random.Range(5, 10);
+                break;
+            case ColonyManager.typeOfResource.bioFuel:
+                scripts.colonyManager.Biofuel += Random.Range(5, 15);
+                break;
         }
+        DestroyBuilding();
     }
 
     public void StartPlacingBuilding(Building buildingPrefab) // Начинаем размещать объект. Метод для кнопки

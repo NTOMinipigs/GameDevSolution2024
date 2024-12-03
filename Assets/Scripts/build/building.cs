@@ -3,8 +3,9 @@
 public class Building : MonoBehaviour
 {
     public string buildingName;
-    public enum TypesOfBuilding {building, materials}
+    public enum TypesOfBuilding {building, resource}
     public TypesOfBuilding typeOfBuilding;
+    public ColonyManager.typeOfResource typeResource; // Тип ресурса, если выбран TypesOfBuilding.resource
     [SerializeField] private Renderer MainRenderer;
     public float materialsNeed, specMaterialsNeed;
     public Vector2Int Size = Vector2Int.one;

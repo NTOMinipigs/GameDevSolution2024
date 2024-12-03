@@ -139,6 +139,7 @@ public class ColonyManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private allScripts scripts;
+    public enum typeOfResource {materials, materialPlus, food, bioFuel, honey}
 
     private void Start()
     {
@@ -220,7 +221,7 @@ public class ColonyManager : MonoBehaviour
         {
             if (scripts.CheckOpenedWindows(!bearsListMenu.activeSelf)) // Если какая-то менюха уже открыта
                 return;
-                
+
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
             scripts.clicksHandler.blockMove = bearsListMenu.activeSelf;
             if (bearsListMenu.activeSelf)

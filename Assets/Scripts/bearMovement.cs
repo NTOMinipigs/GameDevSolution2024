@@ -8,17 +8,12 @@ public class BearMovement : MonoBehaviour
     public float startWaitTime;
     private bool wait = true;
     [SerializeField] private Vector3 moveTarget;
-    [SerializeField] private GameObject downPlane;
 
     private void Start()
     {
         waitTime = startWaitTime;
         transform.eulerAngles = new Vector3(0, 0, 0);
     }
-
-    public void SetChoiced() => downPlane.gameObject.SetActive(true);
-
-    public void SetNormal() => downPlane.gameObject.SetActive(false);
 
     private void Update()
     {
