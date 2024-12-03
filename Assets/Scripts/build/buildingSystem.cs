@@ -4,7 +4,8 @@ using TMPro;
 
 public class BuildingSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject buildingCreateMenu, buildMenu, buildMenuStandartButtons, buildMenuMaterialsButtons, noteBlock;
+    public GameObject buildingCreateMenu, buildMenu;
+    [SerializeField] private GameObject buildMenuStandartButtons, buildMenuMaterialsButtons, noteBlock;
     [SerializeField] private TextMeshProUGUI textSelectedBuild;
     [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
     public Building selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
@@ -21,6 +22,8 @@ public class BuildingSystem : MonoBehaviour
 
     public void SelectBuildingToInteraction(Building building)
     {
+        if (scripts.CheckOpenedWindows(true)) // Если какая-то менюха уже открыта
+            return;
         selectedBuild = building;
         ManageBuildMenu(true, building.typeOfBuilding == Building.TypesOfBuilding.materials);
     }
@@ -30,7 +33,7 @@ public class BuildingSystem : MonoBehaviour
     public void ManageBuildMenu(bool open = true, bool materialsMode = false)
     {
         buildMenu.gameObject.SetActive(open);
-        if (open)
+        if (buildMenu.activeSelf)
         {
             buildMenu.transform.Find("bg").transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = selectedBuild.buildingName;
             buildMenuStandartButtons.gameObject.SetActive(!materialsMode);
@@ -78,9 +81,9 @@ public class BuildingSystem : MonoBehaviour
 
             // Уничтожаем объект
             Destroy(selectedBuild.gameObject);
+            scripts.colonyManager.Materials += selectedBuild.materialsNeed / 2;
             selectedBuild = null;
             buildMenu.gameObject.SetActive(false);
-            scripts.colonyManager.Materials += selectedBuild.materialsNeed / 2;
         }
     }
 
@@ -88,19 +91,23 @@ public class BuildingSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab)) // Активация меню какое здание построить
         {
-            buildingCreateMenu.gameObject.SetActive(!buildingCreateMenu.activeSelf);
-            // Генерация списка зданий к постройке
-            foreach (Transform child in buildingCreateMenu.transform.Find("Scroll View").transform.Find("Viewport").transform.Find("Content"))
+            if (!scripts.CheckOpenedWindows(!buildingCreateMenu.activeSelf)) // Если какая-то менюха уже открыта
             {
-                // Возможность нажать на кнопку. Значение в виде условия
-                child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials;
-                if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials)
-                    child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.black;
-                else
-                    child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.red;
+                buildingCreateMenu.gameObject.SetActive(!buildingCreateMenu.activeSelf);
+                noteBlock.gameObject.SetActive(false);
+                // Генерация списка зданий к постройке
+                foreach (Transform child in buildingCreateMenu.transform.Find("Scroll View").transform.Find("Viewport").transform.Find("Content"))
+                {
+                    // Возможность нажать на кнопку. Значение в виде условия
+                    child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials;
+                    if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials)
+                        child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.black;
+                    else
+                        child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.red;
+                }
+                if (!buildingCreateMenu.activeSelf)
+                    Destroy(flyingBuilding.gameObject);
             }
-            if (!buildingCreateMenu.activeSelf)
-                Destroy(flyingBuilding.gameObject);
         }
 
         // TODO: сделать отмену выбора текущего здания + смену выбранного здания на другое(оно мб работает)
@@ -138,6 +145,7 @@ public class BuildingSystem : MonoBehaviour
 
                 if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
                     PlaceFlyingBuilding(x, y);
+
                 if (Input.GetMouseButtonDown(1)) // Отмена ставить строение
                 {
                     Destroy(flyingBuilding.gameObject);
@@ -172,6 +180,5 @@ public class BuildingSystem : MonoBehaviour
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
-        buildMenu.gameObject.SetActive(false); // пОТОМУ ЧТО ГОВНОКОД
     }
 }

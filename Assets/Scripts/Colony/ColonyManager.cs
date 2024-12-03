@@ -132,7 +132,8 @@ public class ColonyManager : MonoBehaviour
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
     [SerializeField] private SerializableBear[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new SerializableBear[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
-    [SerializeField] private GameObject bearsListMenu, bearsListContainer;
+    public GameObject bearsListMenu;
+    [SerializeField] private GameObject bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
     [SerializeField] private adaptiveScroll bearsListAS;
 
@@ -217,6 +218,9 @@ public class ColonyManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
+            if (scripts.CheckOpenedWindows(!bearsListMenu.activeSelf)) // Если какая-то менюха уже открыта
+                return;
+                
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
             scripts.clicksHandler.blockMove = bearsListMenu.activeSelf;
             if (bearsListMenu.activeSelf)
