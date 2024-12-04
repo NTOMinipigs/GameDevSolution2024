@@ -194,7 +194,8 @@ public class BuildingSystem : MonoBehaviour
                 grid[placeX + x, placeY + y] = flyingBuilding;
         }
 
-        flyingBuilding.SetNormal();
+        scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
+        flyingBuilding.SetBuilding();
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);

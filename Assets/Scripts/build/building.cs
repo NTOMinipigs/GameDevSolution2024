@@ -3,18 +3,25 @@
 public class Building : MonoBehaviour
 {
     public string buildingName;
+    public bool builded;
     public enum TypesOfBuilding {building, resource}
     public TypesOfBuilding typeOfBuilding;
     public ColonyManager.typeOfResource typeResource; // Тип ресурса, если выбран TypesOfBuilding.resource
     [SerializeField] private Renderer MainRenderer;
-    public float materialsNeed, specMaterialsNeed;
+    private Color standartMaterialColor;
+    public float materialsNeed, specMaterialsNeed, stepsNeed;
     public Vector2Int Size = Vector2Int.one;
+
+    private void Awake() => standartMaterialColor = MainRenderer.material.color;
 
     // Смена цвета по возможности расстановки
     public void SetTransparent(bool available) => MainRenderer.material.color = available ? Color.green : Color.red;
 
     // Смена цвета на нормальный
-    public void SetNormal() => MainRenderer.material.color = Color.white;
+    public void SetNormal() => MainRenderer.material.color = standartMaterialColor;
+
+    // Стройка
+    public void SetBuilding() => MainRenderer.material.color = Color.black;
 
     // Это ебать не должно
     private void OnDrawGizmosSelected()

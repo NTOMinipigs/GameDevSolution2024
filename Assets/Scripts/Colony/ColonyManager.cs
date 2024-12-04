@@ -128,6 +128,7 @@ public class ColonyManager : MonoBehaviour
     [Header("Bears")]
     public List<Bear> bearsInColony = new List<Bear>();
     public int maxBears;
+    public List<BearTask> bearTasks = new List<BearTask>();
     [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
     [SerializeField] private SerializableBear[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new SerializableBear[0];
@@ -139,7 +140,7 @@ public class ColonyManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private allScripts scripts;
-    public enum typeOfResource {materials, materialPlus, food, bioFuel, honey}
+    public enum typeOfResource { materials, materialPlus, food, bioFuel, honey }
 
     private void Start()
     {
@@ -213,6 +214,48 @@ public class ColonyManager : MonoBehaviour
         string lastName = bearsLastnames[Random.Range(0, bearsLastnames.Length - 1)];
 
         return firstName + " " + lastName;
+    }
+
+    /// <summary>
+    /// Получить свободного медведя
+    /// </summary>
+    private Bear GetChillBear()
+    {
+        foreach (Bear bear in bearsInColony)
+        {
+            if ((bear.activity == Bear.Activities.chill || bear.totalTask == null) && bear.tradition != Bear.Traditions.Chrom)
+                return bear;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Сгенерировать имя основываясь на гендере
+    /// </summary>
+    public void CreateNewTask(BearTask.TasksMode newTaskMode, GameObject objectOfTask, float steps)
+    {
+        // TODO: сделать возможнсть работы по кастам
+        BearTask task = new BearTask(newTaskMode, objectOfTask, steps);
+        Bear chillBear = GetChillBear();
+        if (chillBear != null)
+        {
+            task.bearSelected = true;
+            chillBear.totalTask = task;
+            chillBear.activity = Bear.Activities.work;
+        }
+        bearTasks.Add(task);
+    }
+
+    public void EndTask(BearTask task)
+    {
+        if (task.taskMode == BearTask.TasksMode.build)
+        {
+            task.objectOfTask.GetComponent<Building>().SetNormal();
+            task.objectOfTask.GetComponent<Building>().builded = true;
+            // Логика дальнейших действий медведя
+        }
+
+        bearTasks.Remove(task);
     }
 
     private void Update()

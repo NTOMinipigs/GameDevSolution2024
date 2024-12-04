@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8943275971496605051}
   - component: {fileID: 4979937797592401403}
   m_Layer: 0
-  m_Name: Sphere.005
+  m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7606007819379444664}
   - component: {fileID: 1402674606021591813}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4216859648262731566}
   - component: {fileID: 1144988799548607101}
   m_Layer: 0
-  m_Name: Sphere.003
+  m_Name: Ear1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 4879404015561015076}
   - component: {fileID: 1633932648087302468}
   m_Layer: 0
-  m_Name: Cone
+  m_Name: Telo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 6587616521163343589}
   - component: {fileID: 1002555752646777121}
   m_Layer: 0
-  m_Name: Sphere.002
+  m_Name: Arm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 3673365369425286422}
   - component: {fileID: 7276813940623709780}
   m_Layer: 0
-  m_Name: Sphere.007
+  m_Name: Sphere.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 5668284646199541987}
   - component: {fileID: 3381310264528314218}
   m_Layer: 0
-  m_Name: Sphere.008
+  m_Name: Sphere.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 7636339726641984763}
   - component: {fileID: 4537761227083525152}
   m_Layer: 0
-  m_Name: Sphere.006
+  m_Name: Sphere.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 2426795987893310910}
   - component: {fileID: 1937515758851851114}
   m_Layer: 0
-  m_Name: Sphere.004
+  m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 626780829032246071}
   - component: {fileID: 1759356925992590432}
   m_Layer: 0
-  m_Name: Sphere.001
+  m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -842,6 +842,8 @@ GameObject:
   - component: {fileID: 8512437646106506147}
   - component: {fileID: 6696417544507241854}
   - component: {fileID: 3520163778663509116}
+  - component: {fileID: 5655473087394653383}
+  - component: {fileID: 6131876810902868103}
   m_Layer: 6
   m_Name: bear1
   m_TagString: bear
@@ -892,13 +894,18 @@ MonoBehaviour:
     sprite: {fileID: 0}
     tradition: 0
     activity: 0
-    lvl: 0
+    totalTask:
+      taskMode: 0
+      totalSteps: 0
+      needSteps: 0
+      objectOfTask: {fileID: 0}
+      bearSelected: 0
     hungry: 0
     tired: 0
   speed: 10
   startWaitTime: 5
   moveTarget: {x: 0, y: 0, z: 0}
-  downPlane: {fileID: 0}
+  scripts: {fileID: 0}
 --- !u!65 &6696417544507241854
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -947,3 +954,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!95 &5655473087394653383
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747976981384506643}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac5b26552d6369f4a97fd43838aee790, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &6131876810902868103
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747976981384506643}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1181474, y: 4.719065, z: 3.5047421}
+  m_Center: {x: -0.5590737, y: 1.859532, z: 0.021592684}

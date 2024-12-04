@@ -10,7 +10,7 @@ public class Bear
     public string gameName;
     public string bearName;
     public Sprite sprite;
-    public enum Traditions { None, Beekeepers, Constructors, Programmers, BioEngineers, Special, Chrom }
+    public enum Traditions { None, Beekeepers, Constructors, Programmers, BioEngineers, Drone, Chrom }
     public Traditions tradition;
 
     /// <summary>
@@ -28,15 +28,15 @@ public class Bear
                 Traditions.Constructors => "Конструктор",
                 Traditions.Programmers => "Программист",
                 Traditions.BioEngineers => "Биоинженер",
+                Traditions.Drone => "Дрон",
                 Traditions.Chrom => "Первопроходец",
                 _ => throw new System.ArgumentException("Tradition " + tradition + " not found!")
             };
         }
     }
 
-    public enum Activities { chill, work, eat }
+    public enum Activities { chill, work, eat}
     public Activities activity;
-
     /// <summary>
     /// Получить строку активности
     /// </summary>
@@ -55,7 +55,8 @@ public class Bear
         }
     }
 
-    public float lvl = 0f;
+    public BearTask totalTask; // Если есть какое-то задаие
+    
     public float hungry, tired;
 
     public Bear(string _gameName, string _bearName, Traditions _tradition, Sprite _sprite)
