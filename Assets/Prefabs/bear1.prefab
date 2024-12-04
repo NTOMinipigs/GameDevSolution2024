@@ -899,7 +899,65 @@ MonoBehaviour:
       totalSteps: 0
       needSteps: 0
       objectOfTask: {fileID: 0}
-      bearSelected: 0
+      selectedBear:
+        gameName: 
+        bearName: 
+        sprite: {fileID: 0}
+        tradition: 0
+        activity: 0
+        totalTask:
+          taskMode: 0
+          totalSteps: 0
+          needSteps: 0
+          objectOfTask: {fileID: 0}
+          selectedBear:
+            gameName: 
+            bearName: 
+            sprite: {fileID: 0}
+            tradition: 0
+            activity: 0
+            totalTask:
+              taskMode: 0
+              totalSteps: 0
+              needSteps: 0
+              objectOfTask: {fileID: 0}
+              selectedBear:
+                gameName: 
+                bearName: 
+                sprite: {fileID: 0}
+                tradition: 0
+                activity: 0
+                totalTask:
+                  taskMode: 0
+                  totalSteps: 0
+                  needSteps: 0
+                  objectOfTask: {fileID: 0}
+                  selectedBear:
+                    gameName: 
+                    bearName: 
+                    sprite: {fileID: 0}
+                    tradition: 0
+                    activity: 0
+                    totalTask:
+                      taskMode: 0
+                      totalSteps: 0
+                      needSteps: 0
+                      objectOfTask: {fileID: 0}
+                      selectedBear:
+                        gameName: 
+                        bearName: 
+                        tradition: 0
+                        activity: 0
+                        hungry: 0
+                        tired: 0
+                    hungry: 0
+                    tired: 0
+                hungry: 0
+                tired: 0
+            hungry: 0
+            tired: 0
+        hungry: 0
+        tired: 0
     hungry: 0
     tired: 0
   speed: 10
@@ -925,8 +983,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 4.281229, z: 1.7326566}
-  m_Center: {x: 6.6351977e-16, y: 1.6406144, z: -0.06749691}
+  m_Size: {x: 1, y: 3.9542153, z: 1.7326566}
+  m_Center: {x: 6.6351977e-16, y: 1.8041261, z: -0.06749691}
 --- !u!54 &3520163778663509116
 Rigidbody:
   m_ObjectHideFlags: 0

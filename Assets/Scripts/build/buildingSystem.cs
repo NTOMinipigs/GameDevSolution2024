@@ -50,8 +50,16 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
-    public void PickUpResource()
+    public void StartPickUpResource()
     {
+        selectedBuild.builded = false;
+        buildMenu.gameObject.SetActive(false);
+        scripts.colonyManager.CreateNewTask(BearTask.TasksMode.getResource, selectedBuild.gameObject, selectedBuild.stepsNeed);
+    }
+
+    public void PickUpResource(GameObject resourceObj)
+    {
+        selectedResource = resourceObj.GetComponent<Building>().typeResource;
         switch (selectedResource)
         {
             case ColonyManager.typeOfResource.materials:
@@ -70,7 +78,7 @@ public class BuildingSystem : MonoBehaviour
                 scripts.colonyManager.Biofuel += Random.Range(5, 15);
                 break;
         }
-        DestroyBuilding();
+        DestroyBuilding(resourceObj);
     }
 
     public void StartPlacingBuilding(Building buildingPrefab) // Начинаем размещать объект. Метод для кнопки
@@ -83,9 +91,11 @@ public class BuildingSystem : MonoBehaviour
         textSelectedBuild.text = flyingBuilding.buildingName;
     }
 
-
-    public void DestroyBuilding()
+    public void DestroyBuilding(GameObject destroyBuilding = null)
     {
+        if (destroyBuilding != null)
+            selectedBuild = destroyBuilding.GetComponent<Building>();
+
         if (selectedBuild != null)
         {
             // Получаем координаты здания на сетке

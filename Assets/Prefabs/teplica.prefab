@@ -51,7 +51,7 @@ MonoBehaviour:
   typeOfBuilding: 0
   typeResource: 0
   MainRenderer: {fileID: 7713748899539634387}
-  materialsNeed: 0
+  materialsNeed: 15
   specMaterialsNeed: 0
   stepsNeed: 10
   Size: {x: 100, y: 80}

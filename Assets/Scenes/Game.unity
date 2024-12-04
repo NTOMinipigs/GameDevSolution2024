@@ -1557,8 +1557,8 @@ MonoBehaviour:
   builded: 0
   typeOfBuilding: 0
   typeResource: 0
-  MainRenderer: {fileID: 0}
-  materialsNeed: 0
+  MainRenderer: {fileID: 1000918759}
+  materialsNeed: 30
   specMaterialsNeed: 0
   stepsNeed: 0
   Size: {x: 1, y: 1}
@@ -1912,8 +1912,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.024199527, y: 0.022645852, z: 0.008130994}
-  m_Center: {x: -0.0020890855, y: -0.0012071924, z: -0.006167538}
+  m_Size: {x: 0.024199527, y: 0.022645852, z: 0.016143853}
+  m_Center: {x: -0.0020890855, y: -0.0012071923, z: -0.004968607}
 --- !u!1 &291530757
 GameObject:
   m_ObjectHideFlags: 0
@@ -4538,8 +4538,8 @@ MonoBehaviour:
   builded: 0
   typeOfBuilding: 0
   typeResource: 0
-  MainRenderer: {fileID: 0}
-  materialsNeed: 0
+  MainRenderer: {fileID: 1000918759}
+  materialsNeed: 15
   specMaterialsNeed: 0
   stepsNeed: 0
   Size: {x: 1, y: 1}
@@ -10737,7 +10737,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5f629b6b3a2499428dac7595c1c66dc, type: 2}
   m_sharedMaterial: {fileID: -6867557840228031844, guid: b5f629b6b3a2499428dac7595c1c66dc, type: 2}
@@ -12097,7 +12097,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 863654774}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: PickUpResource
+        m_MethodName: StartPickUpResource
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12358,8 +12358,8 @@ MonoBehaviour:
   builded: 0
   typeOfBuilding: 0
   typeResource: 0
-  MainRenderer: {fileID: 0}
-  materialsNeed: 0
+  MainRenderer: {fileID: 1000918759}
+  materialsNeed: 10
   specMaterialsNeed: 0
   stepsNeed: 0
   Size: {x: 1, y: 1}
@@ -15095,7 +15095,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: 30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5f629b6b3a2499428dac7595c1c66dc, type: 2}
   m_sharedMaterial: {fileID: -6867557840228031844, guid: b5f629b6b3a2499428dac7595c1c66dc, type: 2}
@@ -15314,7 +15314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20
+  m_text: 15
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5f629b6b3a2499428dac7595c1c66dc, type: 2}
   m_sharedMaterial: {fileID: -6867557840228031844, guid: b5f629b6b3a2499428dac7595c1c66dc, type: 2}

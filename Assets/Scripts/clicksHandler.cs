@@ -28,12 +28,21 @@ public class ClicksHandler : MonoBehaviour
                 selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
                 textRayTotal.text = selectedBear.TraditionStr;
             }
-            else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
+            else if (hit.collider.gameObject.tag == "building")
             {
-                if (hit.collider.gameObject.GetComponent<Building>().builded)
-                    textRayTotal.text = hit.collider.gameObject.GetComponent<Building>().buildingName;
+                Building building = hit.collider.gameObject.GetComponent<Building>();
+                if (building.builded)
+                    textRayTotal.text = building.buildingName;
                 else
-                    textRayTotal.text = hit.collider.gameObject.GetComponent<Building>().buildingName + "(Строится)";
+                    textRayTotal.text = building.buildingName + "(Строится...)";
+            }
+            else if (hit.collider.gameObject.tag == "materialStack")
+            {
+                Building building = hit.collider.gameObject.GetComponent<Building>();
+                if (building.builded)
+                    textRayTotal.text = building.buildingName;
+                else
+                    textRayTotal.text = building.buildingName + "(Добывается...)";
             }
         }
         else

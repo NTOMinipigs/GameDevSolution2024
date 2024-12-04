@@ -729,8 +729,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3.1677225, z: 1}
-  m_Center: {x: 0, y: 1.0838606, z: 0}
+  m_Size: {x: 1, y: 2.821966, z: 1}
+  m_Center: {x: 0, y: 1.256739, z: 0}
 --- !u!114 &706548351731392168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,7 +754,65 @@ MonoBehaviour:
       totalSteps: 0
       needSteps: 0
       objectOfTask: {fileID: 0}
-      bearSelected: 0
+      selectedBear:
+        gameName: 
+        bearName: 
+        sprite: {fileID: 0}
+        tradition: 0
+        activity: 0
+        totalTask:
+          taskMode: 0
+          totalSteps: 0
+          needSteps: 0
+          objectOfTask: {fileID: 0}
+          selectedBear:
+            gameName: 
+            bearName: 
+            sprite: {fileID: 0}
+            tradition: 0
+            activity: 0
+            totalTask:
+              taskMode: 0
+              totalSteps: 0
+              needSteps: 0
+              objectOfTask: {fileID: 0}
+              selectedBear:
+                gameName: 
+                bearName: 
+                sprite: {fileID: 0}
+                tradition: 0
+                activity: 0
+                totalTask:
+                  taskMode: 0
+                  totalSteps: 0
+                  needSteps: 0
+                  objectOfTask: {fileID: 0}
+                  selectedBear:
+                    gameName: 
+                    bearName: 
+                    sprite: {fileID: 0}
+                    tradition: 0
+                    activity: 0
+                    totalTask:
+                      taskMode: 0
+                      totalSteps: 0
+                      needSteps: 0
+                      objectOfTask: {fileID: 0}
+                      selectedBear:
+                        gameName: 
+                        bearName: 
+                        tradition: 0
+                        activity: 0
+                        hungry: 0
+                        tired: 0
+                    hungry: 0
+                    tired: 0
+                hungry: 0
+                tired: 0
+            hungry: 0
+            tired: 0
+        hungry: 0
+        tired: 0
     hungry: 0
     tired: 0
   speed: 10

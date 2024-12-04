@@ -136,7 +136,7 @@ MonoBehaviour:
   typeOfBuilding: 0
   typeResource: 0
   MainRenderer: {fileID: 8148990557839850565}
-  materialsNeed: 20
+  materialsNeed: 30
   specMaterialsNeed: 0
   stepsNeed: 15
   Size: {x: 78, y: 62}

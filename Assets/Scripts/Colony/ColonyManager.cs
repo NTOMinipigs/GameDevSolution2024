@@ -263,7 +263,7 @@ public class ColonyManager : MonoBehaviour
             }
         }
         // Если работы не нашлось
-        if (task.taskMode == BearTask.TasksMode.None)
+        if (bear.totalTask.taskMode == BearTask.TasksMode.None)
             bear.activity = Bear.Activities.chill;
     }
 
@@ -274,6 +274,9 @@ public class ColonyManager : MonoBehaviour
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
         }
+        else if (task.taskMode == BearTask.TasksMode.getResource)
+            scripts.buildingSystem.PickUpResource(task.objectOfTask);
+
         Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
 
