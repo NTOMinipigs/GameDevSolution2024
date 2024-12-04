@@ -20,28 +20,29 @@ public class BearMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (totalBear.totalTask != null)
+        if (scripts.colonyManager.GetBearTask(totalBear) != null)
         {
-            if (collider.gameObject == totalBear.totalTask.objectOfTask)
+            if (collider.gameObject == scripts.colonyManager.GetBearTask(totalBear).objectOfTask)
                 doingTask = true;
         }
     }
 
     private void OnTriggerExit(Collider collider)
     {
-        if (totalBear.totalTask != null)
+        if (scripts.colonyManager.GetBearTask(totalBear) != null)
         {
-            if (collider.gameObject == totalBear.totalTask.objectOfTask)
+            if (collider.gameObject == scripts.colonyManager.GetBearTask(totalBear).objectOfTask)
                 doingTask = false;
         }
     }
 
     private void Update()
     {
-        if (totalBear.totalTask.taskMode != BearTask.TasksMode.None)
-            moveTarget = new Vector3(totalBear.totalTask.objectOfTask.transform.position.x, transform.position.y, totalBear.totalTask.objectOfTask.transform.position.z);
+        BearTask newTask = scripts.colonyManager.GetBearTask(totalBear);
+        if (newTask != null)
+            moveTarget = new Vector3(newTask.objectOfTask.transform.position.x, transform.position.y, newTask.objectOfTask.transform.position.z);
 
-        if (wait && totalBear.totalTask.taskMode == BearTask.TasksMode.None)
+        if (wait && newTask == null)
         {
             waitTime -= Time.deltaTime;
             if (waitTime < 0)
@@ -64,12 +65,13 @@ public class BearMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        BearTask newTask = scripts.colonyManager.GetBearTask(totalBear);
         if (doingTask)
         {
-            totalBear.totalTask.totalSteps += 0.01f;
-            if (totalBear.totalTask.totalSteps >= totalBear.totalTask.needSteps)
+            newTask.totalSteps += 0.01f;
+            if (newTask.totalSteps >= newTask.needSteps)
             {
-                scripts.colonyManager.EndTask(totalBear.totalTask);
+                scripts.colonyManager.EndTask(newTask);
                 doingTask = false;
             }
         }

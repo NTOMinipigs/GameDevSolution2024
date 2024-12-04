@@ -54,8 +54,6 @@ public class Bear
             };
         }
     }
-
-    public BearTask totalTask = new BearTask(); // Если есть какое-то задаие
     
     public float hungry, tired;
 
