@@ -1554,11 +1554,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: 
+  builded: 0
   typeOfBuilding: 0
   typeResource: 0
   MainRenderer: {fileID: 0}
   materialsNeed: 0
   specMaterialsNeed: 0
+  stepsNeed: 0
   Size: {x: 1, y: 1}
 --- !u!114 &226172600
 MonoBehaviour:
@@ -1910,8 +1912,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.024199527, y: 0.022645852, z: 0.010515653}
-  m_Center: {x: -0.0020890855, y: -0.0012071923, z: -0.004975209}
+  m_Size: {x: 0.024199527, y: 0.022645852, z: 0.008130994}
+  m_Center: {x: -0.0020890855, y: -0.0012071924, z: -0.006167538}
 --- !u!1 &291530757
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,6 +2763,7 @@ Transform:
   - {fileID: 980575545}
   - {fileID: 630802917}
   - {fileID: 751245469}
+  - {fileID: 1260179585}
   - {fileID: 873084289}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -4532,11 +4535,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: 
+  builded: 0
   typeOfBuilding: 0
   typeResource: 0
   MainRenderer: {fileID: 0}
   materialsNeed: 0
   specMaterialsNeed: 0
+  stepsNeed: 0
   Size: {x: 1, y: 1}
 --- !u!1 &845236004
 GameObject:
@@ -5463,6 +5468,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909485110}
   m_CullTransparentMesh: 1
+--- !u!1 &951526949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 951526950}
+  - component: {fileID: 951526951}
+  m_Layer: 0
+  m_Name: Drone1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &951526950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951526949}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1260179585}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &951526951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951526949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d147c164d79f5894a8734c6a67e347a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: -1804682130, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
+  prefab: {fileID: 5963445485985904587, guid: 166166b8e3ab4964386c9f4dee924ca8, type: 3}
 --- !u!1 &955478230
 GameObject:
   m_ObjectHideFlags: 0
@@ -11926,6 +11978,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250117571}
   m_CullTransparentMesh: 1
+--- !u!1 &1260179584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1260179585}
+  m_Layer: 0
+  m_Name: Drones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1260179585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260179584}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.48816, y: 37.020973, z: -69.37717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1522636977}
+  - {fileID: 951526950}
+  m_Father: {fileID: 560103192}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1265510614
 GameObject:
   m_ObjectHideFlags: 0
@@ -12270,11 +12355,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: 
+  builded: 0
   typeOfBuilding: 0
   typeResource: 0
   MainRenderer: {fileID: 0}
   materialsNeed: 0
   specMaterialsNeed: 0
+  stepsNeed: 0
   Size: {x: 1, y: 1}
 --- !u!114 &1340826227
 MonoBehaviour:
@@ -12407,34 +12494,129 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 15b42002a82f1c0459fbdef4c14c7ed2, type: 3}
     tradition: 6
     activity: 0
-    lvl: 0
+    totalTask:
+      taskMode: 0
+      totalSteps: 0
+      needSteps: 0
+      objectOfTask: {fileID: 0}
+      selectedBear:
+        gameName: 
+        bearName: 
+        sprite: {fileID: 0}
+        tradition: 0
+        activity: 0
+        totalTask:
+          taskMode: 0
+          totalSteps: 0
+          needSteps: 0
+          objectOfTask: {fileID: 0}
+          selectedBear:
+            gameName: 
+            bearName: 
+            sprite: {fileID: 0}
+            tradition: 0
+            activity: 0
+            totalTask:
+              taskMode: 0
+              totalSteps: 0
+              needSteps: 0
+              objectOfTask: {fileID: 0}
+              selectedBear:
+                gameName: 
+                bearName: 
+                sprite: {fileID: 0}
+                tradition: 0
+                activity: 0
+                totalTask:
+                  taskMode: 0
+                  totalSteps: 0
+                  needSteps: 0
+                  objectOfTask: {fileID: 0}
+                  selectedBear:
+                    gameName: 
+                    bearName: 
+                    sprite: {fileID: 0}
+                    tradition: 0
+                    activity: 0
+                    totalTask:
+                      taskMode: 0
+                      totalSteps: 0
+                      needSteps: 0
+                      objectOfTask: {fileID: 0}
+                      selectedBear:
+                        gameName: 
+                        bearName: 
+                        tradition: 0
+                        activity: 0
+                        hungry: 0
+                        tired: 0
+                    hungry: 0
+                    tired: 0
+                hungry: 0
+                tired: 0
+            hungry: 0
+            tired: 0
+        hungry: 0
+        tired: 0
     hungry: 0
     tired: 0
   maxBears: 0
+  bearTasks: []
   spawnBears: {fileID: 478109593}
   menBearsFirstnames:
-  - "\u041C\u0438\u0448\u0430"
-  - "\u0410\u0440\u0442\u0435\u043C"
-  - "\u0424\u0435\u043B\u0438\u043A\u0441"
+  - "\u041E\u043B\u0435\u0433"
+  - "\u0420\u043E\u0434\u0438\u043E\u043D"
+  - "\u0424\u0435\u0434\u043E\u0440"
+  - "\u0416\u0435\u043D\u044F"
+  - "\u0410\u043B\u044C\u0431\u0435\u0440\u0442"
+  - "\u0418\u043B\u044C\u044F"
+  - "\u0421\u0430\u0432\u0435\u043B\u0438\u0439"
+  - "\u041F\u043E\u043B\u0438\u043A\u0430\u0440\u043F"
+  - "\u041F\u043E\u0440\u0444\u0438\u0440\u0438\u0439"
+  - "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u0438\u043D"
+  - "\u041B\u0443\u043A\u0430"
+  - "\u0410\u0440\u0442\u0435\u043C\u0438\u0439"
+  - "\u0418\u0433\u043E\u0440\u044C"
   - "\u041C\u0430\u043A\u0441\u0438\u043C"
-  - "\u0412\u044F\u0447\u0435\u0441\u043B\u0430\u0432"
+  - "\u0418\u043D\u043D\u043E\u043A\u0435\u043D\u0442\u0438\u0439"
+  - "\u0421\u0435\u043C\u0451\u043D"
+  - "\u0421\u0432\u044F\u0442\u043E\u043F\u043E\u043B\u043A"
   womanBearsFirstnames:
-  - "\u041D\u0430\u0441\u0442\u044F"
-  - "\u041F\u043E\u043B\u0438\u043D\u0430"
-  - "\u0414\u0430\u0448\u0430"
-  - "\u041A\u0430\u0442\u044F"
-  - "\u0412\u0430\u043D\u0435\u0441\u0441\u0430"
+  - "\u0413\u0430\u043B\u0438\u043D\u0430"
+  - "\u0417\u0438\u043D\u0430"
+  - "\u0422\u0430\u043C\u0430\u0440\u0430"
+  - "\u041C\u0430\u0442\u0440\u0451\u043D\u0430"
+  - "\u0417\u043B\u0430\u0442\u0430"
+  - "\u0410\u043B\u0438\u043D\u0430"
+  - "\u0422\u043E\u043D\u044F"
+  - "\u0421\u043D\u0435\u0436\u043A\u0430"
+  - "\u041B\u0435\u043D\u0430"
+  - "\u042D\u043C\u043C\u0430"
+  - "\u0410\u043D\u0430\u0441\u0442\u0430\u0441\u0438\u044F"
+  - "\u0417\u043E\u044F"
+  - "\u0410\u043B\u0438\u0441\u0430"
+  - "\u041F\u0435\u043B\u0430\u0433\u0435\u044F"
+  - "\u0412\u0430\u0441\u0438\u043B\u0438\u0441\u0430"
   bearsLastnames:
-  - "\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0441\u0442"
-  - "\u0411\u0438\u043E\u0438\u043D\u0436\u0435\u043D\u0435\u0440"
-  - "\u0425\u0443\u0434\u043E\u0436\u043D\u0438\u043A"
-  - "\u0411\u0438\u043E\u043B\u043E\u0433"
-  - "\u0425\u0438\u043C\u0438\u043A"
-  - "\u0411\u043E\u0435\u0446"
-  - "\u0428\u0442\u0443\u0440\u043C\u0430\u043D"
-  - "\u0417\u043E\u043E\u043B\u043E\u0433"
-  - "\u041C\u0435\u0445\u0430\u043D\u0438\u043A"
-  - "\u0427\u0438\u043D\u0438\u043B\u0430"
+  - "\u041C\u0435\u0434\u0432\u0435\u0434\u044C"
+  - "\u0424\u0435\u0434\u043E\u0440\u0435\u043D\u044C\u043A\u043E"
+  - "\u0422\u0430\u0439\u0433\u0430"
+  - "\u0421\u0442\u0435\u043F\u044C"
+  - "\u0421\u043D\u0435\u0433\u043E\u0432\u0438\u043A"
+  - "\u0416\u0443\u0440\u0430\u0432\u043B\u044C"
+  - "\u0414\u0443\u0431"
+  - "\u041C\u043E\u0440\u043E\u0437"
+  - "\u041C\u0438\u0445\u0430\u0439\u043B\u043E"
+  - "\u041A\u043E\u0433\u043E\u0442\u044C"
+  - "\u0411\u0443\u0440\u0440"
+  - "\u0428\u0438\u0448\u043A\u0430"
+  - "\u0426\u0432\u0435\u0442\u043E\u043A"
+  - "\u0412\u0438\u0448\u043D\u044F"
+  - "\u041C\u0435\u043B\u044C\u043D\u0438\u043A"
+  - "\u041F\u0430\u0432\u043B\u0435\u043D\u043A\u043E"
+  - "\u041E\u0433\u043D\u0438\u0432\u043E"
+  - "\u0421\u043E\u0437\u0432\u0435\u0437\u0434\u0438\u0435"
+  - "\u041B\u0430\u043F\u0430"
   spriteBeekeepers:
   - {fileID: 162274850}
   - {fileID: 40695107}
@@ -13126,6 +13308,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520282266}
   m_CullTransparentMesh: 1
+--- !u!1 &1522636976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522636977}
+  - component: {fileID: 1522636978}
+  m_Layer: 0
+  m_Name: Drone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1522636977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522636976}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1260179585}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522636978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522636976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d147c164d79f5894a8734c6a67e347a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 0
+  sprite: {fileID: 926015040, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
+  prefab: {fileID: 5963445485985904587, guid: 166166b8e3ab4964386c9f4dee924ca8, type: 3}
 --- !u!1 &1530153489
 GameObject:
   m_ObjectHideFlags: 0

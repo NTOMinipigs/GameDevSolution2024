@@ -132,11 +132,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: "\u0421\u043E\u043B\u043D\u0435\u0447\u043D\u0430\u044F \u043F\u0430\u043D\u0435\u043B\u044C"
+  builded: 0
   typeOfBuilding: 0
   typeResource: 0
   MainRenderer: {fileID: 8148990557839850565}
   materialsNeed: 20
   specMaterialsNeed: 0
+  stepsNeed: 15
   Size: {x: 78, y: 62}
 --- !u!65 &4166468419499915591
 BoxCollider:
@@ -153,7 +155,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

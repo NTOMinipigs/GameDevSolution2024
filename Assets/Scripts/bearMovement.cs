@@ -38,10 +38,10 @@ public class BearMovement : MonoBehaviour
 
     private void Update()
     {
-        if (totalBear.totalTask != null)
+        if (totalBear.totalTask.taskMode != BearTask.TasksMode.None)
             moveTarget = new Vector3(totalBear.totalTask.objectOfTask.transform.position.x, transform.position.y, totalBear.totalTask.objectOfTask.transform.position.z);
 
-        if (wait && totalBear.totalTask == null)
+        if (wait && totalBear.totalTask.taskMode == BearTask.TasksMode.None)
         {
             waitTime -= Time.deltaTime;
             if (waitTime < 0)

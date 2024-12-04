@@ -25,6 +25,8 @@ public class BuildingSystem : MonoBehaviour
     {
         if (scripts.CheckOpenedWindows(true)) // Если какая-то менюха уже открыта
             return;
+        if (!building.builded) // Потом изменить
+            return;
         selectedBuild = building;
         bool isResource = building.typeOfBuilding == Building.TypesOfBuilding.resource;
         if (isResource)

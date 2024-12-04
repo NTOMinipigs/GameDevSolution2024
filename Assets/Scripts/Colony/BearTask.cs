@@ -6,13 +6,18 @@ using UnityEngine;
 [System.Serializable]
 public class BearTask
 {
-    public enum TasksMode { build, getResource, create }
+    public enum TasksMode { None, build, getResource, create}
     public TasksMode taskMode;
     public float totalSteps; // Текущее
     public float needSteps; // Колво для завершения задачи
 
     public GameObject objectOfTask;
-    public bool bearSelected;
+    public Bear selectedBear;
+
+    public BearTask()
+    {
+        
+    }
 
     public BearTask(TasksMode _taskMode, GameObject _objectOfTask, float _needSteps)
     {

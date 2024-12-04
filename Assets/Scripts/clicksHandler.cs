@@ -29,7 +29,12 @@ public class ClicksHandler : MonoBehaviour
                 textRayTotal.text = selectedBear.TraditionStr;
             }
             else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
-                textRayTotal.text = hit.collider.gameObject.GetComponent<Building>().buildingName;
+            {
+                if (hit.collider.gameObject.GetComponent<Building>().builded)
+                    textRayTotal.text = hit.collider.gameObject.GetComponent<Building>().buildingName;
+                else
+                    textRayTotal.text = hit.collider.gameObject.GetComponent<Building>().buildingName + "(Строится)";
+            }
         }
         else
             textRayTotal.text = "";

@@ -239,11 +239,32 @@ public class ColonyManager : MonoBehaviour
         Bear chillBear = GetChillBear();
         if (chillBear != null)
         {
-            task.bearSelected = true;
+            task.selectedBear = chillBear;
             chillBear.totalTask = task;
             chillBear.activity = Bear.Activities.work;
         }
         bearTasks.Add(task);
+    }
+
+    /// <summary>
+    /// Выдать освободившемуся медведю новую задачу
+    /// </summary>
+    public void SetTaskToBear(Bear bear)
+    {
+        foreach (BearTask task in bearTasks)
+        {
+            Debug.Log(task.selectedBear);
+            if (task.selectedBear == null)
+            {
+                task.selectedBear = bear;
+                bear.totalTask = task;
+                bear.activity = Bear.Activities.work;
+                break;
+            }
+        }
+        // Если работы не нашлось
+        if (task.taskMode == BearTask.TasksMode.None)
+            bear.activity = Bear.Activities.chill;
     }
 
     public void EndTask(BearTask task)
@@ -252,10 +273,16 @@ public class ColonyManager : MonoBehaviour
         {
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
-            // Логика дальнейших действий медведя
         }
-
+        Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
+
+        selectedBear.totalTask = new BearTask(); // Очистка
+
+        if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
+            selectedBear.activity = Bear.Activities.chill;
+        else
+            SetTaskToBear(selectedBear);
     }
 
     private void Update()
