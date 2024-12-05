@@ -134,7 +134,8 @@ MonoBehaviour:
   buildingName: "\u0421\u043E\u043B\u043D\u0435\u0447\u043D\u0430\u044F \u043F\u0430\u043D\u0435\u043B\u044C"
   builded: 0
   typeOfBuilding: 0
-  typeResource: 0
+  typeResource: 7
+  resourceGive: 5
   MainRenderer: {fileID: 8148990557839850565}
   materialsNeed: 30
   specMaterialsNeed: 0

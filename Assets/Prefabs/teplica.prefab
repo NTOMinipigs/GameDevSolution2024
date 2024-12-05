@@ -49,7 +49,8 @@ MonoBehaviour:
   buildingName: "\u0424\u0435\u0440\u043C\u0430"
   builded: 0
   typeOfBuilding: 0
-  typeResource: 0
+  typeResource: 3
+  resourceGive: 5
   MainRenderer: {fileID: 7713748899539634387}
   materialsNeed: 15
   specMaterialsNeed: 0

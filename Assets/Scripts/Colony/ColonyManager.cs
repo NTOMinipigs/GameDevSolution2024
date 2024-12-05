@@ -55,6 +55,29 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
+    [Header("-Energy")]
+    [SerializeField] private TextMeshProUGUI energyText;
+    private float _energy;
+    public float Energy
+    {
+        get { return _energy; }
+        set
+        {
+            _energy = value;
+            energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
+        }
+    }
+    private float _maxEnergy;
+    public float MaxEnergy
+    {
+        get { return _maxEnergy; }
+        set
+        {
+            _maxEnergy = value;
+            energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
+        }
+    }
+
     [Header("-materials")]
     [SerializeField] private TextMeshProUGUI materialsText;
     private float _materials;
@@ -140,7 +163,7 @@ public class ColonyManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private allScripts scripts;
-    public enum typeOfResource { materials, materialPlus, food, bioFuel, honey }
+    public enum typeOfResource { none, materials, materialPlus, food, bioFuel, honey, bears, energy }
 
     private void Start()
     {
@@ -280,6 +303,8 @@ public class ColonyManager : MonoBehaviour
         {
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
+            Energy -= 1;
+            scripts.buildingSystem.SetBuildSettings(task.objectOfTask);
         }
         else if (task.taskMode == BearTask.TasksMode.getResource)
             scripts.buildingSystem.PickUpResource(task.objectOfTask);

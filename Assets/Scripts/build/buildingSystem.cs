@@ -112,6 +112,8 @@ public class BuildingSystem : MonoBehaviour
             // Уничтожаем объект
             Destroy(selectedBuild.gameObject);
             scripts.colonyManager.Materials += selectedBuild.materialsNeed / 2;
+            if (selectedBuild.energyNeed != 0)
+                scripts.colonyManager.Energy -= selectedBuild.energyNeed;
             selectedBuild = null;
             buildMenu.gameObject.SetActive(false);
         }
@@ -129,11 +131,16 @@ public class BuildingSystem : MonoBehaviour
                 foreach (Transform child in buildingCreateMenu.transform.Find("Scroll View").transform.Find("Viewport").transform.Find("Content"))
                 {
                     // Возможность нажать на кнопку. Значение в виде условия
-                    child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials;
+                    child.gameObject.GetComponent<Button>().interactable = child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials && child.gameObject.GetComponent<Building>().energyNeed <= scripts.colonyManager.Energy;
                     if (child.gameObject.GetComponent<Building>().materialsNeed <= scripts.colonyManager.Materials)
                         child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.black;
                     else
                         child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color = Color.red;
+
+                    if (child.gameObject.GetComponent<Building>().energyNeed <= scripts.colonyManager.Energy)
+                        child.transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>().color = Color.black;
+                    else
+                        child.transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>().color = Color.red;
                 }
                 if (!buildingCreateMenu.activeSelf)
                     Destroy(flyingBuilding.gameObject);
@@ -211,5 +218,37 @@ public class BuildingSystem : MonoBehaviour
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
+    }
+
+    public void SetBuildSettings(GameObject totalBuild)
+    {
+        // Склады и тд
+        Building build = totalBuild.GetComponent<Building>();
+        selectedResource = build.typeResource;
+        switch (selectedResource)
+        {
+            case ColonyManager.typeOfResource.materials:
+                scripts.colonyManager.MaxMaterials += build.resourceGive;
+                break;
+            case ColonyManager.typeOfResource.materialPlus:
+                scripts.colonyManager.MaxMaterialsPlus += build.resourceGive;
+                break;
+            case ColonyManager.typeOfResource.food:
+                scripts.colonyManager.MaxFood += build.resourceGive;
+                break;
+            case ColonyManager.typeOfResource.honey:
+                scripts.colonyManager.MaxHoney += build.resourceGive;
+                break;
+            case ColonyManager.typeOfResource.bioFuel:
+                scripts.colonyManager.MaxBiofuel += build.resourceGive;
+                break;
+            case ColonyManager.typeOfResource.bears:
+                scripts.colonyManager.maxBears += build.resourceGive;
+                break;
+            case ColonyManager.typeOfResource.energy:
+                scripts.colonyManager.Energy += build.resourceGive;
+                scripts.colonyManager.MaxEnergy += build.resourceGive;
+                break;
+        }
     }
 }

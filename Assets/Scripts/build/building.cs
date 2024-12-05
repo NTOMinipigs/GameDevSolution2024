@@ -2,15 +2,18 @@
 
 public class Building : MonoBehaviour
 {
+    [Header("MainInformation")]
     public string buildingName;
     public bool builded;
-    public enum TypesOfBuilding {building, resource}
+    public enum TypesOfBuilding { building, resource }
     public TypesOfBuilding typeOfBuilding;
     public ColonyManager.typeOfResource typeResource; // Тип ресурса, если выбран TypesOfBuilding.resource
+    [Header("BuildingSettings")]
     [SerializeField] private Renderer MainRenderer;
-    private Color standartMaterialColor;
-    public float materialsNeed, specMaterialsNeed, stepsNeed;
     public Vector2Int Size = Vector2Int.one;
+    public int resourceGive; // Сколько здание дает баффов при постройке
+    public float materialsNeed, specMaterialsNeed, stepsNeed, energyNeed;
+    private Color standartMaterialColor;
 
     private void Awake() => standartMaterialColor = MainRenderer.material.color;
 
