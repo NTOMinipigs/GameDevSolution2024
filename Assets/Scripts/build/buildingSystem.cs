@@ -5,8 +5,8 @@ using TMPro;
 public class BuildingSystem : MonoBehaviour
 {
     public GameObject buildingCreateMenu, buildMenu;
-    [SerializeField] private GameObject buildMenuStandartButtons, buildMenuMaterialsButtons, noteBlock;
-    [SerializeField] private TextMeshProUGUI textSelectedBuild;
+    [SerializeField] private GameObject buildMenuStandartButtons, buildMenuMaterialsButtons, noteBlock, droneManage, bearManage;
+    [SerializeField] private TextMeshProUGUI textSelectedBuild, textNameBuild, textInfoBuild, textCountBears, textCountDrones;
     [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
     public Building selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
     public ColonyManager.typeOfResource selectedResource; // Выбранный ресурс(строение)
@@ -36,15 +36,67 @@ public class BuildingSystem : MonoBehaviour
 
     public void DisableBuildMenu() => ManageBuildMenu(false); // Для UI кнопки
 
+    public void AddWorker(bool drone = false)
+    {
+        if (drone)
+            selectedBuild.countOfDrone++;
+        else
+            selectedBuild.countOfBears++;
+        textCountDrones.text = selectedBuild.countOfDrone.ToString() + "/" + selectedBuild.maxDrones.ToString();
+        textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
+        textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
+    }
+
+    public void RemoveWorker(bool drone = false)
+    {
+        if (drone)
+            selectedBuild.countOfDrone--;
+        else
+            selectedBuild.countOfBears--;
+        textCountDrones.text = selectedBuild.countOfDrone.ToString() + "/" + selectedBuild.maxDrones.ToString();
+        textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
+        textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
+    }
+
+    private void ManageDroneAndBearPanel(bool bear, bool drone)
+    {
+        bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = bear;
+        bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = bear;
+        droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = drone;
+        droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = drone;
+        if (!drone)
+            textCountDrones.text = "";
+        if (!bear)
+            textCountBears.text = "";
+    }
+
     public void ManageBuildMenu(bool open = true, bool materialsMode = false)
     {
         buildMenu.gameObject.SetActive(open);
         if (open)
         {
-            buildMenu.transform.Find("bg").transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = selectedBuild.buildingName;
+            textNameBuild.text = selectedBuild.buildingName;
+            textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
+            textCountDrones.text = selectedBuild.countOfDrone.ToString() + "/" + selectedBuild.maxDrones.ToString();
+            textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
+
+            if (selectedBuild.canWork)
+            {
+                if (selectedBuild.typeOfWorkers == Building.TypeOfWorkers.Any)
+                    ManageDroneAndBearPanel(true, true);
+                else if (selectedBuild.typeOfWorkers == Building.TypeOfWorkers.Drone)
+                    ManageDroneAndBearPanel(false, true);
+                else
+                    ManageDroneAndBearPanel(true, false);
+            }
+            else
+                ManageDroneAndBearPanel(false, false);
+
             buildMenuStandartButtons.gameObject.SetActive(!materialsMode);
             if (!materialsMode)
+            {
                 buildMenuStandartButtons.transform.Find("ButtonDestroy").transform.Find("TextResourceReturn").GetComponent<TextMeshProUGUI>().text = (selectedBuild.materialsNeed / 2).ToString();
+            }
 
             buildMenuMaterialsButtons.gameObject.SetActive(materialsMode);
         }

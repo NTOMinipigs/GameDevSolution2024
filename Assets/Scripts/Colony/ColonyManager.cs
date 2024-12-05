@@ -172,6 +172,8 @@ public class ColonyManager : MonoBehaviour
         GenerateNewBear(Bear.Traditions.Programmers);
         GenerateNewBear(Bear.Traditions.Beekeepers);
         GenerateNewBear(Bear.Traditions.Programmers);
+        Materials = 50;
+        Energy = 2;
     }
 
     /// <summary>
@@ -304,6 +306,7 @@ public class ColonyManager : MonoBehaviour
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
             Energy -= 1;
+            Materials -= task.objectOfTask.GetComponent<Building>().materialsNeed;
             scripts.buildingSystem.SetBuildSettings(task.objectOfTask);
         }
         else if (task.taskMode == BearTask.TasksMode.getResource)
