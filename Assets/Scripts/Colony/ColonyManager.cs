@@ -151,6 +151,7 @@ public class ColonyManager : MonoBehaviour
     [Header("Bears")]
     public List<Bear> bearsInColony = new List<Bear>();
     public int maxBears;
+    public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
     [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
@@ -223,10 +224,9 @@ public class ColonyManager : MonoBehaviour
         // TODO: сделать норм индексацию
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition, serializableBear.sprite);
         bearsInColony.Add(newBear);
-        GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
+        GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-100f, 100f), 0, Random.Range(-100f, 100f)), Quaternion.identity);
         bearObj.name = newBear.gameName;
         bearObj.GetComponent<BearMovement>().totalBear = newBear;
-        bearsCountText.text = bearsInColony.Count.ToString() + "/" + maxBears;
     }
 
     /// <summary>
@@ -351,6 +351,7 @@ public class ColonyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        bearsCountText.text = (bearsInColony.Count - scripts.colonyManager.workingBears) + "/" + maxBears; // костыль
         if (bearsListMenu.activeSelf)
         {
             foreach (Transform child in bearsListContainer.transform)

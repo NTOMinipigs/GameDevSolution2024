@@ -749,70 +749,6 @@ MonoBehaviour:
     sprite: {fileID: 0}
     tradition: 0
     activity: 0
-    totalTask:
-      taskMode: 0
-      totalSteps: 0
-      needSteps: 0
-      objectOfTask: {fileID: 0}
-      selectedBear:
-        gameName: 
-        bearName: 
-        sprite: {fileID: 0}
-        tradition: 0
-        activity: 0
-        totalTask:
-          taskMode: 0
-          totalSteps: 0
-          needSteps: 0
-          objectOfTask: {fileID: 0}
-          selectedBear:
-            gameName: 
-            bearName: 
-            sprite: {fileID: 0}
-            tradition: 0
-            activity: 0
-            totalTask:
-              taskMode: 0
-              totalSteps: 0
-              needSteps: 0
-              objectOfTask: {fileID: 0}
-              selectedBear:
-                gameName: 
-                bearName: 
-                sprite: {fileID: 0}
-                tradition: 0
-                activity: 0
-                totalTask:
-                  taskMode: 0
-                  totalSteps: 0
-                  needSteps: 0
-                  objectOfTask: {fileID: 0}
-                  selectedBear:
-                    gameName: 
-                    bearName: 
-                    sprite: {fileID: 0}
-                    tradition: 0
-                    activity: 0
-                    totalTask:
-                      taskMode: 0
-                      totalSteps: 0
-                      needSteps: 0
-                      objectOfTask: {fileID: 0}
-                      selectedBear:
-                        gameName: 
-                        bearName: 
-                        tradition: 0
-                        activity: 0
-                        hungry: 0
-                        tired: 0
-                    hungry: 0
-                    tired: 0
-                hungry: 0
-                tired: 0
-            hungry: 0
-            tired: 0
-        hungry: 0
-        tired: 0
     hungry: 0
     tired: 0
   speed: 10
@@ -983,7 +919,7 @@ GameObject:
   - component: {fileID: 8556268000463088209}
   - component: {fileID: 1316225260019607449}
   m_Layer: 0
-  m_Name: Ear.001
+  m_Name: Ear1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

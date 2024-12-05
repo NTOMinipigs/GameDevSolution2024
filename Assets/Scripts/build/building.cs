@@ -57,7 +57,7 @@ public class Building : MonoBehaviour
     {
         if (builded && typeOfBuilding == TypesOfBuilding.building && canWork)
         {
-            steps += 0.01f;
+            steps += 0.0005f;
             if (steps >= 1)
             {
                 steps = 0f;

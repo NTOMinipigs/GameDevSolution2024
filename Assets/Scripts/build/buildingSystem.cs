@@ -42,9 +42,19 @@ public class BuildingSystem : MonoBehaviour
             selectedBuild.countOfDrone++;
         else
             selectedBuild.countOfBears++;
+        scripts.colonyManager.workingBears++; // Костыль
         textCountDrones.text = selectedBuild.countOfDrone.ToString() + "/" + selectedBuild.maxDrones.ToString();
         textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
         textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
+
+        // TODO сделать условие для дронов и медведей selectedBuild.countOfBears == selectedBuild.maxBears
+        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == 0 || selectedBuild.countOfBears == selectedBuild.maxBears)
+        {
+            bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
+            droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
+        }
+        else
+            ManageBuildMenu(true);
     }
 
     public void RemoveWorker(bool drone = false)
@@ -53,21 +63,42 @@ public class BuildingSystem : MonoBehaviour
             selectedBuild.countOfDrone--;
         else
             selectedBuild.countOfBears--;
+        scripts.colonyManager.workingBears--; // Костыль
         textCountDrones.text = selectedBuild.countOfDrone.ToString() + "/" + selectedBuild.maxDrones.ToString();
         textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
         textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
+
+        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == scripts.colonyManager.maxBears || selectedBuild.countOfBears == 0)
+        {
+            bearManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
+            droneManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
+        }
+        else
+            ManageBuildMenu(true);
     }
 
     private void ManageDroneAndBearPanel(bool bear, bool drone)
     {
         bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = bear;
-        bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = bear;
+        bearManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = bear;
         droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = drone;
-        droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = drone;
+        droneManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = drone;
         if (!drone)
             textCountDrones.text = "";
         if (!bear)
             textCountBears.text = "";
+        
+        // Костыль
+        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == 0 || selectedBuild.countOfBears == selectedBuild.maxBears)
+        {
+            bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
+            droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
+        }
+        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == scripts.colonyManager.maxBears || selectedBuild.countOfBears == 0)
+        {
+            bearManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
+            droneManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
+        }
     }
 
     public void ManageBuildMenu(bool open = true, bool materialsMode = false)
@@ -83,9 +114,9 @@ public class BuildingSystem : MonoBehaviour
             if (selectedBuild.canWork)
             {
                 if (selectedBuild.typeOfWorkers == Building.TypeOfWorkers.Any)
-                    ManageDroneAndBearPanel(true, true);
+                    ManageDroneAndBearPanel(true, false); // Костыль пока дронов нету
                 else if (selectedBuild.typeOfWorkers == Building.TypeOfWorkers.Drone)
-                    ManageDroneAndBearPanel(false, true);
+                    ManageDroneAndBearPanel(false, false);
                 else
                     ManageDroneAndBearPanel(true, false);
             }

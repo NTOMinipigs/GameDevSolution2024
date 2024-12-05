@@ -4,18 +4,21 @@ public class BearMovement : MonoBehaviour
 {// Новое
     public Bear totalBear;
     public float speed;
+    public float rotationSpeed = 5f;
     private float waitTime;
     public float startWaitTime;
     private bool wait = true;
     private bool doingTask;
     [SerializeField] private Vector3 moveTarget;
     public allScripts scripts;
+    private Animator animator;
 
     private void Start()
     {
         waitTime = startWaitTime;
         transform.eulerAngles = new Vector3(0, 0, 0);
         scripts = GameObject.Find("scripts").GetComponent<allScripts>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -44,6 +47,7 @@ public class BearMovement : MonoBehaviour
 
         if (wait && newTask == null)
         {
+            animator.SetBool("walk", false);
             waitTime -= Time.deltaTime;
             if (waitTime < 0)
             {
@@ -55,6 +59,16 @@ public class BearMovement : MonoBehaviour
         else
         {
             transform.position = Vector3.MoveTowards(transform.position, moveTarget, speed * Time.deltaTime);
+            animator.SetBool("walk", true);
+
+            // Поворачиваем объект в сторону moveTarget
+            Vector3 direction = (moveTarget - transform.position).normalized; // Вычисляем направление
+            if (direction != Vector3.zero) // Проверяем, что направление не нулевое
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(-direction); // Создаем вращение
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime); // Плавно поворачиваем
+            }
+
             if (Vector3.Distance(transform.position, moveTarget) < 0.5f)
             {
                 wait = true;
