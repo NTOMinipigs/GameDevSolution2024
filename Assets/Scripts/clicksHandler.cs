@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ClicksHandler : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class ClicksHandler : MonoBehaviour
     private bool _isDragging;
     private Vector3 _lastMousePosition, _delta;
     private GameObject _choicedBear;
+    private Bear selectedBear;
+    [SerializeField] private TextMeshProUGUI textRayTotal;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private allScripts scripts;
 
@@ -15,36 +19,34 @@ public class ClicksHandler : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Выделение медведя: мышка(ray) наводится на него и он выделяется
+        // Выделение выбранного предмета
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
         {
-            if (hit.collider.gameObject.CompareTag("bear")) // Если наведено на медведя
+            selectedBear = null;
+            if (hit.collider.gameObject.tag == "bear")
             {
-                if (_choicedBear != hit.collider.gameObject)
-                {
-                    if (_choicedBear != null)
-                        _choicedBear.GetComponent<BearMovement>().SetNormal();
-                    _choicedBear = hit.collider.gameObject;
-                    _choicedBear.GetComponent<BearMovement>().SetChoiced();
-                }
+                selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                textRayTotal.text = selectedBear.TraditionStr;
             }
-            else // Если не на медведя
+            else if (hit.collider.gameObject.tag == "building")
             {
-                if (_choicedBear != null)
-                {
-                    _choicedBear.GetComponent<BearMovement>().SetNormal();
-                    _choicedBear = null;
-                }
+                Building building = hit.collider.gameObject.GetComponent<Building>();
+                if (building.builded)
+                    textRayTotal.text = building.buildingName;
+                else
+                    textRayTotal.text = building.buildingName + "(Строится...)";
             }
-        }
-        else // Если вообще не на layerMaskInteract
-        {
-            if (_choicedBear != null)
+            else if (hit.collider.gameObject.tag == "materialStack")
             {
-                _choicedBear.GetComponent<BearMovement>().SetNormal();
-                _choicedBear = null;
+                Building building = hit.collider.gameObject.GetComponent<Building>();
+                if (building.builded)
+                    textRayTotal.text = building.buildingName;
+                else
+                    textRayTotal.text = building.buildingName + "(Добывается...)";
             }
         }
+        else
+            textRayTotal.text = "";
 
         if (Input.GetMouseButtonDown(0)) // Начало нажатия левой кнопки
         {
@@ -55,8 +57,8 @@ public class ClicksHandler : MonoBehaviour
                     Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
-                else if (hit.collider.gameObject.tag == "materialStack")
-                    hit.collider.gameObject.GetComponent<MaterialStack>().ActivateInteraction(); // Начать добычу/взаимодействие с рудой
+                else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
+                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<Building>());
             }
             _isDragging = true;
             _lastMousePosition = Input.mousePosition;

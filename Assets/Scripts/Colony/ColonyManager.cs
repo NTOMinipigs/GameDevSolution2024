@@ -55,6 +55,29 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
+    [Header("-Energy")]
+    [SerializeField] private TextMeshProUGUI energyText;
+    private float _energy;
+    public float Energy
+    {
+        get { return _energy; }
+        set
+        {
+            _energy = value;
+            energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
+        }
+    }
+    private float _maxEnergy;
+    public float MaxEnergy
+    {
+        get { return _maxEnergy; }
+        set
+        {
+            _maxEnergy = value;
+            energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
+        }
+    }
+
     [Header("-materials")]
     [SerializeField] private TextMeshProUGUI materialsText;
     private float _materials;
@@ -128,16 +151,20 @@ public class ColonyManager : MonoBehaviour
     [Header("Bears")]
     public List<Bear> bearsInColony = new List<Bear>();
     public int maxBears;
+    public int workingBears; // Временный костыль
+    public List<BearTask> bearTasks = new List<BearTask>();
     [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
     [SerializeField] private SerializableBear[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new SerializableBear[0];
     [SerializeField] private TextMeshProUGUI bearsCountText;
-    [SerializeField] private GameObject bearsListMenu, bearsListContainer;
+    public GameObject bearsListMenu;
+    [SerializeField] private GameObject bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
     [SerializeField] private adaptiveScroll bearsListAS;
 
     [Header("Other")]
     [SerializeField] private allScripts scripts;
+    public enum typeOfResource { none, materials, materialPlus, food, bioFuel, honey, bears, energy }
 
     private void Start()
     {
@@ -146,6 +173,8 @@ public class ColonyManager : MonoBehaviour
         GenerateNewBear(Bear.Traditions.Programmers);
         GenerateNewBear(Bear.Traditions.Beekeepers);
         GenerateNewBear(Bear.Traditions.Programmers);
+        Materials = 50;
+        Energy = 2;
     }
 
     /// <summary>
@@ -195,10 +224,9 @@ public class ColonyManager : MonoBehaviour
         // TODO: сделать норм индексацию
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition, serializableBear.sprite);
         bearsInColony.Add(newBear);
-        GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
+        GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-100f, 100f), 0, Random.Range(-100f, 100f)), Quaternion.identity);
         bearObj.name = newBear.gameName;
         bearObj.GetComponent<BearMovement>().totalBear = newBear;
-        bearsCountText.text = bearsInColony.Count.ToString() + "/" + maxBears;
     }
 
     /// <summary>
@@ -213,10 +241,93 @@ public class ColonyManager : MonoBehaviour
         return firstName + " " + lastName;
     }
 
+    /// <summary>
+    /// Получить свободного медведя
+    /// </summary>
+    private Bear GetChillBear()
+    {
+        foreach (Bear bear in bearsInColony)
+        {
+            if ((bear.activity == Bear.Activities.chill || GetBearTask(bear) == null) && bear.tradition != Bear.Traditions.Chrom)
+                return bear;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Сгенерировать имя основываясь на гендере
+    /// </summary>
+    public void CreateNewTask(BearTask.TasksMode newTaskMode, GameObject objectOfTask, float steps)
+    {
+        // TODO: сделать возможнсть работы по кастам
+        BearTask task = new BearTask(newTaskMode, objectOfTask, steps);
+        Bear chillBear = GetChillBear();
+        if (chillBear != null)
+        {
+            task.selectedBear = chillBear;
+            chillBear.activity = Bear.Activities.work;
+        }
+        bearTasks.Add(task);
+    }
+
+    /// <summary>
+    /// Выдать освободившемуся медведю новую задачу
+    /// </summary>
+    public void SetTaskToBear(Bear bear)
+    {
+        foreach (BearTask task in bearTasks)
+        {
+            if (task.selectedBear == null)
+            {
+                task.selectedBear = bear;
+                bear.activity = Bear.Activities.work;
+                break;
+            }
+        }
+        // Если работы не нашлось
+        if (GetBearTask(bear) == null)
+            bear.activity = Bear.Activities.chill;
+    }
+
+    public BearTask GetBearTask(Bear bear)
+    {
+        foreach (BearTask task in bearTasks)
+        {
+            if (task.selectedBear == bear)
+                return task;
+        }
+        return null;
+    }
+
+    public void EndTask(BearTask task)
+    {
+        if (task.taskMode == BearTask.TasksMode.build)
+        {
+            task.objectOfTask.GetComponent<Building>().SetNormal();
+            task.objectOfTask.GetComponent<Building>().builded = true;
+            Energy -= 1;
+            Materials -= task.objectOfTask.GetComponent<Building>().materialsNeed;
+            scripts.buildingSystem.SetBuildSettings(task.objectOfTask);
+        }
+        else if (task.taskMode == BearTask.TasksMode.getResource)
+            scripts.buildingSystem.PickUpResource(task.objectOfTask);
+
+        Bear selectedBear = task.selectedBear;
+        bearTasks.Remove(task);
+
+        if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
+            selectedBear.activity = Bear.Activities.chill;
+        else
+            SetTaskToBear(selectedBear);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
+            if (scripts.CheckOpenedWindows(!bearsListMenu.activeSelf)) // Если какая-то менюха уже открыта
+                return;
+
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
             scripts.clicksHandler.blockMove = bearsListMenu.activeSelf;
             if (bearsListMenu.activeSelf)
@@ -240,6 +351,7 @@ public class ColonyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        bearsCountText.text = (bearsInColony.Count - scripts.colonyManager.workingBears) + "/" + maxBears; // костыль
         if (bearsListMenu.activeSelf)
         {
             foreach (Transform child in bearsListContainer.transform)

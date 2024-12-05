@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8943275971496605051}
   - component: {fileID: 4979937797592401403}
   m_Layer: 0
-  m_Name: Sphere.005
+  m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7606007819379444664}
   - component: {fileID: 1402674606021591813}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4216859648262731566}
   - component: {fileID: 1144988799548607101}
   m_Layer: 0
-  m_Name: Sphere.003
+  m_Name: Ear1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 4879404015561015076}
   - component: {fileID: 1633932648087302468}
   m_Layer: 0
-  m_Name: Cone
+  m_Name: Telo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 6587616521163343589}
   - component: {fileID: 1002555752646777121}
   m_Layer: 0
-  m_Name: Sphere.002
+  m_Name: Arm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 3673365369425286422}
   - component: {fileID: 7276813940623709780}
   m_Layer: 0
-  m_Name: Sphere.007
+  m_Name: Sphere.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 5668284646199541987}
   - component: {fileID: 3381310264528314218}
   m_Layer: 0
-  m_Name: Sphere.008
+  m_Name: Sphere.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 7636339726641984763}
   - component: {fileID: 4537761227083525152}
   m_Layer: 0
-  m_Name: Sphere.006
+  m_Name: Sphere.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -664,89 +664,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6237020452903509105
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1546390559782270224}
-  - component: {fileID: 8913909875175653790}
-  - component: {fileID: 1148058259038970495}
-  m_Layer: 6
-  m_Name: downPlane
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1546390559782270224
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6237020452903509105}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.8, z: -0}
-  m_LocalScale: {x: 4.1285696, y: -0.07142857, z: 4.1285696}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8353668780929934781}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8913909875175653790
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6237020452903509105}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1148058259038970495
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6237020452903509105}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 65e90da4b8a7e044f8da8133f99e36aa, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6517759619630110857
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,7 +676,7 @@ GameObject:
   - component: {fileID: 2426795987893310910}
   - component: {fileID: 1937515758851851114}
   m_Layer: 0
-  m_Name: Sphere.004
+  m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -842,7 +759,7 @@ GameObject:
   - component: {fileID: 626780829032246071}
   - component: {fileID: 1759356925992590432}
   m_Layer: 0
-  m_Name: Sphere.001
+  m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -925,6 +842,8 @@ GameObject:
   - component: {fileID: 8512437646106506147}
   - component: {fileID: 6696417544507241854}
   - component: {fileID: 3520163778663509116}
+  - component: {fileID: 5655473087394653383}
+  - component: {fileID: 6131876810902868103}
   m_Layer: 6
   m_Name: bear1
   m_TagString: bear
@@ -954,7 +873,6 @@ Transform:
   - {fileID: 7174037876710944699}
   - {fileID: 2565931134478786451}
   - {fileID: 1372743263195972250}
-  - {fileID: 1546390559782270224}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -976,13 +894,76 @@ MonoBehaviour:
     sprite: {fileID: 0}
     tradition: 0
     activity: 0
-    lvl: 0
+    totalTask:
+      taskMode: 0
+      totalSteps: 0
+      needSteps: 0
+      objectOfTask: {fileID: 0}
+      selectedBear:
+        gameName: 
+        bearName: 
+        sprite: {fileID: 0}
+        tradition: 0
+        activity: 0
+        totalTask:
+          taskMode: 0
+          totalSteps: 0
+          needSteps: 0
+          objectOfTask: {fileID: 0}
+          selectedBear:
+            gameName: 
+            bearName: 
+            sprite: {fileID: 0}
+            tradition: 0
+            activity: 0
+            totalTask:
+              taskMode: 0
+              totalSteps: 0
+              needSteps: 0
+              objectOfTask: {fileID: 0}
+              selectedBear:
+                gameName: 
+                bearName: 
+                sprite: {fileID: 0}
+                tradition: 0
+                activity: 0
+                totalTask:
+                  taskMode: 0
+                  totalSteps: 0
+                  needSteps: 0
+                  objectOfTask: {fileID: 0}
+                  selectedBear:
+                    gameName: 
+                    bearName: 
+                    sprite: {fileID: 0}
+                    tradition: 0
+                    activity: 0
+                    totalTask:
+                      taskMode: 0
+                      totalSteps: 0
+                      needSteps: 0
+                      objectOfTask: {fileID: 0}
+                      selectedBear:
+                        gameName: 
+                        bearName: 
+                        tradition: 0
+                        activity: 0
+                        hungry: 0
+                        tired: 0
+                    hungry: 0
+                    tired: 0
+                hungry: 0
+                tired: 0
+            hungry: 0
+            tired: 0
+        hungry: 0
+        tired: 0
     hungry: 0
     tired: 0
   speed: 10
   startWaitTime: 5
   moveTarget: {x: 0, y: 0, z: 0}
-  downPlane: {fileID: 6237020452903509105}
+  scripts: {fileID: 0}
 --- !u!65 &6696417544507241854
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1002,8 +983,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 4.281229, z: 1.7326566}
-  m_Center: {x: 6.6351977e-16, y: 1.6406144, z: -0.06749691}
+  m_Size: {x: 1, y: 3.9542153, z: 1.7326566}
+  m_Center: {x: 6.6351977e-16, y: 1.8041261, z: -0.06749691}
 --- !u!54 &3520163778663509116
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1031,3 +1012,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!95 &5655473087394653383
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747976981384506643}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac5b26552d6369f4a97fd43838aee790, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &6131876810902868103
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747976981384506643}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1181474, y: 4.719065, z: 3.5047421}
+  m_Center: {x: -0.5590737, y: 1.859532, z: 0.021592684}
