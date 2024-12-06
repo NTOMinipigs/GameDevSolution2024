@@ -324,7 +324,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == Bear.Activities.chill || GetBearTask(bear) == null) && bear.tradition != Bear.Traditions.Chrom)
+            if ((bear.activity == ActivityManager.Activities.Сhill || GetBearTask(bear) == null) && bear.tradition != TraditionsManager.Traditions.Chrom)
                 return bear;
         }
         return null;
@@ -341,7 +341,7 @@ public class ColonyManager : MonoBehaviour
         if (chillBear != null)
         {
             task.selectedBear = chillBear;
-            chillBear.activity = Bear.Activities.work;
+            chillBear.activity = ActivityManager.Activities.Work;
         }
         bearTasks.Add(task);
     }
@@ -356,13 +356,13 @@ public class ColonyManager : MonoBehaviour
             if (task.selectedBear == null)
             {
                 task.selectedBear = bear;
-                bear.activity = Bear.Activities.work;
+                bear.activity = ActivityManager.Activities.Work;
                 break;
             }
         }
         // Если работы не нашлось
         if (GetBearTask(bear) == null)
-            bear.activity = Bear.Activities.chill;
+            bear.activity = ActivityManager.Activities.Сhill;
     }
 
     public BearTask GetBearTask(Bear bear)
@@ -392,7 +392,7 @@ public class ColonyManager : MonoBehaviour
         bearTasks.Remove(task);
 
         if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
-            selectedBear.activity = Bear.Activities.chill;
+            selectedBear.activity = ActivityManager.Activities.Сhill;
         else
             SetTaskToBear(selectedBear);
     }
