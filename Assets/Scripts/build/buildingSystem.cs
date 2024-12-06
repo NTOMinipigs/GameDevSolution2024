@@ -68,7 +68,7 @@ public class BuildingSystem : MonoBehaviour
         textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
         textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
 
-        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == scripts.colonyManager.maxBears || selectedBuild.countOfBears == 0)
+        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == scripts.colonyManager.maxBears && scripts.colonyManager.maxBears != 0 || selectedBuild.countOfBears == 0)
         {
             bearManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
             droneManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
