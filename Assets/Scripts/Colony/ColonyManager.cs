@@ -5,12 +5,22 @@ using TMPro;
 using System;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Singleton паттерн
+/// </summary>
 public class ColonyManager : MonoBehaviour
 {
-    [Header("Main resources")]
-    [Header("-Honey")]
-    [SerializeField] private TextMeshProUGUI honeyText;
+
+    // singleton pattern 
+    private ColonyManager()
+    {
+    }
+
+    [Header("Main resources")] [Header("-Honey")] [SerializeField]
+    private TextMeshProUGUI honeyText;
+
     private float _honey;
+
     public float Honey
     {
         get { return _honey; }
@@ -21,9 +31,9 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-Biofuel")]
-    [SerializeField] private TextMeshProUGUI biofuelText;
+    [Header("-Biofuel")] [SerializeField] private TextMeshProUGUI biofuelText;
     private float _biofuel;
+
     public float Biofuel
     {
         get { return _biofuel; }
@@ -34,9 +44,11 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-materials")]
-    [SerializeField] private TextMeshProUGUI materialsText;
+    [Header("-materials")] [SerializeField]
+    private TextMeshProUGUI materialsText;
+
     private float _materials;
+
     public float Materials
     {
         get { return _materials; }
@@ -46,8 +58,10 @@ public class ColonyManager : MonoBehaviour
             materialsText.text = _materials.ToString();
         }
     }
+
     [SerializeField] private TextMeshProUGUI materialsPlusText;
     private float _materialsPlus;
+
     public float materialsPlus
     {
         get { return _materialsPlus; }
@@ -58,9 +72,9 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-food")]
-    [SerializeField] private TextMeshProUGUI foodText;
+    [Header("-food")] [SerializeField] private TextMeshProUGUI foodText;
     private float _food;
+
     public float Food
     {
         get { return _food; }
@@ -71,27 +85,22 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("Bears")]
-    public List<Bear> bearsInColony = new List<Bear>();
+    [Header("Bears")] public List<Bear> bearsInColony = new List<Bear>();
     [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
-    [SerializeField] private SerializableBear[] spriteBeekeepers, spriteConstructors, spriteProgrammers, spriteBioengineers = new SerializableBear[0];
+
+    [SerializeField] private SerializableBear[] spriteBeekeepers,
+        spriteConstructors,
+        spriteProgrammers,
+        spriteBioengineers = new SerializableBear[0];
+
     [SerializeField] private TextMeshProUGUI bearsCountText;
     [SerializeField] private GameObject bearsListMenu, bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
     [SerializeField] private adaptiveScroll bearsListAS;
 
-    [Header("Other")]
-    [SerializeField] private allScripts scripts;
+    [Header("Other")] [SerializeField] private allScripts scripts;
 
-    private void Start()
-    {
-        // Чисто для тестов firstnamesForBears
-        GenerateNewBear(Bear.Traditions.Beekeepers);
-        GenerateNewBear(Bear.Traditions.Programmers);
-        GenerateNewBear(Bear.Traditions.Beekeepers);
-        GenerateNewBear(Bear.Traditions.Programmers);
-    }
 
     /// <summary>
     /// Получаем медведя по названию игры? 
@@ -105,6 +114,7 @@ public class ColonyManager : MonoBehaviour
             if (bear.gameName == gameName)
                 return bear;
         }
+
         Debug.Log(gameName + " dont finded");
         return null;
     }
@@ -115,14 +125,17 @@ public class ColonyManager : MonoBehaviour
     /// <param name="tradition">Традиция</param>
     /// <returns>Объект SerailizeBear (см документацию этого класса)</returns>
     /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
-    private SerializableBear GetSerializableBear(Bear.Traditions tradition)
+    private SerializableBear GetSerializableBear(TraditionsManager.Traditions tradition)
     {
-        return tradition switch  // Упростил выражение
+        return tradition switch // Упростил выражение
         {
-            Bear.Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
-            Bear.Traditions.Constructors => spriteConstructors[Random.Range(0, spriteConstructors.Length - 1)],
-            Bear.Traditions.Programmers => spriteProgrammers[Random.Range(0, spriteProgrammers.Length - 1)],
-            Bear.Traditions.BioEngineers => spriteBioengineers[Random.Range(0, spriteBioengineers.Length - 1)],
+            TraditionsManager.Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
+            TraditionsManager.Traditions.Constructors => spriteConstructors[
+                Random.Range(0, spriteConstructors.Length - 1)],
+            TraditionsManager.Traditions.Programmers => spriteProgrammers
+                [Random.Range(0, spriteProgrammers.Length - 1)],
+            TraditionsManager.Traditions.BioEngineers => spriteBioengineers[
+                Random.Range(0, spriteBioengineers.Length - 1)],
             _ => throw new ArgumentException("Tradition " + tradition + " not found!")
         };
     }
@@ -132,15 +145,84 @@ public class ColonyManager : MonoBehaviour
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
-    private void GenerateNewBear(Bear.Traditions tradition)
+    public void GenerateNewBear(TraditionsManager.Traditions tradition)
     {
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
-        
+
+        // Блядь мне это трогать страшно, я просто позицию в отдельную переменную вынес и все нахуй посыпалось
         // TODO: сделать норм индексацию
-        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName , tradition, serializableBear.sprite);
+        Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition,
+            serializableBear.sprite);
+        Vector3 generatePosition = spawnBears.transform.position +
+                                   new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+
+        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
+        BearSave bearSave = new BearSave();
+        bearSave.gameName = newBear.gameName;
+        bearSave.bearName = bearName;
+        bearSave.serializableBear = serializableBear.name;
+        bearSave.tradition = newBear.TraditionStr;
+        bearSave.activity = newBear.ActivityStr;
+        bearSave.hungry = 0f;
+        bearSave.tired = 0f;
+        bearSave.x = generatePosition.x;
+        bearSave.z = generatePosition.z;
+
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        systemSaver.gameSave.bearSaves.Add(bearSave);
+    }
+
+    /// <summary>
+    /// Генератор для Хрома (Отдельно т.к. задается отдельно)
+    /// </summary>
+    public void GenerateChrom()
+    {
+        string bearName = "Хром";
+        SerializableBear serializableBear = GameObject.Find("BearChrom_0").GetComponent<SerializableBear>();
+        Bear newBear = new Bear(
+            TraditionsManager.Traditions.Chrom.ToString() + Random.Range(0, 1000),
+            bearName, 
+            TraditionsManager.Traditions.Beekeepers,
+             serializableBear.sprite
+            );
+        newBear.activity = ActivityManager.Activities.Сhill;
+        Vector3 generatePosition = spawnBears.transform.position +
+                                   new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+
+        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
+        BearSave bearSave = new BearSave();
+        bearSave.gameName = newBear.gameName;
+        bearSave.bearName = bearName;
+        bearSave.serializableBear = serializableBear.name;
+        bearSave.tradition = newBear.TraditionStr;
+        bearSave.activity = newBear.ActivityStr;
+        bearSave.hungry = 0f;
+        bearSave.tired = 0f;
+        bearSave.x = generatePosition.x;
+        bearSave.z = generatePosition.z;
+
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        systemSaver.gameSave.bearSaves.Add(bearSave);
+    }
+
+/// <summary>
+    /// Осуществляет создание медведей на поле
+    /// </summary>
+    /// <param name="bearSave">сейв медведя из json'а</param>
+    public void BearSpawn(BearSave bearSave)
+    {
+        SerializableBear serializableBear = GameObject.Find(bearSave.serializableBear).GetComponent<SerializableBear>();
+        
+        Bear newBear = new Bear(
+            bearSave.gameName, 
+            bearSave.bearName, 
+            TraditionsManager.GetTraditionByStr(bearSave.tradition), 
+            serializableBear.sprite);
+        newBear.activity = ActivityManager.GetActivityByStr(bearSave.activity);
         bearsInColony.Add(newBear);
-        GameObject bearObj = Instantiate(serializableBear.prefab, spawnBears.transform.position + new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f)), Quaternion.identity);
+        
+        GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(bearSave.x, 0, bearSave.z), Quaternion.identity);
         bearObj.name = newBear.gameName;
         bearObj.GetComponent<BearMovement>().totalBear = newBear;
         bearsCountText.text = bearsInColony.Count.ToString();

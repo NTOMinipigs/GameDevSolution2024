@@ -10203,6 +10203,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1346596985}
+  - component: {fileID: 1346596994}
+  - component: {fileID: 1346596993}
+  - component: {fileID: 1346596992}
+  - component: {fileID: 1346596991}
   - component: {fileID: 1346596987}
   - component: {fileID: 1346596989}
   - component: {fileID: 1346596988}
@@ -10262,15 +10266,7 @@ MonoBehaviour:
   materialsText: {fileID: 2134033201}
   materialsPlusText: {fileID: 201997676}
   foodText: {fileID: 1250117573}
-  bearsInColony:
-  - gameName: Chrom
-    bearName: "\u0425\u0440\u043E\u043C"
-    sprite: {fileID: 21300000, guid: 15b42002a82f1c0459fbdef4c14c7ed2, type: 3}
-    tradition: 6
-    activity: 0
-    lvl: 0
-    hungry: 0
-    tired: 0
+  bearsInColony: []
   spawnBears: {fileID: 478109593}
   menBearsFirstnames:
   - "\u041C\u0438\u0448\u0430"
@@ -10433,6 +10429,56 @@ MonoBehaviour:
   _musicClips:
   - {fileID: 1199606680}
   - {fileID: 157448383}
+--- !u!114 &1346596991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29ca5a8a3322a64a9889e4ddd915d20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1346596992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc719c091ca54d048480aeddae617791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSave:
+    bearSaves: []
+--- !u!114 &1346596993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f351d8a3aad4bb0a8bcd38c1aa8fe78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1346596994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50a4f0b336e4734aa01d1ccdd8ca1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1431031836
 GameObject:
   m_ObjectHideFlags: 0

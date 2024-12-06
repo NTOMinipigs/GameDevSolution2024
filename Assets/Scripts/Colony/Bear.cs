@@ -10,55 +10,26 @@ public class Bear
     public string gameName;
     public string bearName;
     public Sprite sprite;
-    public enum Traditions { None, Beekeepers, Constructors, Programmers, BioEngineers, Special, Chrom }
-    public Traditions tradition;
+    public TraditionsManager.Traditions tradition;
+    public ActivityManager.Activities activity;
+
 
     /// <summary>
-    /// Получить строку традиции
+    /// Получить строку традиции. УСТАРЕЛО! Оставил для обратной совместимки, используй TraditionManager
     /// </summary>
     /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
     [HideInInspector]
-    public string TraditionStr
-    {
-        get
-        {
-            return tradition switch
-            {
-                Traditions.Beekeepers => "Пасечник",
-                Traditions.Constructors => "Конструктор",
-                Traditions.Programmers => "Программист",
-                Traditions.BioEngineers => "Биоинженер",
-                Traditions.Chrom => "Первопроходец",
-                _ => throw new System.ArgumentException("Tradition " + tradition + " not found!")
-            };
-        }
-    }
-
-    public enum Activities { chill, work, eat }
-    public Activities activity;
+    public string TraditionStr => TraditionsManager.GetStrByTradition(tradition);
 
     /// <summary>
-    /// Получить строку активности
+    /// Получить строку активности. УСТАРЕЛО! Оставил для обратной совместимки, используй ActivityManager
     /// </summary>
     /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
-    public string ActivityStr
-    {
-        get
-        {
-            return activity switch
-            {
-                Activities.chill => "отдыхаю",
-                Activities.work => "работаю",
-                Activities.eat => "ем",
-                _ => throw new System.ArgumentException("Activity " + activity + " not found!")
-            };
-        }
-    }
+    public string ActivityStr => ActivityManager.GetStrByActivity(activity);
 
-    public float lvl = 0f;
     public float hungry, tired;
 
-    public Bear(string _gameName, string _bearName, Traditions _tradition, Sprite _sprite)
+    public Bear(string _gameName, string _bearName, TraditionsManager.Traditions _tradition, Sprite _sprite)
     {
         gameName = _gameName;
         bearName = _bearName;
