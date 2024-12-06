@@ -163,6 +163,7 @@ public class ColonyManager : MonoBehaviour
     [SerializeField] private adaptiveScroll bearsListAS;
 
     [Header("Other")]
+    public bool scoutHome;
     [SerializeField] private allScripts scripts;
     public enum typeOfResource { none, materials, materialPlus, food, bioFuel, honey, bears, energy }
 
@@ -305,9 +306,9 @@ public class ColonyManager : MonoBehaviour
         {
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
-            Energy -= 1;
-            Materials -= task.objectOfTask.GetComponent<Building>().materialsNeed;
             scripts.buildingSystem.SetBuildSettings(task.objectOfTask);
+            if (task.objectOfTask.GetComponent<Building>().scoutHome)
+                scoutHome = true;
         }
         else if (task.taskMode == BearTask.TasksMode.getResource)
             scripts.buildingSystem.PickUpResource(task.objectOfTask);

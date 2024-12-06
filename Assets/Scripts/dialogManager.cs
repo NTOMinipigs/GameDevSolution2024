@@ -33,6 +33,7 @@ public class DialogManager : MonoBehaviour
 
         if (_activatedDialog == null)
         {
+            Debug.Log(name);
             _activatedDialog = GetDialog(name);
             dialogMenu.gameObject.SetActive(true);
             scripts.clicksHandler.blockMove = true;
@@ -54,7 +55,7 @@ public class DialogManager : MonoBehaviour
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 3), selectedBear.gameName, true);
+                ActivateDialog("bearTalk" + Random.Range(0, 3).ToString(), selectedBear.gameName, true);
             else if (mode == 1)
                 ActivateDialog("bearActivity", selectedBear.gameName, true);
         }
@@ -100,7 +101,7 @@ public class DialogManager : MonoBehaviour
     {
         if (text.Contains("{activity}"))
             return text.Replace("{activity}", _selectedBear.ActivityStr);
-        return "";
+        return text;
     }
 
     private void Update()

@@ -87,7 +87,7 @@ public class BuildingSystem : MonoBehaviour
             textCountDrones.text = "";
         if (!bear)
             textCountBears.text = "";
-        
+
         // Костыль
         if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == 0 || selectedBuild.countOfBears == selectedBuild.maxBears)
         {
@@ -298,6 +298,8 @@ public class BuildingSystem : MonoBehaviour
 
         scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
+        scripts.colonyManager.Energy -= 1;
+        scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
