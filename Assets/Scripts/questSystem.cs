@@ -4,7 +4,7 @@ using TMPro;
 
 public class QuestSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject questMenu;
+    public GameObject questMenu;
     private TextMeshProUGUI textName, textDescription, textStep;
     [SerializeField] private quest[] questsInGame = new quest[0];
     public int totalStep;
@@ -76,9 +76,12 @@ public class QuestSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            questMenu.gameObject.SetActive(!questMenu.activeSelf);
-            scripts.clicksHandler.blockMove = questMenu.activeSelf;
-            UpdateQuestUI();
+            if (!scripts.CheckOpenedWindows(!questMenu.activeSelf)) // Если какая-то менюха уже открыта
+            {
+                questMenu.gameObject.SetActive(!questMenu.activeSelf);
+                scripts.clicksHandler.blockMove = questMenu.activeSelf;
+                UpdateQuestUI();                
+            }
         }
     }
 }

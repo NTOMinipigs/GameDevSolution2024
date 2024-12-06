@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4207636842959721679}
   - component: {fileID: 4507750396630940018}
-  m_Layer: 0
+  - component: {fileID: 6531968076769750190}
+  m_Layer: 6
   m_Name: teplica
-  m_TagString: Untagged
+  m_TagString: building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,10 +46,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6e9051a8c5c18498a4a7f13f643fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingName: "\u0424\u0435\u0440\u043C\u0430"
+  builded: 0
+  typeOfBuilding: 0
+  typeResource: 3
+  canWork: 1
+  steps: 0
+  typeOfWorkers: 0
+  countOfBears: 0
+  countOfDrone: 0
   MainRenderer: {fileID: 7713748899539634387}
-  materialsNeed: 20
+  Size: {x: 100, y: 80}
+  maxDrones: 5
+  maxBears: 5
+  resourceGive: 5
+  resourseOneWorker: 2
+  materialsNeed: 15
   specMaterialsNeed: 0
-  Size: {x: 132, y: 112}
+  stepsNeed: 10
+  energyNeed: 1
+--- !u!65 &6531968076769750190
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630439293286891372}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 114.215515, y: 48.117966, z: 66.158875}
+  m_Center: {x: -3.1739044, y: 23.558983, z: -0.7375641}
 --- !u!1 &3417124767521042843
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +97,6 @@ GameObject:
   - component: {fileID: 6131654663934708369}
   - component: {fileID: 6477605418259508222}
   - component: {fileID: 7713748899539634387}
-  - component: {fileID: 7624708807850714059}
   m_Layer: 0
   m_Name: teplica
   m_TagString: Untagged
@@ -136,24 +172,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7624708807850714059
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3417124767521042843}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.7375062, y: 11.760236, z: 9.448696}
-  m_Center: {x: -0.06775379, y: 4.2140183, z: 2.9033031}

@@ -7,7 +7,7 @@ public class DialogManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textName, _textDialog;
     [SerializeField] private Image _iconImage;
-    [SerializeField] private GameObject dialogMenu;
+    public GameObject dialogMenu;
     public Dialog[] dialogs = new Dialog[0];
     [SerializeField] private int totalStep;
     private Dialog _activatedDialog;
@@ -26,8 +26,11 @@ public class DialogManager : MonoBehaviour
         return null;
     }
 
-    public void ActivateDialog(string name, string gameNameBear = "") // Старт диалога
+    public void ActivateDialog(string name, string gameNameBear = "", bool blockWithOtherMenu = false) // Старт диалога
     {
+        if (scripts.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
+            return;
+
         if (_activatedDialog == null)
         {
             _activatedDialog = GetDialog(name);
@@ -44,16 +47,16 @@ public class DialogManager : MonoBehaviour
     public void ActivateBearInteractionDialog(Bear selectedBear)
     {
         if (selectedBear.tired > 10)
-            ActivateDialog("bearTired", selectedBear.gameName);
+            ActivateDialog("bearTired", selectedBear.gameName, true);
         else if (selectedBear.hungry > 10)
-            ActivateDialog("bearHungry", selectedBear.gameName);
+            ActivateDialog("bearHungry", selectedBear.gameName, true);
         else
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 3), selectedBear.gameName);
+                ActivateDialog("bearTalk" + Random.Range(0, 3), selectedBear.gameName, true);
             else if (mode == 1)
-                ActivateDialog("bearActivity", selectedBear.gameName);
+                ActivateDialog("bearActivity", selectedBear.gameName, true);
         }
     }
 

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ClicksHandler : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class ClicksHandler : MonoBehaviour
     private bool _isDragging;
     private Vector3 _lastMousePosition, _delta;
     private GameObject _choicedBear;
+    private Bear selectedBear;
+    [SerializeField] private TextMeshProUGUI textRayTotal;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private allScripts scripts;
 
@@ -15,61 +19,59 @@ public class ClicksHandler : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Выделение медведя
+        // Выделение выбранного предмета
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
         {
-            if (hit.collider.gameObject.CompareTag("bear"))
+            selectedBear = null;
+            if (hit.collider.gameObject.tag == "bear")
             {
-                if (_choicedBear != hit.collider.gameObject)
-                {
-                    if (_choicedBear != null)
-                        _choicedBear.GetComponent<BearMovement>().SetNormal();
-                    _choicedBear = hit.collider.gameObject;
-                    _choicedBear.GetComponent<BearMovement>().SetChoiced();
-                }
+                selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                textRayTotal.text = selectedBear.TraditionStr;
             }
-            else
+            else if (hit.collider.gameObject.tag == "building")
             {
-                if (_choicedBear != null)
-                {
-                    _choicedBear.GetComponent<BearMovement>().SetNormal();
-                    _choicedBear = null;
-                }
+                Building building = hit.collider.gameObject.GetComponent<Building>();
+                if (building.builded)
+                    textRayTotal.text = building.buildingName;
+                else
+                    textRayTotal.text = building.buildingName + "(Строится...)";
+            }
+            else if (hit.collider.gameObject.tag == "materialStack")
+            {
+                Building building = hit.collider.gameObject.GetComponent<Building>();
+                if (building.builded)
+                    textRayTotal.text = building.buildingName;
+                else
+                    textRayTotal.text = building.buildingName + "(Добывается...)";
             }
         }
         else
-        {
-            if (_choicedBear != null)
-            {
-                _choicedBear.GetComponent<BearMovement>().SetNormal();
-                _choicedBear = null;
-            }
-        }
+            textRayTotal.text = "";
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // Начало нажатия левой кнопки
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
             {
                 if (hit.collider.gameObject.tag == "bear")
                 {
                     Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
-                    scripts.dialogManager.ActivateBearInteractionDialog(selectedBear);
+                    scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
-                else if (hit.collider.gameObject.tag == "materialStack")
-                    hit.collider.gameObject.GetComponent<MaterialStack>().ActivateInteraction();
+                else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
+                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<Building>());
             }
             _isDragging = true;
             _lastMousePosition = Input.mousePosition;
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)) // Конец отжатия
             _isDragging = false;
 
-        if (_isDragging && !blockMove)
+        if (_isDragging && !blockMove) // Пока мышка держится, ну и блокировки нету
         {
             _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.deltaTime;
 
-            transform.position += new Vector3(-_delta.x, 0, -_delta.y);
+            transform.position += new Vector3(-_delta.x, 0, -_delta.y); // Перемещение камеры, пока зажата левая кнопка мыши
             _lastMousePosition = Input.mousePosition;
         }
     }
