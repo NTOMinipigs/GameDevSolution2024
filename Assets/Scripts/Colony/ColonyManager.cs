@@ -273,7 +273,7 @@ public class ColonyManager : MonoBehaviour
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition,
             serializableBear.sprite);
         Vector3 generatePosition = spawnBears.transform.position +
-                                   new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
         // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
         BearSave bearSave = new BearSave();
@@ -308,7 +308,7 @@ public class ColonyManager : MonoBehaviour
             );
         newBear.activity = ActivityManager.Activities.Chill;
         Vector3 generatePosition = spawnBears.transform.position +
-                                   new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
+                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
         // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
         BearSave bearSave = new BearSave();

@@ -6,7 +6,6 @@ using TMPro;
 public class ClicksHandler : MonoBehaviour
 {
     // Зум
-    [SerializeField] private float zoomSpeed = 100f; // Скорость изменения зума
     [SerializeField] private float minZoom = 20f;  // Минимальное поле зрения (или близость)
     [SerializeField] private float maxZoom = 60f;  // Максимальное поле зрения (или дальность)
     private Camera _camera;
@@ -25,7 +24,11 @@ public class ClicksHandler : MonoBehaviour
     public void Start()
     {
         _camera = GetComponent<Camera>();   
+        SetTimeScale(1f);
     }
+
+    //Управление временем
+    public void SetTimeScale(float timeScale) => Time.timeScale = timeScale;
 
     private void Update()
     {
@@ -95,13 +98,13 @@ public class ClicksHandler : MonoBehaviour
         if (_camera.orthographic)
         {
             // Для ортографической камеры изменяем размер
-            _camera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            _camera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 5;
             _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, minZoom, maxZoom);
         }
         else
         {
             // изменяем поле зрения
-            _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 5;
             _camera.fieldOfView = Mathf.Clamp(_camera.fieldOfView, minZoom, maxZoom);
         }
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlaceOfTravel
 {
     public string gameName, nameOfPlace;
-    public string description;
-    public string resultText;
+    [TextAreaAttribute] public string description;
+    [TextAreaAttribute] public string resultText;
     public float foodNeed;
     public float timeNow; // Сколько уже прошли
     public float timeToGoing; // Сколько надо

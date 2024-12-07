@@ -225,7 +225,8 @@ public class BuildingSystem : MonoBehaviour
                     else
                         child.transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>().color = Color.red;
                 }
-                if (!buildingCreateMenu.activeSelf)
+
+                if (!buildingCreateMenu.activeSelf && flyingBuilding.gameObject != null)
                     Destroy(flyingBuilding.gameObject);
             }
         }

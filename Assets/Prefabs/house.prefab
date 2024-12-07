@@ -52,15 +52,16 @@ MonoBehaviour:
   typeResource: 6
   canWork: 0
   steps: 0
-  totalCoeff: 0
   typeOfWorkers: 0
   countOfBears: 0
   countOfDrone: 0
+  scoutHome: 0
   MainRenderer: {fileID: 3268988000459937665}
   Size: {x: 72, y: 70}
-  resourceGive: 2
-  resourceGiveWork: 0
-  resourseOneWorkerCoeff: 0
+  maxDrones: 0
+  maxBears: 0
+  resourceGive: 5
+  resourseOneWorker: 0
   materialsNeed: 10
   specMaterialsNeed: 0
   stepsNeed: 5
