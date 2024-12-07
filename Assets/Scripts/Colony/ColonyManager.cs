@@ -1,14 +1,17 @@
+using System;
 using System.Collections.Generic;
 using ArgumentException = System.ArgumentException;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Singleton паттерн
 /// </summary>
 public class ColonyManager : MonoBehaviour
 {
+    
     [Header("Main resources")]
     // Структура каждого ресурса: _ресурсText _ресурсPrivate Ресурс _максимумРесурсаПриват МаксимумРесурса
     // _ресурс/_максимумРесурсаПриват
@@ -22,6 +25,7 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _honey = value;
+            //StartCoroutine( APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary));
             honeyText.text = _honey.ToString() + "/" + _maxHoney.ToString();
         }
     }
@@ -179,6 +183,39 @@ public class ColonyManager : MonoBehaviour
     [SerializeField] private allScripts scripts;
     public enum typeOfResource { none, materials, materialPlus, food, bioFuel, honey, bears, energy }
 
+    private Dictionary<string, Func<float>> _materialsRefs;
+
+    /// <summary>
+    /// Словарь _materialRefs хранится в несереализуемом виде, так как в нем присутствуют лямбды
+    /// Этот геттер позволяет удобно привести словарь к сереализуемому виду.
+    /// </summary>
+    /// TODO: Сейчас здесь работает приведение к типу int, т.к. все остальное хранится в флоат. Исправить
+    public  Dictionary<string, int> SendDictionary
+    {
+        get
+        {
+            Dictionary<string, int> sendDictionary = new Dictionary<string, int>();
+            foreach (var (key, value) in _materialsRefs)
+            {
+                sendDictionary[key] = (int) value();
+            }
+            return sendDictionary;
+        }
+    }
+
+    public void Start()
+    {
+        // Здесь инициализируется словарь с значениями-ссылками на ресурсы
+        _materialsRefs = new Dictionary<string, Func<float>>()
+        {
+            {"materials", () => Materials},
+            {"food", () => Food},
+            {"bioFuel", () => Biofuel },
+            {"honey", () => Honey },
+            {"bears", () => bearsInColony.Count },
+            {"energy", () => Energy},
+        };
+    }
 
     /// <summary>
     /// Получаем медведя по названию игры? 
@@ -247,6 +284,8 @@ public class ColonyManager : MonoBehaviour
         bearSave.x = generatePosition.x;
         bearSave.z = generatePosition.z;
 
+        newBear.bearSave = bearSave;
+        
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         systemSaver.gameSave.bearSaves.Add(bearSave);
     }
@@ -264,7 +303,7 @@ public class ColonyManager : MonoBehaviour
             TraditionsManager.Traditions.Beekeepers,
              serializableBear.sprite
             );
-        newBear.activity = ActivityManager.Activities.Сhill;
+        newBear.activity = ActivityManager.Activities.Chill;
         Vector3 generatePosition = spawnBears.transform.position +
                                    new Vector3(Random.Range(-50f, 50f), 0, Random.Range(-50f, 50f));
 
@@ -279,6 +318,8 @@ public class ColonyManager : MonoBehaviour
         bearSave.tired = 0f;
         bearSave.x = generatePosition.x;
         bearSave.z = generatePosition.z;
+        
+        newBear.bearSave = bearSave;
 
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         systemSaver.gameSave.bearSaves.Add(bearSave);
@@ -324,7 +365,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == Bear.Activities.chill || GetBearTask(bear) == null) && bear.tradition != Bear.Traditions.Chrom)
+            if ((bear.activity == ActivityManager.Activities.Chill || GetBearTask(bear) == null) && bear.tradition != TraditionsManager.Traditions.Chrom)
                 return bear;
         }
         return null;
@@ -341,7 +382,7 @@ public class ColonyManager : MonoBehaviour
         if (chillBear != null)
         {
             task.selectedBear = chillBear;
-            chillBear.activity = Bear.Activities.work;
+            chillBear.activity = ActivityManager.Activities.Work;
         }
         bearTasks.Add(task);
     }
@@ -356,13 +397,13 @@ public class ColonyManager : MonoBehaviour
             if (task.selectedBear == null)
             {
                 task.selectedBear = bear;
-                bear.activity = Bear.Activities.work;
+                bear.activity = ActivityManager.Activities.Work;
                 break;
             }
         }
         // Если работы не нашлось
         if (GetBearTask(bear) == null)
-            bear.activity = Bear.Activities.chill;
+            bear.activity = ActivityManager.Activities.Chill;
     }
 
     public BearTask GetBearTask(Bear bear)
@@ -392,7 +433,7 @@ public class ColonyManager : MonoBehaviour
         bearTasks.Remove(task);
 
         if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
-            selectedBear.activity = Bear.Activities.chill;
+            selectedBear.activity = ActivityManager.Activities.Chill;
         else
             SetTaskToBear(selectedBear);
     }

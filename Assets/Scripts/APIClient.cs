@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 ///     Базируется на паттерне Singleton (Одиночка)
@@ -153,17 +154,37 @@ public class APIClient : MonoBehaviour
         {
             await Task.Yield();
         }
+        
+        // Проверим подключение к интернету
+        if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError)
+        {
+            IfNoInternetConnection();
+            return null;
+        }
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
             return JsonConvert.DeserializeObject<T>(unityWebRequest.downloadHandler.text);
         }
-
+        
         string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " + unityWebRequest.downloadHandler;
         Debug.LogError(errorMessage);
         throw new HttpRequestException(errorMessage);
     }
 
+    /// <summary>
+    /// Вызывается в случае, если есть подозрение на то, что у человека нет подключения к интернету в данный момент
+    /// </summary>
+    private void IfNoInternetConnection()
+    {
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
+            saveAndLoad.SaveGame();
+            SceneManager.LoadScene("Menu");
+        }
+    }
+    
     /// <summary>
     /// Отправить get запрос на сервер
     /// </summary>
