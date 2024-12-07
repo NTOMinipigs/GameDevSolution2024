@@ -5,6 +5,8 @@ using TMPro;
 public class QuestSystem : MonoBehaviour
 {
     public GameObject questMenu;
+    [SerializeField] private GameObject prehistoryObj;
+    [SerializeField] private TextMeshProUGUI totalQuestText;
     private TextMeshProUGUI textName, textDescription, textStep;
     [SerializeField] private quest[] questsInGame = new quest[0];
     public int totalStep;
@@ -21,13 +23,16 @@ public class QuestSystem : MonoBehaviour
         return null;
     }
 
-    // TODO: Сделать начальный квест + начальные ресурсы
+    public void StartFirst() // Заставка + первый квест
+    {
+        prehistoryObj.gameObject.SetActive(true);
+    }
+
     public void ActivateQuest(string questName)
     {
         quest newQuest = FindQuest(questName);
         if (newQuest != null)
         {
-            // TODO: Сделать мигающую икноку нового квеста
             totalQuest = newQuest;
             totalStep = 0;
             DoStep(totalStep);
@@ -35,7 +40,6 @@ public class QuestSystem : MonoBehaviour
         }
     }
 
-    //TODO: Сделать обработчик действия для движения квеста
     public void MoveNextStep()
     {
         if (totalQuest != null)
@@ -80,9 +84,13 @@ public class QuestSystem : MonoBehaviour
             {
                 questMenu.gameObject.SetActive(!questMenu.activeSelf);
                 scripts.clicksHandler.blockMove = questMenu.activeSelf;
-                UpdateQuestUI();                
+                UpdateQuestUI();
             }
         }
+        if (totalQuest != null)
+            totalQuestText.text = totalQuest.steps[totalStep].stepName;
+        else
+            totalQuestText.text = "";
     }
 }
 

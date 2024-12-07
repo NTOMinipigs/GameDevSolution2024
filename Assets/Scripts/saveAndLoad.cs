@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class SaveAndLoad : MonoBehaviour
 {
+    private allScripts scripts;
     // Start is called before the first frame update
 
     void Start()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        scripts = GameObject.Find("scripts").GetComponent<allScripts>();
         bool loadResult = systemSaver.LoadGame();
         // Если файл сохранения не найден
         if (!loadResult)
@@ -48,6 +50,7 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateNewGame()
     {
         CreateBears();
+        scripts.questSystem.StartFirst();
     }
 
     /// <summary>
