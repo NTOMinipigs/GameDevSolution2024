@@ -18,14 +18,7 @@ public class SystemSaver : MonoBehaviour
     /// В singleton паттерне конструктор приватный
     /// </summary>
     private SystemSaver() {}
-
-    /// <summary>
-    /// При НЕ аварийном закрытии игры, игра сохранится в Json
-    /// </summary>
-    public void OnApplicationQuit()
-    {
-        SaveGame();
-    }
+    
 
     /// <summary>
     /// Получить название json файла для конкретного игрока

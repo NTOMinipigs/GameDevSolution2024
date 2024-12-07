@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class SaveAndLoad : MonoBehaviour
@@ -13,19 +10,36 @@ public class SaveAndLoad : MonoBehaviour
         bool loadResult = systemSaver.LoadGame();
         // Если файл сохранения не найден
         if (!loadResult)
-        { 
+        {
             CreateNewGame();
         }
-        
+
         LoadGame();
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveGame();
     }
 
     /// <summary>
     /// Вызывает методы загрузки игры, например спавн медведей из памяти
+    /// Оставьте этот метод приватным, он должен вызываться только один раз в одном месте
     /// </summary>
     private void LoadGame()
     {
         SpawnBears();
+    }
+
+    /// <summary>
+    /// Вызывает методы сохранения игры.
+    /// Оставьте его публичным, чтобы игру можно было сохранять из любого класса
+    /// </summary>
+    public void SaveGame()
+    {
+        SaveBears();
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        systemSaver.SaveGame();
     }
     
     /// <summary>
@@ -41,7 +55,6 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateBears()
     {
-        Debug.Log("Creating new bears");
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
         colonyManager.GenerateChrom();
         colonyManager.GenerateNewBear(TraditionsManager.Traditions.Beekeepers);
@@ -60,8 +73,35 @@ public class SaveAndLoad : MonoBehaviour
         
         foreach (BearSave bearSave in systemSaver.gameSave.bearSaves)
         {
-            Debug.Log(bearSave);
             colonyManager.BearSpawn(bearSave);
         }
     }
+    
+    /// <summary>
+    /// Сохранить медведей, сведения о них, например позиции
+    /// </summary>
+    private void SaveBears()
+    {
+        ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        // Рассчитывается на то, что каждый медведь из bearsInColony, соответствует индексу в json 
+
+        for (int i = 0; i < colonyManager.bearsInColony.Count; i++)
+        {
+            // Получаем медведей медведя и сейв медведя из списков
+            Bear bear = colonyManager.bearsInColony[i];
+            BearSave bearSave = systemSaver.gameSave.bearSaves[i];
+
+            // Сейвим координаты
+            GameObject bearObj = GameObject.Find(bear.gameName);
+            bearSave.x = bearObj.transform.position.x;
+            bearSave.z = bearObj.transform.position.z;
+            
+            // Настроение голод и активность
+            bearSave.hungry = bear.hungry;
+            bearSave.tired = bear.tired;
+            bearSave.activity = ActivityManager.GetStrByActivity(bear.activity);
+        }
+    }
+
 }

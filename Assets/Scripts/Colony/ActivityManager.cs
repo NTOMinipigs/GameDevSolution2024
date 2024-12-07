@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class ActivityManager : MonoBehaviour
 {
-    public enum Activities { Сhill, Work, Eat }
+    public enum Activities { Chill, Work, Eat }
 
     // Количество традиций, нужно для того, чтобы задать размер хешмапе. Изменить при добавлении новой активности!
     private static byte activityAmount = 7;
@@ -20,7 +20,7 @@ public class ActivityManager : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        AddToDictionaries(Activities.Сhill, "Отдыхаю");
+        AddToDictionaries(Activities.Chill, "Отдыхаю");
         AddToDictionaries(Activities.Work, "Работаю");
         AddToDictionaries(Activities.Eat, "Ем");
     }
@@ -28,12 +28,12 @@ public class ActivityManager : MonoBehaviour
     /// <summary>
     /// Добавить традицию и строку в обе хешмапы
     /// </summary>
-    /// <param name="activitiy">Активность</param>
+    /// <param name="activity">Активность</param>
     /// <param name="str">названиее традиции</param>
-    private static void AddToDictionaries(Activities activitiy, string str)
+    private static void AddToDictionaries(Activities activity, string str)
     {
-        activityToStr[activitiy] = str;
-        strToActivity[str] = activitiy;
+        activityToStr[activity] = str;
+        strToActivity[str] = activity;
     }
     
     // Геттеры

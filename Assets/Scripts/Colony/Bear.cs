@@ -12,8 +12,8 @@ public class Bear
     public Sprite sprite;
     public TraditionsManager.Traditions tradition;
     public ActivityManager.Activities activity;
-
-
+    public BearSave bearSave;
+    
     /// <summary>
     /// Получить строку традиции. УСТАРЕЛО! Оставил для обратной совместимки, используй TraditionManager
     /// </summary>
