@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/00d2ed804a47477fbcd16b18f553ed824f9400/2a/577bfe63/JsonSerializer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4da806cbfd6b460c922c5a83e4fb97f993fe00/43/4f6e455c/SerializedProperty.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8f02bdf82edc4309b57af878cc7723ff468a00/84/30019751/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/908567eb5a7b4752bcbdfc8d1c968896171a00/43/04cbaee7/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/2d/54b6f4ea/Task`1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scenes/Game.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scenes/Game.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Tests/EditMode/APIClientIntegrationTests.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2pZjoHxJzt2ss8cpeoYwbOyEKQJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Standalone Player.Start Unity.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dubkov&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$USER_HOME$/Unity/Hub/Editor/2022.3.4f1/Editor/Unity" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;$PROJECT_DIR$&quot; -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$USER_HOME$/Unity/Hub/Editor/2022.3.4f1/Editor/Unity" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath &quot;$PROJECT_DIR$&quot; -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="" />
+      <created>1732980771383</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732980771383</updated>
+      <workItem from="1732980771391" duration="2605000" />
+      <workItem from="1732983658483" duration="1423000" />
+      <workItem from="1732985691815" duration="11268000" />
+      <workItem from="1732998627861" duration="4934000" />
+      <workItem from="1733003626775" duration="5918000" />
+      <workItem from="1733042311692" duration="5256000" />
+      <workItem from="1733048251910" duration="4261000" />
+      <workItem from="1733055213087" duration="4073000" />
+      <workItem from="1733067714985" duration="970000" />
+      <workItem from="1733068706882" duration="5484000" />
+      <workItem from="1733076929051" duration="2204000" />
+      <workItem from="1733149701102" duration="4533000" />
+      <workItem from="1733154341085" duration="12895000" />
+      <workItem from="1733216003965" duration="7396000" />
+      <workItem from="1733228640208" duration="10477000" />
+      <workItem from="1733245033833" duration="745000" />
+      <workItem from="1733259460994" duration="5283000" />
+      <workItem from="1733312439274" duration="1186000" />
+      <workItem from="1733415434882" duration="1430000" />
+      <workItem from="1733497592079" duration="8572000" />
+      <workItem from="1733508724815" duration="14576000" />
+      <workItem from="1733562320128" duration="1673000" />
+      <workItem from="1733564035427" duration="266000" />
+      <workItem from="1733564334495" duration="6155000" />
+      <workItem from="1733570842341" duration="493000" />
+    </task>
+    <task id="LOCAL-00001" summary="remove govnocode">
+      <option name="closed" value="true" />
+      <created>1732993134672</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732993134672</updated>
+    </task>
+    <task id="LOCAL-00002" summary="remove govnocode">
+      <option name="closed" value="true" />
+      <created>1732999070825</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732999070825</updated>
+    </task>
+    <task id="LOCAL-00003" summary="remove govnocode fix genders">
+      <option name="closed" value="true" />
+      <created>1733007493482</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733007493482</updated>
+    </task>
+    <task id="LOCAL-00004" summary="music manager">
+      <option name="closed" value="true" />
+      <created>1733075083616</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733075083616</updated>
+    </task>
+    <task id="LOCAL-00005" summary="tests for APIClient">
+      <option name="closed" value="true" />
+      <created>1733151311147</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733151311147</updated>
+    </task>
+    <task id="LOCAL-00006" summary="bugfix">
+      <option name="closed" value="true" />
+      <created>1733230162950</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733230162950</updated>
+    </task>
+    <task id="LOCAL-00007" summary="save and load багфикс хуйфикс">
+      <option name="closed" value="true" />
+      <created>1733506331586</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1733506331586</updated>
+    </task>
+    <task id="LOCAL-00008" summary="camera zoom">
+      <option name="closed" value="true" />
+      <created>1733521501428</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733521501428</updated>
+    </task>
+    <task id="LOCAL-00009" summary="не помню что это, но это очень важно">
+      <option name="closed" value="true" />
+      <created>1733571010612</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1733571010612</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+    <option name="unityProject" value="true" />
+    <option name="unityProjectFolder" value="true" />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="remove govnocode" />
+    <MESSAGE value="remove govnocode fix genders" />
+    <MESSAGE value="music manager" />
+    <MESSAGE value="tests for APIClient" />
+    <MESSAGE value="bugfix" />
+    <MESSAGE value="save and load багфикс хуйфикс" />
+    <MESSAGE value="camera zoom" />
+    <MESSAGE value="не помню что это, но это очень важно" />
+    <option name="LAST_COMMIT_MESSAGE" value="не помню что это, но это очень важно" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#UnityEngine.Networking.DownloadHandlerBuffer" memberName="m_NativeData" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
