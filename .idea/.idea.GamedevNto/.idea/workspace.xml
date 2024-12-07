@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="" />
+    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GamedevNto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GamedevNto/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEventsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameEventsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/save/SystemSaver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/save/SystemSaver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/saveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/saveAndLoad.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,6 +141,7 @@
       <workItem from="1733564035427" duration="266000" />
       <workItem from="1733564334495" duration="6155000" />
       <workItem from="1733570842341" duration="493000" />
+      <workItem from="1733581112676" duration="1270000" />
     </task>
     <task id="LOCAL-00001" summary="remove govnocode">
       <option name="closed" value="true" />

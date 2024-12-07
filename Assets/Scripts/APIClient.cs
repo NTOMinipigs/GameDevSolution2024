@@ -88,9 +88,9 @@ public class APIClient : MonoBehaviour
         public string Comment { get; }
         public string PlayerName { get; }
         public string ShopName { get; }
-        public Dictionary<string, int> ResourcesChanged { get; }
+        public Dictionary<string, string> ResourcesChanged { get; }
 
-        public ResourcesLog(string comment, string playerName, string shopName, Dictionary<string, int> resourcesChanged)
+        public ResourcesLog(string comment, string playerName, string shopName, Dictionary<string, string> resourcesChanged)
         {
             Comment = comment;
             PlayerName = playerName;
@@ -345,7 +345,7 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">Запрашиваемый юзернейм</param>
     /// <param name="requestResources">Изменения в ивентаре</param>
     /// <returns>SendResoursesLog record</returns>
-    public async Task<SendResourcesLog?> CreateLogRequest(string requestComment, string requestLogin, Dictionary<string, int> requestResources)
+    public async Task<SendResourcesLog?> CreateLogRequest(string requestComment, string requestLogin, Dictionary<string, string> requestResources)
     {
         return await SendPostAsync<SendResourcesLog>(
             "logs/",

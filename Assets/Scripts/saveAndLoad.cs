@@ -1,5 +1,10 @@
 using UnityEngine;
 
+
+
+/// <summary>
+/// Этот класс отвечает за подгрузку и сохранение прогресса
+/// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
     // Start is called before the first frame update

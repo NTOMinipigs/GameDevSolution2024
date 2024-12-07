@@ -27,7 +27,8 @@ public class SystemSaver : MonoBehaviour
     private string GetFilePath()
     {
         Debug.Log(Application.persistentDataPath);
-        return Path.Combine(Application.persistentDataPath, "playerName.json"); // Player.playerName + ".json");
+        
+        return Path.Combine(Application.persistentDataPath, Player.Instance.playerName + ".json");
     }
 
     /// <summary>

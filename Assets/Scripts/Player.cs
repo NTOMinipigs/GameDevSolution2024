@@ -6,18 +6,6 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; }
-    public string playerName;
-
-    public void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    public static Player Instance { get; private set; } = new();
+    public string playerName = "Justiks";
 }
