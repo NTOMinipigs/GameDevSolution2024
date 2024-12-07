@@ -50,11 +50,22 @@ MonoBehaviour:
   builded: 0
   typeOfBuilding: 0
   typeResource: 0
+  canWork: 0
+  steps: 0
+  typeOfWorkers: 0
+  countOfBears: 0
+  countOfDrone: 0
+  scoutHome: 1
   MainRenderer: {fileID: 7251213672971974862}
+  Size: {x: 183, y: 226}
+  maxDrones: 0
+  maxBears: 0
+  resourceGive: 0
+  resourseOneWorker: 0
   materialsNeed: 30
   specMaterialsNeed: 0
   stepsNeed: 20
-  Size: {x: 183, y: 226}
+  energyNeed: 0
 --- !u!65 &5042763924733531086
 BoxCollider:
   m_ObjectHideFlags: 0

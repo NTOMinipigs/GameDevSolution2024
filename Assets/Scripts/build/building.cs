@@ -15,6 +15,7 @@ public class Building : MonoBehaviour
     public enum TypeOfWorkers { Any, Beekeepers, Constructors, Programmers, BioEngineers, Drone }
     [HideInInspector] public int countOfBears, countOfDrone;
     [Header("BuildingSettings")]
+    public bool scoutHome;
     [SerializeField] private Renderer MainRenderer;
     public Vector2Int Size = Vector2Int.one;
     public int maxDrones, maxBears;
