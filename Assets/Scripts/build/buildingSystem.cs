@@ -68,7 +68,7 @@ public class BuildingSystem : MonoBehaviour
         textCountBears.text = selectedBuild.countOfBears.ToString() + "/" + selectedBuild.maxBears.ToString();
         textInfoBuild.text = "+ " + ((selectedBuild.countOfBears + selectedBuild.countOfDrone) * selectedBuild.resourseOneWorker).ToString();
 
-        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == scripts.colonyManager.maxBears || selectedBuild.countOfBears == 0)
+        if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == scripts.colonyManager.maxBears && scripts.colonyManager.maxBears != 0 || selectedBuild.countOfBears == 0)
         {
             bearManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
             droneManage.transform.Find("ButtonDeleteBear").GetComponent<Button>().interactable = false;
@@ -87,7 +87,7 @@ public class BuildingSystem : MonoBehaviour
             textCountDrones.text = "";
         if (!bear)
             textCountBears.text = "";
-        
+
         // Костыль
         if ((scripts.colonyManager.bearsInColony.Count - scripts.colonyManager.workingBears) == 0 || selectedBuild.countOfBears == selectedBuild.maxBears)
         {
@@ -298,6 +298,8 @@ public class BuildingSystem : MonoBehaviour
 
         scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
+        scripts.colonyManager.Energy -= 1;
+        scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
