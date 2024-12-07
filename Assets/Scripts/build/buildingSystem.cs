@@ -298,7 +298,7 @@ public class BuildingSystem : MonoBehaviour
 
         scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
-        scripts.colonyManager.Energy -= 1;
+        scripts.colonyManager.Energy -= flyingBuilding.energyNeed;
         scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);

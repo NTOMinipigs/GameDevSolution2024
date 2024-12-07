@@ -41,7 +41,7 @@ public class SaveAndLoad : MonoBehaviour
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         systemSaver.SaveGame();
     }
-    
+
     /// <summary>
     /// Вызывает методы создания игры, например создает медведей постройки и т.д.
     /// </summary>
@@ -59,8 +59,8 @@ public class SaveAndLoad : MonoBehaviour
         colonyManager.GenerateChrom();
         colonyManager.GenerateNewBear(TraditionsManager.Traditions.Beekeepers);
         colonyManager.GenerateNewBear(TraditionsManager.Traditions.Programmers);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Beekeepers);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Programmers);
+        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Constructors);
+        colonyManager.GenerateNewBear(TraditionsManager.Traditions.BioEngineers);
     }
 
     /// <summary>
@@ -70,13 +70,13 @@ public class SaveAndLoad : MonoBehaviour
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
-        
+
         foreach (BearSave bearSave in systemSaver.gameSave.bearSaves)
         {
             colonyManager.BearSpawn(bearSave);
         }
     }
-    
+
     /// <summary>
     /// Сохранить медведей, сведения о них, например позиции
     /// </summary>
@@ -92,11 +92,14 @@ public class SaveAndLoad : MonoBehaviour
             Bear bear = colonyManager.bearsInColony[i];
             BearSave bearSave = systemSaver.gameSave.bearSaves[i];
 
-            // Сейвим координаты
-            GameObject bearObj = GameObject.Find(bear.gameName);
-            bearSave.x = bearObj.transform.position.x;
-            bearSave.z = bearObj.transform.position.z;
-            
+            if (bear.tradition != TraditionsManager.Traditions.Chrom)
+            {
+                // Сейвим координаты
+                GameObject bearObj = GameObject.Find(bear.gameName);
+                bearSave.x = bearObj.transform.position.x;
+                bearSave.z = bearObj.transform.position.z;
+            }
+
             // Настроение голод и активность
             bearSave.hungry = bear.hungry;
             bearSave.tired = bear.tired;
