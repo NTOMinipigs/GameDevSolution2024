@@ -152,7 +152,7 @@ public class Dialog
 [System.Serializable]
 public class DialogStep
 {
-    public Bear.Traditions traditionBear;
+    public TraditionsManager.Traditions traditionBear;
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;

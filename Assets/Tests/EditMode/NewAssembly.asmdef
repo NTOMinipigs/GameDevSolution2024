@@ -1,0 +1,10 @@
+{
+    "name": "Tests.EditMode",
+    "references": [
+        "APIClient",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": []
+}

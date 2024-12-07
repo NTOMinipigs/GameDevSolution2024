@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-
+    
     // Слой стены, нужен для рейкаста
     public LayerMask wallLayer;
     Vector2 direction = new Vector2(1, 0.48f);

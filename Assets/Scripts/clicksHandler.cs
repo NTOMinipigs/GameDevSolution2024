@@ -1,9 +1,16 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class ClicksHandler : MonoBehaviour
 {
+    // Зум
+    [SerializeField] private float zoomSpeed = 100f; // Скорость изменения зума
+    [SerializeField] private float minZoom = 20f;  // Минимальное поле зрения (или близость)
+    [SerializeField] private float maxZoom = 60f;  // Максимальное поле зрения (или дальность)
+    private Camera _camera;
+    
     public float sensitivity;
     public bool blockMove;
     private bool _isDragging;
@@ -13,6 +20,12 @@ public class ClicksHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textRayTotal;
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private allScripts scripts;
+
+
+    public void Start()
+    {
+        _camera = GetComponent<Camera>();   
+    }
 
     private void Update()
     {
@@ -73,6 +86,23 @@ public class ClicksHandler : MonoBehaviour
 
             transform.position += new Vector3(-_delta.x, 0, -_delta.y); // Перемещение камеры, пока зажата левая кнопка мыши
             _lastMousePosition = Input.mousePosition;
+        }
+        HandleZoom();
+    }
+
+    private void HandleZoom()
+    {
+        if (_camera.orthographic)
+        {
+            // Для ортографической камеры изменяем размер
+            _camera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, minZoom, maxZoom);
+        }
+        else
+        {
+            // изменяем поле зрения
+            _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            _camera.fieldOfView = Mathf.Clamp(_camera.fieldOfView, minZoom, maxZoom);
         }
     }
 }

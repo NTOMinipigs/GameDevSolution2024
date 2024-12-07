@@ -52,7 +52,7 @@ public class BearMovement : MonoBehaviour
             if (waitTime < 0)
             {
                 wait = false;
-                if (totalBear.activity == Bear.Activities.chill)
+                if (totalBear.activity == ActivityManager.Activities.Chill)
                     moveTarget = new Vector3(transform.position.x + Random.Range(-100f, 100f), transform.position.y, transform.position.z + Random.Range(-100f, 100f));
             }
         }
@@ -91,12 +91,12 @@ public class BearMovement : MonoBehaviour
         }
 
         // Говно реализация, переделать
-        if (totalBear.activity == Bear.Activities.work)
+        if (totalBear.activity == ActivityManager.Activities.Work)
         {
             totalBear.tired += 0.0005f;
             totalBear.hungry += 0.00007f;
         }
-        else if (totalBear.activity == Bear.Activities.chill)
+        else if (totalBear.activity == ActivityManager.Activities.Chill)
         {
             if (totalBear.hungry >= 5)
             {
