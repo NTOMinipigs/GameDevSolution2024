@@ -8,4 +8,5 @@ public class GameSave
 {
     public List<BearSave> bearSaves;
     public List<BuildingsSave> buildingSaves;
+    public List<Dictionary<string, object>> tasksSaves = new();
 }

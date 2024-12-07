@@ -1,5 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
-
 
 
 /// <summary>
@@ -7,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Часть необходимых методов для инициализации
 
     void Start()
     {
@@ -33,7 +35,8 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void LoadGame()
     {
-        SpawnBears();
+        LoadBears();
+        LoadTasks();
     }
 
     /// <summary>
@@ -43,9 +46,13 @@ public class SaveAndLoad : MonoBehaviour
     public void SaveGame()
     {
         SaveBears();
+        SaveTasks();
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         systemSaver.SaveGame();
     }
+
+    
+    // Часть иниициализации (Create)
     
     /// <summary>
     /// Вызывает методы создания игры, например создает медведей постройки и т.д.
@@ -69,18 +76,76 @@ public class SaveAndLoad : MonoBehaviour
     }
 
     /// <summary>
+    /// Создать постройки в игре, если они не были созданы до этого
+    /// </summary>
+    private void CreateBuilds()
+    {
+        
+    }
+    
+    
+    // Часть Загрузки (Load)
+    
+    /// <summary>
     /// Загрузит медведей из json'а
     /// </summary>
-    private void SpawnBears()
+    private void LoadBears()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
-        
+
         foreach (BearSave bearSave in systemSaver.gameSave.bearSaves)
         {
             colonyManager.BearSpawn(bearSave);
         }
     }
+    
+    /// <summary>
+    /// Подргрузка тасков из json
+    /// </summary>
+    private void LoadTasks()
+    {
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
+
+        // Проходимся по всем сохраненным таскам
+        foreach (Dictionary<string, object> task in systemSaver.gameSave.tasksSaves)
+        {
+            // Инициализируем все нужные переменные для создания задачи
+            BearTask.TasksMode tasksMode = BearTask.GetTaskMode((string)task["taskMode"]);
+            GameObject objectOfTask = GameObject.Find((string)task["ObjectOfTaskName"]);
+            Bear bearObject = null;
+
+            foreach (Bear bear in colonyManager.bearsInColony) // Ищем медведя
+            {
+                if (bear.gameName == (string)task["BearGameName"])
+                {
+                    bearObject = bear;
+                }
+            }
+
+            if (bearObject == null) // Если медведь не найден
+            {
+                throw new ArgumentException("Invalid bear game name: " + task["BearGameName"]);
+            }
+
+            // Инициализируем задачу
+            BearTask bearTask = new BearTask(tasksMode, objectOfTask, (float)(double) task["needSteps"]);
+            bearTask.selectedBear = bearObject;
+            bearTask.totalSteps = (float)(double) task["totalSteps"];
+        }
+    }
+
+    /// <summary>
+    /// Загрузить постройки из json
+    /// </summary>
+    private void LoadBuilds()
+    {
+        
+    }
+
+    
+    // Часть сохранения (Save)
     
     /// <summary>
     /// Сохранить медведей, сведения о них, например позиции
@@ -101,12 +166,46 @@ public class SaveAndLoad : MonoBehaviour
             GameObject bearObj = GameObject.Find(bear.gameName);
             bearSave.x = bearObj.transform.position.x;
             bearSave.z = bearObj.transform.position.z;
-            
+
             // Настроение голод и активность
             bearSave.hungry = bear.hungry;
             bearSave.tired = bear.tired;
             bearSave.activity = ActivityManager.GetStrByActivity(bear.activity);
         }
+    }
+
+    /// <summary>
+    /// Сохранить задачи медведя в json
+    /// </summary>
+    private void SaveTasks()
+    {
+        ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        
+        if (colonyManager.bearTasks.Count == 0) return;
+        
+        Type type = colonyManager.bearTasks[0].GetType();
+        foreach (BearTask bearTask in colonyManager.bearTasks) // Проходимся по всем медведям
+        {
+            Dictionary<string, object> saveData = new Dictionary<string, object>();
+            foreach (var field in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))  // Проходимся по всем публичным филдам, чтобы найти помеченные аттрибутом
+            {
+                JsonSerializeAttribute attribute = field.GetCustomAttribute<JsonSerializeAttribute>();
+                if (attribute != null) // Если у поля есть такой аттрибут, достаем из него значение
+                {
+                     saveData[attribute.inJsonName] = field.GetValue(bearTask);
+                }
+            }
+            systemSaver.gameSave.tasksSaves.Add(saveData);
+        }
+    }
+
+    /// <summary>
+    /// Сохранять постройки в json
+    /// </summary>
+    private void SaveBuilds()
+    {
+        
     }
 
 }

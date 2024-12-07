@@ -318,20 +318,21 @@ public class BuildingSystem : MonoBehaviour
     // Поставить здание
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
-        for (int x = 0; x < flyingBuilding.Size.x; x++)
-        {
-            for (int y = 0; y < flyingBuilding.Size.y; y++)
-                grid[placeX + x, placeY + y] = flyingBuilding;
-        }
-
+        PlaceBuilding(flyingBuilding, placeX, placeY);
+        
+        // Кор
+        flyingBuilding = null;
+        noteBlock.gameObject.SetActive(false);
+        buildingCreateMenu.gameObject.SetActive(false);
+        
+        // Колония менеджер
         scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject,
             flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
         scripts.colonyManager.Energy -= 1;
         scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
-
+        
         // Логи на создание здания
-
         APIClient.Instance.CreateLogRequest(
             "Затраты энергии и материалов на постройку здания",
             Player.Instance.playerName,
@@ -342,10 +343,23 @@ public class BuildingSystem : MonoBehaviour
             }
         );
         
-        flyingBuilding = null;
-        noteBlock.gameObject.SetActive(false);
-        buildingCreateMenu.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Поставит постройку по координатам
+    /// Вынес в отдельный метод так как это вполне себе самостоятельный метод который можно использовать извне (Уже используется)
+    /// </summary>
+    /// <param name="building">Постройка которую нужно поставить</param>
+    /// <param name="placeX">Координата по X</param>
+    /// <param name="placeY">Координата по Y</param>
+    public void PlaceBuilding(Building building, int placeX, int placeY)
+    {
+        for (int x = 0; x < building.Size.x; x++)
+        {
+            for (int y = 0; y < building.Size.y; y++)
+                grid[placeX + x, placeY + y] = building;
         }
+    }
 
     public void SetBuildSettings(GameObject totalBuild)
     {
