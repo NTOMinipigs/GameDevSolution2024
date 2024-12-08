@@ -9,7 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Preference preference; // Нужно сделать загрузку и сохранение
     [SerializeField] private GameObject menuNickname;
     [SerializeField] private TMP_InputField inputFieldNickname;
-    
+
     private Dictionary<string, int> emptyInventory = new Dictionary<string, int>()
     {
         {"materials", 0},
@@ -36,6 +36,7 @@ public class MenuManager : MonoBehaviour
 
         if (inputFieldNickname.text != "")
         {
+            menuNickname.gameObject.SetActive(false);
             List<APIClient.UserInventory> users = await APIClient.Instance.GetUsersListRequest();
 
             foreach (APIClient.UserInventory user in users)
@@ -44,20 +45,25 @@ public class MenuManager : MonoBehaviour
                 if (inputFieldNickname.text == user.Name)
                 {
                     Player.Instance.playerName = inputFieldNickname.text;
-                    menuNickname.gameObject.SetActive(false);
                     return;
                 }
             }
-            
+
             // Иначе
             APIClient.UserInventory userInventory = await APIClient.Instance.CreatePlayerRequest(inputFieldNickname.text, emptyInventory);
             if (userInventory == null) // Если произошла ошибка в запросе
             {
                 return;
             }
-                
+
             Player.Instance.playerName = inputFieldNickname.text;
             menuNickname.gameObject.SetActive(false);
         }
+    }
+
+    public async void SetQuest()
+    {
+        Player.Instance.playerName = "nickname";
+        menuNickname.gameObject.SetActive(false);
     }
 }

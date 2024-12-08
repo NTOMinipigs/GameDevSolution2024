@@ -134,13 +134,23 @@ MonoBehaviour:
   buildingName: "\u0421\u043E\u043B\u043D\u0435\u0447\u043D\u0430\u044F \u043F\u0430\u043D\u0435\u043B\u044C"
   builded: 0
   typeOfBuilding: 0
-  typeResource: 7
-  resourceGive: 5
+  typeResource: 5
+  canWork: 0
+  steps: 0
+  typeOfWorkers: 0
+  countOfBears: 0
+  countOfDrone: 0
+  scoutHome: 0
   MainRenderer: {fileID: 8148990557839850565}
+  Size: {x: 78, y: 62}
+  maxDrones: 0
+  maxBears: 0
+  resourceGive: 5
+  resourseOneWorker: 0
   materialsNeed: 30
   specMaterialsNeed: 0
   stepsNeed: 15
-  Size: {x: 78, y: 62}
+  energyNeed: 0
 --- !u!65 &4166468419499915591
 BoxCollider:
   m_ObjectHideFlags: 0
