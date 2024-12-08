@@ -10,7 +10,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textSelectedBuild, textNameBuild, textInfoBuild, textCountBears, textCountDrones;
     [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
     public Building selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
-    public ColonyManager.typeOfResource selectedResource; // Выбранный ресурс(строение)
+    public ResourcesManager.Resources selectedResource; // Выбранный ресурс(строение)
     private Building[,] grid; // Размещение строений на сетке
     private Building flyingBuilding; // Выделенное строение
     private Camera mainCamera;
@@ -149,27 +149,27 @@ public class BuildingSystem : MonoBehaviour
         
         switch (selectedResource)
         {
-            case ColonyManager.typeOfResource.materials:
+            case ResourcesManager.Resources.Material:
                 earn = Random.Range(15, 40);
                 resourceChanged = "materials";
                 scripts.colonyManager.Materials += earn;
                 break;
-            case ColonyManager.typeOfResource.materialPlus:
+            case ResourcesManager.Resources.MaterialPlus:
                 earn = Random.Range(1, 5);
                 resourceChanged = "materialPlus";
                 scripts.colonyManager.materialsPlus += earn;
                 break;
-            case ColonyManager.typeOfResource.food:
+            case ResourcesManager.Resources.Food:
                 earn = Random.Range(1, 10);
                 resourceChanged = "food";
                 scripts.colonyManager.Food += earn;
                 break;
-            case ColonyManager.typeOfResource.honey:
+            case ResourcesManager.Resources.Honey:
                 earn = Random.Range(5, 10);
                 resourceChanged = "honey";
                 scripts.colonyManager.Honey += earn;
                 break;
-            case ColonyManager.typeOfResource.bioFuel:
+            case ResourcesManager.Resources.BioFuel:
                 earn = Random.Range(5, 15);
                 resourceChanged = "bioFuel";
                 scripts.colonyManager.Biofuel += earn;
@@ -379,31 +379,31 @@ public class BuildingSystem : MonoBehaviour
         string resourse = "";
         switch (selectedResource)
         {
-            case ColonyManager.typeOfResource.materials:
+            case ResourcesManager.Resources.Material:
                 scripts.colonyManager.MaxMaterials += build.resourceGive;
                 resourse = "maxMaterials";
                 break;
-            case ColonyManager.typeOfResource.materialPlus:
+            case ResourcesManager.Resources.MaterialPlus:
                 scripts.colonyManager.MaxMaterialsPlus += build.resourceGive;
                 resourse = "maxMaterialsPlus";
                 break;
-            case ColonyManager.typeOfResource.food:
+            case ResourcesManager.Resources.Food:
                 scripts.colonyManager.MaxFood += build.resourceGive;
                 resourse = "maxFood";
                 break;
-            case ColonyManager.typeOfResource.honey:
+            case ResourcesManager.Resources.Honey:
                 scripts.colonyManager.MaxHoney += build.resourceGive;
                 resourse = "maxHoney";
                 break;
-            case ColonyManager.typeOfResource.bioFuel:
+            case ResourcesManager.Resources.BioFuel:
                 scripts.colonyManager.MaxBiofuel += build.resourceGive;
                 resourse = "maxBiofuel";
                 break;
-            case ColonyManager.typeOfResource.bears:
+            case ResourcesManager.Resources.Bears:
                 scripts.colonyManager.maxBears += build.resourceGive;
                 resourse = "maxBears";
                 break;
-            case ColonyManager.typeOfResource.energy:
+            case ResourcesManager.Resources.Energy:
                 scripts.colonyManager.Energy += build.resourceGive;
                 resourse = "energy";
                 break;

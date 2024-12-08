@@ -214,7 +214,6 @@ public class ColonyManager : MonoBehaviour
     [Header("Other")]
     public bool scoutHome;
     [SerializeField] private allScripts scripts;
-    public enum typeOfResource { none, materials, materialPlus, food, bioFuel, honey, bears, energy }
 
     private Dictionary<string, Func<float>> _materialsRefs;
 

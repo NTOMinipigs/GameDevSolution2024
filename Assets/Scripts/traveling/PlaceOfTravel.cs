@@ -18,5 +18,5 @@ public class PlaceOfTravel
 public class Reward
 {
     public float count;
-    public ColonyManager.typeOfResource typeOfReward;
+    public ResourcesManager.Resources typeOfReward;
 }
