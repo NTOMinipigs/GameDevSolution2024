@@ -55,7 +55,7 @@ public class DialogManager : MonoBehaviour
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 3).ToString(), selectedBear.gameName, true);
+                ActivateDialog("bearTalk" + Random.Range(0, 4).ToString(), selectedBear.gameName, true);
             else if (mode == 1)
                 ActivateDialog("bearActivity", selectedBear.gameName, true);
         }
@@ -70,8 +70,9 @@ public class DialogManager : MonoBehaviour
             _selectedStep.icon = _selectedBear.sprite;
         }
         else
-            _selectedStep.SetBear(scripts.colonyManager);
-        _textName.text = _selectedStep.nameBear + " | " + _selectedBear.TraditionStr;
+            _selectedBear = _selectedStep.SetBear(scripts.colonyManager);
+
+        _textName.text = _selectedBear.bearName + " | " + _selectedBear.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));
         _iconImage.sprite = _selectedStep.icon;
         _iconImage.SetNativeSize();
@@ -86,6 +87,8 @@ public class DialogManager : MonoBehaviour
         }
         totalStep++;
         _selectedStep = _activatedDialog.steps[totalStep];
+        if (_selectedStep.questStart != "")
+            scripts.questSystem.ActivateQuest(_selectedStep.questStart);
         DialogUpdateAction();
     }
 
@@ -156,9 +159,9 @@ public class DialogStep
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;
-    public Transform cameraTarget;
+    public string questStart;
 
-    public void SetBear(ColonyManager CM)
+    public Bear SetBear(ColonyManager CM)
     {
         foreach (Bear totalBear in CM.bearsInColony)
         {
@@ -166,7 +169,9 @@ public class DialogStep
             {
                 nameBear = totalBear.bearName;
                 icon = totalBear.sprite;
+                return totalBear;
             }
         }
+        return null;
     }
 }

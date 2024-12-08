@@ -146,7 +146,7 @@ public class BuildingSystem : MonoBehaviour
         switch (selectedResource)
         {
             case ColonyManager.typeOfResource.materials:
-                scripts.colonyManager.Materials += Random.Range(10, 30);
+                scripts.colonyManager.Materials += Random.Range(15, 40);
                 break;
             case ColonyManager.typeOfResource.materialPlus:
                 scripts.colonyManager.materialsPlus += Random.Range(1, 5);
@@ -225,7 +225,8 @@ public class BuildingSystem : MonoBehaviour
                     else
                         child.transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>().color = Color.red;
                 }
-                if (!buildingCreateMenu.activeSelf)
+
+                if (!buildingCreateMenu.activeSelf && flyingBuilding != null)
                     Destroy(flyingBuilding.gameObject);
             }
         }
@@ -296,9 +297,13 @@ public class BuildingSystem : MonoBehaviour
                 grid[placeX + x, placeY + y] = flyingBuilding;
         }
 
+        if (flyingBuilding.buildingName == "Солнечная панель" && scripts.questSystem.totalQuest.questName == "StartQuest")
+            scripts.questSystem.MoveNextStep();
+        else if (flyingBuilding.buildingName == "Фабрика материалов" && scripts.questSystem.totalQuest.questName == "StartQuest")
+            scripts.questSystem.MoveNextStep();
         scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
-        scripts.colonyManager.Energy -= 1;
+        scripts.colonyManager.Energy -= flyingBuilding.energyNeed;
         scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
