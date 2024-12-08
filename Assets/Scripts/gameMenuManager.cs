@@ -42,6 +42,7 @@ public class gameMenuManager : MonoBehaviour
     public void SavePreferens()
     {
         scripts.preference.sensitivityOfCamera = sensSlider.value;
+        scripts.clicksHandler.sensitivity = scripts.preference.sensitivityOfCamera;
         scripts.preference.globalVolume = volumeSlider.value;
         scripts.preference.postProcessing = postProcessingToggle.isOn;
         ManagePreferensMenu();
