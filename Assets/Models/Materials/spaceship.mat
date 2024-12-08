@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: snow1
+  m_Name: spaceship
   m_Shader: {fileID: 4800000, guid: a54aebfdf4a66be44976288e9e769ae2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -66,24 +66,24 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 3.99
+    - _Glossiness: -2.78
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimBlend: 0.471
-    - _RimThreshold: 1
-    - _Smoothness: 0.5
+    - _RimBlend: 0.222
+    - _RimThreshold: 0.385
+    - _Smoothness: 0.129
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _AmbientColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
-    - _Color: {r: 0.6745728, g: 0.7390955, b: 0.8773585, a: 1}
+    - _AmbientColor: {r: 1.6, g: 1.6, b: 1.6, a: 1}
+    - _Color: {r: 0.03835828, g: 0.03835828, b: 0.03835828, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _RimColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
-    - _SpecularColor: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   m_BuildTextureStacks: []

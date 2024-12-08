@@ -24,7 +24,10 @@ public class ColonyManager : MonoBehaviour
         get { return _honey; }
         set
         {
-            _honey = value;
+            if (value > MaxHoney && MaxHoney != 0)
+                _honey = MaxHoney;
+            else
+                _honey = value;
             //StartCoroutine( APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary));
             honeyText.text = _honey.ToString() + "/" + _maxHoney.ToString();
         }
@@ -48,7 +51,10 @@ public class ColonyManager : MonoBehaviour
         get { return _biofuel; }
         set
         {
-            _biofuel = value;
+            if (value > MaxBiofuel && MaxBiofuel != 0)
+                _biofuel = MaxBiofuel;
+            else
+                _biofuel = value;
             biofuelText.text = _biofuel.ToString() + "/" + _maxBiofuel.ToString();
         }
     }
@@ -71,7 +77,10 @@ public class ColonyManager : MonoBehaviour
         get { return _energy; }
         set
         {
-            _energy = value;
+            if (value > MaxEnergy && MaxEnergy != 0)
+                _energy = MaxEnergy;
+            else
+                _energy = value;
             energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
         }
     }
@@ -97,6 +106,10 @@ public class ColonyManager : MonoBehaviour
         get { return _materials; }
         set
         {
+            if (value > MaxMaterials && MaxMaterials != 0)
+                _materials = MaxMaterials;
+            else
+                _materials = value;
             _materials = value;
             materialsText.text = _materials.ToString() + "/" + _maxMaterials.ToString();
         }
@@ -121,7 +134,10 @@ public class ColonyManager : MonoBehaviour
         get { return _materialsPlus; }
         set
         {
-            _materialsPlus = value;
+            if (value > MaxMaterialsPlus && MaxMaterialsPlus != 0)
+                _materialsPlus = MaxMaterialsPlus;
+            else
+                _materialsPlus = value;
             materialsPlusText.text = _materialsPlus.ToString();
         }
     }
@@ -146,7 +162,10 @@ public class ColonyManager : MonoBehaviour
         get { return _food; }
         set
         {
-            _food = value;
+            if (value > MaxFood && MaxFood != 0)
+                _food = MaxFood;
+            else
+                _food = value;
             foodText.text = _food.ToString() + "/" + _maxFood.ToString();
         }
     }

@@ -74,28 +74,30 @@ public class TravelingManager : MonoBehaviour
         precentOfKnowPlanet.text = "Мир исследован на " + ((1 - (allPlaces.Length - maxPlaces)) * 100).ToString() + "%";
     }
 
-    public void ActivateTravelResult(bool activate = true)
+    public void ActivateTravelResult()
     {
-        resultOfTravelMenu.gameObject.SetActive(activate);
-        if (activate)
-        {
-            resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = activatedPlace.nameOfPlace;
-            resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = activatedPlace.resultText;
-            activatedPlace.placeIsChecked = true;
-            scripts.clicksHandler.SetTimeScale(0.05f);
-        }
-        else
-        {
-            scripts.clicksHandler.SetTimeScale(1f);
-            activatedPlace = new PlaceOfTravel(); // Очистка
-        }
+        resultOfTravelMenu.gameObject.SetActive(true);
+        resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = "Экспедиция вернулась: " + activatedPlace.nameOfPlace;
+        resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = activatedPlace.resultText;
+        activatedPlace.placeIsChecked = true;
+        scripts.clicksHandler.SetTimeScale(0.05f);
+        activatedPlace = new PlaceOfTravel(); // Очистка
+    }
+
+    public void DisableTravelResult() // Для UI
+    {
+        resultOfTravelMenu.gameObject.SetActive(false);
+        scripts.clicksHandler.SetTimeScale(1f);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
             OpenTravelMenu(scripts.colonyManager.scoutHome);
+    }
 
+    private void FixedUpdate()
+    {
         if (activatedPlace.gameName != "")
         {
             // Каждую секунду
@@ -103,7 +105,11 @@ public class TravelingManager : MonoBehaviour
             activatedPlace.timeNow += Mathf.FloorToInt(timeElapsed);
             timeElapsed -= Mathf.FloorToInt(timeElapsed);
             if (activatedPlace.timeNow >= activatedPlace.timeToGoing)
-                ActivateTravelResult(true);
+            {
+                ActivateTravelResult();
+                timeElapsed = 0f;
+                activatedPlace.gameName = "";
+            }
         }
     }
 }

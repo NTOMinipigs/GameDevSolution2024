@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6e9051a8c5c18498a4a7f13f643fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingName: "\u0424\u0430\u0431\u0440\u0438\u043A\u0430 \u043C\u0435\u0434\u0430"
+  buildingName: "\u041F\u0430\u0441\u0435\u043A\u0430"
   builded: 0
   typeOfBuilding: 0
   typeResource: 5
