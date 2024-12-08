@@ -305,6 +305,7 @@ public class ColonyManager : MonoBehaviour
         bearSave.tired = 0f;
         bearSave.x = generatePosition.x;
         bearSave.z = generatePosition.z;
+        bearSave.y = generatePosition.y;
 
         newBear.bearSave = bearSave;
 
@@ -340,6 +341,7 @@ public class ColonyManager : MonoBehaviour
         bearSave.tired = 0f;
         bearSave.x = generatePosition.x;
         bearSave.z = generatePosition.z;
+        bearSave.y = generatePosition.y;
 
         newBear.bearSave = bearSave;
 
@@ -364,7 +366,7 @@ public class ColonyManager : MonoBehaviour
         bearsInColony.Add(newBear);
         if (TraditionsManager.GetTraditionByStr(bearSave.tradition) != TraditionsManager.Traditions.Chrom)
         {
-            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(bearSave.x, 0, bearSave.z), Quaternion.identity);
+            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(bearSave.x, bearSave.y, bearSave.z), Quaternion.identity);
             bearObj.name = newBear.gameName;
             bearObj.GetComponent<BearMovement>().totalBear = newBear;
         }

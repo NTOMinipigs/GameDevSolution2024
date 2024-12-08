@@ -80,6 +80,38 @@ public class TravelingManager : MonoBehaviour
         resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = "Экспедиция вернулась: " + activatedPlace.nameOfPlace;
         resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = activatedPlace.resultText;
         activatedPlace.placeIsChecked = true;
+        foreach (Reward reward in activatedPlace.rewards)
+        {
+            switch (reward.typeOfReward)
+            {
+                case ColonyManager.typeOfResource.materials:
+                    scripts.colonyManager.Materials += reward.count;
+                    break;
+                case ColonyManager.typeOfResource.materialPlus:
+                    scripts.colonyManager.materialsPlus += reward.count;
+                    break;
+                case ColonyManager.typeOfResource.food:
+                    scripts.colonyManager.Food += reward.count;
+                    break;
+                case ColonyManager.typeOfResource.honey:
+                    scripts.colonyManager.Honey += reward.count;
+                    break;
+                case ColonyManager.typeOfResource.bioFuel:
+                    scripts.colonyManager.Biofuel += reward.count;
+                    break;
+                case ColonyManager.typeOfResource.bears:
+                    for (int i = 0; i < reward.count; i++)
+                    {
+                        // Получаем все значения перечисления Traditions
+                        TraditionsManager.Traditions[] traditions = (TraditionsManager.Traditions[])System.Enum.GetValues(typeof(TraditionsManager.Traditions));
+
+                        // Генерируем случайный индекс
+                        int randomIndex = Random.Range(0, traditions.Length);
+                        scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
+                    }
+                    break;
+            }
+        }
         scripts.clicksHandler.SetTimeScale(0.05f);
         activatedPlace = new PlaceOfTravel(); // Очистка
     }

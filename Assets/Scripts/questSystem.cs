@@ -10,7 +10,7 @@ public class QuestSystem : MonoBehaviour
     private TextMeshProUGUI textName, textDescription, textStep;
     [SerializeField] private quest[] questsInGame = new quest[0];
     public int totalStep;
-    private quest totalQuest;
+    public quest totalQuest;
     [SerializeField] private allScripts scripts;
 
     public quest FindQuest(string questName)
@@ -45,7 +45,7 @@ public class QuestSystem : MonoBehaviour
         if (totalQuest != null)
         {
             totalStep++;
-            if (totalQuest.steps.Length == totalStep + 1)
+            if (totalQuest.steps.Length == totalStep)
             {
                 totalQuest = null;
                 return;
