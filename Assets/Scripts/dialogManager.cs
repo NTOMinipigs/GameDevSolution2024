@@ -55,7 +55,7 @@ public class DialogManager : MonoBehaviour
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 3).ToString(), selectedBear.gameName, true);
+                ActivateDialog("bearTalk" + Random.Range(0, 4).ToString(), selectedBear.gameName, true);
             else if (mode == 1)
                 ActivateDialog("bearActivity", selectedBear.gameName, true);
         }
@@ -102,8 +102,11 @@ public class DialogManager : MonoBehaviour
 
     private string CodeTextReplace(string text)
     {
-        if (text.Contains("{activity}"))
-            return text.Replace("{activity}", _selectedBear.ActivityStr);
+        if (_selectedBear != null)
+        {
+            if (text.Contains("{activity}"))
+                return text.Replace("{activity}", _selectedBear.ActivityStr);
+        }
         return text;
     }
 
