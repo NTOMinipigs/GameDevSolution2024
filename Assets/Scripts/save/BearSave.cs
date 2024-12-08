@@ -13,5 +13,6 @@ public class BearSave
     public float tired;
     public float x;
     public float z;
+    public float y;
 }
-        
+

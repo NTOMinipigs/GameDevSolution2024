@@ -9,11 +9,13 @@ using UnityEngine;
 /// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
+    private allScripts scripts;
     // Часть необходимых методов для инициализации
 
     void Start()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+        scripts = GameObject.Find("scripts").GetComponent<allScripts>();
         bool loadResult = systemSaver.LoadGame();
         // Если файл сохранения не найден
         if (!loadResult)
@@ -60,6 +62,7 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateNewGame()
     {
         CreateBears();
+        scripts.questSystem.StartFirst();
     }
 
     /// <summary>
@@ -71,8 +74,8 @@ public class SaveAndLoad : MonoBehaviour
         colonyManager.GenerateChrom();
         colonyManager.GenerateNewBear(TraditionsManager.Traditions.Beekeepers);
         colonyManager.GenerateNewBear(TraditionsManager.Traditions.Programmers);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Beekeepers);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Programmers);
+        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Constructors);
+        colonyManager.GenerateNewBear(TraditionsManager.Traditions.BioEngineers);
     }
 
     /// <summary>
@@ -162,10 +165,13 @@ public class SaveAndLoad : MonoBehaviour
             Bear bear = colonyManager.bearsInColony[i];
             BearSave bearSave = systemSaver.gameSave.bearSaves[i];
 
-            // Сейвим координаты
-            GameObject bearObj = GameObject.Find(bear.gameName);
-            bearSave.x = bearObj.transform.position.x;
-            bearSave.z = bearObj.transform.position.z;
+            if (bear.tradition != TraditionsManager.Traditions.Chrom)
+            {
+                // Сейвим координаты
+                GameObject bearObj = GameObject.Find(bear.gameName);
+                bearSave.x = bearObj.transform.position.x;
+                bearSave.z = bearObj.transform.position.z;
+            }
 
             // Настроение голод и активность
             bearSave.hungry = bear.hungry;
