@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -38,8 +39,18 @@ public class APIClient : MonoBehaviour
     /// Приватим конструктор, так как это требует паттерн
     /// </summary>
     private APIClient () {}
-    
-    
+
+
+    public void Update()
+    {
+        // Проверим подключение к интернету
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            IfNoInternetConnection();
+        }
+    }
+
+
     // records block
     // Все эти record'ы, это удобное представление Http ответов
 
@@ -154,13 +165,6 @@ public class APIClient : MonoBehaviour
         {
             await Task.Yield();
         }
-        
-        // Проверим подключение к интернету
-        if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError)
-        {
-            IfNoInternetConnection();
-            return null;
-        }
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
@@ -177,12 +181,9 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private void IfNoInternetConnection()
     {
-        if (Application.internetReachability != NetworkReachability.NotReachable)
-        {
-            SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
-            saveAndLoad.SaveGame();
-            SceneManager.LoadScene("Menu");
-        }
+        SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
+        saveAndLoad.SaveGame();
+        SceneManager.LoadScene("Menu");
     }
     
     /// <summary>

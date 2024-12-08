@@ -366,34 +366,43 @@ public class BuildingSystem : MonoBehaviour
         // Склады и тд
         Building build = totalBuild.GetComponent<Building>();
         selectedResource = build.typeResource;
+        string resourse = "";
         switch (selectedResource)
         {
             case ColonyManager.typeOfResource.materials:
                 scripts.colonyManager.MaxMaterials += build.resourceGive;
+                resourse = "maxMaterials";
                 break;
             case ColonyManager.typeOfResource.materialPlus:
                 scripts.colonyManager.MaxMaterialsPlus += build.resourceGive;
+                resourse = "maxMaterialsPlus";
                 break;
             case ColonyManager.typeOfResource.food:
                 scripts.colonyManager.MaxFood += build.resourceGive;
+                resourse = "maxFood";
                 break;
             case ColonyManager.typeOfResource.honey:
                 scripts.colonyManager.MaxHoney += build.resourceGive;
+                resourse = "maxHoney";
                 break;
             case ColonyManager.typeOfResource.bioFuel:
                 scripts.colonyManager.MaxBiofuel += build.resourceGive;
+                resourse = "maxBiofuel";
                 break;
             case ColonyManager.typeOfResource.bears:
                 scripts.colonyManager.maxBears += build.resourceGive;
+                resourse = "maxBears";
                 break;
             case ColonyManager.typeOfResource.energy:
                 scripts.colonyManager.Energy += build.resourceGive;
-                APIClient.Instance.CreateLogRequest(
-                    "Повышение объема максимальной энергии",
-                    Player.Instance.playerName,
-                    new Dictionary<string, string> {{"energy", "+" + build.resourceGive}});
-                scripts.colonyManager.MaxEnergy += build.resourceGive;
+                resourse = "energy";
                 break;
         }
+        
+        APIClient.Instance.CreateLogRequest(
+            "Повышение лимитов за здание",
+            Player.Instance.playerName,
+            new Dictionary<string, string> {{resourse, "+" + build.resourceGive}});
+        scripts.colonyManager.MaxEnergy += build.resourceGive;
     }
 }
