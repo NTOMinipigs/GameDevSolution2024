@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Building : MonoBehaviour
 {
@@ -54,6 +55,9 @@ public class Building : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Заработок с заводов, ферм и прочего
+    /// </summary>
     private void FixedUpdate()
     {
         if (builded && typeOfBuilding == TypesOfBuilding.building && canWork)
@@ -63,24 +67,36 @@ public class Building : MonoBehaviour
             {
                 steps = 0f;
                 float earn = (countOfBears + countOfDrone) * resourseOneWorker;
+                string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
                 switch (typeResource)
                 {
                     case ColonyManager.typeOfResource.materials:
                         scripts.colonyManager.Materials += earn;
+                        resourceChanged = "materials";
                         break;
                     case ColonyManager.typeOfResource.materialPlus:
                         scripts.colonyManager.materialsPlus += earn;
+                        resourceChanged = "materialsPlus";
                         break;
                     case ColonyManager.typeOfResource.food:
                         scripts.colonyManager.Food += earn;
+                        resourceChanged = "food";
                         break;
                     case ColonyManager.typeOfResource.honey:
                         scripts.colonyManager.Honey += earn;
+                        resourceChanged = "honey";
                         break;
                     case ColonyManager.typeOfResource.bioFuel:
                         scripts.colonyManager.Biofuel += earn;
+                        resourceChanged = "bioFuel";
                         break;
                 }
+
+                // Лог
+                APIClient.Instance.CreateLogRequest(
+                    "Новые ресурсы произведенные в результате работы некоторого строения",
+                    Player.Instance.playerName,
+                    new Dictionary<string, string>() {{resourceChanged, "+" + earn}});
             }
         }
     }

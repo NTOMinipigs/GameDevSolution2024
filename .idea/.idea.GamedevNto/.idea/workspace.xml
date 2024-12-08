@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="" />
+    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="bugfix + add server requests">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GamedevNto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GamedevNto/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,12 +25,13 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/00d2ed804a47477fbcd16b18f553ed824f9400/2a/577bfe63/JsonSerializer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4da806cbfd6b460c922c5a83e4fb97f993fe00/43/4f6e455c/SerializedProperty.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/ef/b73d5cbe/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8f02bdf82edc4309b57af878cc7723ff468a00/84/30019751/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/908567eb5a7b4752bcbdfc8d1c968896171a00/43/04cbaee7/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/908567eb5a7b4752bcbdfc8d1c968896171a00/43/04cbaee7/GameObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/2d/54b6f4ea/Task`1.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scenes/Game.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scenes/Game.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Tests/EditMode/APIClientIntegrationTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scripts/Colony/BearTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scripts/save/GameSave.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scripts/saveAndLoad.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -55,6 +62,14 @@
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../game.x86_64" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$USER_HOME$/Unity/Hub/Editor/2022.3.4f1/Editor/Unity" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;$PROJECT_DIR$&quot; -debugCodeOptimization" />
@@ -131,6 +146,8 @@
       <workItem from="1733564035427" duration="266000" />
       <workItem from="1733564334495" duration="6155000" />
       <workItem from="1733570842341" duration="493000" />
+      <workItem from="1733581112676" duration="12348000" />
+      <workItem from="1733663795946" duration="715000" />
     </task>
     <task id="LOCAL-00001" summary="remove govnocode">
       <option name="closed" value="true" />
@@ -204,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733571010612</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="bugfix + add server requests">
+      <option name="closed" value="true" />
+      <created>1733582442647</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1733582442647</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +253,8 @@
     <MESSAGE value="save and load багфикс хуйфикс" />
     <MESSAGE value="camera zoom" />
     <MESSAGE value="не помню что это, но это очень важно" />
-    <option name="LAST_COMMIT_MESSAGE" value="не помню что это, но это очень важно" />
+    <MESSAGE value="bugfix + add server requests" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix + add server requests" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -38,8 +39,18 @@ public class APIClient : MonoBehaviour
     /// Приватим конструктор, так как это требует паттерн
     /// </summary>
     private APIClient () {}
-    
-    
+
+
+    public void Update()
+    {
+        // Проверим подключение к интернету
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            IfNoInternetConnection();
+        }
+    }
+
+
     // records block
     // Все эти record'ы, это удобное представление Http ответов
 
@@ -88,9 +99,9 @@ public class APIClient : MonoBehaviour
         public string Comment { get; }
         public string PlayerName { get; }
         public string ShopName { get; }
-        public Dictionary<string, int> ResourcesChanged { get; }
+        public Dictionary<string, string> ResourcesChanged { get; }
 
-        public ResourcesLog(string comment, string playerName, string shopName, Dictionary<string, int> resourcesChanged)
+        public ResourcesLog(string comment, string playerName, string shopName, Dictionary<string, string> resourcesChanged)
         {
             Comment = comment;
             PlayerName = playerName;
@@ -154,13 +165,6 @@ public class APIClient : MonoBehaviour
         {
             await Task.Yield();
         }
-        
-        // Проверим подключение к интернету
-        if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError)
-        {
-            IfNoInternetConnection();
-            return null;
-        }
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
@@ -177,12 +181,9 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private void IfNoInternetConnection()
     {
-        if (Application.internetReachability != NetworkReachability.NotReachable)
-        {
-            SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
-            saveAndLoad.SaveGame();
-            SceneManager.LoadScene("Menu");
-        }
+        SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
+        saveAndLoad.SaveGame();
+        SceneManager.LoadScene("Menu");
     }
     
     /// <summary>
@@ -345,7 +346,7 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">Запрашиваемый юзернейм</param>
     /// <param name="requestResources">Изменения в ивентаре</param>
     /// <returns>SendResoursesLog record</returns>
-    public async Task<SendResourcesLog?> CreateLogRequest(string requestComment, string requestLogin, Dictionary<string, int> requestResources)
+    public async Task<SendResourcesLog?> CreateLogRequest(string requestComment, string requestLogin, Dictionary<string, string> requestResources)
     {
         return await SendPostAsync<SendResourcesLog>(
             "logs/",

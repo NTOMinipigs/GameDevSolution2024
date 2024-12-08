@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -143,25 +144,44 @@ public class BuildingSystem : MonoBehaviour
     public void PickUpResource(GameObject resourceObj)
     {
         selectedResource = resourceObj.GetComponent<Building>().typeResource;
+        string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
+        int earn = 0;  // Вынес в отдельную переменную, т.к. после свитчкейса нужно записать все в лог
+        
         switch (selectedResource)
         {
             case ColonyManager.typeOfResource.materials:
-                scripts.colonyManager.Materials += Random.Range(15, 40);
+                earn = Random.Range(15, 40);
+                resourceChanged = "materials";
+                scripts.colonyManager.Materials += earn;
                 break;
             case ColonyManager.typeOfResource.materialPlus:
-                scripts.colonyManager.materialsPlus += Random.Range(1, 5);
+                earn = Random.Range(1, 5);
+                resourceChanged = "materialPlus";
+                scripts.colonyManager.materialsPlus += earn;
                 break;
             case ColonyManager.typeOfResource.food:
-                scripts.colonyManager.Food += Random.Range(1, 10);
+                earn = Random.Range(1, 10);
+                resourceChanged = "food";
+                scripts.colonyManager.Food += earn;
                 break;
             case ColonyManager.typeOfResource.honey:
-                scripts.colonyManager.Honey += Random.Range(5, 10);
+                earn = Random.Range(5, 10);
+                resourceChanged = "honey";
+                scripts.colonyManager.Honey += earn;
                 break;
             case ColonyManager.typeOfResource.bioFuel:
-                scripts.colonyManager.Biofuel += Random.Range(5, 15);
+                earn = Random.Range(5, 15);
+                resourceChanged = "bioFuel";
+                scripts.colonyManager.Biofuel += earn;
                 break;
         }
+        
         DestroyBuilding(resourceObj);
+        // Лог
+        APIClient.Instance.CreateLogRequest(
+            "Новые ресурсы произведенные в результате работы некоторого строения",
+            Player.Instance.playerName,
+            new Dictionary<string, string>() {{resourceChanged, "+" + earn}});
     }
 
     public void StartPlacingBuilding(Building buildingPrefab) // Начинаем размещать объект. Метод для кнопки
@@ -196,7 +216,15 @@ public class BuildingSystem : MonoBehaviour
             Destroy(selectedBuild.gameObject);
             scripts.colonyManager.Materials += selectedBuild.materialsNeed / 2;
             if (selectedBuild.energyNeed != 0)
+            {
                 scripts.colonyManager.Energy -= selectedBuild.energyNeed;
+
+                APIClient.Instance.CreateLogRequest(
+                    "Потрачена энергия на снос здания",
+                    Player.Instance.playerName,
+                    new Dictionary<string, string>() { { "energy", "-" + selectedBuild.energyNeed } });
+            }
+
             selectedBuild = null;
             buildMenu.gameObject.SetActive(false);
         }
@@ -291,11 +319,9 @@ public class BuildingSystem : MonoBehaviour
     // Поставить здание
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
-        for (int x = 0; x < flyingBuilding.Size.x; x++)
-        {
-            for (int y = 0; y < flyingBuilding.Size.y; y++)
-                grid[placeX + x, placeY + y] = flyingBuilding;
-        }
+        PlaceBuilding(flyingBuilding, placeX, placeY);
+        
+        // Кор
 
         if (flyingBuilding.buildingName == "Солнечная панель" && scripts.questSystem.totalQuest.questName == "StartQuest")
             scripts.questSystem.MoveNextStep();
@@ -308,6 +334,41 @@ public class BuildingSystem : MonoBehaviour
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
+        
+        // Колония менеджер
+        scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject,
+            flyingBuilding.stepsNeed);
+        flyingBuilding.SetBuilding();
+        scripts.colonyManager.Energy -= 1;
+        scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
+        
+        // Логи на создание здания
+        APIClient.Instance.CreateLogRequest(
+            "Затраты энергии и материалов на постройку здания",
+            Player.Instance.playerName,
+            new Dictionary<string, string>()
+            {
+                {"energy", "-1"},
+                {"materials", "-" + flyingBuilding.materialsNeed}
+            }
+        );
+        
+    }
+
+    /// <summary>
+    /// Поставит постройку по координатам
+    /// Вынес в отдельный метод так как это вполне себе самостоятельный метод который можно использовать извне (Уже используется)
+    /// </summary>
+    /// <param name="building">Постройка которую нужно поставить</param>
+    /// <param name="placeX">Координата по X</param>
+    /// <param name="placeY">Координата по Y</param>
+    public void PlaceBuilding(Building building, int placeX, int placeY)
+    {
+        for (int x = 0; x < building.Size.x; x++)
+        {
+            for (int y = 0; y < building.Size.y; y++)
+                grid[placeX + x, placeY + y] = building;
+        }
     }
 
     public void SetBuildSettings(GameObject totalBuild)
@@ -315,30 +376,43 @@ public class BuildingSystem : MonoBehaviour
         // Склады и тд
         Building build = totalBuild.GetComponent<Building>();
         selectedResource = build.typeResource;
+        string resourse = "";
         switch (selectedResource)
         {
             case ColonyManager.typeOfResource.materials:
                 scripts.colonyManager.MaxMaterials += build.resourceGive;
+                resourse = "maxMaterials";
                 break;
             case ColonyManager.typeOfResource.materialPlus:
                 scripts.colonyManager.MaxMaterialsPlus += build.resourceGive;
+                resourse = "maxMaterialsPlus";
                 break;
             case ColonyManager.typeOfResource.food:
                 scripts.colonyManager.MaxFood += build.resourceGive;
+                resourse = "maxFood";
                 break;
             case ColonyManager.typeOfResource.honey:
                 scripts.colonyManager.MaxHoney += build.resourceGive;
+                resourse = "maxHoney";
                 break;
             case ColonyManager.typeOfResource.bioFuel:
                 scripts.colonyManager.MaxBiofuel += build.resourceGive;
+                resourse = "maxBiofuel";
                 break;
             case ColonyManager.typeOfResource.bears:
                 scripts.colonyManager.maxBears += build.resourceGive;
+                resourse = "maxBears";
                 break;
             case ColonyManager.typeOfResource.energy:
                 scripts.colonyManager.Energy += build.resourceGive;
-                scripts.colonyManager.MaxEnergy += build.resourceGive;
+                resourse = "energy";
                 break;
         }
+        
+        APIClient.Instance.CreateLogRequest(
+            "Повышение лимитов за здание",
+            Player.Instance.playerName,
+            new Dictionary<string, string> {{resourse, "+" + build.resourceGive}});
+        scripts.colonyManager.MaxEnergy += build.resourceGive;
     }
 }
