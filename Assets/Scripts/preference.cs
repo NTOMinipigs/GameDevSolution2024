@@ -23,10 +23,10 @@ public class Preference : MonoBehaviour
 
     public void Update() // Знаю, что это неправильно... Но как есть
     {
-        if (preferenceMenu.activeSelf)
-        {
-            sliderOfSens.value = sensitivityOfCamera;
-            sliderOfVolume.value = globalVolume;
-        }
+        // if (preferenceMenu.activeSelf)
+        // {
+        //     sliderOfSens.value = sensitivityOfCamera;
+        //     sliderOfVolume.value = globalVolume;
+        // }
     }
 }

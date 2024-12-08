@@ -210,6 +210,7 @@ public class APIClient : MonoBehaviour
     private async Task<T> SendPostAsync<T>(string uri, object requestBody) where T : class
     {
         string jsonString = JsonConvert.SerializeObject(requestBody);
+        Debug.Log(jsonString);
         using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "POST"))
         {
             byte[] jsonInBytes = new UTF8Encoding().GetBytes(jsonString);
@@ -275,7 +276,7 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">Логин игрока</param>
     /// <param name="requestResourses">Ресурсы игрока</param>
     /// <returns></returns>
-    public async Task<UserInventory?> CreatePlayerRequest(string requestLogin, Dictionary<string, byte>? requestResourses)
+    public async Task<UserInventory?> CreatePlayerRequest(string requestLogin, Dictionary<string, int>? requestResourses)
     {
         object requestBody;
 
@@ -286,7 +287,7 @@ public class APIClient : MonoBehaviour
 
         else
         {
-            requestBody = new {name = requestLogin, resourses = requestResourses};
+            requestBody = new {name = requestLogin, resources = requestResourses};
         }
 
         return await SendPostAsync<UserInventory>("players/", requestBody); // Отправляем запрос

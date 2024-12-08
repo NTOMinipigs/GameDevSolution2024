@@ -84,22 +84,22 @@ public class TravelingManager : MonoBehaviour
         {
             switch (reward.typeOfReward)
             {
-                case ColonyManager.typeOfResource.materials:
+                case ResourcesManager.Resources.Material:
                     scripts.colonyManager.Materials += reward.count;
                     break;
-                case ColonyManager.typeOfResource.materialPlus:
+                case ResourcesManager.Resources.MaterialPlus:
                     scripts.colonyManager.materialsPlus += reward.count;
                     break;
-                case ColonyManager.typeOfResource.food:
+                case ResourcesManager.Resources.Food:
                     scripts.colonyManager.Food += reward.count;
                     break;
-                case ColonyManager.typeOfResource.honey:
+                case ResourcesManager.Resources.Honey:
                     scripts.colonyManager.Honey += reward.count;
                     break;
-                case ColonyManager.typeOfResource.bioFuel:
+                case ResourcesManager.Resources.BioFuel:
                     scripts.colonyManager.Biofuel += reward.count;
                     break;
-                case ColonyManager.typeOfResource.bears:
+                case ResourcesManager.Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
                     {
                         // Получаем все значения перечисления Traditions

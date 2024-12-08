@@ -7,5 +7,5 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; } = new();
-    public string playerName = "Justiks";
+    public string playerName;
 }

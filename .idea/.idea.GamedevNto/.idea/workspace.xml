@@ -4,11 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="bugfix + add server requests">
+    <list default="true" id="1a7e2585-d7b0-41b4-93b8-23817b0b0e18" name="Changes" comment="add sync with api for max resources and fix bug in no internet connection (check after build!)">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ResourcesManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ResourcesManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GamedevNto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GamedevNto/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OffersPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OffersPrefab.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/menuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/menuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/preference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/preference.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/questSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/questSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/PlaceOfTravel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/PlaceOfTravel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/travelingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/travelingManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,9 +42,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8f02bdf82edc4309b57af878cc7723ff468a00/84/30019751/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/908567eb5a7b4752bcbdfc8d1c968896171a00/43/04cbaee7/GameObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/2d/54b6f4ea/Task`1.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scripts/Colony/BearTask.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scripts/save/GameSave.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/max/Рабочий стол/GamedevNto/Assets/Scripts/saveAndLoad.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f2970ef808f5fc49ec9ff7383e62c1970ecafafc80cbadf6463174dba4e2d7/System.Resources.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -45,22 +56,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Standalone Player.Start Unity.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dubkov&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Standalone Player.Start Unity.executor": "Debug",
+    "git-widget-placeholder": "dubkov",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/../game.x86_64" />
@@ -99,13 +110,15 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="31329">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="31329" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -147,7 +160,8 @@
       <workItem from="1733564334495" duration="6155000" />
       <workItem from="1733570842341" duration="493000" />
       <workItem from="1733581112676" duration="12348000" />
-      <workItem from="1733663795946" duration="715000" />
+      <workItem from="1733663795946" duration="4463000" />
+      <workItem from="1733668684046" duration="11339000" />
     </task>
     <task id="LOCAL-00001" summary="remove govnocode">
       <option name="closed" value="true" />
@@ -229,7 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733582442647</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add sync with api for max resources and fix bug in no internet connection (check after build!)">
+      <option name="closed" value="true" />
+      <created>1733664746471</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733664746471</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,9 +276,118 @@
     <MESSAGE value="camera zoom" />
     <MESSAGE value="не помню что это, но это очень важно" />
     <MESSAGE value="bugfix + add server requests" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix + add server requests" />
+    <MESSAGE value="add sync with api for max resources and fix bug in no internet connection (check after build!)" />
+    <option name="LAST_COMMIT_MESSAGE" value="add sync with api for max resources and fix bug in no internet connection (check after build!)" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>212</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7044" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7066" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>214</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7169" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7170" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>215</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7183" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7244" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>216</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7257" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7323" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>218</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7411" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7480" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>217</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7336" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7398" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/APIClient.cs</url>
+          <line>219</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" containingFunctionPresentation="Method 'SendPostAsync'">
+            <startOffsets>
+              <option value="7493" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7549" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/menuManager.cs</url>
+          <line>52</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/menuManager.cs" containingFunctionPresentation="Method 'ActivateNickname'">
+            <startOffsets>
+              <option value="1675" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1801" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEngine.Networking.DownloadHandlerBuffer" memberName="m_NativeData" />

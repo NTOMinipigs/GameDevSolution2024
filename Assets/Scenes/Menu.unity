@@ -1536,7 +1536,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1258667951}
   - component: {fileID: 1258667950}
-  - component: {fileID: 1258667952}
   m_Layer: 0
   m_Name: scripts
   m_TagString: Untagged
@@ -1557,7 +1556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preference: {fileID: 0}
-  menuNickname: {fileID: 1258667949}
+  menuNickname: {fileID: 1355450167}
   inputFieldNickname: {fileID: 97118614}
 --- !u!4 &1258667951
 Transform:
@@ -1574,22 +1573,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1258667952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1258667949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea943fa79fb20b44986f656130a988e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  preferenceMenu: {fileID: 0}
-  sensitivityOfCamera: 5
-  globalVolume: 100
-  postProcessing: 1
 --- !u!1 &1355450167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,7 +1588,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1355450168
 RectTransform:
   m_ObjectHideFlags: 0

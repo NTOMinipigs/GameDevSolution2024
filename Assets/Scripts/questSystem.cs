@@ -87,10 +87,10 @@ public class QuestSystem : MonoBehaviour
                 UpdateQuestUI();
             }
         }
-        if (totalQuest != null)
-            totalQuestText.text = totalQuest.steps[totalStep].stepName;
-        else
-            totalQuestText.text = "";
+        // if (totalQuest != null)
+        //     totalQuestText.text = totalQuest.steps[totalStep].stepName;
+        // else
+        //     totalQuestText.text = "";
     }
 }
 
