@@ -25,6 +25,7 @@ public class TraditionsManager : MonoBehaviour
         AddToDictionaries(Traditions.Programmers, "Программист");
         AddToDictionaries(Traditions.BioEngineers, "Биоинженер");
         AddToDictionaries(Traditions.Chrom, "Первопроходец");
+        Debug.Log("Traditions was loaded");
     }
     
     /// <summary>

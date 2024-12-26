@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
@@ -25,7 +26,10 @@ public class SaveAndLoad : MonoBehaviour
 
         LoadGame();
     }
-
+    
+    /// <summary>
+    /// При закрытии игры сработает это
+    /// </summary>
     void OnApplicationQuit()
     {
         SaveGame();
@@ -97,9 +101,9 @@ public class SaveAndLoad : MonoBehaviour
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
 
-        foreach (BearSave bearSave in systemSaver.gameSave.bearSaves)
+        foreach (Bear bear in systemSaver.gameSave.bears)
         {
-            colonyManager.BearSpawn(bearSave);
+            colonyManager.BearSpawn(bear);
         }
     }
     
@@ -156,27 +160,20 @@ public class SaveAndLoad : MonoBehaviour
     private void SaveBears()
     {
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
-        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         // Рассчитывается на то, что каждый медведь из bearsInColony, соответствует индексу в json 
 
-        for (int i = 0; i < colonyManager.bearsInColony.Count; i++)
+        for (int i = 0; i < colonyManager.bearsInColony.Count; i++) 
+            
+        // Получаем медведей медведя и сейв медведя из списков
+        foreach (Bear bear in colonyManager.bearsInColony)
         {
-            // Получаем медведей медведя и сейв медведя из списков
-            Bear bear = colonyManager.bearsInColony[i];
-            BearSave bearSave = systemSaver.gameSave.bearSaves[i];
-
             if (bear.tradition != TraditionsManager.Traditions.Chrom)
             {
                 // Сейвим координаты
                 GameObject bearObj = GameObject.Find(bear.gameName);
-                bearSave.x = bearObj.transform.position.x;
-                bearSave.z = bearObj.transform.position.z;
+                bear.x = bearObj.transform.position.x;
+                bear.z = bearObj.transform.position.z;
             }
-
-            // Настроение голод и активность
-            bearSave.hungry = bear.hungry;
-            bearSave.tired = bear.tired;
-            bearSave.activity = ActivityManager.GetStrByActivity(bear.activity);
         }
     }
 
@@ -194,12 +191,13 @@ public class SaveAndLoad : MonoBehaviour
         foreach (BearTask bearTask in colonyManager.bearTasks) // Проходимся по всем медведям
         {
             Dictionary<string, object> saveData = new Dictionary<string, object>();
-            foreach (var field in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))  // Проходимся по всем публичным филдам, чтобы найти помеченные аттрибутом
+            // Проходимся по всем публичным филдам, чтобы найти помеченные аттрибутом
+            foreach (var field in type.GetProperties(BindingFlags.Public | BindingFlags.Instance)) 
             {
-                JsonSerializeAttribute attribute = field.GetCustomAttribute<JsonSerializeAttribute>();
+                JsonPropertyAttribute attribute = field.GetCustomAttribute<JsonPropertyAttribute>();
                 if (attribute != null) // Если у поля есть такой аттрибут, достаем из него значение
                 {
-                     saveData[attribute.inJsonName] = field.GetValue(bearTask);
+                     saveData[attribute.PropertyName] = field.GetValue(bearTask);
                 }
             }
             systemSaver.gameSave.tasksSaves.Add(saveData);

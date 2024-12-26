@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 /// <summary>
@@ -12,14 +13,14 @@ public class BearTask
     public GameObject objectOfTask;
     public Bear selectedBear;
 
-    [JsonSerialize("totalSteps")] public float totalSteps { get; set; } // Текущее
-    [JsonSerialize("needSteps")] public float needSteps { get; set; } // Колво для завершения задачи
+    [JsonProperty("totalSteps")] public float totalSteps { get; set; } // Текущее
+    [JsonProperty("needSteps")] public float needSteps { get; set; } // Колво для завершения задачи
 
     /// <summary>
     /// Приведение режима задачи в строчный вид, для записи json
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">Если в свитчкейсе нет текущего таск мода</exception>
-    [JsonSerialize("taskMode")]
+    [JsonProperty("taskMode")]
     public string taskModeString
     {
         get
@@ -38,13 +39,13 @@ public class BearTask
     /// <summary>
     /// Имя объекта к которому применяется таска, приведение к строке для записи в json
     /// </summary>
-    [JsonSerialize("ObjectOfTaskName")]
+    [JsonProperty("ObjectOfTaskName")]
     public string taskName => objectOfTask.name;
     
     /// <summary>
     /// Вернет имя медведя в игре в формате строки для записи в json
     /// </summary>
-    [JsonSerialize("BearGameName")]
+    [JsonProperty("BearGameName")]
     public string bearGameName => selectedBear.gameName;
     
     /// <summary>

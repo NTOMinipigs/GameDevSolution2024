@@ -1,5 +1,10 @@
 using UnityEngine;
 
+
+
+/// <summary>
+/// Все это - карта
+/// </summary>
 [System.Serializable]
 public class PlaceOfTravel
 {

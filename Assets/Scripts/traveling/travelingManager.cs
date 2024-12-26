@@ -48,10 +48,13 @@ public class TravelingManager : MonoBehaviour
                 selectedPlace = place;
                 if (blockOfTravel.activeSelf)
                 {
+                    TextMeshProUGUI travelInfo =
+                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
+                    
                     if (activatedPlace.gameName == "")
-                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>().text = (place.timeToGoing / 60).ToString() + " мин/-" + place.foodNeed.ToString() + " еды";
+                        travelInfo.text = (place.timeToGoing / 60).ToString() + " мин/-" + place.foodNeed.ToString() + " еды";
                     else
-                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>().text = "Экспедиция уже начата!";
+                        travelInfo.text = "Экспедиция уже начата!";
                 }
                 break;
             }
@@ -74,6 +77,9 @@ public class TravelingManager : MonoBehaviour
         precentOfKnowPlanet.text = "Мир исследован на " + ((1 - (allPlaces.Length - maxPlaces)) * 100).ToString() + "%";
     }
 
+    /// <summary>
+    /// Блять что это
+    /// </summary>
     public void ActivateTravelResult()
     {
         resultOfTravelMenu.gameObject.SetActive(true);

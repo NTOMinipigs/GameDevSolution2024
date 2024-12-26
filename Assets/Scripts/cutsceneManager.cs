@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,7 +6,7 @@ using TMPro;
 public class cutsceneManager : MonoBehaviour
 {
     private int step;
-    [TextAreaAttribute][SerializeField] private string[] stepText = new string[0];
+    [TextArea][SerializeField] private string[] stepText = new string[0];
     [SerializeField] private Sprite[] stepSprite = new Sprite[0];
     [SerializeField] private TextMeshProUGUI textHistory;
     [SerializeField] private Image bg;

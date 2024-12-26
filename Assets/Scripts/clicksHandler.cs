@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ClicksHandler : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class ClicksHandler : MonoBehaviour
     //Управление временем
     public void SetTimeScale(float timeScale) => Time.timeScale = timeScale;
 
+    /// <summary>
+    /// Показать текущий статус сущности после клика
+    /// </summary>
     private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -39,26 +43,27 @@ public class ClicksHandler : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
         {
             selectedBear = null;
-            if (hit.collider.gameObject.tag == "bear")
+            Building building; // double initialize in switch fix
+            switch (hit.collider.gameObject.tag)
             {
-                selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
-                textRayTotal.text = selectedBear.TraditionStr;
-            }
-            else if (hit.collider.gameObject.tag == "building")
-            {
-                Building building = hit.collider.gameObject.GetComponent<Building>();
-                if (building.builded)
-                    textRayTotal.text = building.buildingName;
-                else
-                    textRayTotal.text = building.buildingName + "(Строится...)";
-            }
-            else if (hit.collider.gameObject.tag == "materialStack")
-            {
-                Building building = hit.collider.gameObject.GetComponent<Building>();
-                if (building.builded)
-                    textRayTotal.text = building.buildingName;
-                else
-                    textRayTotal.text = building.buildingName + "(Добывается...)";
+                case "bear":
+                    selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                    textRayTotal.text = selectedBear.TraditionStr;
+                    break;
+                case "building":
+                    building = hit.collider.gameObject.GetComponent<Building>();
+                    if (building.builded)
+                        textRayTotal.text = building.buildingName;
+                    else
+                        textRayTotal.text = building.buildingName + "(Строится...)";
+                    break;
+                case "materialStack":
+                    building= hit.collider.gameObject.GetComponent<Building>();
+                    if (building.builded)
+                        textRayTotal.text = building.buildingName;
+                    else
+                        textRayTotal.text = building.buildingName + "(Добывается...)";
+                    break;
             }
         }
         else

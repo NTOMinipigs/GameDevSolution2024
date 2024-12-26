@@ -328,22 +328,13 @@ public class ColonyManager : MonoBehaviour
                                    new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
         // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        BearSave bearSave = new BearSave();
-        bearSave.gameName = newBear.gameName;
-        bearSave.bearName = bearName;
-        bearSave.serializableBear = serializableBear.name;
-        bearSave.tradition = newBear.TraditionStr;
-        bearSave.activity = newBear.ActivityStr;
-        bearSave.hungry = 0f;
-        bearSave.tired = 0f;
-        bearSave.x = generatePosition.x;
-        bearSave.z = generatePosition.z;
-        bearSave.y = generatePosition.y;
-
-        newBear.bearSave = bearSave;
-
+        newBear.serializableBear = serializableBear.name;
+        newBear.x = generatePosition.x;
+        newBear.z = generatePosition.z;
+        newBear.y = generatePosition.y;
+        
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bearSaves.Add(bearSave);
+        systemSaver.gameSave.bears.Add(newBear);
     }
 
     /// <summary>
@@ -364,42 +355,26 @@ public class ColonyManager : MonoBehaviour
                                    new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
         // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        BearSave bearSave = new BearSave();
-        bearSave.gameName = newBear.gameName;
-        bearSave.bearName = bearName;
-        bearSave.serializableBear = serializableBear.name;
-        bearSave.tradition = newBear.TraditionStr;
-        bearSave.activity = newBear.ActivityStr;
-        bearSave.hungry = 0f;
-        bearSave.tired = 0f;
-        bearSave.x = generatePosition.x;
-        bearSave.z = generatePosition.z;
-        bearSave.y = generatePosition.y;
-
-        newBear.bearSave = bearSave;
-
+        newBear.serializableBear = serializableBear.name;
+        newBear.x = generatePosition.x;
+        newBear.z = generatePosition.z;
+        newBear.y = generatePosition.y;
+        
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bearSaves.Add(bearSave);
+        systemSaver.gameSave.bears.Add(newBear);
     }
 
     /// <summary>
     /// Осуществляет создание медведей на поле
     /// </summary>
-    /// <param name="bearSave">сейв медведя из json'а</param>
-    public void BearSpawn(BearSave bearSave)
+    /// <param name="newBear">сейв медведя из json'а</param>
+    public void BearSpawn(Bear newBear)
     {
-        SerializableBear serializableBear = GameObject.Find(bearSave.serializableBear).GetComponent<SerializableBear>();
-
-        Bear newBear = new Bear(
-            bearSave.gameName,
-            bearSave.bearName,
-            TraditionsManager.GetTraditionByStr(bearSave.tradition),
-            serializableBear.sprite);
-        newBear.activity = ActivityManager.GetActivityByStr(bearSave.activity);
+        SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
         bearsInColony.Add(newBear);
-        if (TraditionsManager.GetTraditionByStr(bearSave.tradition) != TraditionsManager.Traditions.Chrom)
+        if (TraditionsManager.GetTraditionByStr(newBear.TraditionStr) != TraditionsManager.Traditions.Chrom)
         {
-            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(bearSave.x, bearSave.y, bearSave.z), Quaternion.identity);
+            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z), Quaternion.identity);
             bearObj.name = newBear.gameName;
             bearObj.GetComponent<BearMovement>().totalBear = newBear;
         }
