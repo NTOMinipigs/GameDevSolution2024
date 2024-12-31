@@ -76,10 +76,10 @@ public class SaveAndLoad : MonoBehaviour
     {
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
         colonyManager.GenerateChrom();
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Beekeepers);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Programmers);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.Constructors);
-        colonyManager.GenerateNewBear(TraditionsManager.Traditions.BioEngineers);
+        colonyManager.GenerateNewBear(Enums.Traditions.Beekeepers);
+        colonyManager.GenerateNewBear(Enums.Traditions.Programmers);
+        colonyManager.GenerateNewBear(Enums.Traditions.Constructors);
+        colonyManager.GenerateNewBear(Enums.Traditions.BioEngineers);
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public class SaveAndLoad : MonoBehaviour
         foreach (Dictionary<string, object> task in systemSaver.gameSave.tasksSaves)
         {
             // Инициализируем все нужные переменные для создания задачи
-            BearTask.TasksMode tasksMode = BearTask.GetTaskMode((string)task["taskMode"]);
+            Enums.TasksMode tasksMode = (Enums.TasksMode) Enum.Parse(typeof(Enums.TasksMode), (string)task["taskMode"]);
             GameObject objectOfTask = GameObject.Find((string)task["ObjectOfTaskName"]);
             Bear bearObject = null;
 
@@ -167,7 +167,7 @@ public class SaveAndLoad : MonoBehaviour
         // Получаем медведей медведя и сейв медведя из списков
         foreach (Bear bear in colonyManager.bearsInColony)
         {
-            if (bear.tradition != TraditionsManager.Traditions.Chrom)
+            if (bear.tradition != Enums.Traditions.Chrom)
             {
                 // Сейвим координаты
                 GameObject bearObj = GameObject.Find(bear.gameName);

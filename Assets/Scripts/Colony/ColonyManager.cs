@@ -295,16 +295,16 @@ public class ColonyManager : MonoBehaviour
     /// <param name="tradition">Традиция</param>
     /// <returns>Объект SerailizeBear (см документацию этого класса)</returns>
     /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
-    private SerializableBear GetSerializableBear(TraditionsManager.Traditions tradition)
+    private SerializableBear GetSerializableBear(Enums.Traditions tradition)
     {
         return tradition switch // Упростил выражение
         {
-            TraditionsManager.Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
-            TraditionsManager.Traditions.Constructors => spriteConstructors[
+            Enums.Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
+            Enums.Traditions.Constructors => spriteConstructors[
                 Random.Range(0, spriteConstructors.Length - 1)],
-            TraditionsManager.Traditions.Programmers => spriteProgrammers
+            Enums.Traditions.Programmers => spriteProgrammers
                 [Random.Range(0, spriteProgrammers.Length - 1)],
-            TraditionsManager.Traditions.BioEngineers => spriteBioengineers[
+            Enums.Traditions.BioEngineers => spriteBioengineers[
                 Random.Range(0, spriteBioengineers.Length - 1)],
             _ => throw new ArgumentException("Tradition " + tradition + " not found!")
         };
@@ -315,7 +315,7 @@ public class ColonyManager : MonoBehaviour
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
-    public void GenerateNewBear(TraditionsManager.Traditions tradition)
+    public void GenerateNewBear(Enums.Traditions tradition)
     {
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
@@ -345,12 +345,12 @@ public class ColonyManager : MonoBehaviour
         string bearName = "Хром";
         SerializableBear serializableBear = GameObject.Find("BearChrom_0").GetComponent<SerializableBear>();
         Bear newBear = new Bear(
-            TraditionsManager.Traditions.Chrom.ToString() + Random.Range(0, 1000),
+            Enums.Traditions.Chrom.ToString() + Random.Range(0, 1000),
             bearName,
-            TraditionsManager.Traditions.Chrom,
+            Enums.Traditions.Chrom,
              serializableBear.sprite
             );
-        newBear.activity = ActivityManager.Activities.Chill;
+        newBear.activity = Enums.Activities.Chill;
         Vector3 generatePosition = spawnBears.transform.position +
                                    new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
@@ -372,7 +372,7 @@ public class ColonyManager : MonoBehaviour
     {
         SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
         bearsInColony.Add(newBear);
-        if (TraditionsManager.GetTraditionByStr(newBear.TraditionStr) != TraditionsManager.Traditions.Chrom)
+        if ((Enums.Traditions)Enum.Parse(typeof(Enums.Traditions), newBear.TraditionStr) != Enums.Traditions.Chrom)
         {
             GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z), Quaternion.identity);
             bearObj.name = newBear.gameName;
@@ -399,7 +399,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == ActivityManager.Activities.Chill || GetBearTask(bear) == null) && bear.tradition != TraditionsManager.Traditions.Chrom)
+            if ((bear.activity == Enums.Activities.Chill || GetBearTask(bear) == null) && bear.tradition != Enums.Traditions.Chrom)
                 return bear;
         }
         return null;
@@ -408,7 +408,7 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Сгенерировать имя основываясь на гендере
     /// </summary>
-    public void CreateNewTask(BearTask.TasksMode newTaskMode, GameObject objectOfTask, float steps)
+    public void CreateNewTask(Enums.TasksMode newTaskMode, GameObject objectOfTask, float steps)
     {
         // TODO: сделать возможнсть работы по кастам
         BearTask task = new BearTask(newTaskMode, objectOfTask, steps);
@@ -416,7 +416,7 @@ public class ColonyManager : MonoBehaviour
         if (chillBear != null)
         {
             task.selectedBear = chillBear;
-            chillBear.activity = ActivityManager.Activities.Work;
+            chillBear.activity = Enums.Activities.Work;
         }
         bearTasks.Add(task);
     }
@@ -431,13 +431,13 @@ public class ColonyManager : MonoBehaviour
             if (task.selectedBear == null)
             {
                 task.selectedBear = bear;
-                bear.activity = ActivityManager.Activities.Work;
+                bear.activity = Enums.Activities.Work;
                 break;
             }
         }
         // Если работы не нашлось
         if (GetBearTask(bear) == null)
-            bear.activity = ActivityManager.Activities.Chill;
+            bear.activity = Enums.Activities.Chill;
     }
 
     public BearTask GetBearTask(Bear bear)
@@ -452,7 +452,7 @@ public class ColonyManager : MonoBehaviour
 
     public void EndTask(BearTask task)
     {
-        if (task.taskMode == BearTask.TasksMode.build)
+        if (task.taskMode == Enums.TasksMode.Build)
         {
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
@@ -460,14 +460,14 @@ public class ColonyManager : MonoBehaviour
             if (task.objectOfTask.GetComponent<Building>().scoutHome)
                 scoutHome = true;
         }
-        else if (task.taskMode == BearTask.TasksMode.getResource)
+        else if (task.taskMode == Enums.TasksMode.GetResource)
             scripts.buildingSystem.PickUpResource(task.objectOfTask);
 
         Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
 
         if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
-            selectedBear.activity = ActivityManager.Activities.Chill;
+            selectedBear.activity = Enums.Activities.Chill;
         else
             SetTaskToBear(selectedBear);
     }

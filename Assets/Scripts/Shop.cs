@@ -12,13 +12,13 @@ public class Shop : MonoBehaviour
     public GameObject offerPrefab, contentGameObject; // Префаб предложения
     public Sprite[] resourcesSprites = new Sprite[0];
     
-    private ResourcesManager.Resources[] colonyResource = new ResourcesManager.Resources[5]
+    private Enums.Resources[] colonyResource = new Enums.Resources[5]
     {
-        ResourcesManager.Resources.Material,
-        ResourcesManager.Resources.MaterialPlus,
-        ResourcesManager.Resources.BioFuel,
-        ResourcesManager.Resources.Food,
-        ResourcesManager.Resources.Energy
+        Enums.Resources.Material,
+        Enums.Resources.MaterialPlus,
+        Enums.Resources.BioFuel,
+        Enums.Resources.Food,
+        Enums.Resources.Energy
     };
 
     public void Update()
@@ -41,9 +41,9 @@ public class Shop : MonoBehaviour
             Destroy(child.gameObject);
         }
         
-        ResourcesManager.Resources resource = colonyResource[buttonIndex];
+        Enums.Resources resource = colonyResource[buttonIndex];
         
-        string resourceStringName = ResourcesManager.GetStrByResource(resource);
+        string resourceStringName = resource.ToString();
         List<APIClient.UserInventory> users = await APIClient.Instance.GetUsersListRequest();
         foreach (APIClient.UserInventory user in users)
         {

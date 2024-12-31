@@ -90,26 +90,26 @@ public class TravelingManager : MonoBehaviour
         {
             switch (reward.typeOfReward)
             {
-                case ResourcesManager.Resources.Material:
+                case Enums.Resources.Material:
                     scripts.colonyManager.Materials += reward.count;
                     break;
-                case ResourcesManager.Resources.MaterialPlus:
+                case Enums.Resources.MaterialPlus:
                     scripts.colonyManager.materialsPlus += reward.count;
                     break;
-                case ResourcesManager.Resources.Food:
+                case Enums.Resources.Food:
                     scripts.colonyManager.Food += reward.count;
                     break;
-                case ResourcesManager.Resources.Honey:
+                case Enums.Resources.Honey:
                     scripts.colonyManager.Honey += reward.count;
                     break;
-                case ResourcesManager.Resources.BioFuel:
+                case Enums.Resources.BioFuel:
                     scripts.colonyManager.Biofuel += reward.count;
                     break;
-                case ResourcesManager.Resources.Bears:
+                case Enums.Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
                     {
                         // Получаем все значения перечисления Traditions
-                        TraditionsManager.Traditions[] traditions = (TraditionsManager.Traditions[])System.Enum.GetValues(typeof(TraditionsManager.Traditions));
+                        Enums.Traditions[] traditions = (Enums.Traditions[])System.Enum.GetValues(typeof(Enums.Traditions));
 
                         // Генерируем случайный индекс
                         int randomIndex = Random.Range(0, traditions.Length);

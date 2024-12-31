@@ -155,7 +155,7 @@ public class Dialog
 [System.Serializable]
 public class DialogStep
 {
-    public TraditionsManager.Traditions traditionBear;
+    public Enums.Traditions traditionBear;
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;
