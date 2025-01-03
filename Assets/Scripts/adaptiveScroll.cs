@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// Вверх вниз по UI элементам
+/// Должен подгружаться первее чем UI элементы в которых он используется, чтобы подгрузка не случалась позже
+/// </summary>
 [RequireComponent(typeof(ScrollRect))]
 public class adaptiveScroll : MonoBehaviour
 {

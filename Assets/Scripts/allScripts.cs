@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class allScripts : MonoBehaviour
 {
+    public CoroutineExecutor coroutineExecutor;
     public ClicksHandler clicksHandler;
     public CameraMove cameraMove;
     public Zoom zoom;
