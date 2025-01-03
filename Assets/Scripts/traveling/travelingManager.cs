@@ -90,26 +90,26 @@ public class TravelingManager : MonoBehaviour
         {
             switch (reward.typeOfReward)
             {
-                case Enums.Resources.Material:
+                case Resources.Material:
                     scripts.colonyManager.Materials += reward.count;
                     break;
-                case Enums.Resources.MaterialPlus:
+                case Resources.MaterialPlus:
                     scripts.colonyManager.materialsPlus += reward.count;
                     break;
-                case Enums.Resources.Food:
+                case Resources.Food:
                     scripts.colonyManager.Food += reward.count;
                     break;
-                case Enums.Resources.Honey:
+                case Resources.Honey:
                     scripts.colonyManager.Honey += reward.count;
                     break;
-                case Enums.Resources.BioFuel:
+                case Resources.BioFuel:
                     scripts.colonyManager.Biofuel += reward.count;
                     break;
-                case Enums.Resources.Bears:
+                case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
                     {
                         // Получаем все значения перечисления Traditions
-                        Enums.Traditions[] traditions = (Enums.Traditions[])System.Enum.GetValues(typeof(Enums.Traditions));
+                        Traditions[] traditions = (Traditions[])System.Enum.GetValues(typeof(Traditions));
 
                         // Генерируем случайный индекс
                         int randomIndex = Random.Range(0, traditions.Length);
@@ -118,14 +118,14 @@ public class TravelingManager : MonoBehaviour
                     break;
             }
         }
-        scripts.clicksHandler.SetTimeScale(0.05f);
+        Time.timeScale = 0.05f;
         activatedPlace = new PlaceOfTravel(); // Очистка
     }
 
     public void DisableTravelResult() // Для UI
     {
         resultOfTravelMenu.gameObject.SetActive(false);
-        scripts.clicksHandler.SetTimeScale(1f);
+        Time.timeScale = 1f;
     }
 
     private void Update()

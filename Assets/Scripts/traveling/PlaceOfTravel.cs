@@ -23,5 +23,5 @@ public class PlaceOfTravel
 public class Reward
 {
     public float count;
-    public Enums.Resources typeOfReward;
+    public Resources typeOfReward;
 }

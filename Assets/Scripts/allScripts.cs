@@ -3,6 +3,8 @@ using UnityEngine;
 public class allScripts : MonoBehaviour
 {
     public ClicksHandler clicksHandler;
+    public CameraMove cameraMove;
+    public Zoom zoom;
     public ColonyManager colonyManager;
     public DialogManager dialogManager;
     public BuildingSystem buildingSystem;

@@ -21,10 +21,10 @@ public class gameMenuManager : MonoBehaviour
         {
             mainMenu.gameObject.SetActive(true);
             preferenceMenu.gameObject.SetActive(false);
-            scripts.clicksHandler.SetTimeScale(0.05f);
+            Time.timeScale = 0.05f;
         }
         else
-            scripts.clicksHandler.SetTimeScale(1f);
+            Time.timeScale = 1f;
     }
 
     public void ManagePreferensMenu()
@@ -42,7 +42,7 @@ public class gameMenuManager : MonoBehaviour
     public void SavePreferens()
     {
         scripts.preference.sensitivityOfCamera = sensSlider.value;
-        scripts.clicksHandler.sensitivity = scripts.preference.sensitivityOfCamera;
+        scripts.cameraMove.sensitivity = scripts.preference.sensitivityOfCamera;
         scripts.preference.globalVolume = volumeSlider.value;
         scripts.preference.postProcessing = postProcessingToggle.isOn;
         ManagePreferensMenu();

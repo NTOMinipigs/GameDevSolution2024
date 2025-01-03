@@ -1,59 +1,79 @@
-
+using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 /// <summary>
-/// Класс хранящий все публичные enums в кодовой базе
+/// Перечисление активностей медведей   
 /// </summary>
-public static class Enums
+[SuppressMessage("ReSharper", "MissingXmlDoc")]
+public enum Activities
+{
+    [Description("Отдыхаю")]
+    Chill, 
+    [Description("Работаю")]
+    Work,
+    [Description("Ем")]
+    Eat
+}
+
+/// <summary>
+/// Типы ресурсов в игре
+/// </summary>
+[SuppressMessage("ReSharper", "MissingXmlDoc")]
+public enum Resources
+{
+    Material,
+    MaterialPlus,
+    BioFuel,
+    Honey,
+    Food,
+    Energy,
+    Bears
+}
+
+/// <summary>
+/// Професиии медведей
+/// </summary>
+[SuppressMessage("ReSharper", "MissingXmlDoc")]
+public enum Traditions
+{
+    None,
+    Beekeepers, 
+    Constructors, 
+    Programmers,
+    BioEngineers, 
+    Special, 
+    Chrom
+}
+
+[SuppressMessage("ReSharper", "MissingXmlDoc")]
+public enum TasksMode
+{
+    None, 
+    Build, 
+    Destroy, 
+    GetResource,
+    Create
+}
+
+/// <summary>
+/// Расширение для Enums, позволяет использовать DescriptionAttribute для задания поведения GetString метода
+/// </summary>
+public static class EnumExtensions
 {
     /// <summary>
-    /// Перечисление активностей медведей   
+    /// Замена ToString метода с расширением
     /// </summary>
-    [SuppressMessage("ReSharper", "MissingXmlDoc")]
-    public enum Activities
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static string GetString(this Enum value)
     {
-        Chill, 
-        Work,
-        Eat
-    }
-
-    /// <summary>
-    /// Типы ресурсов в игре
-    /// </summary>
-    [SuppressMessage("ReSharper", "MissingXmlDoc")]
-    public enum Resources
-    {
-        Material,
-        MaterialPlus,
-        BioFuel,
-        Honey,
-        Food,
-        Energy,
-        Bears
-    }
-    
-    /// <summary>
-    /// Професиии медведей
-    /// </summary>
-    [SuppressMessage("ReSharper", "MissingXmlDoc")]
-    public enum Traditions
-    {
-        None,
-        Beekeepers, 
-        Constructors, 
-        Programmers,
-        BioEngineers, 
-        Special, 
-        Chrom
-    }
-
-    [SuppressMessage("ReSharper", "MissingXmlDoc")]
-    public enum TasksMode
-    {
-        None, 
-        Build, 
-        Destroy, 
-        GetResource,
-        Create
+        FieldInfo field = value.GetType().GetField(value.ToString()); // Получаем филд
+        DescriptionAttribute attribute = 
+            Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute; // Ищем у него аттрибут
+        // Если аттрибут Description, используй его методы. Иначе вызываем ToString
+        return attribute == null ? value.ToString() : attribute.Description;
     }
 }
+

@@ -8,7 +8,7 @@ public class Building : MonoBehaviour
     public bool builded;
     public enum TypesOfBuilding { building, resource }
     public TypesOfBuilding typeOfBuilding;
-    public Enums.Resources typeResource;
+    public Resources typeResource;
     [Header("Workers")]
     public bool canWork;
     public float steps; // Текущее кол-во "работы" до обнуления
@@ -70,23 +70,23 @@ public class Building : MonoBehaviour
                 string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
                 switch (typeResource)
                 {
-                    case Enums.Resources.Material:
+                    case Resources.Material:
                         scripts.colonyManager.Materials += earn;
                         resourceChanged = "materials";
                         break;
-                    case Enums.Resources.MaterialPlus:
+                    case Resources.MaterialPlus:
                         scripts.colonyManager.materialsPlus += earn;
                         resourceChanged = "materialsPlus";
                         break;
-                    case Enums.Resources.Food:
+                    case Resources.Food:
                         scripts.colonyManager.Food += earn;
                         resourceChanged = "food";
                         break;
-                    case Enums.Resources.Honey:
+                    case Resources.Honey:
                         scripts.colonyManager.Honey += earn;
                         resourceChanged = "honey";
                         break;
-                    case Enums.Resources.BioFuel:
+                    case Resources.BioFuel:
                         scripts.colonyManager.Biofuel += earn;
                         resourceChanged = "bioFuel";
                         break;

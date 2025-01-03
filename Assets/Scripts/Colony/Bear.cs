@@ -19,13 +19,13 @@ public class Bear
     /// Объект Tradition из enum. Определяет профессию медвдея
     /// Сереализуемый объект в json
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("tradition")] public Enums.Traditions tradition;
+    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("tradition")] public Traditions tradition;
     
     /// <summary>
     /// Объект Activity из enum. Определяет активность медведя
     /// Сереализуемый объект в json
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("activity")]  public Enums.Activities activity;
+    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("activity")]  public Activities activity;
 
     /// <summary>
     /// gameName - имя медведя которое видит разработчик (gameObject name)
@@ -71,12 +71,12 @@ public class Bear
     /// <summary>
     /// Получить строку традиции. УСТАРЕЛО! Оставил для обратной совместимки, используй TraditionManager
     /// </summary>
-     public string TraditionStr => tradition.ToString();
+     public string TraditionStr => tradition.GetString();
 
     /// <summary>
     /// Получить строку активности. УСТАРЕЛО! Оставил для обратной совместимки, используй ActivityManager
     /// </summary>
-    public string ActivityStr => activity.ToString();
+    public string ActivityStr => activity.GetString();
 
     
     /// <summary>
@@ -86,7 +86,7 @@ public class Bear
     /// <param name="bearName">Имя медведя которое видит пользователь</param>
     /// <param name="tradition">Профессия медведя</param>
     /// <param name="sprite">Спрайт медведя</param>
-    public Bear(string gameName, string bearName, Enums.Traditions tradition, Sprite sprite)
+    public Bear(string gameName, string bearName, Traditions tradition, Sprite sprite)
     {
         this.gameName = gameName;
         this.bearName = bearName;
