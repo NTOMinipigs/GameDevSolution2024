@@ -22366,8 +22366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clicksHandler: {fileID: 1727350351}
-  cameraMove: {fileID: 0}
-  zoom: {fileID: 0}
+  cameraMove: {fileID: 1727350354}
+  zoom: {fileID: 1727350355}
   colonyManager: {fileID: 1346596987}
   dialogManager: {fileID: 1346596988}
   buildingSystem: {fileID: 863654774}
@@ -27852,7 +27852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae613d5590043b0a4db518e41d617f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 10
+  sensitivity: 20
   blockMove: 0
   scripts: {fileID: 1346596986}
   layerMaskInteract:
@@ -27872,7 +27872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minZoom: 20
   maxZoom: 60
-  sensitivity: 10
+  sensitivity: 15
 --- !u!1 &1741570842
 GameObject:
   m_ObjectHideFlags: 0
