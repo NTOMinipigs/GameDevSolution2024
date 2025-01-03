@@ -48,10 +48,13 @@ public class TravelingManager : MonoBehaviour
                 selectedPlace = place;
                 if (blockOfTravel.activeSelf)
                 {
+                    TextMeshProUGUI travelInfo =
+                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
+                    
                     if (activatedPlace.gameName == "")
-                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>().text = (place.timeToGoing / 60).ToString() + " мин/-" + place.foodNeed.ToString() + " еды";
+                        travelInfo.text = (place.timeToGoing / 60).ToString() + " мин/-" + place.foodNeed.ToString() + " еды";
                     else
-                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>().text = "Экспедиция уже начата!";
+                        travelInfo.text = "Экспедиция уже начата!";
                 }
                 break;
             }
@@ -74,6 +77,9 @@ public class TravelingManager : MonoBehaviour
         precentOfKnowPlanet.text = "Мир исследован на " + ((1 - (allPlaces.Length - maxPlaces)) * 100).ToString() + "%";
     }
 
+    /// <summary>
+    /// Блять что это
+    /// </summary>
     public void ActivateTravelResult()
     {
         resultOfTravelMenu.gameObject.SetActive(true);
@@ -84,26 +90,26 @@ public class TravelingManager : MonoBehaviour
         {
             switch (reward.typeOfReward)
             {
-                case ResourcesManager.Resources.Material:
+                case Resources.Material:
                     scripts.colonyManager.Materials += reward.count;
                     break;
-                case ResourcesManager.Resources.MaterialPlus:
+                case Resources.MaterialPlus:
                     scripts.colonyManager.materialsPlus += reward.count;
                     break;
-                case ResourcesManager.Resources.Food:
+                case Resources.Food:
                     scripts.colonyManager.Food += reward.count;
                     break;
-                case ResourcesManager.Resources.Honey:
+                case Resources.Honey:
                     scripts.colonyManager.Honey += reward.count;
                     break;
-                case ResourcesManager.Resources.BioFuel:
+                case Resources.BioFuel:
                     scripts.colonyManager.Biofuel += reward.count;
                     break;
-                case ResourcesManager.Resources.Bears:
+                case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
                     {
                         // Получаем все значения перечисления Traditions
-                        TraditionsManager.Traditions[] traditions = (TraditionsManager.Traditions[])System.Enum.GetValues(typeof(TraditionsManager.Traditions));
+                        Traditions[] traditions = (Traditions[])System.Enum.GetValues(typeof(Traditions));
 
                         // Генерируем случайный индекс
                         int randomIndex = Random.Range(0, traditions.Length);
@@ -112,14 +118,14 @@ public class TravelingManager : MonoBehaviour
                     break;
             }
         }
-        scripts.clicksHandler.SetTimeScale(0.05f);
+        Time.timeScale = 0.05f;
         activatedPlace = new PlaceOfTravel(); // Очистка
     }
 
     public void DisableTravelResult() // Для UI
     {
         resultOfTravelMenu.gameObject.SetActive(false);
-        scripts.clicksHandler.SetTimeScale(1f);
+        Time.timeScale = 1f;
     }
 
     private void Update()

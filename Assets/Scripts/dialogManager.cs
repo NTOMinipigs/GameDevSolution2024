@@ -36,7 +36,7 @@ public class DialogManager : MonoBehaviour
             Debug.Log(name);
             _activatedDialog = GetDialog(name);
             dialogMenu.gameObject.SetActive(true);
-            scripts.clicksHandler.blockMove = true;
+            scripts.cameraMove.blockMove = true;
             _selectedStep = _activatedDialog.steps[0];
             if (gameNameBear != "")
                 _selectedBear = scripts.colonyManager.GetBear((gameNameBear));
@@ -97,7 +97,7 @@ public class DialogManager : MonoBehaviour
         totalStep = 0;
         dialogMenu.gameObject.SetActive(false);
         _activatedDialog = null;
-        scripts.clicksHandler.blockMove = false;
+        scripts.cameraMove.blockMove = false;
     }
 
     private string CodeTextReplace(string text)
@@ -155,7 +155,7 @@ public class Dialog
 [System.Serializable]
 public class DialogStep
 {
-    public TraditionsManager.Traditions traditionBear;
+    public Traditions traditionBear;
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;

@@ -10,7 +10,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textSelectedBuild, textNameBuild, textInfoBuild, textCountBears, textCountDrones;
     [SerializeField] private Vector2Int GridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
     public Building selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
-    public ResourcesManager.Resources selectedResource; // Выбранный ресурс(строение)
+    public Resources selectedResource; // Выбранный ресурс(строение)
     private Building[,] grid; // Размещение строений на сетке
     private Building flyingBuilding; // Выделенное строение
     private Camera mainCamera;
@@ -138,7 +138,7 @@ public class BuildingSystem : MonoBehaviour
     {
         selectedBuild.builded = false;
         buildMenu.gameObject.SetActive(false);
-        scripts.colonyManager.CreateNewTask(BearTask.TasksMode.getResource, selectedBuild.gameObject, selectedBuild.stepsNeed);
+        scripts.colonyManager.CreateNewTask(TasksMode.GetResource, selectedBuild.gameObject, selectedBuild.stepsNeed);
     }
 
     public void PickUpResource(GameObject resourceObj)
@@ -149,27 +149,27 @@ public class BuildingSystem : MonoBehaviour
         
         switch (selectedResource)
         {
-            case ResourcesManager.Resources.Material:
+            case Resources.Material:
                 earn = Random.Range(15, 40);
                 resourceChanged = "materials";
                 scripts.colonyManager.Materials += earn;
                 break;
-            case ResourcesManager.Resources.MaterialPlus:
+            case Resources.MaterialPlus:
                 earn = Random.Range(1, 5);
                 resourceChanged = "materialPlus";
                 scripts.colonyManager.materialsPlus += earn;
                 break;
-            case ResourcesManager.Resources.Food:
+            case Resources.Food:
                 earn = Random.Range(1, 10);
                 resourceChanged = "food";
                 scripts.colonyManager.Food += earn;
                 break;
-            case ResourcesManager.Resources.Honey:
+            case Resources.Honey:
                 earn = Random.Range(5, 10);
                 resourceChanged = "honey";
                 scripts.colonyManager.Honey += earn;
                 break;
-            case ResourcesManager.Resources.BioFuel:
+            case Resources.BioFuel:
                 earn = Random.Range(5, 15);
                 resourceChanged = "bioFuel";
                 scripts.colonyManager.Biofuel += earn;
@@ -327,7 +327,7 @@ public class BuildingSystem : MonoBehaviour
             scripts.questSystem.MoveNextStep();
         else if (flyingBuilding.buildingName == "Фабрика материалов" && scripts.questSystem.totalQuest.questName == "StartQuest")
             scripts.questSystem.MoveNextStep();
-        scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
+        scripts.colonyManager.CreateNewTask(TasksMode.Build, flyingBuilding.gameObject, flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
         scripts.colonyManager.Energy -= flyingBuilding.energyNeed;
         scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
@@ -336,7 +336,7 @@ public class BuildingSystem : MonoBehaviour
         buildingCreateMenu.gameObject.SetActive(false);
         
         // Колония менеджер
-        scripts.colonyManager.CreateNewTask(BearTask.TasksMode.build, flyingBuilding.gameObject,
+        scripts.colonyManager.CreateNewTask(TasksMode.Build, flyingBuilding.gameObject,
             flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
         scripts.colonyManager.Energy -= 1;
@@ -379,31 +379,31 @@ public class BuildingSystem : MonoBehaviour
         string resourse = "";
         switch (selectedResource)
         {
-            case ResourcesManager.Resources.Material:
+            case Resources.Material:
                 scripts.colonyManager.MaxMaterials += build.resourceGive;
                 resourse = "maxMaterials";
                 break;
-            case ResourcesManager.Resources.MaterialPlus:
+            case Resources.MaterialPlus:
                 scripts.colonyManager.MaxMaterialsPlus += build.resourceGive;
                 resourse = "maxMaterialsPlus";
                 break;
-            case ResourcesManager.Resources.Food:
+            case Resources.Food:
                 scripts.colonyManager.MaxFood += build.resourceGive;
                 resourse = "maxFood";
                 break;
-            case ResourcesManager.Resources.Honey:
+            case Resources.Honey:
                 scripts.colonyManager.MaxHoney += build.resourceGive;
                 resourse = "maxHoney";
                 break;
-            case ResourcesManager.Resources.BioFuel:
+            case Resources.BioFuel:
                 scripts.colonyManager.MaxBiofuel += build.resourceGive;
                 resourse = "maxBiofuel";
                 break;
-            case ResourcesManager.Resources.Bears:
+            case Resources.Bears:
                 scripts.colonyManager.maxBears += build.resourceGive;
                 resourse = "maxBears";
                 break;
-            case ResourcesManager.Resources.Energy:
+            case Resources.Energy:
                 scripts.colonyManager.Energy += build.resourceGive;
                 resourse = "energy";
                 break;

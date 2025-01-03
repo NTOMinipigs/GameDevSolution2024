@@ -295,16 +295,16 @@ public class ColonyManager : MonoBehaviour
     /// <param name="tradition">Традиция</param>
     /// <returns>Объект SerailizeBear (см документацию этого класса)</returns>
     /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
-    private SerializableBear GetSerializableBear(TraditionsManager.Traditions tradition)
+    private SerializableBear GetSerializableBear(Traditions tradition)
     {
         return tradition switch // Упростил выражение
         {
-            TraditionsManager.Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
-            TraditionsManager.Traditions.Constructors => spriteConstructors[
+            Traditions.Beekeepers => spriteBeekeepers[Random.Range(0, spriteBeekeepers.Length - 1)],
+            Traditions.Constructors => spriteConstructors[
                 Random.Range(0, spriteConstructors.Length - 1)],
-            TraditionsManager.Traditions.Programmers => spriteProgrammers
+            Traditions.Programmers => spriteProgrammers
                 [Random.Range(0, spriteProgrammers.Length - 1)],
-            TraditionsManager.Traditions.BioEngineers => spriteBioengineers[
+            Traditions.BioEngineers => spriteBioengineers[
                 Random.Range(0, spriteBioengineers.Length - 1)],
             _ => throw new ArgumentException("Tradition " + tradition + " not found!")
         };
@@ -315,7 +315,7 @@ public class ColonyManager : MonoBehaviour
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
-    public void GenerateNewBear(TraditionsManager.Traditions tradition)
+    public void GenerateNewBear(Traditions tradition)
     {
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
@@ -328,22 +328,13 @@ public class ColonyManager : MonoBehaviour
                                    new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
         // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        BearSave bearSave = new BearSave();
-        bearSave.gameName = newBear.gameName;
-        bearSave.bearName = bearName;
-        bearSave.serializableBear = serializableBear.name;
-        bearSave.tradition = newBear.TraditionStr;
-        bearSave.activity = newBear.ActivityStr;
-        bearSave.hungry = 0f;
-        bearSave.tired = 0f;
-        bearSave.x = generatePosition.x;
-        bearSave.z = generatePosition.z;
-        bearSave.y = generatePosition.y;
-
-        newBear.bearSave = bearSave;
-
+        newBear.serializableBear = serializableBear.name;
+        newBear.x = generatePosition.x;
+        newBear.z = generatePosition.z;
+        newBear.y = generatePosition.y;
+        
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bearSaves.Add(bearSave);
+        systemSaver.gameSave.bears.Add(newBear);
     }
 
     /// <summary>
@@ -354,52 +345,36 @@ public class ColonyManager : MonoBehaviour
         string bearName = "Хром";
         SerializableBear serializableBear = GameObject.Find("BearChrom_0").GetComponent<SerializableBear>();
         Bear newBear = new Bear(
-            TraditionsManager.Traditions.Chrom.ToString() + Random.Range(0, 1000),
+            Traditions.Chrom.ToString() + Random.Range(0, 1000),
             bearName,
-            TraditionsManager.Traditions.Chrom,
+            Traditions.Chrom,
              serializableBear.sprite
             );
-        newBear.activity = ActivityManager.Activities.Chill;
+        newBear.activity = Activities.Chill;
         Vector3 generatePosition = spawnBears.transform.position +
                                    new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
 
         // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        BearSave bearSave = new BearSave();
-        bearSave.gameName = newBear.gameName;
-        bearSave.bearName = bearName;
-        bearSave.serializableBear = serializableBear.name;
-        bearSave.tradition = newBear.TraditionStr;
-        bearSave.activity = newBear.ActivityStr;
-        bearSave.hungry = 0f;
-        bearSave.tired = 0f;
-        bearSave.x = generatePosition.x;
-        bearSave.z = generatePosition.z;
-        bearSave.y = generatePosition.y;
-
-        newBear.bearSave = bearSave;
-
+        newBear.serializableBear = serializableBear.name;
+        newBear.x = generatePosition.x;
+        newBear.z = generatePosition.z;
+        newBear.y = generatePosition.y;
+        
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bearSaves.Add(bearSave);
+        systemSaver.gameSave.bears.Add(newBear);
     }
 
     /// <summary>
     /// Осуществляет создание медведей на поле
     /// </summary>
-    /// <param name="bearSave">сейв медведя из json'а</param>
-    public void BearSpawn(BearSave bearSave)
+    /// <param name="newBear">сейв медведя из json'а</param>
+    public void BearSpawn(Bear newBear)
     {
-        SerializableBear serializableBear = GameObject.Find(bearSave.serializableBear).GetComponent<SerializableBear>();
-
-        Bear newBear = new Bear(
-            bearSave.gameName,
-            bearSave.bearName,
-            TraditionsManager.GetTraditionByStr(bearSave.tradition),
-            serializableBear.sprite);
-        newBear.activity = ActivityManager.GetActivityByStr(bearSave.activity);
+        SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
         bearsInColony.Add(newBear);
-        if (TraditionsManager.GetTraditionByStr(bearSave.tradition) != TraditionsManager.Traditions.Chrom)
+        if ((Traditions)Enum.Parse(typeof(Traditions), newBear.TraditionStr) != Traditions.Chrom)
         {
-            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(bearSave.x, bearSave.y, bearSave.z), Quaternion.identity);
+            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z), Quaternion.identity);
             bearObj.name = newBear.gameName;
             bearObj.GetComponent<BearMovement>().totalBear = newBear;
         }
@@ -424,7 +399,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == ActivityManager.Activities.Chill || GetBearTask(bear) == null) && bear.tradition != TraditionsManager.Traditions.Chrom)
+            if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) && bear.tradition != Traditions.Chrom)
                 return bear;
         }
         return null;
@@ -433,7 +408,7 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Сгенерировать имя основываясь на гендере
     /// </summary>
-    public void CreateNewTask(BearTask.TasksMode newTaskMode, GameObject objectOfTask, float steps)
+    public void CreateNewTask(TasksMode newTaskMode, GameObject objectOfTask, float steps)
     {
         // TODO: сделать возможнсть работы по кастам
         BearTask task = new BearTask(newTaskMode, objectOfTask, steps);
@@ -441,7 +416,7 @@ public class ColonyManager : MonoBehaviour
         if (chillBear != null)
         {
             task.selectedBear = chillBear;
-            chillBear.activity = ActivityManager.Activities.Work;
+            chillBear.activity = Activities.Work;
         }
         bearTasks.Add(task);
     }
@@ -456,13 +431,13 @@ public class ColonyManager : MonoBehaviour
             if (task.selectedBear == null)
             {
                 task.selectedBear = bear;
-                bear.activity = ActivityManager.Activities.Work;
+                bear.activity = Activities.Work;
                 break;
             }
         }
         // Если работы не нашлось
         if (GetBearTask(bear) == null)
-            bear.activity = ActivityManager.Activities.Chill;
+            bear.activity = Activities.Chill;
     }
 
     public BearTask GetBearTask(Bear bear)
@@ -477,7 +452,7 @@ public class ColonyManager : MonoBehaviour
 
     public void EndTask(BearTask task)
     {
-        if (task.taskMode == BearTask.TasksMode.build)
+        if (task.taskMode == TasksMode.Build)
         {
             task.objectOfTask.GetComponent<Building>().SetNormal();
             task.objectOfTask.GetComponent<Building>().builded = true;
@@ -485,14 +460,14 @@ public class ColonyManager : MonoBehaviour
             if (task.objectOfTask.GetComponent<Building>().scoutHome)
                 scoutHome = true;
         }
-        else if (task.taskMode == BearTask.TasksMode.getResource)
+        else if (task.taskMode == TasksMode.GetResource)
             scripts.buildingSystem.PickUpResource(task.objectOfTask);
 
         Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
 
         if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
-            selectedBear.activity = ActivityManager.Activities.Chill;
+            selectedBear.activity = Activities.Chill;
         else
             SetTaskToBear(selectedBear);
     }
@@ -505,7 +480,7 @@ public class ColonyManager : MonoBehaviour
                 return;
 
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
-            scripts.clicksHandler.blockMove = bearsListMenu.activeSelf;
+            scripts.cameraMove.blockMove = bearsListMenu.activeSelf;
             if (bearsListMenu.activeSelf)
             {
                 foreach (Transform child in bearsListContainer.transform)

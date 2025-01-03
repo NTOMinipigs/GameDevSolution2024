@@ -83,7 +83,7 @@ public class QuestSystem : MonoBehaviour
             if (!scripts.CheckOpenedWindows(!questMenu.activeSelf)) // Если какая-то менюха уже открыта
             {
                 questMenu.gameObject.SetActive(!questMenu.activeSelf);
-                scripts.clicksHandler.blockMove = questMenu.activeSelf;
+                scripts.cameraMove.blockMove = questMenu.activeSelf;
                 UpdateQuestUI();
             }
         }
