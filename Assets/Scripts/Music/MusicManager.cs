@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 /// <summary>
@@ -16,22 +17,22 @@ public class MusicManager : MonoBehaviour
 
     /// <summary>
     /// Список аудио треков присутствующих в игре
+    /// Ключи для Audio генерируются автоматически, и называются так же как и AudioClip на сцене в unity
+    /// См. на сцене GameObject Music и Sounds!
     /// </summary>
     public readonly Dictionary<string, Audio> Audios = new();
-
-    public async void Start()
+    
+    public void Start()
     {
         // Добавляем все известные музыкальные треки в список аудио
         foreach (AudioSource audioSource in GameObject.Find("Music").GetComponentsInChildren<AudioSource>())
         {
-            Debug.Log(audioSource.name);
             Audios[audioSource.name] = new Audio(audioSource);
         }
 
         // Добавляем все известные звуки в список аудио
         foreach (AudioSource audioSource in GameObject.Find("Sounds").GetComponentsInChildren<AudioSource>())
         {
-            Debug.Log(audioSource.name);
             Audios[audioSource.name] = new Audio(audioSource);
         }
 
@@ -46,7 +47,7 @@ public class MusicManager : MonoBehaviour
                 Audios["Baltika9beer"],
                 Audios["WindBeer"]
             },
-            true
+            fadeEffect: true
             );
         
         // Цикл кирки
@@ -71,7 +72,8 @@ public class MusicManager : MonoBehaviour
                 Audios["snow_steps_2"]
             }
         );
-
-        await Task.Delay(1000);
     }
+    
+    
+    
 }

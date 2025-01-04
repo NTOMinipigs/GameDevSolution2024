@@ -16,7 +16,7 @@ public class Audio
     /// <summary>
     /// Воиспроизводимый AudioSource. Публичный, однако НЕ РЕКОМЕНДУЕТСЯ РАБОТАТЬ С НИМ НА ПРЯМУЮ 
     /// </summary>
-    public AudioSource source;
+    public AudioSource Source;
     
     /// <summary>
     /// Конструктор, вызывается исключительно из MusicManager
@@ -24,7 +24,7 @@ public class Audio
     /// <param name="source">AudioSource of track</param>
     public Audio(AudioSource source)
     {
-        this.source = source;
+        Source = source;
     }
     
     /// <summary>
@@ -33,7 +33,7 @@ public class Audio
     /// </summary>
     public void Play()
     {
-        source.Play();
+        Source.Play();
     }
 
     /// <summary>
@@ -42,7 +42,10 @@ public class Audio
     /// </summary>
     public void Stop()
     {
-        source.Stop();
+        Source.Stop();
+        
+        // Ресетаем параметры трека
+        Source.volume = 1.0f;  
     }
 
     /// <summary>
@@ -51,7 +54,7 @@ public class Audio
     /// </summary>
     public void Pause()
     {
-        source.Pause();
+        Source.Pause();
     }
 
     /// <summary>
@@ -60,7 +63,7 @@ public class Audio
     /// </summary>
     public void Resume()
     {
-        source.UnPause();
+        Source.UnPause();
     }
     
     /// <summary>
@@ -70,17 +73,17 @@ public class Audio
     /// <returns>IEnumerator (корутина)</returns>
     private IEnumerator FadeEffect(float targetVolume)
     {
-        float startVolume = source.volume;
+        float startVolume = Source.volume;
         float time = 0;
 
         while (time < FadeDuration)
         {
             time += Time.deltaTime;
-            source.volume = Mathf.Lerp(startVolume, targetVolume, time / FadeDuration);
+            Source.volume = Mathf.Lerp(startVolume, targetVolume, time / FadeDuration);
             yield return null;
         }
 
-        source.volume = targetVolume;
+        Source.volume = targetVolume;
     }
     
     /// <summary>
@@ -89,26 +92,26 @@ public class Audio
     /// <returns></returns>
     public IEnumerator PlayWithFadeEffect()
     {
-        source.volume = 0f;
-        source.Play();
+        Source.volume = 0f;
+        Source.Play();
         yield return FadeEffect(1f); // входной фейд эффект
         
         while ( // Ждем когда нужно будет уменьшать громкость
-               source.time != 0
+               Source.time != 0
                &&
-               source.time < source.clip.length - FadeDuration * 2)
+               Source.time < Source.clip.length - FadeDuration * 2)
         {
             yield return null;
         }
 
-        // Если трек остановился в точке 0, скорее всего к нему преминили метод .Stop(), в таком случае дальше продолжать не стоит
-        if (source.time == 0)
+        // Если трек остановился в точке 0, скорее всего к нему применили метод .Stop(), в таком случае дальше продолжать не стоит
+        if (Source.time == 0)
         {
             yield return null;
         }
         
         yield return FadeEffect(0f); // Выходной эффект
-        source.Stop();
+        Stop();
     }
     
 }
