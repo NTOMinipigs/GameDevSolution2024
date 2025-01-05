@@ -47,7 +47,8 @@ public class MusicManager : MonoBehaviour
                 Audios["Baltika9beer"],
                 Audios["WindBeer"]
             },
-            fadeEffect: true
+            fadeEffect: true,
+            volume: 0.2f
             );
         
         // Цикл кирки
@@ -72,8 +73,7 @@ public class MusicManager : MonoBehaviour
                 Audios["snow_steps_2"]
             }
         );
+        
+        //AudioLoops["MusicLoop"].Play();
     }
-    
-    
-    
 }
