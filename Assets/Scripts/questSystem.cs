@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Система квестов (q for open it)
+/// </summary>
 public class QuestSystem : MonoBehaviour
 {
     public GameObject questMenu;
