@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Система квестов (q for open it)
+/// </summary>
 public class QuestSystem : MonoBehaviour
 {
     public GameObject questMenu;
@@ -83,7 +86,7 @@ public class QuestSystem : MonoBehaviour
             if (!scripts.CheckOpenedWindows(!questMenu.activeSelf)) // Если какая-то менюха уже открыта
             {
                 questMenu.gameObject.SetActive(!questMenu.activeSelf);
-                scripts.clicksHandler.blockMove = questMenu.activeSelf;
+                scripts.cameraMove.blockMove = questMenu.activeSelf;
                 UpdateQuestUI();
             }
         }

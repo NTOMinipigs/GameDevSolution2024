@@ -1,5 +1,10 @@
 using UnityEngine;
 
+
+
+/// <summary>
+/// Все это - карта
+/// </summary>
 [System.Serializable]
 public class PlaceOfTravel
 {
@@ -18,5 +23,5 @@ public class PlaceOfTravel
 public class Reward
 {
     public float count;
-    public ResourcesManager.Resources typeOfReward;
+    public Resources typeOfReward;
 }

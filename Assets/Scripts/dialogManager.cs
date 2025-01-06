@@ -16,6 +16,12 @@ public class DialogManager : MonoBehaviour
     private bool _animatingText, _canStepNext;
     [SerializeField] private allScripts scripts;
 
+    /// <summary>
+    /// Каждый вид диалогов имеет своё имя. Этот метод вернет нужный диалог по имени
+    /// TODO: Не самый логичный способ хранения имен диалогов, перекрафтить в хешмапы или чет такое, но говнище полное честн
+    /// </summary>
+    /// <param name="name">Название диалога</param>
+    /// <returns></returns>
     private Dialog GetDialog(string name)
     {
         foreach (Dialog totalDialog in dialogs)
@@ -26,17 +32,25 @@ public class DialogManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Открытие менюшки диалога
+    /// </summary>
+    /// <param name="name">Название диалога</param>
+    /// <param name="gameNameBear">Имя медведя видное разработчику</param>
+    /// <param name="blockWithOtherMenu">чеэто</param>
     public void ActivateDialog(string name, string gameNameBear = "", bool blockWithOtherMenu = false) // Старт диалога
     {
         if (scripts.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
 
+        scripts.musicManager.AudioLoops["snow_steps"].Play();
+        
         if (_activatedDialog == null)
         {
             Debug.Log(name);
             _activatedDialog = GetDialog(name);
             dialogMenu.gameObject.SetActive(true);
-            scripts.clicksHandler.blockMove = true;
+            scripts.cameraMove.blockMove = true;
             _selectedStep = _activatedDialog.steps[0];
             if (gameNameBear != "")
                 _selectedBear = scripts.colonyManager.GetBear((gameNameBear));
@@ -94,10 +108,11 @@ public class DialogManager : MonoBehaviour
 
     public void DialogCLose()
     {
+        scripts.musicManager.AudioLoops["snow_steps"].Stop();
         totalStep = 0;
         dialogMenu.gameObject.SetActive(false);
         _activatedDialog = null;
-        scripts.clicksHandler.blockMove = false;
+        scripts.cameraMove.blockMove = false;
     }
 
     private string CodeTextReplace(string text)
@@ -155,7 +170,7 @@ public class Dialog
 [System.Serializable]
 public class DialogStep
 {
-    public TraditionsManager.Traditions traditionBear;
+    public Traditions traditionBear;
     [HideInInspector] public string nameBear;
     public string text;
     [HideInInspector] public Sprite icon;

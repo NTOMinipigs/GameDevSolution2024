@@ -1,3 +1,6 @@
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 
@@ -7,33 +10,87 @@ using UnityEngine;
 [System.Serializable]
 public class Bear
 {
-    public string gameName;
-    public string bearName;
-    public Sprite sprite;
-    public TraditionsManager.Traditions tradition;
-    public ActivityManager.Activities activity;
-    public BearSave bearSave;
+    /// <summary>
+    /// 2д спрайт медведя в диалоге
+    /// </summary>
+    [JsonIgnore] public Sprite sprite;
+    
+    /// <summary>
+    /// Объект Tradition из enum. Определяет профессию медвдея
+    /// Сереализуемый объект в json
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("tradition")] public Traditions tradition;
+    
+    /// <summary>
+    /// Объект Activity из enum. Определяет активность медведя
+    /// Сереализуемый объект в json
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("activity")]  public Activities activity;
+
+    /// <summary>
+    /// gameName - имя медведя которое видит разработчик (gameObject name)
+    /// </summary>
+    [JsonProperty("gameName")] public string gameName;
+
+    /// <summary>
+    ///  bearName - имя медведя которое видит игрок
+    /// </summary>
+    [JsonProperty("bearName")] public string bearName;
+
+    /// <summary>
+    /// serializableBear - Название объекта из иерархии BearSprites
+    /// </summary>
+    [JsonProperty("serializableBear")] public string serializableBear;
+
+    /// <summary>
+    /// Сытость  медведя
+    /// </summary>
+    [JsonProperty("hungry")] public float hungry;
+
+    /// <summary>
+    /// Настроение медведя
+    /// </summary>
+    [JsonProperty("tired")] public float tired;
+
+    /// <summary>
+    /// x
+    /// </summary>
+    [JsonProperty("x")] public float x;
+
+    /// <summary>
+    /// y
+    /// </summary>
+    [JsonProperty("y")] public float y;
+
+    /// <summary>
+    /// z
+    /// </summary>
+    [JsonProperty("z")] public float z;
+
     
     /// <summary>
     /// Получить строку традиции. УСТАРЕЛО! Оставил для обратной совместимки, используй TraditionManager
     /// </summary>
-    /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
-    [HideInInspector]
-    public string TraditionStr => TraditionsManager.GetStrByTradition(tradition);
+     public string TraditionStr => tradition.GetString();
 
     /// <summary>
     /// Получить строку активности. УСТАРЕЛО! Оставил для обратной совместимки, используй ActivityManager
     /// </summary>
-    /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
-    public string ActivityStr => ActivityManager.GetStrByActivity(activity);
+    public string ActivityStr => activity.GetString();
 
-    public float hungry, tired;
-
-    public Bear(string _gameName, string _bearName, TraditionsManager.Traditions _tradition, Sprite _sprite)
+    
+    /// <summary>
+    /// Конструктор медведя
+    /// </summary>
+    /// <param name="gameName">имя медведя как gameObject</param>
+    /// <param name="bearName">Имя медведя которое видит пользователь</param>
+    /// <param name="tradition">Профессия медведя</param>
+    /// <param name="sprite">Спрайт медведя</param>
+    public Bear(string gameName, string bearName, Traditions tradition, Sprite sprite)
     {
-        gameName = _gameName;
-        bearName = _bearName;
-        tradition = _tradition;
-        sprite = _sprite;
+        this.gameName = gameName;
+        this.bearName = bearName;
+        this.tradition = tradition;
+        this.sprite = sprite;
     }
 }

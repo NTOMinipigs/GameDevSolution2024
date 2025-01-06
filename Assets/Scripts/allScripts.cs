@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class allScripts : MonoBehaviour
 {
+    public CoroutineExecutor coroutineExecutor;
     public ClicksHandler clicksHandler;
+    public CameraMove cameraMove;
+    public Zoom zoom;
     public ColonyManager colonyManager;
     public DialogManager dialogManager;
     public BuildingSystem buildingSystem;
@@ -10,6 +13,7 @@ public class allScripts : MonoBehaviour
     public gameMenuManager GMM;
     public TravelingManager TM;
     public Preference preference;
+    public MusicManager musicManager;
 
     public bool CheckOpenedWindows(bool mode, bool extraOpen = false) //  Общий метод для проверки "открыто ли какое-либо меню"
     {
