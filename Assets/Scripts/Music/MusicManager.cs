@@ -69,9 +69,15 @@ public class MusicManager : MonoBehaviour
             new[]
             {
                 Audios["snow_steps_1"],
-                Audios["snow_steps_2"]
+                Audios["snow_steps_2"],
+                Audios["snow_steps_3"],
+                Audios["snow_steps_4"],
+                Audios["snow_steps_5"],
+                Audios["snow_steps_6"],
+                Audios["snow_steps_7"]
             }
         );
+        AudioLoops["MusicLoop"].Play();
     }
     
     
