@@ -49,12 +49,13 @@ MonoBehaviour:
   buildingName: "\u0424\u0435\u0440\u043C\u0430"
   builded: 0
   typeOfBuilding: 0
-  typeResource: 3
+  typeResource: 4
   canWork: 1
   steps: 0
   typeOfWorkers: 0
   countOfBears: 0
   countOfDrone: 0
+  scoutHome: 0
   MainRenderer: {fileID: 7713748899539634387}
   Size: {x: 100, y: 80}
   maxDrones: 5

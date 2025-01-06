@@ -146,7 +146,7 @@ public class BuildingSystem : MonoBehaviour
         selectedResource = resourceObj.GetComponent<Building>().typeResource;
         string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
         int earn = 0;  // Вынес в отдельную переменную, т.к. после свитчкейса нужно записать все в лог
-        
+
         switch (selectedResource)
         {
             case Resources.Material:
@@ -175,13 +175,13 @@ public class BuildingSystem : MonoBehaviour
                 scripts.colonyManager.Biofuel += earn;
                 break;
         }
-        
+
         DestroyBuilding(resourceObj);
         // Лог
         APIClient.Instance.CreateLogRequest(
             "Новые ресурсы произведенные в результате работы некоторого строения",
             Player.Instance.playerName,
-            new Dictionary<string, string>() {{resourceChanged, "+" + earn}});
+            new Dictionary<string, string>() { { resourceChanged, "+" + earn } });
     }
 
     public void StartPlacingBuilding(Building buildingPrefab) // Начинаем размещать объект. Метод для кнопки
@@ -320,7 +320,7 @@ public class BuildingSystem : MonoBehaviour
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
         PlaceBuilding(flyingBuilding, placeX, placeY);
-        
+
         // Кор
 
         if (flyingBuilding.buildingName == "Солнечная панель" && scripts.questSystem.totalQuest.questName == "StartQuest")
@@ -334,14 +334,14 @@ public class BuildingSystem : MonoBehaviour
         flyingBuilding = null;
         noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
-        
+
         // Колония менеджер
         scripts.colonyManager.CreateNewTask(TasksMode.Build, flyingBuilding.gameObject,
             flyingBuilding.stepsNeed);
         flyingBuilding.SetBuilding();
-        scripts.colonyManager.Energy -= 1;
+        scripts.colonyManager.Energy -= flyingBuilding.energyNeed;
         scripts.colonyManager.Materials -= flyingBuilding.materialsNeed;
-        
+
         // Логи на создание здания
         APIClient.Instance.CreateLogRequest(
             "Затраты энергии и материалов на постройку здания",
@@ -352,7 +352,7 @@ public class BuildingSystem : MonoBehaviour
                 {"materials", "-" + flyingBuilding.materialsNeed}
             }
         );
-        
+
     }
 
     /// <summary>
@@ -405,14 +405,14 @@ public class BuildingSystem : MonoBehaviour
                 break;
             case Resources.Energy:
                 scripts.colonyManager.Energy += build.resourceGive;
+                scripts.colonyManager.MaxEnergy += build.resourceGive;
                 resourse = "energy";
                 break;
         }
-        
+
         APIClient.Instance.CreateLogRequest(
             "Повышение лимитов за здание",
             Player.Instance.playerName,
-            new Dictionary<string, string> {{resourse, "+" + build.resourceGive}});
-        scripts.colonyManager.MaxEnergy += build.resourceGive;
+            new Dictionary<string, string> { { resourse, "+" + build.resourceGive } });
     }
 }

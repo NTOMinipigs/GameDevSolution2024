@@ -50,7 +50,7 @@ MonoBehaviour:
   buildingName: "\u041A\u043E\u0440\u043E\u0431\u043A\u0430 \u0435\u0434\u044B \"\u0420\u0435\u0437\u0435\u0440\u0432\""
   builded: 1
   typeOfBuilding: 1
-  typeResource: 3
+  typeResource: 4
   canWork: 0
   steps: 0
   typeOfWorkers: 0

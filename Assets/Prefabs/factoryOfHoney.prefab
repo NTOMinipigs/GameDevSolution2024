@@ -49,7 +49,7 @@ MonoBehaviour:
   buildingName: "\u041F\u0430\u0441\u0435\u043A\u0430"
   builded: 0
   typeOfBuilding: 0
-  typeResource: 5
+  typeResource: 3
   canWork: 1
   steps: 0
   typeOfWorkers: 0
