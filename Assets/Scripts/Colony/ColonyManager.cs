@@ -372,7 +372,7 @@ public class ColonyManager : MonoBehaviour
     {
         SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
         bearsInColony.Add(newBear);
-        if ((Traditions)Enum.Parse(typeof(Traditions), newBear.TraditionStr) != Traditions.Chrom)
+        if ((Traditions)Enum.Parse(typeof(Traditions), newBear.tradition.ToString()) != Traditions.Chrom)
         {
             GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z), Quaternion.identity);
             bearObj.name = newBear.gameName;
