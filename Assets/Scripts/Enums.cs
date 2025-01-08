@@ -39,11 +39,16 @@ public enum Resources
 public enum Traditions
 {
     None,
-    Beekeepers, 
+    [Description("Пасечник")]
+    Beekeepers,
+    [Description("Инженер")]
     Constructors, 
+    [Description("Программист")]
     Programmers,
+    [Description("БиоИнженер")]
     BioEngineers, 
     Special, 
+    [Description("Хром")]
     Chrom
 }
 
