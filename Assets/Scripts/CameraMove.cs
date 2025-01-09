@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
@@ -9,13 +10,14 @@ public class CameraMove : MonoBehaviour
     public bool blockMove;
     [SerializeField] private allScripts scripts;
     [SerializeField] private LayerMask layerMaskInteract;
-
+    public Vector2 minBounds; // Минимальные границы
+    public Vector2 maxBounds; // Максимальные границы
     
-    public void Update()
+    private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
+
         if (Input.GetMouseButtonDown(0)) // Начало нажатия левой кнопки
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
@@ -26,8 +28,7 @@ public class CameraMove : MonoBehaviour
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
                 else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
-                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject
-                        .GetComponent<Building>());
+                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<Building>());
             }
 
             _isDragging = true;
@@ -36,13 +37,20 @@ public class CameraMove : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0)) // Конец отжатия
             _isDragging = false;
+    }
 
+    private void LateUpdate() // Для плавного перемещения
+    {
         if (_isDragging && !blockMove) // Пока мышка держится, ну и блокировки нету
         {
             _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.deltaTime;
 
-            transform.position +=
-                new Vector3(-_delta.x, 0, -_delta.y); // Перемещение камеры, пока зажата левая кнопка мыши
+            Vector3 newPosition = transform.position + new Vector3(-_delta.x, 0, -_delta.y);
+            // Ограничиваем
+            newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
+            newPosition.z = Mathf.Clamp(newPosition.z, minBounds.y, maxBounds.y);
+
+            transform.position = newPosition;
             _lastMousePosition = Input.mousePosition;
         }
     }

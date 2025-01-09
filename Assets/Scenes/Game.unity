@@ -30222,9 +30222,9 @@ GameObject:
   - component: {fileID: 1727350348}
   - component: {fileID: 1727350355}
   - component: {fileID: 1727350351}
+  - component: {fileID: 1727350354}
   - component: {fileID: 1727350353}
   - component: {fileID: 1727350352}
-  - component: {fileID: 1727350354}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -30300,7 +30300,7 @@ Transform:
   m_GameObject: {fileID: 1727350347}
   serializedVersion: 2
   m_LocalRotation: {x: 0.42024413, y: 0, z: 0, w: 0.90741116}
-  m_LocalPosition: {x: 588, y: 347, z: 202}
+  m_LocalPosition: {x: 567, y: 345, z: 273}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -30419,6 +30419,8 @@ MonoBehaviour:
   layerMaskInteract:
     serializedVersion: 2
     m_Bits: 64
+  minBounds: {x: 199, y: 50}
+  maxBounds: {x: 945, y: 850}
 --- !u!114 &1727350355
 MonoBehaviour:
   m_ObjectHideFlags: 0
