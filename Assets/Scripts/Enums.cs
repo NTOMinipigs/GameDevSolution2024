@@ -46,8 +46,7 @@ public enum Traditions
     [Description("Программист")]
     Programmers,
     [Description("БиоИнженер")]
-    BioEngineers, 
-    Special, 
+    BioEngineers,
     [Description("Хром")]
     Chrom
 }
