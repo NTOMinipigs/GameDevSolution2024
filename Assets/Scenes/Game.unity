@@ -1420,7 +1420,7 @@ GameObject:
   - component: {fileID: 93970895}
   - component: {fileID: 93970894}
   m_Layer: 5
-  m_Name: ButtonDeleteBear
+  m_Name: ButtonDeleteDrones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1492,12 +1492,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 863654774}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: RemoveWorker
-        m_Mode: 6
+        m_MethodName: ManageDrones
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -8635,7 +8635,7 @@ GameObject:
   - component: {fileID: 598858937}
   - component: {fileID: 598858936}
   m_Layer: 5
-  m_Name: TextBearCount
+  m_Name: TextDroneCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11956,12 +11956,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 15
   specMaterialsNeed: 0
   stepsNeed: 0
@@ -12145,12 +12145,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 10
   specMaterialsNeed: 0
   stepsNeed: 0
@@ -12416,20 +12416,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingCreateMenu: {fileID: 904100672}
   buildMenu: {fileID: 432680793}
-  buildMenuStandartButtons: {fileID: 1914181852}
-  buildMenuMaterialsButtons: {fileID: 1908334761}
-  noteBlock: {fileID: 705623079}
-  droneManage: {fileID: 897904263}
-  bearManage: {fileID: 2045125098}
-  textSelectedBuild: {fileID: 1494669317}
-  textNameBuild: {fileID: 1948587424}
-  textInfoBuild: {fileID: 2144992892}
-  textCountBears: {fileID: 2040694781}
-  textCountDrones: {fileID: 598858936}
-  GridSize: {x: 1900, y: 1900}
+  gridSize: {x: 10, y: 10}
   selectedBuild: {fileID: 0}
   selectedResource: 0
-  scripts: {fileID: 1346596986}
 --- !u!4 &863654775
 Transform:
   m_ObjectHideFlags: 0
@@ -23425,7 +23414,7 @@ GameObject:
   - component: {fileID: 1262530318}
   - component: {fileID: 1262530317}
   m_Layer: 5
-  m_Name: ButtonAddBear
+  m_Name: ButtonAddDrones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23497,12 +23486,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 863654774}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: AddWorker
-        m_Mode: 6
+        m_MethodName: ManageDrones
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -24426,7 +24415,7 @@ MonoBehaviour:
   bearsListMenu: {fileID: 1954224484}
   bearsListContainer: {fileID: 1033262483}
   cardBearPrefab: {fileID: 389877295033216478, guid: 457f3faa42a0a1042a40afb2e1cfa23c, type: 3}
-  bearsListAS: {fileID: 124659033}
+  bearsListAs: {fileID: 0}
   scoutHome: 0
   scripts: {fileID: 1346596986}
 --- !u!114 &1346596988
@@ -25183,12 +25172,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 30
   specMaterialsNeed: 0
   stepsNeed: 0
@@ -26847,7 +26836,7 @@ GameObject:
   - component: {fileID: 1514610821}
   - component: {fileID: 1514610820}
   m_Layer: 5
-  m_Name: TextBear
+  m_Name: TextDrone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27730,12 +27719,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 863654774}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: AddWorker
-        m_Mode: 6
+        m_MethodName: ManageWorkers
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -30502,12 +30491,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 20
   specMaterialsNeed: 0
   stepsNeed: 0
@@ -31135,12 +31124,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 20
   specMaterialsNeed: 0
   stepsNeed: 0
@@ -33376,12 +33365,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 30
   specMaterialsNeed: 0
   stepsNeed: 0
@@ -36474,12 +36463,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 863654774}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: RemoveWorker
-        m_Mode: 6
+        m_MethodName: ManageWorkers
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -36928,12 +36917,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 1000918759}
-  Size: {x: 1, y: 1}
+  mainRenderer: {fileID: 0}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 15
   specMaterialsNeed: 0
   stepsNeed: 0

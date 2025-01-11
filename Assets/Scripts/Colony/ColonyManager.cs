@@ -200,7 +200,8 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("Bears")] public List<Bear> bearsInColony = new List<Bear>();
+    [Header("Bears")] public List<Bear> bearsInColony;
+    private Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
     public int maxBears;
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
@@ -224,11 +225,6 @@ public class ColonyManager : MonoBehaviour
 
     private Dictionary<string, Func<float>> _materialsRefs;
 
-    private void Awake()
-    {
-        _systemSaver = gameObject.GetComponent<SystemSaver>();
-    }
-
     /// <summary>
     /// Словарь _materialRefs хранится в несереализуемом виде, так как в нем присутствуют лямбды
     /// Этот геттер позволяет удобно привести словарь к сереализуемому виду.
@@ -240,9 +236,7 @@ public class ColonyManager : MonoBehaviour
         {
             Dictionary<string, int> sendDictionary = new Dictionary<string, int>();
             foreach (var (key, value) in _materialsRefs)
-            {
                 sendDictionary[key] = (int)value();
-            }
 
             return sendDictionary;
         }
@@ -250,6 +244,11 @@ public class ColonyManager : MonoBehaviour
 
     public async void Start()
     {
+        _systemSaver = gameObject.GetComponent<SystemSaver>();
+
+        foreach (Bear bear in bearsInColony)
+            _bearsInColonyDict.Add(bear.gameName, bear);
+
         // Здесь инициализируется словарь с значениями-ссылками на ресурсы
         _materialsRefs = new Dictionary<string, Func<float>>()
         {
@@ -287,22 +286,14 @@ public class ColonyManager : MonoBehaviour
         _maxEnergy = inventory.Resources["maxEnergy"];
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
-    /// Получаем медведя по названию игры? 
+    /// Получаем медведя по его dev имени
     /// </summary>
-    /// <param name="gameName">Название игры? (спасибо за чистый код)</param>
-    /// <returns>Возвращает медведя по названию игры</returns>
+    /// <param name="gameName">Dev имя</param>
+    /// <returns>Возвращает медведя по dev имени</returns>
     public Bear GetBear(string gameName)
     {
-        foreach (Bear bear in bearsInColony)
-        {
-            if (bear.gameName == gameName)
-                return bear;
-        }
-
-        Debug.Log(gameName + " dont finded");
-        return null;
+        return _bearsInColonyDict[gameName];
     }
 
     /// <summary>
@@ -310,7 +301,7 @@ public class ColonyManager : MonoBehaviour
     /// </summary>
     /// <param name="tradition">Традиция</param>
     /// <returns>Объект SerailizeBear (см документацию этого класса)</returns>
-    /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
+    /// <exception cref="ArgumentException">Если активность не найдена.</exception>
     private SerializableBear GetSerializableBear(Traditions tradition)
     {
         return tradition switch // Упростил выражение
@@ -327,7 +318,26 @@ public class ColonyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Генерирует нового медведя
+    /// Сохраняет медведя + генерирует позицию(вынесено из метода GenerateNewBear)
+    /// </summary>
+    /// <param name="bear"></param>
+    /// <param name="serializableBearName"></param>
+    private void SaveBear(Bear bear, string serializableBearName)
+    {
+        Vector3 generatePosition = spawnBears.transform.position +
+                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+
+        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
+        bear.serializableBear = serializableBearName;
+        bear.x = generatePosition.x;
+        bear.z = generatePosition.z;
+        bear.y = generatePosition.y;
+
+        _systemSaver.gameSave.bears.Add(bear);
+    }
+
+    /// <summary>
+    /// Генерирует нового медведя по традиции
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
@@ -336,47 +346,28 @@ public class ColonyManager : MonoBehaviour
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
 
-        // Блядь мне это трогать страшно, я просто позицию в отдельную переменную вынес и все нахуй посыпалось
         // TODO: сделать норм индексацию
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition,
             serializableBear.sprite);
-        Vector3 generatePosition = spawnBears.transform.position +
-                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
-
-        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        newBear.serializableBear = serializableBear.name;
-        newBear.x = generatePosition.x;
-        newBear.z = generatePosition.z;
-        newBear.y = generatePosition.y;
-
-        _systemSaver.gameSave.bears.Add(newBear);
+        SaveBear(newBear, serializableBear.name);
     }
 
     /// <summary>
-    /// Генератор для Хрома (Отдельно т.к. задается отдельно)
+    /// Генерирует ЗАДАННОГО медведя
     /// </summary>
-    public void GenerateChrom()
+    /// <param name="bearName"></param>
+    /// <param name="serializableBearObj"></param>
+    /// <param name="tradition"></param>
+    public void GenerateSpecialBear(string bearName, GameObject serializableBearObj, Traditions tradition)
     {
-        string bearName = "Хром";
-        SerializableBear serializableBear = GameObject.Find("BearChrom_0").GetComponent<SerializableBear>();
+        SerializableBear serializableBear = serializableBearObj.GetComponent<SerializableBear>();
         Bear newBear = new Bear(
-            Traditions.Chrom.ToString() + Random.Range(0, 1000),
+            tradition.ToString() + Random.Range(0, 1000),
             bearName,
-            Traditions.Chrom,
+            tradition,
             serializableBear.sprite
         );
-        newBear.activity = Activities.Chill;
-        Vector3 generatePosition = spawnBears.transform.position +
-                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
-
-        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        newBear.serializableBear = serializableBear.name;
-        newBear.x = generatePosition.x;
-        newBear.z = generatePosition.z;
-        newBear.y = generatePosition.y;
-
-        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bears.Add(newBear);
+        SaveBear(newBear, serializableBear.name);
     }
 
     /// <summary>
@@ -444,7 +435,7 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Выдать освободившемуся медведю новую задачу
     /// </summary>
-    public void SetTaskToBear(Bear bear)
+    private void SetTaskToBear(Bear bear)
     {
         foreach (BearTask task in bearTasks)
         {

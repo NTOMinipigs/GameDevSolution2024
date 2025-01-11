@@ -3,24 +3,41 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    [Header("MainInformation")]
-    public string buildingName;
+    [Header("MainInformation")] public string buildingName;
     public bool builded;
-    public enum TypesOfBuilding { Building, Resource }
+
+    public enum TypesOfBuilding
+    {
+        Building,
+        Resource
+    }
+
     public TypesOfBuilding typeOfBuilding;
     public Resources typeResource;
-    [Header("Workers")]
-    public bool canWork;
+    [Header("Workers")] public bool canWork;
     public float steps; // Текущее кол-во "работы" до обнуления
     public TypeOfWorkers typeOfWorkers;
-    public enum TypeOfWorkers { Any, Beekeepers, Constructors, Programmers, BioEngineers, Drone }
+
+    public enum TypeOfWorkers
+    {
+        Any,
+        Beekeepers,
+        Constructors,
+        Programmers,
+        BioEngineers,
+        Drone
+    }
+
     [HideInInspector] public int countOfBears, countOfDrone;
-    [Header("BuildingSettings")]
-    public bool scoutHome;
+    [Header("BuildingSettings")] public bool scoutHome;
     [SerializeField] private Renderer mainRenderer;
     public Vector2Int size = Vector2Int.one;
     public int maxDrones, maxBears;
-    public int resourceGive, resourceOneWorker; // Сколько здание дает баффов при постройке + после производства +сколько "работы" за одного рабочего
+
+    public int
+        resourceGive,
+        resourceOneWorker; // Сколько здание дает баффов при постройке + после производства +сколько "работы" за одного рабочего
+
     public float materialsNeed, specMaterialsNeed, stepsNeed, energyNeed;
     private Color _standartMaterialColor;
     private allScripts _scripts;
@@ -95,7 +112,7 @@ public class Building : MonoBehaviour
             APIClient.Instance.CreateLogRequest(
                 "Новые ресурсы произведенные в результате работы некоторого строения",
                 Player.Instance.playerName,
-                new Dictionary<string, string>() {{resourceChanged, "+" + earn}});
+                new Dictionary<string, string>() { { resourceChanged, "+" + earn } });
         }
     }
 }
