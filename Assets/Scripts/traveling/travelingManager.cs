@@ -1,63 +1,95 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
+
 public class TravelingManager : MonoBehaviour
 {
-    public GameObject travelMenu, infoOfPlaceMenu, blockOfTravel;
-    [SerializeField] private GameObject resultOfTravelMenu;
-    [SerializeField] private PlaceOfTravel[] allPlaces = new PlaceOfTravel[0]; // Все места.
-    [SerializeField] PlaceOfTravel activatedPlace; // Место, куда уже отправлены люди
-    private PlaceOfTravel selectedPlace;
-    [SerializeField] private TextMeshProUGUI textNameLocation, textDescriptionLocation, precentOfKnowPlanet;
-    [SerializeField] private allScripts scripts;
-    private int maxPlaces;
-    private float timeElapsed;
+    [Header("Точки интереса")] [SerializeField]
+    private PlaceOfTravel[] allPlaces = Array.Empty<PlaceOfTravel>(); // Все места.
 
-    private void Start() => maxPlaces = allPlaces.Length;
+    private Dictionary<string, PlaceOfTravel> _allPlacesDict = new Dictionary<string, PlaceOfTravel>();
+    private PlaceOfTravel _activatedPlace; // Место, куда уже отправлены медведи
+    private PlaceOfTravel _selectedPlace; // Выбранное место на карте
 
-    public void OpenTravelMenu(bool canTravel = false)
+    [Header("Настройки")] public GameObject travelMenu;
+    private GameObject _infoOfPlaceMenu, _blockOfTravel, _resultOfTravelMenu;
+    private TextMeshProUGUI _textNameLocation, _textDescriptionLocation, _precentOfKnowPlanet;
+    private Button _travelButton;
+    private int _maxPlaces;
+    private float _timeElapsed;
+    private allScripts _scripts;
+
+    private void Start()
     {
-        if (scripts.CheckOpenedWindows(!travelMenu.activeSelf)) // Если какая-то менюха уже открыта
-            return;
-        travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
-        infoOfPlaceMenu.gameObject.SetActive(false);
-        if (travelMenu.activeSelf)
-        {
-            UpdateMap();
-            blockOfTravel.gameObject.SetActive(canTravel);
-            if (blockOfTravel.activeSelf)
-                blockOfTravel.transform.Find("Button").GetComponent<Button>().interactable = (activatedPlace.gameName == "" && scripts.colonyManager.Food >= activatedPlace.foodNeed); // Если исследование не идет
-        }
+        _scripts = GameObject.Find("scripts").GetComponent<allScripts>();
+        _maxPlaces = allPlaces.Length;
+
+        // Инициализация
+        _infoOfPlaceMenu = travelMenu.transform.Find("panelPlaceInfo")?.gameObject;
+
+        _textNameLocation = _infoOfPlaceMenu?.transform.Find("TextLocationName")?.GetComponent<TextMeshProUGUI>();
+        _textDescriptionLocation =
+            _infoOfPlaceMenu?.transform.Find("TextLocationDescription")?.GetComponent<TextMeshProUGUI>();
+        _precentOfKnowPlanet = _infoOfPlaceMenu?.transform.Find("TextPrecent")?.GetComponent<TextMeshProUGUI>();
+        _blockOfTravel = _infoOfPlaceMenu?.transform.Find("StartTravelBlock")?.gameObject;
+        _resultOfTravelMenu = GameObject.Find("menuEvent");
+        _travelButton = _blockOfTravel?.transform.Find("Button")?.GetComponent<Button>();
+
+        foreach (PlaceOfTravel pot in allPlaces)
+            _allPlacesDict.Add(pot.gameName, pot);
     }
 
+    /// <summary>
+    /// Открытие меню путешествий
+    /// </summary>
+    /// <param name="canTravel"></param>
+    private void OpenTravelMenu(bool canTravel = false)
+    {
+        // Если какая-то менюха уже открыта
+        if (_scripts.CheckOpenedWindows(!travelMenu.activeSelf)) return;
+        travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
+        _infoOfPlaceMenu.gameObject.SetActive(false); // Закрытие информации о месте, если была открыта
+        if (!travelMenu.activeSelf) return;
+
+        UpdateMap();
+        _blockOfTravel.gameObject.SetActive(canTravel);
+        if (_blockOfTravel.activeSelf)
+            _travelButton.interactable =
+                (_activatedPlace.gameName == "" &&
+                 _scripts.colonyManager.Food >= _activatedPlace.foodNeed); // Если исследование не идет
+    }
+
+    /// <summary>
+    /// Начать экспедицию
+    /// </summary>
     public void StartExpedition()
     {
-        activatedPlace = selectedPlace;
+        _activatedPlace = _selectedPlace;
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
     }
 
+    /// <summary>
+    /// Выбрать какое-либо место для путешествия
+    /// </summary>
+    /// <param name="placeObj"></param>
     public void ChoicePlace(GameObject placeObj)
     {
-        foreach (PlaceOfTravel place in allPlaces)
+        _selectedPlace = _allPlacesDict[placeObj.name];
+        _infoOfPlaceMenu.gameObject.SetActive(true);
+        _textNameLocation.text = _selectedPlace.nameOfPlace;
+        _textDescriptionLocation.text = _selectedPlace.description;
+        if (_blockOfTravel.activeSelf)
         {
-            if (place.gameName == placeObj.name)
-            {
-                infoOfPlaceMenu.gameObject.SetActive(true);
-                textNameLocation.text = place.nameOfPlace;
-                textDescriptionLocation.text = place.description;
-                selectedPlace = place;
-                if (blockOfTravel.activeSelf)
-                {
-                    TextMeshProUGUI travelInfo =
-                        blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
-                    
-                    if (activatedPlace.gameName == "")
-                        travelInfo.text = (place.timeToGoing / 60).ToString() + " мин/-" + place.foodNeed.ToString() + " еды";
-                    else
-                        travelInfo.text = "Экспедиция уже начата!";
-                }
-                break;
-            }
+            TextMeshProUGUI travelInfo =
+                _blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
+
+            if (_activatedPlace.gameName == "")
+                travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды";
+            else
+                travelInfo.text = "Экспедиция уже начата!";
         }
     }
 
@@ -65,16 +97,13 @@ public class TravelingManager : MonoBehaviour
     {
         foreach (Transform child in travelMenu.transform.Find("places"))
         {
-            foreach (PlaceOfTravel place in allPlaces)
-            {
-                if (place.gameName == child.gameObject.name)
-                {
-                    child.gameObject.GetComponent<Button>().interactable = !place.placeIsChecked;
-                    break;
-                }
-            }
+            child.gameObject.GetComponent<Button>().interactable =
+                !_allPlacesDict[child.gameObject.name].placeIsChecked;
+            break;
         }
-        precentOfKnowPlanet.text = "Мир исследован на " + ((1 - (allPlaces.Length - maxPlaces)) * 100).ToString() + "%";
+
+        _precentOfKnowPlanet.text =
+            "Мир исследован на " + (1 - (allPlaces.Length - _maxPlaces)) * 100 + "%";
     }
 
     /// <summary>
@@ -82,28 +111,30 @@ public class TravelingManager : MonoBehaviour
     /// </summary>
     public void ActivateTravelResult()
     {
-        resultOfTravelMenu.gameObject.SetActive(true);
-        resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = "Экспедиция вернулась: " + activatedPlace.nameOfPlace;
-        resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = activatedPlace.resultText;
-        activatedPlace.placeIsChecked = true;
-        foreach (Reward reward in activatedPlace.rewards)
+        _resultOfTravelMenu.gameObject.SetActive(true);
+        _resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text =
+            "Экспедиция вернулась: " + _activatedPlace.nameOfPlace;
+        _resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text =
+            _activatedPlace.resultText;
+        _activatedPlace.placeIsChecked = true;
+        foreach (Reward reward in _activatedPlace.rewards)
         {
             switch (reward.typeOfReward)
             {
                 case Resources.Material:
-                    scripts.colonyManager.Materials += reward.count;
+                    _scripts.colonyManager.Materials += reward.count;
                     break;
                 case Resources.MaterialPlus:
-                    scripts.colonyManager.materialsPlus += reward.count;
+                    _scripts.colonyManager.MaterialsPlus += reward.count;
                     break;
                 case Resources.Food:
-                    scripts.colonyManager.Food += reward.count;
+                    _scripts.colonyManager.Food += reward.count;
                     break;
                 case Resources.Honey:
-                    scripts.colonyManager.Honey += reward.count;
+                    _scripts.colonyManager.Honey += reward.count;
                     break;
                 case Resources.BioFuel:
-                    scripts.colonyManager.Biofuel += reward.count;
+                    _scripts.colonyManager.Biofuel += reward.count;
                     break;
                 case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
@@ -113,41 +144,42 @@ public class TravelingManager : MonoBehaviour
 
                         // Генерируем случайный индекс
                         int randomIndex = Random.Range(0, traditions.Length);
-                        scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
+                        _scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
                     }
+
                     break;
             }
         }
+
         Time.timeScale = 0.05f;
-        activatedPlace = new PlaceOfTravel(); // Очистка
+        _activatedPlace = new PlaceOfTravel(); // Очистка
     }
 
     public void DisableTravelResult() // Для UI
     {
-        resultOfTravelMenu.gameObject.SetActive(false);
+        _resultOfTravelMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
-            OpenTravelMenu(scripts.colonyManager.scoutHome);
+            OpenTravelMenu(_scripts.colonyManager.scoutHome);
     }
 
     private void FixedUpdate()
     {
-        if (activatedPlace.gameName != "")
+        if (_activatedPlace == null) return;
+        
+        // Каждую секунду
+        _timeElapsed += Time.deltaTime;
+        _activatedPlace.timeNow += Mathf.FloorToInt(_timeElapsed);
+        _timeElapsed -= Mathf.FloorToInt(_timeElapsed);
+        if (_activatedPlace.timeNow >= _activatedPlace.timeToGoing)
         {
-            // Каждую секунду
-            timeElapsed += Time.deltaTime;
-            activatedPlace.timeNow += Mathf.FloorToInt(timeElapsed);
-            timeElapsed -= Mathf.FloorToInt(timeElapsed);
-            if (activatedPlace.timeNow >= activatedPlace.timeToGoing)
-            {
-                ActivateTravelResult();
-                timeElapsed = 0f;
-                activatedPlace.gameName = "";
-            }
+            ActivateTravelResult();
+            _timeElapsed = 0f;
+            _activatedPlace.gameName = "";
         }
     }
 }

@@ -26,7 +26,7 @@ public class SaveAndLoad : MonoBehaviour
 
         LoadGame();
     }
-    
+
     /// <summary>
     /// При закрытии игры сработает это
     /// </summary>
@@ -57,9 +57,9 @@ public class SaveAndLoad : MonoBehaviour
         systemSaver.SaveGame();
     }
 
-    
+
     // Часть иниициализации (Create)
-    
+
     /// <summary>
     /// Вызывает методы создания игры, например создает медведей постройки и т.д.
     /// </summary>
@@ -75,7 +75,7 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateBears()
     {
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
-        colonyManager.GenerateChrom();
+        colonyManager.GenerateSpecialBear("Хром", GameObject.Find("BearChrom_0"), Traditions.Chrom);
         colonyManager.GenerateNewBear(Traditions.Beekeepers);
         colonyManager.GenerateNewBear(Traditions.Programmers);
         colonyManager.GenerateNewBear(Traditions.Constructors);
@@ -87,12 +87,11 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateBuilds()
     {
-        
     }
-    
-    
+
+
     // Часть Загрузки (Load)
-    
+
     /// <summary>
     /// Загрузит медведей из json'а
     /// </summary>
@@ -102,11 +101,9 @@ public class SaveAndLoad : MonoBehaviour
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
 
         foreach (Bear bear in systemSaver.gameSave.bears)
-        {
             colonyManager.BearSpawn(bear);
-        }
     }
-    
+
     /// <summary>
     /// Подргрузка тасков из json
     /// </summary>
@@ -119,27 +116,23 @@ public class SaveAndLoad : MonoBehaviour
         foreach (Dictionary<string, object> task in systemSaver.gameSave.tasksSaves)
         {
             // Инициализируем все нужные переменные для создания задачи
-            TasksMode tasksMode = (TasksMode) Enum.Parse(typeof(TasksMode), (string)task["taskMode"]);
+            TasksMode tasksMode = (TasksMode)Enum.Parse(typeof(TasksMode), (string)task["taskMode"]);
             GameObject objectOfTask = GameObject.Find((string)task["ObjectOfTaskName"]);
             Bear bearObject = null;
 
             foreach (Bear bear in colonyManager.bearsInColony) // Ищем медведя
             {
                 if (bear.gameName == (string)task["BearGameName"])
-                {
                     bearObject = bear;
-                }
             }
 
             if (bearObject == null) // Если медведь не найден
-            {
                 throw new ArgumentException("Invalid bear game name: " + task["BearGameName"]);
-            }
 
             // Инициализируем задачу
-            BearTask bearTask = new BearTask(tasksMode, objectOfTask, (float)(double) task["needSteps"]);
+            BearTask bearTask = new BearTask(tasksMode, objectOfTask, (float)(double)task["needSteps"]);
             bearTask.selectedBear = bearObject;
-            bearTask.totalSteps = (float)(double) task["totalSteps"];
+            bearTask.totalSteps = (float)(double)task["totalSteps"];
         }
     }
 
@@ -148,12 +141,11 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void LoadBuilds()
     {
-        
     }
 
-    
+
     // Часть сохранения (Save)
-    
+
     /// <summary>
     /// Сохранить медведей, сведения о них, например позиции
     /// </summary>
@@ -162,19 +154,19 @@ public class SaveAndLoad : MonoBehaviour
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
         // Рассчитывается на то, что каждый медведь из bearsInColony, соответствует индексу в json 
 
-        for (int i = 0; i < colonyManager.bearsInColony.Count; i++) 
-            
-        // Получаем медведей медведя и сейв медведя из списков
-        foreach (Bear bear in colonyManager.bearsInColony)
-        {
-            if (bear.tradition != Traditions.Chrom)
+        for (int i = 0; i < colonyManager.bearsInColony.Count; i++)
+
+            // Получаем медведей медведя и сейв медведя из списков
+            foreach (Bear bear in colonyManager.bearsInColony)
             {
-                // Сейвим координаты
-                GameObject bearObj = GameObject.Find(bear.gameName);
-                bear.x = bearObj.transform.position.x;
-                bear.z = bearObj.transform.position.z;
+                if (bear.tradition != Traditions.Chrom)
+                {
+                    // Сейвим координаты
+                    GameObject bearObj = GameObject.Find(bear.gameName);
+                    bear.x = bearObj.transform.position.x;
+                    bear.z = bearObj.transform.position.z;
+                }
             }
-        }
     }
 
     /// <summary>
@@ -184,22 +176,23 @@ public class SaveAndLoad : MonoBehaviour
     {
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        
+
         if (colonyManager.bearTasks.Count == 0) return;
-        
+
         Type type = colonyManager.bearTasks[0].GetType();
         foreach (BearTask bearTask in colonyManager.bearTasks) // Проходимся по всем медведям
         {
             Dictionary<string, object> saveData = new Dictionary<string, object>();
             // Проходимся по всем публичным филдам, чтобы найти помеченные аттрибутом
-            foreach (var field in type.GetProperties(BindingFlags.Public | BindingFlags.Instance)) 
+            foreach (var field in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 JsonPropertyAttribute attribute = field.GetCustomAttribute<JsonPropertyAttribute>();
                 if (attribute != null) // Если у поля есть такой аттрибут, достаем из него значение
                 {
-                     saveData[attribute.PropertyName] = field.GetValue(bearTask);
+                    saveData[attribute.PropertyName] = field.GetValue(bearTask);
                 }
             }
+
             systemSaver.gameSave.tasksSaves.Add(saveData);
         }
     }
@@ -209,7 +202,5 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void SaveBuilds()
     {
-        
     }
-
 }

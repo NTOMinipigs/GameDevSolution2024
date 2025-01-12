@@ -25,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7988121807721105924}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 558, y: 1, z: 525.8158}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,7 +33,6 @@ Transform:
   m_Children:
   - {fileID: 2043123245542920964}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3165407333752762988
 MonoBehaviour:
@@ -56,12 +56,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 2652720429672817184}
-  Size: {x: 207, y: 199}
+  mainRenderer: {fileID: 2652720429672817184}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 0
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 0
   specMaterialsNeed: 0
   stepsNeed: 0

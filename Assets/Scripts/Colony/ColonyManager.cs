@@ -11,104 +11,110 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class ColonyManager : MonoBehaviour
 {
-
     [Header("Main resources")]
     // Структура каждого ресурса: _ресурсText _ресурсPrivate Ресурс _максимумРесурсаПриват МаксимумРесурса
     // _ресурс/_максимумРесурсаПриват
     [Header("-Honey")]
-    [SerializeField] private TextMeshProUGUI honeyText;
+    [SerializeField]
+    private TextMeshProUGUI honeyText;
+
     private float _honey;
 
     public float Honey
     {
-        get { return _honey; }
+        get => _honey;
         set
         {
             if (value > MaxHoney && MaxHoney != 0)
                 _honey = MaxHoney;
             else
                 _honey = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            honeyText.text = _honey.ToString() + "/" + _maxHoney.ToString();
-        }
-    }
-    private float _maxHoney;
-    public float MaxHoney
-    {
-        get { return _maxHoney; }
-        set
-        {
-            _maxHoney = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            honeyText.text = _honey.ToString() + "/" + _maxHoney.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            honeyText.text = _honey + "/" + _maxHoney;
         }
     }
 
-    [Header("-Biofuel")][SerializeField] private TextMeshProUGUI biofuelText;
+    private float _maxHoney;
+
+    public float MaxHoney
+    {
+        get => _maxHoney;
+        set
+        {
+            _maxHoney = value;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            honeyText.text = _honey + "/" + _maxHoney;
+        }
+    }
+
+    [Header("-Biofuel")] [SerializeField] private TextMeshProUGUI biofuelText;
     private float _biofuel;
 
     public float Biofuel
     {
-        get { return _biofuel; }
+        get => _biofuel;
         set
         {
             if (value > MaxBiofuel && MaxBiofuel != 0)
                 _biofuel = MaxBiofuel;
             else
                 _biofuel = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            biofuelText.text = _biofuel.ToString() + "/" + _maxBiofuel.ToString();
-        }
-    }
-    private float _maxBiofuel;
-    public float MaxBiofuel
-    {
-        get { return _maxBiofuel; }
-        set
-        {
-            _maxBiofuel = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            biofuelText.text = _biofuel.ToString() + "/" + _maxBiofuel.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            biofuelText.text = _biofuel + "/" + _maxBiofuel;
         }
     }
 
-    [Header("-Energy")]
-    [SerializeField] private TextMeshProUGUI energyText;
+    private float _maxBiofuel;
+
+    public float MaxBiofuel
+    {
+        get => _maxBiofuel;
+        set
+        {
+            _maxBiofuel = value;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            biofuelText.text = _biofuel + "/" + _maxBiofuel;
+        }
+    }
+
+    [Header("-Energy")] [SerializeField] private TextMeshProUGUI energyText;
     private float _energy;
+
     public float Energy
     {
-        get { return _energy; }
+        get => _energy;
         set
         {
             if (value > MaxEnergy && MaxEnergy != 0)
                 _energy = MaxEnergy;
             else
                 _energy = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
-        }
-    }
-    private float _maxEnergy;
-    public float MaxEnergy
-    {
-        get { return _maxEnergy; }
-        set
-        {
-            _maxEnergy = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            energyText.text = _energy.ToString() + "/" + _maxEnergy.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            energyText.text = _energy + "/" + _maxEnergy;
         }
     }
 
-    [Header("-materials")]
-    [SerializeField]
+    private float _maxEnergy;
+
+    public float MaxEnergy
+    {
+        get => _maxEnergy;
+        set
+        {
+            _maxEnergy = value;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            energyText.text = _energy + "/" + _maxEnergy;
+        }
+    }
+
+    [Header("-materials")] [SerializeField]
     private TextMeshProUGUI materialsText;
 
     private float _materials;
 
     public float Materials
     {
-        get { return _materials; }
+        get => _materials;
         set
         {
             if (value > MaxMaterials && MaxMaterials != 0)
@@ -116,104 +122,106 @@ public class ColonyManager : MonoBehaviour
             else
                 _materials = value;
             _materials = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            materialsText.text = _materials.ToString() + "/" + _maxMaterials.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            materialsText.text = _materials + "/" + _maxMaterials;
         }
     }
 
     private float _maxMaterials;
+
     public float MaxMaterials
     {
-        get { return _maxMaterials; }
+        get => _maxMaterials;
         set
         {
             _maxMaterials = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            materialsText.text = _materials.ToString() + "/" + _maxMaterials.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            materialsText.text = _materials + "/" + _maxMaterials;
         }
     }
 
     [SerializeField] private TextMeshProUGUI materialsPlusText;
     private float _materialsPlus;
 
-    public float materialsPlus
+    public float MaterialsPlus
     {
-        get { return _materialsPlus; }
+        get => _materialsPlus;
         set
         {
             if (value > MaxMaterialsPlus && MaxMaterialsPlus != 0)
                 _materialsPlus = MaxMaterialsPlus;
             else
                 _materialsPlus = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            materialsPlusText.text = _materialsPlus.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            materialsPlusText.text = _materialsPlus + "/" + _maxMaterialsPlus;
         }
     }
 
     private float _maxMaterialsPlus;
+
     public float MaxMaterialsPlus
     {
-        get { return _maxMaterialsPlus; }
+        get => _maxMaterialsPlus;
         set
         {
             _maxMaterialsPlus = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            materialsText.text = _materialsPlus.ToString() + "/" + _maxMaterialsPlus.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            materialsPlusText.text = _materialsPlus + "/" + _maxMaterialsPlus;
         }
     }
 
-    [Header("-food")]
-    [SerializeField] private TextMeshProUGUI foodText;
+    [Header("-food")] [SerializeField] private TextMeshProUGUI foodText;
     private float _food;
 
     public float Food
     {
-        get { return _food; }
+        get => _food;
         set
         {
             if (value > MaxFood && MaxFood != 0)
                 _food = MaxFood;
             else
                 _food = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            foodText.text = _food.ToString() + "/" + _maxFood.ToString();
-        }
-    }
-    private float _maxFood;
-    public float MaxFood
-    {
-        get { return _maxFood; }
-        set
-        {
-            _maxFood = value;
-            APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
-            foodText.text = _food.ToString() + "/" + _maxFood.ToString();
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            foodText.text = _food + "/" + _maxFood;
         }
     }
 
-    [Header("Bears")]
-    public List<Bear> bearsInColony = new List<Bear>();
+    private float _maxFood;
+
+    public float MaxFood
+    {
+        get => _maxFood;
+        set
+        {
+            _maxFood = value;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+            foodText.text = _food + "/" + _maxFood;
+        }
+    }
+
+    [Header("Bears")] public List<Bear> bearsInColony;
+    public Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
     public int maxBears;
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
     [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
-    [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = new string[0];
+    [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = Array.Empty<string>();
 
-    [SerializeField]
-    private SerializableBear[] spriteBeekeepers,
+    [SerializeField] private SerializableBear[] spriteBeekeepers,
         spriteConstructors,
         spriteProgrammers,
-        spriteBioengineers = new SerializableBear[0];
+        spriteBioengineers = Array.Empty<SerializableBear>();
 
     [SerializeField] private TextMeshProUGUI bearsCountText;
     public GameObject bearsListMenu;
     [SerializeField] private GameObject bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
-    [SerializeField] private adaptiveScroll bearsListAS;
+    [SerializeField] private adaptiveScroll bearsListAs;
 
-    [Header("Other")]
-    public bool scoutHome;
+    [Header("Other")] public bool scoutHome;
     [SerializeField] private allScripts scripts;
+    private SystemSaver _systemSaver;
 
     private Dictionary<string, Func<float>> _materialsRefs;
 
@@ -222,41 +230,44 @@ public class ColonyManager : MonoBehaviour
     /// Этот геттер позволяет удобно привести словарь к сереализуемому виду.
     /// </summary>
     /// TODO: Сейчас здесь работает приведение к типу int, т.к. все остальное хранится в флоат. Исправить
-    public Dictionary<string, int> SendDictionary
+    private Dictionary<string, int> SendDictionary
     {
         get
         {
             Dictionary<string, int> sendDictionary = new Dictionary<string, int>();
             foreach (var (key, value) in _materialsRefs)
-            {
                 sendDictionary[key] = (int)value();
-            }
+
             return sendDictionary;
         }
     }
 
     public async void Start()
     {
+        _systemSaver = gameObject.GetComponent<SystemSaver>();
+
         // Здесь инициализируется словарь с значениями-ссылками на ресурсы
         _materialsRefs = new Dictionary<string, Func<float>>()
         {
-            {"materials", () => Materials},
-            {"food", () => Food},
-            {"bioFuel", () => Biofuel },
-            {"honey", () => Honey },
-            {"bears", () => bearsInColony.Count },
-            {"materialPlus", () => materialsPlus},
-            {"energy", () => Energy},
-            {"maxMaterials", () => MaxMaterials},
-            {"maxFood", () => MaxFood},
-            {"maxBioFuel", () => MaxBiofuel},
-            {"maxHoney", () => MaxHoney},
-            {"maxBears", () => maxBears},
-            {"maxMaterialPlus", () => MaxMaterialsPlus},
-            {"maxEnergy", () => MaxEnergy}
+            { "materials", () => Materials },
+            { "food", () => Food },
+            { "bioFuel", () => Biofuel },
+            { "honey", () => Honey },
+            { "bears", () => bearsInColony.Count },
+            { "materialPlus", () => MaterialsPlus },
+            { "energy", () => Energy },
+            { "maxMaterials", () => MaxMaterials },
+            { "maxFood", () => MaxFood },
+            { "maxBioFuel", () => MaxBiofuel },
+            { "maxHoney", () => MaxHoney },
+            { "maxBears", () => maxBears },
+            { "maxMaterialPlus", () => MaxMaterialsPlus },
+            { "maxEnergy", () => MaxEnergy }
         };
-       
-        APIClient.UserInventory inventory = await APIClient.Instance.GetUserInventoryRequest(Player.Instance.playerName);
+
+        APIClient.UserInventory inventory =
+            await APIClient.Instance.GetUserInventoryRequest(Player.Instance.playerName);
+        if (inventory == null) return;
         _materials = inventory.Resources["materials"];
         _food = inventory.Resources["food"];
         _biofuel = inventory.Resources["bioFuel"];
@@ -271,22 +282,15 @@ public class ColonyManager : MonoBehaviour
         _maxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
         _maxEnergy = inventory.Resources["maxEnergy"];
     }
-
+    
     /// <summary>
-    /// Получаем медведя по названию игры? 
+    /// Получаем медведя по его dev имени
     /// </summary>
-    /// <param name="gameName">Название игры? (спасибо за чистый код)</param>
-    /// <returns>Возвращает медведя по названию игры</returns>
+    /// <param name="gameName">Dev имя</param>
+    /// <returns>Возвращает медведя по dev имени</returns>
     public Bear GetBear(string gameName)
     {
-        foreach (Bear bear in bearsInColony)
-        {
-            if (bear.gameName == gameName)
-                return bear;
-        }
-
-        Debug.Log(gameName + " dont finded");
-        return null;
+        return _bearsInColonyDict[gameName];
     }
 
     /// <summary>
@@ -294,7 +298,7 @@ public class ColonyManager : MonoBehaviour
     /// </summary>
     /// <param name="tradition">Традиция</param>
     /// <returns>Объект SerailizeBear (см документацию этого класса)</returns>
-    /// <exception cref="ArgumentException">Если активность не найдена. АРТЕМ НЕ НАДО ВЫРЕЗАТЬ ARGUMENTEXCEIPTIONS! Если ты обосрешься, то благодаря ошибке ты увидишь это быстрее</exception>
+    /// <exception cref="ArgumentException">Если активность не найдена.</exception>
     private SerializableBear GetSerializableBear(Traditions tradition)
     {
         return tradition switch // Упростил выражение
@@ -311,7 +315,26 @@ public class ColonyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Генерирует нового медведя
+    /// Сохраняет медведя + генерирует позицию(вынесено из метода GenerateNewBear)
+    /// </summary>
+    /// <param name="bear"></param>
+    /// <param name="serializableBearName"></param>
+    private void SaveBear(Bear bear, string serializableBearName)
+    {
+        Vector3 generatePosition = spawnBears.transform.position +
+                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+
+        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
+        bear.serializableBear = serializableBearName;
+        bear.x = generatePosition.x;
+        bear.z = generatePosition.z;
+        bear.y = generatePosition.y;
+
+        _systemSaver.gameSave.bears.Add(bear);
+    }
+
+    /// <summary>
+    /// Генерирует нового медведя по традиции
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
@@ -320,48 +343,28 @@ public class ColonyManager : MonoBehaviour
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
 
-        // Блядь мне это трогать страшно, я просто позицию в отдельную переменную вынес и все нахуй посыпалось
         // TODO: сделать норм индексацию
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition,
             serializableBear.sprite);
-        Vector3 generatePosition = spawnBears.transform.position +
-                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
-
-        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        newBear.serializableBear = serializableBear.name;
-        newBear.x = generatePosition.x;
-        newBear.z = generatePosition.z;
-        newBear.y = generatePosition.y;
-        
-        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bears.Add(newBear);
+        SaveBear(newBear, serializableBear.name);
     }
 
     /// <summary>
-    /// Генератор для Хрома (Отдельно т.к. задается отдельно)
+    /// Генерирует ЗАДАННОГО медведя
     /// </summary>
-    public void GenerateChrom()
+    /// <param name="bearName"></param>
+    /// <param name="serializableBearObj"></param>
+    /// <param name="tradition"></param>
+    public void GenerateSpecialBear(string bearName, GameObject serializableBearObj, Traditions tradition)
     {
-        string bearName = "Хром";
-        SerializableBear serializableBear = GameObject.Find("BearChrom_0").GetComponent<SerializableBear>();
+        SerializableBear serializableBear = serializableBearObj.GetComponent<SerializableBear>();
         Bear newBear = new Bear(
-            Traditions.Chrom.ToString() + Random.Range(0, 1000),
+            tradition.ToString() + Random.Range(0, 1000),
             bearName,
-            Traditions.Chrom,
-             serializableBear.sprite
-            );
-        newBear.activity = Activities.Chill;
-        Vector3 generatePosition = spawnBears.transform.position +
-                                   new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
-
-        // Записываем медведя в SystemSaver, чтобы в будущем удобно записывать в json
-        newBear.serializableBear = serializableBear.name;
-        newBear.x = generatePosition.x;
-        newBear.z = generatePosition.z;
-        newBear.y = generatePosition.y;
-        
-        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        systemSaver.gameSave.bears.Add(newBear);
+            tradition,
+            serializableBear.sprite
+        );
+        SaveBear(newBear, serializableBear.name);
     }
 
     /// <summary>
@@ -372,9 +375,11 @@ public class ColonyManager : MonoBehaviour
     {
         SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
         bearsInColony.Add(newBear);
+        _bearsInColonyDict.Add(newBear.gameName, newBear);
         if ((Traditions)Enum.Parse(typeof(Traditions), newBear.tradition.ToString()) != Traditions.Chrom)
         {
-            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z), Quaternion.identity);
+            GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z),
+                Quaternion.identity);
             bearObj.name = newBear.gameName;
             bearObj.GetComponent<BearMovement>().totalBear = newBear;
         }
@@ -386,7 +391,9 @@ public class ColonyManager : MonoBehaviour
     /// <returns>ФИ медведя</returns>
     private string GetBearName(SerializableBear.Gender gender)
     {
-        string firstName = gender == SerializableBear.Gender.Men ? menBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)] : womanBearsFirstnames[Random.Range(0, womanBearsFirstnames.Length - 1)];
+        string firstName = gender == SerializableBear.Gender.Men
+            ? menBearsFirstnames[Random.Range(0, menBearsFirstnames.Length - 1)]
+            : womanBearsFirstnames[Random.Range(0, womanBearsFirstnames.Length - 1)];
         string lastName = bearsLastnames[Random.Range(0, bearsLastnames.Length - 1)];
 
         return firstName + " " + lastName;
@@ -402,6 +409,7 @@ public class ColonyManager : MonoBehaviour
             if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) && bear.tradition != Traditions.Chrom)
                 return bear;
         }
+
         return null;
     }
 
@@ -418,13 +426,14 @@ public class ColonyManager : MonoBehaviour
             task.selectedBear = chillBear;
             chillBear.activity = Activities.Work;
         }
+
         bearTasks.Add(task);
     }
 
     /// <summary>
     /// Выдать освободившемуся медведю новую задачу
     /// </summary>
-    public void SetTaskToBear(Bear bear)
+    private void SetTaskToBear(Bear bear)
     {
         foreach (BearTask task in bearTasks)
         {
@@ -435,6 +444,7 @@ public class ColonyManager : MonoBehaviour
                 break;
             }
         }
+
         // Если работы не нашлось
         if (GetBearTask(bear) == null)
             bear.activity = Activities.Chill;
@@ -447,6 +457,7 @@ public class ColonyManager : MonoBehaviour
             if (task.selectedBear == bear)
                 return task;
         }
+
         return null;
     }
 
@@ -454,10 +465,11 @@ public class ColonyManager : MonoBehaviour
     {
         if (task.taskMode == TasksMode.Build)
         {
-            task.objectOfTask.GetComponent<Building>().SetNormal();
-            task.objectOfTask.GetComponent<Building>().builded = true;
-            scripts.buildingSystem.SetBuildSettings(task.objectOfTask);
-            if (task.objectOfTask.GetComponent<Building>().scoutHome)
+            Building building = task.objectOfTask.GetComponent<Building>();
+            building.SetNormal();
+            building.builded = true;
+            scripts.buildingSystem.SetBuildSettings(building);
+            if (building.scoutHome)
                 scoutHome = true;
         }
         else if (task.taskMode == TasksMode.GetResource)
@@ -481,22 +493,23 @@ public class ColonyManager : MonoBehaviour
 
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
             scripts.cameraMove.blockMove = bearsListMenu.activeSelf;
-            if (bearsListMenu.activeSelf)
+            if (!bearsListMenu.activeSelf) return;
+
+            foreach (Transform child in bearsListContainer.transform)
+                Destroy(child.gameObject);
+
+            foreach (Bear bear in bearsInColony)
             {
-                foreach (Transform child in bearsListContainer.transform)
-                    Destroy(child.gameObject);
+                GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity,
+                    bearsListContainer.transform);
+                newObj.name = bear.gameName;
 
-                foreach (Bear bear in bearsInColony)
-                {
-                    GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity, bearsListContainer.transform);
-                    newObj.name = bear.gameName;
-
-                    Image image = newObj.transform.Find("Icon").GetComponent<Image>();
-                    image.sprite = bear.sprite;
-                    image.SetNativeSize();
-                }
-                bearsListAS.UpdateContentSize();
+                Image image = newObj.transform.Find("Icon").GetComponent<Image>();
+                image.sprite = bear.sprite;
+                image.SetNativeSize();
             }
+
+            bearsListAs.UpdateContentSize();
         }
     }
 
@@ -508,9 +521,10 @@ public class ColonyManager : MonoBehaviour
             foreach (Transform child in bearsListContainer.transform)
             {
                 Bear bear = GetBear(child.name);
-                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName + "\nТрадиция: " + bear.TraditionStr + "\nТекущее дело: " + bear.ActivityStr + "\nУсталость/голод: " + (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
+                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName +
+                    "\nТрадиция: " + bear.TraditionStr + "\nТекущее дело: " + bear.ActivityStr + "\nУсталость/голод: " +
+                    (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
             }
         }
     }
 }
-

@@ -25,6 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011949570504229626}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,7 +33,6 @@ Transform:
   m_Children:
   - {fileID: 4742295329569389131}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6555627606297097527
 MonoBehaviour:
@@ -56,12 +56,12 @@ MonoBehaviour:
   countOfBears: 0
   countOfDrone: 0
   scoutHome: 0
-  MainRenderer: {fileID: 3268988000459937665}
-  Size: {x: 72, y: 70}
+  mainRenderer: {fileID: 3268988000459937665}
+  size: {x: 1, y: 1}
   maxDrones: 0
   maxBears: 0
   resourceGive: 5
-  resourseOneWorker: 0
+  resourceOneWorker: 0
   materialsNeed: 10
   specMaterialsNeed: 0
   stepsNeed: 5
@@ -112,13 +112,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6033850555018476108}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 31.8, z: 30.1}
   m_LocalScale: {x: 11.63, y: 10.63175, z: 6.271071}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3027823047036914602}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1203266561505174306
 MeshFilter:
@@ -145,6 +145,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

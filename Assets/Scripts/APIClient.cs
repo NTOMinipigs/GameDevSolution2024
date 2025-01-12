@@ -149,6 +149,7 @@ public class APIClient : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// Обертка для UnityWebRequest в асинхронный метод.
     /// Используется как обертка во всех запросах кроме DELETE (Почему? Описано в документации метода SendDeleteAsync)
@@ -200,6 +201,7 @@ public class APIClient : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// Post запрос на сервер
     /// </summary>
@@ -318,7 +320,7 @@ public class APIClient : MonoBehaviour
     {
         return await SendGetAsync<UserInventory>("players/" + login + "/");
     }
-
+    
     /// <summary>
     /// Обновление инвентаря на сервере
     /// </summary>

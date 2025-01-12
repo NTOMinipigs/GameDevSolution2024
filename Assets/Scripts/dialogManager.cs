@@ -1,61 +1,66 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class DialogManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _textName, _textDialog;
-    [SerializeField] private Image _iconImage;
+    [SerializeField] private TextMeshProUGUI textName, textDialog;
+    [SerializeField] private Image iconImage;
     public GameObject dialogMenu;
-    public Dialog[] dialogs = new Dialog[0];
+    
+    public Dialog[] dialogs = Array.Empty<Dialog>();
+    private Dictionary<string, Dialog> _dialogsDict = new Dictionary<string, Dialog>();
+    
     [SerializeField] private int totalStep;
     private Dialog _activatedDialog;
     private DialogStep _selectedStep;
     private Bear _selectedBear;
     private bool _animatingText, _canStepNext;
+    
     [SerializeField] private allScripts scripts;
 
-    /// <summary>
-    /// Каждый вид диалогов имеет своё имя. Этот метод вернет нужный диалог по имени
-    /// TODO: Не самый логичный способ хранения имен диалогов, перекрафтить в хешмапы или чет такое, но говнище полное честн
-    /// </summary>
-    /// <param name="name">Название диалога</param>
-    /// <returns></returns>
-    private Dialog GetDialog(string name)
+    private void Start()
     {
         foreach (Dialog totalDialog in dialogs)
-        {
-            if (totalDialog.nameDialog == name)
-                return totalDialog;
-        }
-        return null;
+            _dialogsDict.Add(totalDialog.nameDialog, totalDialog);
+    }
+    
+    /// <summary>
+    /// Метод возвращает диалог по имени
+    /// </summary>
+    /// <param name="dialogName">Название диалога</param>
+    /// <returns></returns>
+    private Dialog GetDialog(string dialogName)
+    {
+        return _dialogsDict[dialogName];
     }
 
     /// <summary>
     /// Открытие менюшки диалога
     /// </summary>
-    /// <param name="name">Название диалога</param>
-    /// <param name="gameNameBear">Имя медведя видное разработчику</param>
-    /// <param name="blockWithOtherMenu">чеэто</param>
-    public void ActivateDialog(string name, string gameNameBear = "", bool blockWithOtherMenu = false) // Старт диалога
+    /// <param name="dialogName">Название диалога</param>
+    /// <param name="gameNameBear">Dev имя медведя, для произвольного диалого</param>
+    /// <param name="blockWithOtherMenu">Блокировать иные окна?</param>
+    public void ActivateDialog(string dialogName, string gameNameBear = "", bool blockWithOtherMenu = false) // Старт диалога
     {
         if (scripts.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
 
         scripts.musicManager.AudioLoops["snow_steps"].Play();
+
+        if (_activatedDialog != null) return;
         
-        if (_activatedDialog == null)
-        {
-            Debug.Log(name);
-            _activatedDialog = GetDialog(name);
-            dialogMenu.gameObject.SetActive(true);
-            scripts.cameraMove.blockMove = true;
-            _selectedStep = _activatedDialog.steps[0];
-            if (gameNameBear != "")
-                _selectedBear = scripts.colonyManager.GetBear((gameNameBear));
-            DialogUpdateAction();
-        }
+        _activatedDialog = GetDialog(dialogName);
+        dialogMenu.gameObject.SetActive(true);
+        scripts.cameraMove.blockMove = true;
+        _selectedStep = _activatedDialog.steps[0];
+        if (gameNameBear != "")
+            _selectedBear = scripts.colonyManager.GetBear(gameNameBear);
+        DialogUpdateAction();
     }
 
     // Старт диалога при взаимодействии с медведем
@@ -69,7 +74,7 @@ public class DialogManager : MonoBehaviour
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 4).ToString(), selectedBear.gameName, true);
+                ActivateDialog("bearTalk" + Random.Range(0, 4), selectedBear.gameName, true);
             else if (mode == 1)
                 ActivateDialog("bearActivity", selectedBear.gameName, true);
         }
@@ -86,10 +91,10 @@ public class DialogManager : MonoBehaviour
         else
             _selectedBear = _selectedStep.SetBear(scripts.colonyManager);
 
-        _textName.text = _selectedBear.bearName + " | " + _selectedBear.TraditionStr;
+        textName.text = _selectedBear?.bearName + " | " + _selectedBear?.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));
-        _iconImage.sprite = _selectedStep.icon;
-        _iconImage.SetNativeSize();
+        iconImage.sprite = _selectedStep.icon;
+        iconImage.SetNativeSize();
     }
 
     private void DialogMoveNext()
@@ -133,7 +138,7 @@ public class DialogManager : MonoBehaviour
                     _animatingText = false;
                     StopAllCoroutines();
                     string newText = CodeTextReplace(_selectedStep.text);
-                    _textDialog.text = newText;
+                    textDialog.text = newText;
                 }
                 else
                     DialogMoveNext();
@@ -143,7 +148,7 @@ public class DialogManager : MonoBehaviour
 
     private IEnumerator SetText(string text)
     {
-        _textDialog.text = "";
+        textDialog.text = "";
         _animatingText = true;
         text = CodeTextReplace(text);
         char[] textChar = text.ToCharArray();
@@ -151,7 +156,7 @@ public class DialogManager : MonoBehaviour
         {
             if (_animatingText)
             {
-                _textDialog.text += tChar;
+                textDialog.text += tChar;
                 yield return new WaitForSeconds(0.05f);
             }
         }

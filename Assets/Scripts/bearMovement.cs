@@ -86,6 +86,7 @@ public class BearMovement : MonoBehaviour
             if (newTask.totalSteps >= newTask.needSteps)
             {
                 scripts.colonyManager.EndTask(newTask);
+                Debug.Log(newTask.objectOfTask);
                 doingTask = false;
             }
         }
