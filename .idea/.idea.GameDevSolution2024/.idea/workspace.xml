@@ -4,29 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/brokenSpaceship.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/brokenSpaceship.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/crateWithFood.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/crateWithFood.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/factory.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/factory.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/factoryOfHoney.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/factoryOfHoney.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/factoryofBiofuel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/factoryofBiofuel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/honeyBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/honeyBox.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/house.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/house.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/rock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/rock.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/sunPanel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/sunPanel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/teplica.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/teplica.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/bearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/bearMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/dialogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/dialogManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/saveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/saveAndLoad.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/travelingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/travelingManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-    </list>
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,7 +112,7 @@
       <workItem from="1736348284006" duration="1378000" />
       <workItem from="1736350310635" duration="3803000" />
       <workItem from="1736585294296" duration="23825000" />
-      <workItem from="1736671796554" duration="6442000" />
+      <workItem from="1736671796554" duration="6800000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -168,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736632508309</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="govno refactoring">
+      <option name="closed" value="true" />
+      <created>1736697593419</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736697593419</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,6 +174,7 @@
     <MESSAGE value="Camera borders added" />
     <MESSAGE value="Small refactoring(buildings, colonyManager, traveling)" />
     <MESSAGE value="Small refactoring PART 2(ColonyManager, buildings, traveling)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small refactoring PART 2(ColonyManager, buildings, traveling)" />
+    <MESSAGE value="govno refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="govno refactoring" />
   </component>
 </project>

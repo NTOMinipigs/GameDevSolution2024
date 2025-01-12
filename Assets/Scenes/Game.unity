@@ -24398,7 +24398,7 @@ MonoBehaviour:
   bearsListMenu: {fileID: 1954224484}
   bearsListContainer: {fileID: 1033262483}
   cardBearPrefab: {fileID: 389877295033216478, guid: 457f3faa42a0a1042a40afb2e1cfa23c, type: 3}
-  bearsListAs: {fileID: 0}
+  bearsListAs: {fileID: 124659033}
   scoutHome: 0
   scripts: {fileID: 1346596986}
 --- !u!114 &1346596988
@@ -24413,9 +24413,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7866e64f1d7a90e4fb82d2559d424f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textName: {fileID: 0}
-  textDialog: {fileID: 0}
-  iconImage: {fileID: 0}
+  textName: {fileID: 1830313224}
+  textDialog: {fileID: 1082012928}
+  iconImage: {fileID: 45634956}
   dialogMenu: {fileID: 121036676}
   dialogs:
   - nameDialog: bearTired
