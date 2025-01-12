@@ -1,26 +1,42 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class TravelingManager : MonoBehaviour
 {
-    [SerializeField] private PlaceOfTravel[] allPlaces = new PlaceOfTravel[0]; // Все места.
-    private Dictionary<string, PlaceOfTravel> _allPlacesDict;
-    public GameObject travelMenu, infoOfPlaceMenu, blockOfTravel;
-    [SerializeField] private GameObject resultOfTravelMenu;
-    [SerializeField] PlaceOfTravel activatedPlace; // Место, куда уже отправлены люди
-    private PlaceOfTravel _selectedPlace;
-    [SerializeField] private TextMeshProUGUI textNameLocation, textDescriptionLocation, precentOfKnowPlanet;
+    [Header("Точки интереса")] [SerializeField]
+    private PlaceOfTravel[] allPlaces = Array.Empty<PlaceOfTravel>(); // Все места.
+
+    private Dictionary<string, PlaceOfTravel> _allPlacesDict = new Dictionary<string, PlaceOfTravel>();
+    private PlaceOfTravel _activatedPlace; // Место, куда уже отправлены медведи
+    private PlaceOfTravel _selectedPlace; // Выбранное место на карте
+
+    [Header("Настройки")] public GameObject travelMenu;
+    private GameObject _infoOfPlaceMenu, _blockOfTravel, _resultOfTravelMenu;
+    private TextMeshProUGUI _textNameLocation, _textDescriptionLocation, _precentOfKnowPlanet;
     private Button _travelButton;
-    [SerializeField] private allScripts scripts;
     private int _maxPlaces;
     private float _timeElapsed;
+    private allScripts _scripts;
 
     private void Start()
     {
+        _scripts = GameObject.Find("scripts").GetComponent<allScripts>();
         _maxPlaces = allPlaces.Length;
-        _travelButton = blockOfTravel.transform.Find("Button").GetComponent<Button>();
+
+        // Инициализация
+        _infoOfPlaceMenu = travelMenu.transform.Find("panelPlaceInfo")?.gameObject;
+
+        _textNameLocation = _infoOfPlaceMenu?.transform.Find("TextLocationName")?.GetComponent<TextMeshProUGUI>();
+        _textDescriptionLocation =
+            _infoOfPlaceMenu?.transform.Find("TextLocationDescription")?.GetComponent<TextMeshProUGUI>();
+        _precentOfKnowPlanet = _infoOfPlaceMenu?.transform.Find("TextPrecent")?.GetComponent<TextMeshProUGUI>();
+        _blockOfTravel = _infoOfPlaceMenu?.transform.Find("StartTravelBlock")?.gameObject;
+        _resultOfTravelMenu = GameObject.Find("menuEvent");
+        _travelButton = _blockOfTravel?.transform.Find("Button")?.GetComponent<Button>();
 
         foreach (PlaceOfTravel pot in allPlaces)
             _allPlacesDict.Add(pot.gameName, pot);
@@ -33,17 +49,17 @@ public class TravelingManager : MonoBehaviour
     private void OpenTravelMenu(bool canTravel = false)
     {
         // Если какая-то менюха уже открыта
-        if (scripts.CheckOpenedWindows(!travelMenu.activeSelf)) return;
+        if (_scripts.CheckOpenedWindows(!travelMenu.activeSelf)) return;
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
-        infoOfPlaceMenu.gameObject.SetActive(false); // Закрытие информации о месте, если была открыта
+        _infoOfPlaceMenu.gameObject.SetActive(false); // Закрытие информации о месте, если была открыта
         if (!travelMenu.activeSelf) return;
 
         UpdateMap();
-        blockOfTravel.gameObject.SetActive(canTravel);
-        if (blockOfTravel.activeSelf)
+        _blockOfTravel.gameObject.SetActive(canTravel);
+        if (_blockOfTravel.activeSelf)
             _travelButton.interactable =
-                (activatedPlace.gameName == "" &&
-                 scripts.colonyManager.Food >= activatedPlace.foodNeed); // Если исследование не идет
+                (_activatedPlace.gameName == "" &&
+                 _scripts.colonyManager.Food >= _activatedPlace.foodNeed); // Если исследование не идет
     }
 
     /// <summary>
@@ -51,7 +67,7 @@ public class TravelingManager : MonoBehaviour
     /// </summary>
     public void StartExpedition()
     {
-        activatedPlace = _selectedPlace;
+        _activatedPlace = _selectedPlace;
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
     }
 
@@ -62,15 +78,15 @@ public class TravelingManager : MonoBehaviour
     public void ChoicePlace(GameObject placeObj)
     {
         _selectedPlace = _allPlacesDict[placeObj.name];
-        infoOfPlaceMenu.gameObject.SetActive(true);
-        textNameLocation.text = _selectedPlace.nameOfPlace;
-        textDescriptionLocation.text = _selectedPlace.description;
-        if (blockOfTravel.activeSelf)
+        _infoOfPlaceMenu.gameObject.SetActive(true);
+        _textNameLocation.text = _selectedPlace.nameOfPlace;
+        _textDescriptionLocation.text = _selectedPlace.description;
+        if (_blockOfTravel.activeSelf)
         {
             TextMeshProUGUI travelInfo =
-                blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
+                _blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
 
-            if (activatedPlace.gameName == "")
+            if (_activatedPlace.gameName == "")
                 travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды";
             else
                 travelInfo.text = "Экспедиция уже начата!";
@@ -86,7 +102,7 @@ public class TravelingManager : MonoBehaviour
             break;
         }
 
-        precentOfKnowPlanet.text =
+        _precentOfKnowPlanet.text =
             "Мир исследован на " + (1 - (allPlaces.Length - _maxPlaces)) * 100 + "%";
     }
 
@@ -95,29 +111,30 @@ public class TravelingManager : MonoBehaviour
     /// </summary>
     public void ActivateTravelResult()
     {
-        resultOfTravelMenu.gameObject.SetActive(true);
-        resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text =
-            "Экспедиция вернулась: " + activatedPlace.nameOfPlace;
-        resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = activatedPlace.resultText;
-        activatedPlace.placeIsChecked = true;
-        foreach (Reward reward in activatedPlace.rewards)
+        _resultOfTravelMenu.gameObject.SetActive(true);
+        _resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text =
+            "Экспедиция вернулась: " + _activatedPlace.nameOfPlace;
+        _resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text =
+            _activatedPlace.resultText;
+        _activatedPlace.placeIsChecked = true;
+        foreach (Reward reward in _activatedPlace.rewards)
         {
             switch (reward.typeOfReward)
             {
                 case Resources.Material:
-                    scripts.colonyManager.Materials += reward.count;
+                    _scripts.colonyManager.Materials += reward.count;
                     break;
                 case Resources.MaterialPlus:
-                    scripts.colonyManager.MaterialsPlus += reward.count;
+                    _scripts.colonyManager.MaterialsPlus += reward.count;
                     break;
                 case Resources.Food:
-                    scripts.colonyManager.Food += reward.count;
+                    _scripts.colonyManager.Food += reward.count;
                     break;
                 case Resources.Honey:
-                    scripts.colonyManager.Honey += reward.count;
+                    _scripts.colonyManager.Honey += reward.count;
                     break;
                 case Resources.BioFuel:
-                    scripts.colonyManager.Biofuel += reward.count;
+                    _scripts.colonyManager.Biofuel += reward.count;
                     break;
                 case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
@@ -127,7 +144,7 @@ public class TravelingManager : MonoBehaviour
 
                         // Генерируем случайный индекс
                         int randomIndex = Random.Range(0, traditions.Length);
-                        scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
+                        _scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
                     }
 
                     break;
@@ -135,35 +152,34 @@ public class TravelingManager : MonoBehaviour
         }
 
         Time.timeScale = 0.05f;
-        activatedPlace = new PlaceOfTravel(); // Очистка
+        _activatedPlace = new PlaceOfTravel(); // Очистка
     }
 
     public void DisableTravelResult() // Для UI
     {
-        resultOfTravelMenu.gameObject.SetActive(false);
+        _resultOfTravelMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
-            OpenTravelMenu(scripts.colonyManager.scoutHome);
+            OpenTravelMenu(_scripts.colonyManager.scoutHome);
     }
 
     private void FixedUpdate()
     {
-        if (activatedPlace.gameName != "")
+        if (_activatedPlace == null) return;
+        
+        // Каждую секунду
+        _timeElapsed += Time.deltaTime;
+        _activatedPlace.timeNow += Mathf.FloorToInt(_timeElapsed);
+        _timeElapsed -= Mathf.FloorToInt(_timeElapsed);
+        if (_activatedPlace.timeNow >= _activatedPlace.timeToGoing)
         {
-            // Каждую секунду
-            _timeElapsed += Time.deltaTime;
-            activatedPlace.timeNow += Mathf.FloorToInt(_timeElapsed);
-            _timeElapsed -= Mathf.FloorToInt(_timeElapsed);
-            if (activatedPlace.timeNow >= activatedPlace.timeToGoing)
-            {
-                ActivateTravelResult();
-                _timeElapsed = 0f;
-                activatedPlace.gameName = "";
-            }
+            ActivateTravelResult();
+            _timeElapsed = 0f;
+            _activatedPlace.gameName = "";
         }
     }
 }

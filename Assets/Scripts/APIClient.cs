@@ -201,6 +201,7 @@ public class APIClient : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// Post запрос на сервер
     /// </summary>

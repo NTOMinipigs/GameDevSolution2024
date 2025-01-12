@@ -201,7 +201,7 @@ public class ColonyManager : MonoBehaviour
     }
 
     [Header("Bears")] public List<Bear> bearsInColony;
-    private Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
+    public Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
     public int maxBears;
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
@@ -246,9 +246,6 @@ public class ColonyManager : MonoBehaviour
     {
         _systemSaver = gameObject.GetComponent<SystemSaver>();
 
-        foreach (Bear bear in bearsInColony)
-            _bearsInColonyDict.Add(bear.gameName, bear);
-
         // Здесь инициализируется словарь с значениями-ссылками на ресурсы
         _materialsRefs = new Dictionary<string, Func<float>>()
         {
@@ -285,7 +282,7 @@ public class ColonyManager : MonoBehaviour
         _maxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
         _maxEnergy = inventory.Resources["maxEnergy"];
     }
-
+    
     /// <summary>
     /// Получаем медведя по его dev имени
     /// </summary>
@@ -378,6 +375,7 @@ public class ColonyManager : MonoBehaviour
     {
         SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
         bearsInColony.Add(newBear);
+        _bearsInColonyDict.Add(newBear.gameName, newBear);
         if ((Traditions)Enum.Parse(typeof(Traditions), newBear.tradition.ToString()) != Traditions.Chrom)
         {
             GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z),

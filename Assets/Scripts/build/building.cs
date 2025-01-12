@@ -30,7 +30,7 @@ public class Building : MonoBehaviour
 
     [HideInInspector] public int countOfBears, countOfDrone;
     [Header("BuildingSettings")] public bool scoutHome;
-    [SerializeField] private Renderer mainRenderer;
+    [SerializeField] private MeshRenderer mainRenderer;
     public Vector2Int size = Vector2Int.one;
     public int maxDrones, maxBears;
 

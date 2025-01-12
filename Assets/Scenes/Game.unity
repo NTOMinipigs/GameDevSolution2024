@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: ManageDrones
         m_Mode: 3
@@ -2032,7 +2032,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -11922,7 +11922,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
@@ -12199,7 +12199,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
@@ -12394,7 +12394,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 863654775}
-  - component: {fileID: 863654774}
   m_Layer: 0
   m_Name: buildingGrid
   m_TagString: Untagged
@@ -12402,23 +12401,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &863654774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863654773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7ce2ec49cbfeb64f87da160b13163c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildingCreateMenu: {fileID: 904100672}
-  buildMenu: {fileID: 432680793}
-  gridSize: {x: 10, y: 10}
-  selectedBuild: {fileID: 0}
-  selectedResource: 0
 --- !u!4 &863654775
 Transform:
   m_ObjectHideFlags: 0
@@ -12707,7 +12689,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: DisableBuildMenu
         m_Mode: 1
@@ -20107,7 +20089,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -21188,7 +21170,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -22650,7 +22632,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: DestroyBuilding
         m_Mode: 2
@@ -23484,7 +23466,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: ManageDrones
         m_Mode: 3
@@ -23617,7 +23599,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPickUpResource
         m_Mode: 1
@@ -24266,6 +24248,7 @@ GameObject:
   - component: {fileID: 1346597000}
   - component: {fileID: 1346596989}
   - component: {fileID: 1346596990}
+  - component: {fileID: 1346597001}
   - component: {fileID: 1346596988}
   - component: {fileID: 1346596996}
   - component: {fileID: 1346596997}
@@ -24312,7 +24295,7 @@ MonoBehaviour:
   zoom: {fileID: 1727350355}
   colonyManager: {fileID: 1346596987}
   dialogManager: {fileID: 1346596988}
-  buildingSystem: {fileID: 863654774}
+  buildingSystem: {fileID: 1346597001}
   questSystem: {fileID: 1346596989}
   GMM: {fileID: 1346596996}
   TM: {fileID: 1346596990}
@@ -24430,9 +24413,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7866e64f1d7a90e4fb82d2559d424f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textName: {fileID: 1830313224}
-  _textDialog: {fileID: 1082012928}
-  _iconImage: {fileID: 45634956}
+  textName: {fileID: 0}
+  textDialog: {fileID: 0}
+  iconImage: {fileID: 0}
   dialogMenu: {fileID: 121036676}
   dialogs:
   - nameDialog: bearTired
@@ -24680,10 +24663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34d9f87d494b1a4591117184f2c64b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelMenu: {fileID: 106093770}
-  infoOfPlaceMenu: {fileID: 686206019}
-  blockOfTravel: {fileID: 906780933}
-  resultOfTravelMenu: {fileID: 1803996131}
   allPlaces:
   - gameName: maybeHome
     nameOfPlace: "\u0417\u0430\u0442\u0435\u0440\u044F\u043D\u043D\u043E\u0435 \u043F\u043E\u0441\u0435\u043B\u0435\u043D\u0438\u0435"
@@ -24899,21 +24878,7 @@ MonoBehaviour:
       typeOfReward: 2
     - count: 30
       typeOfReward: 1
-  activatedPlace:
-    gameName: 
-    nameOfPlace: 
-    description: 
-    resultText: 
-    foodNeed: 0
-    timeNow: 0
-    timeToGoing: 0
-    placeIsChecked: 0
-    buttonInMap: {fileID: 0}
-    rewards: []
-  textNameLocation: {fileID: 746985998}
-  textDescriptionLocation: {fileID: 1228940637}
-  precentOfKnowPlanet: {fileID: 2066180136}
-  scripts: {fileID: 1346596986}
+  travelMenu: {fileID: 106093770}
 --- !u!114 &1346596991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25031,6 +24996,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7fb4cac8f0bf04c985cca1404fc49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1346597001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7ce2ec49cbfeb64f87da160b13163c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingCreateMenu: {fileID: 904100672}
+  buildMenu: {fileID: 432680793}
+  gridSize: {x: 1900, y: 1900}
+  selectedBuild: {fileID: 0}
+  selectedResource: 0
 --- !u!1 &1353461284
 GameObject:
   m_ObjectHideFlags: 0
@@ -25226,7 +25208,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
@@ -27717,7 +27699,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: ManageWorkers
         m_Mode: 3
@@ -30408,7 +30390,7 @@ MonoBehaviour:
   layerMaskInteract:
     serializedVersion: 2
     m_Bits: 64
-  minBounds: {x: 199, y: 50}
+  minBounds: {x: 199, y: 0}
   maxBounds: {x: 945, y: 850}
 --- !u!114 &1727350355
 MonoBehaviour:
@@ -30545,7 +30527,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
@@ -31178,7 +31160,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
@@ -33419,7 +33401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
@@ -36461,7 +36443,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: ManageWorkers
         m_Mode: 3
@@ -36971,7 +36953,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 863654774}
+      - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
         m_MethodName: StartPlacingBuilding
         m_Mode: 2

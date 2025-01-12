@@ -101,9 +101,7 @@ public class SaveAndLoad : MonoBehaviour
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
 
         foreach (Bear bear in systemSaver.gameSave.bears)
-        {
             colonyManager.BearSpawn(bear);
-        }
     }
 
     /// <summary>
@@ -125,15 +123,11 @@ public class SaveAndLoad : MonoBehaviour
             foreach (Bear bear in colonyManager.bearsInColony) // Ищем медведя
             {
                 if (bear.gameName == (string)task["BearGameName"])
-                {
                     bearObject = bear;
-                }
             }
 
             if (bearObject == null) // Если медведь не найден
-            {
                 throw new ArgumentException("Invalid bear game name: " + task["BearGameName"]);
-            }
 
             // Инициализируем задачу
             BearTask bearTask = new BearTask(tasksMode, objectOfTask, (float)(double)task["needSteps"]);

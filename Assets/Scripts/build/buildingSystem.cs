@@ -37,24 +37,24 @@ public class BuildingSystem : MonoBehaviour
         _scripts = GameObject.Find("scripts").GetComponent<allScripts>();
 
         // Общая инициализация
-        _noteBlock = buildingCreateMenu.transform.Find("NoteBlock")?.GetComponent<GameObject>();
-        _textSelectedBuild = _noteBlock?.transform.Find("TextSelectedBuild")?.GetComponent<TextMeshProUGUI>();
+        _noteBlock = buildingCreateMenu.transform.Find("NoteBlock")?.gameObject;
+        _textSelectedBuild = _noteBlock?.transform.Find("TextSelectedBuild").GetComponent<TextMeshProUGUI>();
         _buildCreateMenuBuildingsTransform = buildingCreateMenu.transform.Find("Scroll View").transform.Find("Viewport")
             .transform.Find("Content");
 
-        _bgObj = buildMenu.transform.Find("bg")?.GetComponent<GameObject>();
-        _buildMenuStandartButtons = _bgObj?.transform.Find("buildButtons")?.GetComponent<GameObject>();
-        _buildMenuMaterialsButtons = _bgObj?.transform.Find("materialStackButtons")?.GetComponent<GameObject>();
+        _bgObj = buildMenu.transform.Find("bg")?.gameObject;
+        _buildMenuStandartButtons = _bgObj?.transform.Find("buildButtons")?.gameObject;
+        _buildMenuMaterialsButtons = _bgObj?.transform.Find("materialStackButtons")?.gameObject;
         _textNameBuild = _bgObj?.transform.Find("TextName")?.GetComponent<TextMeshProUGUI>();
 
         _textInfoBuild = _buildMenuStandartButtons?.transform.Find("TextBuildInfo")?.GetComponent<TextMeshProUGUI>();
 
-        _bearManage = _buildMenuStandartButtons?.transform.Find("bearManage")?.GetComponent<GameObject>();
+        _bearManage = _buildMenuStandartButtons?.transform.Find("bearManage")?.gameObject;
         _buttonAddBear = _bearManage?.transform.Find("ButtonAddBear")?.GetComponent<Button>();
         _buttonRemoveBear = _bearManage?.transform.Find("ButtonDeleteBear")?.GetComponent<Button>();
         _textCountBears = _bearManage?.transform.Find("TextBearCount")?.GetComponent<TextMeshProUGUI>();
 
-        _droneManage = _buildMenuStandartButtons?.transform.Find("droneManage")?.GetComponent<GameObject>();
+        _droneManage = _buildMenuStandartButtons?.transform.Find("droneManage")?.gameObject;
         _buttonAddDrone = _droneManage?.transform.Find("ButtonAddDrone")?.GetComponent<Button>();
         _buttonRemoveDrone = _droneManage?.transform.Find("ButtonDeleteDrone")?.GetComponent<Button>();
         _textCountDrones = _droneManage?.transform.Find("TextDroneCount")?.GetComponent<TextMeshProUGUI>();
@@ -346,7 +346,6 @@ public class BuildingSystem : MonoBehaviour
 
                 _flyingBuilding.transform.position =
                     new Vector3(x + _flyingBuilding.size.x / 2f, 0, y + _flyingBuilding.size.y / 2f);
-                _flyingBuilding.SetTransparent(available); // Смена окраски
 
                 if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
                     PlaceFlyingBuilding(x, y);
@@ -356,6 +355,7 @@ public class BuildingSystem : MonoBehaviour
                     Destroy(_flyingBuilding.gameObject);
                     _noteBlock.gameObject.SetActive(false);
                 }
+                _flyingBuilding.SetTransparent(available); // Смена окраски
             }
         }
     }
