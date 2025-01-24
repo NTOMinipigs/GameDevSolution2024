@@ -18,14 +18,14 @@ public class APIClient : MonoBehaviour
     // HttpClient block
 
     /// <summary>
-    /// Базовый урл для всех запросов
-    /// </summary>
-    readonly string _baseUri = "https://2025.nti-gamedev.ru/api/games/a43ad0b2-c91a-408f-8247-79ec436532b4/";
-
-    /// <summary>
     /// UUID игры
     /// </summary>
-    readonly string _uuid = "a43ad0b2-c91a-408f-8247-79ec436532b4";
+    readonly string _uuid = Config.ConfigManager.Instance.config.api_key;
+
+    /// <summary>
+    /// Базовый урл для всех запросов
+    /// </summary>
+    private readonly string _baseUri;
     
 
     // Singleton block
@@ -38,9 +38,11 @@ public class APIClient : MonoBehaviour
     /// <summary>
     /// Приватим конструктор, так как это требует паттерн
     /// </summary>
-    private APIClient () {}
-
-
+    private APIClient()
+    {
+        _baseUri = "https://2025.nti-gamedev.ru/api/games/" + _uuid + "/";
+    }
+    
     public void Update()
     {
         // Проверим подключение к интернету
