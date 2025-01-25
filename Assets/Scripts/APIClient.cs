@@ -1,6 +1,6 @@
-using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,46 +12,96 @@ using UnityEngine.SceneManagement;
 ///     Базируется на паттерне Singleton (Одиночка)
 ///     Предоставляет удобный доступ к API, берет на себя полную ответственность за маршрутизацию запросов
 /// </summary>
+[SuppressMessage("ReSharper", "MissingXmlDoc")] // I suppress xmldocwarn because many fields don't need it
 public class APIClient : MonoBehaviour
 {
-    
     // HttpClient block
 
     /// <summary>
     /// UUID игры
     /// </summary>
-    readonly string _uuid = Config.ConfigManager.Instance.config.api_key;
+    private string _uuid;
 
     /// <summary>
     /// Базовый урл для всех запросов
     /// </summary>
-    private readonly string _baseUri;
-    
+    private string _baseUri;
+
+    private string _host = "2025.nti-gamedev.ru";
+
 
     // Singleton block
 
     /// <summary>
     /// Инстанция объекта, часть Singleton паттерна
     /// </summary>
-    public static APIClient Instance = new();
+    public static APIClient Instance;
 
     /// <summary>
-    /// Приватим конструктор, так как это требует паттерн
+    /// Инициализируем Singleton
     /// </summary>
-    private APIClient()
+    private void Awake()
     {
-        _baseUri = "https://2025.nti-gamedev.ru/api/games/" + _uuid + "/";
-    }
-    
-    public void Update()
-    {
-        // Проверим подключение к интернету
-        if (Application.internetReachability != NetworkReachability.NotReachable)
+        if (Instance == null)
         {
-            IfNoInternetConnection();
+            Instance = this;
+
+            DontDestroyOnLoad(gameObject);
+            Initialize();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
+    private void Initialize()
+    {
+        _uuid = Config.ConfigManager.Instance.config.api_key;
+        _baseUri = "https://" + _host + "/api/games/" + _uuid + "/";
+        StartCoroutine(CheckPing());
+    }
+
+    /// <summary>
+    /// Пингует сервер раз в 5 секунд, проверка доступа к серверу
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <returns></returns>
+    public IEnumerator<WaitForSeconds> CheckPing()
+    {
+        while (true)
+        {
+            Ping ping = new Ping(_host);
+            float startTime = Time.time;
+
+            while (!ping.isDone)
+            {
+                if (Time.time - startTime > 5f) // Таймаут в 5 секунд
+                {
+                    Debug.Log("Ping не отвечает");
+                    NoInternetConnection();
+                    yield break;
+                }
+
+                yield return new WaitForSeconds(1);
+            }
+
+            if (ping.time < 0)
+            {
+                NoInternetConnection();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Вызывается в случае, если есть подозрение на то, что у человека нет подключения к интернету в данный момент
+    /// </summary>
+    private void NoInternetConnection()
+    {
+        SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
+        saveAndLoad.SaveGame();
+        SceneManager.LoadScene("Menu");
+    }
 
     // records block
     // Все эти record'ы, это удобное представление Http ответов
@@ -103,7 +153,8 @@ public class APIClient : MonoBehaviour
         public string ShopName { get; }
         public Dictionary<string, string> ResourcesChanged { get; }
 
-        public ResourcesLog(string comment, string playerName, string shopName, Dictionary<string, string> resourcesChanged)
+        public ResourcesLog(string comment, string playerName, string shopName,
+            Dictionary<string, string> resourcesChanged)
         {
             Comment = comment;
             PlayerName = playerName;
@@ -124,6 +175,7 @@ public class APIClient : MonoBehaviour
             Resources = resources;
         }
     }
+
     // 10. Shop resources after a transaction
     public class ShopResourcesUpdate
     {
@@ -134,6 +186,7 @@ public class APIClient : MonoBehaviour
             Resources = resources;
         }
     }
+
     // Стракт для логов шопа
     public class ShopLogs
     {
@@ -161,7 +214,7 @@ public class APIClient : MonoBehaviour
     /// <param name="unityWebRequest">UnityWebRequest объект</param>
     /// <returns>null или сериализованный объект класса T</returns>
     /// <exception cref="HttpRequestException">В случае если запрос обвалился</exception>
-    private async Task<T?> UnityWebRequestWrapper<T>(UnityWebRequest unityWebRequest) where T : class
+    private async Task<T> UnityWebRequestWrapper<T>(UnityWebRequest unityWebRequest) where T : class
     {
         UnityWebRequestAsyncOperation operation = unityWebRequest.SendWebRequest();
         while (!operation.isDone)
@@ -173,22 +226,13 @@ public class APIClient : MonoBehaviour
         {
             return JsonConvert.DeserializeObject<T>(unityWebRequest.downloadHandler.text);
         }
-        
-        string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " + unityWebRequest.downloadHandler;
+
+        string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " +
+                              unityWebRequest.downloadHandler;
         Debug.LogError(errorMessage);
         throw new HttpRequestException(errorMessage);
     }
 
-    /// <summary>
-    /// Вызывается в случае, если есть подозрение на то, что у человека нет подключения к интернету в данный момент
-    /// </summary>
-    private void IfNoInternetConnection()
-    {
-        SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
-        saveAndLoad.SaveGame();
-        SceneManager.LoadScene("Menu");
-    }
-    
     /// <summary>
     /// Отправить get запрос на сервер
     /// </summary>
@@ -197,7 +241,8 @@ public class APIClient : MonoBehaviour
     /// <returns>Сериализованный record class (T)</returns>
     private async Task<T> SendGetAsync<T>(string uri) where T : class
     {
-        using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "GET")) {
+        using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "GET"))
+        {
             unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
             return await UnityWebRequestWrapper<T>(unityWebRequest);
         }
@@ -232,7 +277,7 @@ public class APIClient : MonoBehaviour
     /// <param name="uri">uri на который нужно отправить запрос</param>
     /// <param name="requestBody">Данные отправляемые на сервер</param>
     /// <returns>Сериализованный json в формате record class</returns>
-    private async Task<T> SendPutAsync<T>(string uri, object? requestBody) where T : class
+    private async Task<T> SendPutAsync<T>(string uri, object requestBody) where T : class
     {
         string jsonString = JsonConvert.SerializeObject(requestBody);
         using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "PUT"))
@@ -255,7 +300,7 @@ public class APIClient : MonoBehaviour
     {
         using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri + uri, "DELETE"))
         {
-            UnityWebRequestAsyncOperation operation =  unityWebRequest.SendWebRequest();
+            UnityWebRequestAsyncOperation operation = unityWebRequest.SendWebRequest();
 
             while (!operation.isDone)
             {
@@ -264,7 +309,8 @@ public class APIClient : MonoBehaviour
 
             if (unityWebRequest.result != UnityWebRequest.Result.Success)
             {
-                string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " + unityWebRequest.downloadHandler.text;
+                string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " +
+                                      unityWebRequest.downloadHandler.text;
                 Debug.LogError(errorMessage);
                 throw new HttpRequestException(errorMessage);
             }
@@ -280,18 +326,19 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">Логин игрока</param>
     /// <param name="requestResourses">Ресурсы игрока</param>
     /// <returns></returns>
-    public async Task<UserInventory?> CreatePlayerRequest(string requestLogin, Dictionary<string, int>? requestResourses)
+    public async Task<UserInventory> CreatePlayerRequest(string requestLogin, Dictionary<string, int> requestResourses)
     {
         object requestBody;
 
         // Формируем тело запроса
-        if (requestResourses == null) {
-            requestBody = new {name = requestLogin};
+        if (requestResourses == null)
+        {
+            requestBody = new { name = requestLogin };
         }
 
         else
         {
-            requestBody = new {name = requestLogin, resources = requestResourses};
+            requestBody = new { name = requestLogin, resources = requestResourses };
         }
 
         return await SendPostAsync<UserInventory>("players/", requestBody); // Отправляем запрос
@@ -303,10 +350,11 @@ public class APIClient : MonoBehaviour
     /// <returns>Список пользователей либо пустой список</returns>
     public async Task<List<UserInventory>> GetUsersListRequest()
     {
-        List<UserInventory>? response = await SendGetAsync<List<UserInventory>>("players/");
+        List<UserInventory> response = await SendGetAsync<List<UserInventory>>("players/");
 
         // Если ничего не нашли, вернем хотя бы пустой лист
-        if (response == null) {
+        if (response == null)
+        {
             return new List<UserInventory>();
         }
 
@@ -318,20 +366,21 @@ public class APIClient : MonoBehaviour
     /// </summary>
     /// <param name="login">Логин игрока</param>
     /// <returns>Инвентарь игрока</returns>
-    public async Task<UserInventory?> GetUserInventoryRequest(string login)
+    public async Task<UserInventory> GetUserInventoryRequest(string login)
     {
         return await SendGetAsync<UserInventory>("players/" + login + "/");
     }
-    
+
     /// <summary>
     /// Обновление инвентаря на сервере
     /// </summary>
     /// <param name="login">никнейм игрока на сервере</param>
     /// <param name="inventory">инвентарь игрока</param>
     /// <returns>ChangeResoures record</returns>
-    public async Task<ChangeResources?> SetUserInventoryRequest(string login, Dictionary<string, int> inventory)
+    public async Task<ChangeResources> SetUserInventoryRequest(string login, Dictionary<string, int> inventory)
     {
-        return await SendPutAsync<ChangeResources>("players/" + login + "/", new {name = login, resources = inventory});
+        return await SendPutAsync<ChangeResources>("players/" + login + "/",
+            new { name = login, resources = inventory });
     }
 
     /// <summary>
@@ -351,7 +400,8 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">Запрашиваемый юзернейм</param>
     /// <param name="requestResources">Изменения в ивентаре</param>
     /// <returns>SendResoursesLog record</returns>
-    public async Task<SendResourcesLog?> CreateLogRequest(string requestComment, string requestLogin, Dictionary<string, string> requestResources)
+    public async Task<SendResourcesLog> CreateLogRequest(string requestComment, string requestLogin,
+        Dictionary<string, string> requestResources)
     {
         return await SendPostAsync<SendResourcesLog>(
             "logs/",
@@ -371,9 +421,11 @@ public class APIClient : MonoBehaviour
     /// <returns>Если есть логи, вернет логи, если нет логов, вернет пустой массив</returns>
     public async Task<List<SendResourcesLog>> ReadLogsRequest(string requestLogin)
     {
-        List<SendResourcesLog>? response = await SendGetAsync<List<SendResourcesLog>>("players/" + requestLogin + "/logs/");
+        List<SendResourcesLog> response =
+            await SendGetAsync<List<SendResourcesLog>>("players/" + requestLogin + "/logs/");
 
-        if (response == null) {
+        if (response == null)
+        {
             return new List<SendResourcesLog>();
         }
 
@@ -387,21 +439,22 @@ public class APIClient : MonoBehaviour
     /// <param name="requestShopname">Название магазина</param>
     /// <param name="requestResourses">Ресурсы в магазине</param>
     /// <returns>ShopInfo record</returns>
-    public async Task<ShopInfo?> CreateShopRequest(string requestLogin, string requestShopname, Dictionary<string, byte>? requestResourses)
+    public async Task<ShopInfo> CreateShopRequest(string requestLogin, string requestShopname,
+        Dictionary<string, byte> requestResourses)
     {
         object resoursesObject;
 
         if (requestResourses == null)
         {
-            resoursesObject = new {name = requestShopname};
+            resoursesObject = new { name = requestShopname };
         }
 
         else
         {
-            resoursesObject = new {name = requestShopname, resourses = requestResourses};
+            resoursesObject = new { name = requestShopname, resourses = requestResourses };
         }
 
-        return  await SendPostAsync<ShopInfo>("players/" + requestLogin + "/shops/", resoursesObject);
+        return await SendPostAsync<ShopInfo>("players/" + requestLogin + "/shops/", resoursesObject);
     }
 
     /// <summary>
@@ -411,7 +464,7 @@ public class APIClient : MonoBehaviour
     /// <returns>Лист из магазинов либо пустой лист</returns>
     public async Task<List<ShopInfo>> GetShopsRequest(string requestLogin)
     {
-        List<ShopInfo>? response = await SendGetAsync<List<ShopInfo>>("players/" + requestLogin + "/shops/");
+        List<ShopInfo> response = await SendGetAsync<List<ShopInfo>>("players/" + requestLogin + "/shops/");
 
         if (response == null)
         {
@@ -427,7 +480,7 @@ public class APIClient : MonoBehaviour
     /// <param name="login">Ник человека</param>
     /// <param name="shopname">Имя магазина</param>
     /// <returns>ShopInfo record</returns>
-    public async Task<ShopInfo?> GetShopResoursesRequest(string login, string shopname)
+    public async Task<ShopInfo> GetShopResoursesRequest(string login, string shopname)
     {
         return await SendGetAsync<ShopInfo>("players/" + login + "/shops/" + shopname + "/");
     }
@@ -439,9 +492,11 @@ public class APIClient : MonoBehaviour
     /// <param name="shopname">название магазина</param>
     /// <param name="requestResourses">новые обновленные ресурсы</param>
     /// <returns>Ресурсы магазина</returns>
-    public async Task<ShopResourcesUpdate?> SetShopResoursesRequest(string login, string shopname, Dictionary<string, int> requestResourses)
+    public async Task<ShopResourcesUpdate> SetShopResoursesRequest(string login, string shopname,
+        Dictionary<string, int> requestResourses)
     {
-        return await SendPutAsync<ShopResourcesUpdate>("players/" + login + "/shops/" + shopname + "/", new {resourses = requestResourses});
+        return await SendPutAsync<ShopResourcesUpdate>("players/" + login + "/shops/" + shopname + "/",
+            new { resourses = requestResourses });
     }
 
     /// <summary>
@@ -450,7 +505,8 @@ public class APIClient : MonoBehaviour
     /// <param name="login">логин игрока</param>
     /// <param name="shopname">название магазина</param>
     /// <returns>void</returns>
-    public async Task DeleteShop(string login, string shopname) {
+    public async Task DeleteShop(string login, string shopname)
+    {
         await SendDeleteAsync("players/" + login + "/shops/" + shopname + "/");
     }
 
@@ -462,8 +518,11 @@ public class APIClient : MonoBehaviour
     /// <param name="requestShopname">название магазина</param>
     /// <param name="requestResorses">изменения ресурсов магазина</param>
     /// <returns>отправленное тело</returns>
-    public async Task<ShopLogs?> CreateShopLogs(string requestComment, string requestLogin, string requestShopname, Dictionary<string, int> requestResorses) {
-        return await SendPostAsync<ShopLogs>("logs/", new {
+    public async Task<ShopLogs> CreateShopLogs(string requestComment, string requestLogin, string requestShopname,
+        Dictionary<string, int> requestResorses)
+    {
+        return await SendPostAsync<ShopLogs>("logs/", new
+        {
             comment = requestComment,
             player_name = requestLogin,
             shop_name = requestShopname,
@@ -477,7 +536,8 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">юзернейм игрока</param>
     /// <param name="requestShopname">название магазина</param>
     /// <returns>получить логи магазина</returns>
-    public async Task<List<ShopLogs>?> GetShopLogs(string requestLogin, string requestShopname) {
+    public async Task<List<ShopLogs>> GetShopLogs(string requestLogin, string requestShopname)
+    {
         return await SendGetAsync<List<ShopLogs>>("players/" + requestLogin + "/shops/" + requestShopname + "/logs/");
     }
 
@@ -485,7 +545,8 @@ public class APIClient : MonoBehaviour
     /// Посмотреть все логи магазинов внезависимости от игрока и тд
     /// </summary>
     /// <returns>получить логи игры магазина</returns>
-    public async Task<List<ShopLogs>?> GetGameLogs() {
+    public async Task<List<ShopLogs>> GetGameLogs()
+    {
         return await SendGetAsync<List<ShopLogs>>("logs/");
     }
 }

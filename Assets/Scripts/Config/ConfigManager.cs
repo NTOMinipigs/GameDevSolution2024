@@ -31,6 +31,7 @@ namespace Config
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
+                Initialize();
             }
             else
             {
@@ -41,7 +42,7 @@ namespace Config
         /// <summary>
         /// Подгрузим конфиг
         /// </summary>
-        private void Start()
+        private void Initialize()
         {
             config = LoadDebugConfig();
         }
