@@ -45,8 +45,6 @@ public class APIClient : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-
-            DontDestroyOnLoad(gameObject);
             Initialize();
         }
         else
@@ -228,7 +226,7 @@ public class APIClient : MonoBehaviour
         }
 
         string errorMessage = "http request error: " + unityWebRequest.responseCode + " json: " +
-                              unityWebRequest.downloadHandler;
+                              unityWebRequest.downloadHandler.text;
         Debug.LogError(errorMessage);
         throw new HttpRequestException(errorMessage);
     }

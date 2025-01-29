@@ -30,7 +30,6 @@ namespace Config
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
                 Initialize();
             }
             else
