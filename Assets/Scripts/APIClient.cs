@@ -69,7 +69,7 @@ public class APIClient : MonoBehaviour
     {
         while (true)
         {
-            Ping ping = new Ping(_host);
+            Ping ping = new Ping("1.1.1.1");
             float startTime = Time.time;
 
             while (!ping.isDone)
@@ -81,7 +81,7 @@ public class APIClient : MonoBehaviour
                     yield break;
                 }
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(10);
             }
 
             if (ping.time < 0)
