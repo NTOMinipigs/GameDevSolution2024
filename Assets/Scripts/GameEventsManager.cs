@@ -34,15 +34,27 @@ public class GameEventsManager : MonoBehaviour
             // Начало нового дня
             if (_worldHours == 24)
                 _worldHours = 0;
-            // Смена глобального света в зависимости от времени
+            // Смена глобального света в зависимости от времени. Цикл для плавности
             if (_worldHours < 16)
-                _directLight.intensity += 0.06f;
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    yield return new WaitForSeconds(0.00000001f);
+                    _directLight.intensity += 0.008f;
+                }
+            }
             else
-                _directLight.intensity -= 0.125f;
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    yield return new WaitForSeconds(0.00000001f);
+                    _directLight.intensity -= 0.00825f;
+                }
+            }
         }
 
         _textTime.text = _worldHours.ToString("D2") + ":" + _worldMinuts.ToString("D2");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f); // Частота обновления дня
         StartCoroutine(WorldTimeChange());
     }
 }
