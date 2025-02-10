@@ -54,7 +54,7 @@ namespace Alerts
         /// <summary>
         /// Время анимации уничтожения алерта
         /// </summary>
-        private const float DestroyTime = 0.5f;
+        private const float DestroyTime = 1f;
 
         /// <summary>
         /// Скорость мерцания перед уничтожением
@@ -65,7 +65,7 @@ namespace Alerts
         void Start()
         {
             _destroyCoroutine = StartCoroutine(WaitAlertDestroy());
-            _progressBarCoroutine = StartCoroutine(ProgressBarEffects());
+            //_progressBarCoroutine = StartCoroutine(ProgressBarEffects());
         }
 
         /// <summary>
