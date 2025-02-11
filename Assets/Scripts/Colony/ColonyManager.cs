@@ -374,6 +374,7 @@ public class ColonyManager : MonoBehaviour
     public void BearSpawn(Bear newBear)
     {
         SerializableBear serializableBear = GameObject.Find(newBear.serializableBear).GetComponent<SerializableBear>();
+        newBear.sprite = serializableBear.sprite; // Добавлено, т.к как-то не сохраняется и не назначается, хз
         bearsInColony.Add(newBear);
         _bearsInColonyDict.Add(newBear.gameName, newBear);
         if ((Traditions)Enum.Parse(typeof(Traditions), newBear.tradition.ToString()) != Traditions.Chrom)

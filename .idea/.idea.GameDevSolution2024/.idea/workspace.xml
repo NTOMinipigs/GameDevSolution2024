@@ -113,6 +113,9 @@
       <workItem from="1736350310635" duration="3803000" />
       <workItem from="1736585294296" duration="23825000" />
       <workItem from="1736671796554" duration="6800000" />
+      <workItem from="1737301344160" duration="532000" />
+      <workItem from="1737991882004" duration="15000" />
+      <workItem from="1737999626158" duration="783000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -154,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736697593419</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="UI + particles edit + bear icons time fix">
+      <option name="closed" value="true" />
+      <created>1738000227577</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738000227577</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +186,7 @@
     <MESSAGE value="Small refactoring(buildings, colonyManager, traveling)" />
     <MESSAGE value="Small refactoring PART 2(ColonyManager, buildings, traveling)" />
     <MESSAGE value="govno refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="govno refactoring" />
+    <MESSAGE value="UI + particles edit + bear icons time fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI + particles edit + bear icons time fix" />
   </component>
 </project>
