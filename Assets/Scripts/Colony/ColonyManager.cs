@@ -242,7 +242,7 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    public async void Start()
+    private async void Start()
     {
         _systemSaver = gameObject.GetComponent<SystemSaver>();
 

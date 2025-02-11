@@ -17,14 +17,57 @@ public class SaveAndLoad : MonoBehaviour
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         scripts = GameObject.Find("scripts").GetComponent<allScripts>();
+        
         bool loadResult = systemSaver.LoadGame();
         // Если файл сохранения не найден
         if (!loadResult)
         {
+            // Загрузите игру в режиме debug, если 
+            if (Config.ConfigManager.Instance.config.debug)
+            {
+                CreateDebugGame();  
+            } 
             CreateNewGame();
         }
-
+        
+        // Загрузите игру в режиме debug, если 
+        if (Config.ConfigManager.Instance.config.debug)
+        {
+            LoadDebugGame();  
+        } 
         LoadGame();
+    }
+
+    /// <summary>
+    /// Запустите это если флаг debug в конфиге true
+    /// </summary>
+    void CreateDebugGame()
+    {
+        // Проставляем начальные ресурсы игроку, сразу много чтобы можно было удобно дебажить
+        scripts.colonyManager.Materials = 100;
+        scripts.colonyManager.Energy = 100;
+        scripts.colonyManager.Biofuel = 100;
+        scripts.colonyManager.Food = 100;
+        scripts.colonyManager.Honey = 100;
+        scripts.colonyManager.MaterialsPlus = 100;
+        scripts.colonyManager.MaxMaterials = 200;
+        scripts.colonyManager.MaxEnergy = 200;
+        scripts.colonyManager.MaxBiofuel = 200;
+        scripts.colonyManager.MaxFood = 200;
+        scripts.colonyManager.MaxHoney = 200;
+        scripts.colonyManager.MaxMaterialsPlus = 200;
+        
+        // TODO: Добавь сюда дефолтных построек
+    }
+
+    /// <summary>
+    /// Запустите это если флаг debug в конфиге true, чтобы загрузить игру
+    /// </summary>
+    void LoadDebugGame()
+    {
+        // Убиваем фпс чтобы игра не жрала много
+        Application.targetFrameRate = 20;
+        Destroy(Camera.main.GetComponentInChildren<ParticleSystem>()); // Убираем снег
     }
 
     /// <summary>

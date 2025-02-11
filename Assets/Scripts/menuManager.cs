@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 
 public class MenuManager : MonoBehaviour
@@ -24,8 +23,16 @@ public class MenuManager : MonoBehaviour
         {"maxHoney", 0},
         {"maxBears", 0},
         {"maxMaterialPlus", 0},
-        {"maxMaterialPlus", 0},
     };
+
+    private void Start()
+    {
+        if (Config.ConfigManager.Instance.config.debug)
+        {
+            Player.Instance.playerName = "test";
+            StartGame();
+        }
+    }
 
     public void StartGame() => SceneManager.LoadScene("Game");
     public void ExitGame() => Application.Quit();
