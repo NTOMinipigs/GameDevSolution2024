@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f39efe66e244d7a865dd8f69eaf954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alertLifeDuration: 100
+  alertLifeDuration: 5
   textMeshPro: {fileID: 1948321180457782039}
   progressBar: {fileID: 5681700714419410935}
   canvasGroup: {fileID: 1809369340851985505}
