@@ -1,8 +1,9 @@
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Alerts
 {
-    
     /// <summary>
     /// Менеджер алертов
     /// </summary>
@@ -12,20 +13,55 @@ namespace Alerts
         [SerializeField] private Alert alertPrefab;
         [SerializeField] private Transform alertContainer;
         
+        void Awake()
+        {
+            DontDestroyOnLoad(gameObject.transform.parent.gameObject);
+        }
+
         void Start()
         {
-            ShowAlert("пиг");
-            ShowAlert("лол");
+            ShowAlert("С возвращением!");
         }
 
         /// <summary>
-        /// Показать алерт
+        /// Покажите алерт
         /// </summary>
-        /// <param name="text">Текст сообщения</param>
         public void ShowAlert(string text)
         {
-            Alert alert = Instantiate(alertPrefab, alertContainer);
+            // Создаем новый элемент
+            Alert alert = Instantiate(alertPrefab, gameObject.transform);
             alert.Text = text;
+            alert.transform.SetAsLastSibling(); // Помещаем в конец контейнера
+
+            // Запускаем корутину для плавного появления
+            StartCoroutine(SmoothAppear(alert.GetComponent<RectTransform>()));
+        }
+
+        /// <summary>
+        /// Корутина для плавного появления элемента
+        /// </summary>
+        /// <param name="item">Новый айтем в VerticalLayout</param>
+        /// <returns>coroutines should return null</returns>
+        private IEnumerator SmoothAppear(RectTransform item)
+        {
+            float duration = 0.5f; // Длительность анимации
+            float elapsed = 0f;
+
+            // Начальные параметры
+            Vector2 startSize = new Vector2(item.sizeDelta.x, 0);
+            Vector2 targetSize = item.sizeDelta;
+
+            item.sizeDelta = startSize;
+
+            // Анимация
+            while (elapsed < duration)
+            {
+                item.sizeDelta = Vector2.Lerp(startSize, targetSize, elapsed / duration);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            item.sizeDelta = targetSize; // Фиксируем конечный размер
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Alerts
         void Start()
         {
             _destroyCoroutine = StartCoroutine(WaitAlertDestroy());
-            //_progressBarCoroutine = StartCoroutine(ProgressBarEffects());
+            _progressBarCoroutine = StartCoroutine(ProgressBarEffects());
         }
 
         /// <summary>
@@ -118,14 +118,16 @@ namespace Alerts
         /// <summary>
         /// Поведение кнопки закрытия
         /// </summary>
-        public void Close()
+        public void CloseAlert()
         {
-            // Убиваем сам объект
-            Destroy(gameObject);
-
             // Убиваем корутины алерта
             StopCoroutine(_destroyCoroutine);
             StopCoroutine(_progressBarCoroutine);
+            
+            // Убиваем сам объект
+            StartCoroutine(DestroyEffect());
+
+
         }
     }
 }
