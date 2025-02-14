@@ -7,23 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 4478b447cdd9fc5458e982283a01d3c0, type: 2}
+      name: cloth
+    second: {fileID: 2100000, guid: 0bb52486a3985fe4f85abf1a1dff6154, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 304f994b8dca33646945c153249df031, type: 2}
+      name: eyesAndEar
+    second: {fileID: 2100000, guid: eb3a5f34891ba13499114880e5a91e00, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: bearSkin
-    second: {fileID: 2100000, guid: 336748139c45c4d478ee4b7de6d0140e, type: 2}
+      name: pants
+    second: {fileID: 2100000, guid: 76a85b36e8c544d428da715a3e7d3d84, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: bearSkin.001
-    second: {fileID: 2100000, guid: f7814d428cd73cc4cb9ab56707ba1720, type: 2}
+      name: skin
+    second: {fileID: 2100000, guid: aa1ef62505e8f174291d505c86d8a384, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,8 +36,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -55,7 +53,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.5
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -110,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

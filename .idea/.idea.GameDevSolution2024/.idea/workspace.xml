@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="" />
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,6 +118,7 @@
       <workItem from="1737301344160" duration="532000" />
       <workItem from="1737991882004" duration="15000" />
       <workItem from="1737999626158" duration="783000" />
+      <workItem from="1738253141878" duration="2742000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -165,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738000227577</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Cicle light fix">
+      <option name="closed" value="true" />
+      <created>1738259601176</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738259601176</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +198,7 @@
     <MESSAGE value="Small refactoring PART 2(ColonyManager, buildings, traveling)" />
     <MESSAGE value="govno refactoring" />
     <MESSAGE value="UI + particles edit + bear icons time fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI + particles edit + bear icons time fix" />
+    <MESSAGE value="Cicle light fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cicle light fix" />
   </component>
 </project>
