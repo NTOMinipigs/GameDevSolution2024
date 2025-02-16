@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/bear.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/bear.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/MainShader.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/MainShader.shadergraph" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +121,7 @@
       <workItem from="1737991882004" duration="15000" />
       <workItem from="1737999626158" duration="783000" />
       <workItem from="1738253141878" duration="2742000" />
+      <workItem from="1739558182148" duration="657000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -176,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738259601176</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="NEW START: All materials and models deleted. + new platform model + new bear models">
+      <option name="closed" value="true" />
+      <created>1739558244819</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1739558244819</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +210,7 @@
     <MESSAGE value="govno refactoring" />
     <MESSAGE value="UI + particles edit + bear icons time fix" />
     <MESSAGE value="Cicle light fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cicle light fix" />
+    <MESSAGE value="NEW START: All materials and models deleted. + new platform model + new bear models" />
+    <option name="LAST_COMMIT_MESSAGE" value="NEW START: All materials and models deleted. + new platform model + new bear models" />
   </component>
 </project>
