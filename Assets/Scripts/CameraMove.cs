@@ -8,7 +8,7 @@ public class CameraMove : MonoBehaviour
     private GameObject _choicedBear;
     public float sensitivity;
     public bool blockMove;
-    [SerializeField] private allScripts scripts;
+    [SerializeField] private AllScripts scripts;
     [SerializeField] private LayerMask layerMaskInteract;
     public Vector2 minBounds; // Минимальные границы
     public Vector2 maxBounds; // Максимальные границы

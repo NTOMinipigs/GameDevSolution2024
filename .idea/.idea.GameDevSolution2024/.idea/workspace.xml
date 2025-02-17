@@ -4,10 +4,101 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Models/bear.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/bear.fbx" afterDir="false" />
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="Rename scripts + new models">
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/bearHouseBody.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/bearHouseBody.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/bodyFarmer.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/bodyFarmer.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/door.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/door.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/glass.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/glass.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/gryadki.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/gryadki.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/krutilka.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/krutilka.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/platform.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/platform.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/radioConts.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/radioConts.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/technoDoor.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/technoDoor.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Models/farm.fbx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Models/farm.fbx.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Models/house.fbx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Models/house.fbx.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Models/metallFabric.fbx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Models/metallFabric.fbx.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AdaptiveScroll.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BearMovement.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/GameMenuManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Preference.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/QuestSystem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/build/Building.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/TravelingManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/HouseBodyTexture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/HouseBodyTexture.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/bodyFarmerTexture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/bodyFarmerTexture.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/doorTexture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/doorTexture.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/MainShader.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/MainShader.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Music/MusicLoop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Music/MusicLoop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/adaptiveScroll.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AdaptiveScroll.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/adaptiveScroll.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/allScripts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/allScripts.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/bearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BearMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/bearMovement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/building.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/Building.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/building.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/buildingSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/clicksHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/clicksHandler.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/cutsceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/cutsceneManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/dialogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/dialogManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/gameMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameMenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/gameMenuManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/menuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/menuManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/preference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Preference.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/preference.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/questSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/QuestSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/questSystem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/saveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/saveAndLoad.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/travelingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/TravelingManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/travelingManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilding.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilding.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (1).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (1).png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (2).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (2).png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (3).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (3).png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (4).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (4).png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (5).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (5).png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (6).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/UI/iconOfBuilidng (6).png.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +124,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Scripts/build/building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Scripts/adaptiveScroll.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -122,6 +213,9 @@
       <workItem from="1737999626158" duration="783000" />
       <workItem from="1738253141878" duration="2742000" />
       <workItem from="1739558182148" duration="657000" />
+      <workItem from="1739705274608" duration="2322000" />
+      <workItem from="1739711996571" duration="144000" />
+      <workItem from="1739798589919" duration="2235000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -187,7 +281,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739558244819</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="+ new resource models">
+      <option name="closed" value="true" />
+      <created>1739710327170</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1739710327170</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Snow particles change and other">
+      <option name="closed" value="true" />
+      <created>1739711684466</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1739711684466</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +321,9 @@
     <MESSAGE value="UI + particles edit + bear icons time fix" />
     <MESSAGE value="Cicle light fix" />
     <MESSAGE value="NEW START: All materials and models deleted. + new platform model + new bear models" />
-    <option name="LAST_COMMIT_MESSAGE" value="NEW START: All materials and models deleted. + new platform model + new bear models" />
+    <MESSAGE value="+ new resource models" />
+    <MESSAGE value="Snow particles change and other" />
+    <MESSAGE value="Rename scripts + new models" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename scripts + new models" />
   </component>
 </project>

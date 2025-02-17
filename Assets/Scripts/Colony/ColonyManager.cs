@@ -217,10 +217,10 @@ public class ColonyManager : MonoBehaviour
     public GameObject bearsListMenu;
     [SerializeField] private GameObject bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
-    [SerializeField] private adaptiveScroll bearsListAs;
+    [SerializeField] private AdaptiveScroll bearsListAs;
 
     [Header("Other")] public bool scoutHome;
-    [SerializeField] private allScripts scripts;
+    [SerializeField] private AllScripts scripts;
     private SystemSaver _systemSaver;
 
     private Dictionary<string, Func<float>> _materialsRefs;
