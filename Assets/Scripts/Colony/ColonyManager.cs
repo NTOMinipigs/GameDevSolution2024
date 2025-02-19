@@ -466,11 +466,11 @@ public class ColonyManager : MonoBehaviour
     {
         if (task.taskMode == TasksMode.Build)
         {
-            Building building = task.objectOfTask.GetComponent<Building>();
-            building.SetNormal();
-            building.builded = true;
-            scripts.buildingSystem.SetBuildSettings(building);
-            if (building.scoutHome)
+            BuildingController buildingController = task.objectOfTask.GetComponent<BuildingController>();
+            buildingController.SetNormal();
+            buildingController.isReady = true;
+            scripts.buildingSystem.SetBuildSettings(buildingController);
+            if (buildingController.building.scoutHome)
                 scoutHome = true;
         }
         else if (task.taskMode == TasksMode.GetResource)

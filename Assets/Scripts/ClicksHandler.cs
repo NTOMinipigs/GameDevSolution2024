@@ -20,7 +20,7 @@ public class ClicksHandler : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
         {
             selectedBear = null;
-            Building building; // double initialize in switch fix
+            BuildingController buildingController; // double initialize in switch fix
             switch (hit.collider.gameObject.tag)
             {
                 case "bear":
@@ -28,18 +28,18 @@ public class ClicksHandler : MonoBehaviour
                     textRayTotal.text = selectedBear.TraditionStr;
                     break;
                 case "building":
-                    building = hit.collider.gameObject.GetComponent<Building>();
-                    if (building.builded)
-                        textRayTotal.text = building.buildingName;
+                    buildingController = hit.collider.gameObject.GetComponent<BuildingController>();
+                    if (buildingController.isReady)
+                        textRayTotal.text = buildingController.building.buildingName;
                     else
-                        textRayTotal.text = building.buildingName + "(Строится...)";
+                        textRayTotal.text = buildingController.building.buildingName + "(Строится...)";
                     break;
                 case "materialStack":
-                    building= hit.collider.gameObject.GetComponent<Building>();
-                    if (building.builded)
-                        textRayTotal.text = building.buildingName;
+                    buildingController= hit.collider.gameObject.GetComponent<BuildingController>();
+                    if (buildingController.isReady)
+                        textRayTotal.text = buildingController.building.buildingName;
                     else
-                        textRayTotal.text = building.buildingName + "(Добывается...)";
+                        textRayTotal.text = buildingController.building.buildingName + "(Добывается...)";
                     break;
             }
         }

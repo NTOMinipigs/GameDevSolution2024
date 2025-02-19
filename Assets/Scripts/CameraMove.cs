@@ -28,7 +28,7 @@ public class CameraMove : MonoBehaviour
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
                 else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
-                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<Building>());
+                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<BuildingController>());
             }
 
             _isDragging = true;
