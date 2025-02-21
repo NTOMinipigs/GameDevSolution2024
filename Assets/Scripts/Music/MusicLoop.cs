@@ -40,7 +40,7 @@ public class AudioLoop
     /// <summary>
     /// Костыль
     /// </summary>
-    private static allScripts _allScripts = GameObject.FindObjectOfType<allScripts>();
+    private static AllScripts _allScripts = GameObject.FindObjectOfType<AllScripts>();
 
     /// <summary>
     /// Длина фейд эффекта

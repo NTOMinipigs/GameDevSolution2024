@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a5855cab4c8f3834abc39e5712404a72
+guid: aa4ccc2417373a1468051b95e1bad72c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,28 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: doorWindow
-    second: {fileID: 2100000, guid: 1415d97f345dfbf489d1ff004a1f8afd, type: 2}
+      name: bearHouseBody
+    second: {fileID: 2100000, guid: e102c40e010fca441838441c67e73687, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: handle
-    second: {fileID: 2100000, guid: 237e8494a5a52e145be865569344fc9c, type: 2}
+      name: radioConts
+    second: {fileID: 2100000, guid: b3f28bb7cd53e2a40b31db823203be57, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: houseMainCorpse
-    second: {fileID: 2100000, guid: 0fa1501d166dce64d98e0263ea597eeb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: houseSubCorpse
-    second: {fileID: 2100000, guid: 366817436700c374da36ea2ae183bb78, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: subWindow
-    second: {fileID: 2100000, guid: a417699ef905b364b971e1b344c49011, type: 2}
+      name: technoDoor
+    second: {fileID: 2100000, guid: 8cf43e49d0cf4914daa7211005e0a476, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -41,8 +31,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -60,7 +48,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 3
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -115,7 +103,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 3
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

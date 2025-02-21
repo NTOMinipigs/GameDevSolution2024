@@ -217,10 +217,10 @@ public class ColonyManager : MonoBehaviour
     public GameObject bearsListMenu;
     [SerializeField] private GameObject bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
-    [SerializeField] private adaptiveScroll bearsListAs;
+    [SerializeField] private AdaptiveScroll bearsListAs;
 
     [Header("Other")] public bool scoutHome;
-    [SerializeField] private allScripts scripts;
+    [SerializeField] private AllScripts scripts;
     private SystemSaver _systemSaver;
 
     private Dictionary<string, Func<float>> _materialsRefs;
@@ -282,7 +282,7 @@ public class ColonyManager : MonoBehaviour
         _maxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
         _maxEnergy = inventory.Resources["maxEnergy"];
     }
-    
+
     /// <summary>
     /// Получаем медведя по его dev имени
     /// </summary>
@@ -466,12 +466,14 @@ public class ColonyManager : MonoBehaviour
     {
         if (task.taskMode == TasksMode.Build)
         {
-            Building building = task.objectOfTask.GetComponent<Building>();
-            building.SetNormal();
-            building.builded = true;
-            scripts.buildingSystem.SetBuildSettings(building);
-            if (building.scoutHome)
-                scoutHome = true;
+            BuildingController buildingController = task.objectOfTask.GetComponent<BuildingController>();
+            buildingController.SetNormal();
+            buildingController.isReady = true;
+            scripts.buildingSystem.SetBuildSettings(buildingController);
+            if (buildingController.Building is Building building) // Настройки для зданий
+            {
+                scoutHome = building.scoutHome;
+            }
         }
         else if (task.taskMode == TasksMode.GetResource)
             scripts.buildingSystem.PickUpResource(task.objectOfTask);

@@ -8,7 +8,7 @@ public class CameraMove : MonoBehaviour
     private GameObject _choicedBear;
     public float sensitivity;
     public bool blockMove;
-    [SerializeField] private allScripts scripts;
+    [SerializeField] private AllScripts scripts;
     [SerializeField] private LayerMask layerMaskInteract;
     public Vector2 minBounds; // Минимальные границы
     public Vector2 maxBounds; // Максимальные границы
@@ -28,7 +28,7 @@ public class CameraMove : MonoBehaviour
                     scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
                 else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
-                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<Building>());
+                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<BuildingController>());
             }
 
             _isDragging = true;

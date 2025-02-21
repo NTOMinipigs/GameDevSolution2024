@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="" />
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,7 +31,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Scripts/build/building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Scripts/adaptiveScroll.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -116,6 +118,12 @@
       <workItem from="1737301344160" duration="532000" />
       <workItem from="1737991882004" duration="15000" />
       <workItem from="1737999626158" duration="783000" />
+      <workItem from="1738253141878" duration="2742000" />
+      <workItem from="1739558182148" duration="657000" />
+      <workItem from="1739705274608" duration="2322000" />
+      <workItem from="1739711996571" duration="144000" />
+      <workItem from="1739798589919" duration="2235000" />
+      <workItem from="1739899381117" duration="1461000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -165,7 +173,39 @@
       <option name="project" value="LOCAL" />
       <updated>1738000227577</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Cicle light fix">
+      <option name="closed" value="true" />
+      <created>1738259601176</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738259601176</updated>
+    </task>
+    <task id="LOCAL-00008" summary="NEW START: All materials and models deleted. + new platform model + new bear models">
+      <option name="closed" value="true" />
+      <created>1739558244819</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1739558244819</updated>
+    </task>
+    <task id="LOCAL-00009" summary="+ new resource models">
+      <option name="closed" value="true" />
+      <created>1739710327170</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1739710327170</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Snow particles change and other">
+      <option name="closed" value="true" />
+      <created>1739711684466</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1739711684466</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +227,11 @@
     <MESSAGE value="Small refactoring PART 2(ColonyManager, buildings, traveling)" />
     <MESSAGE value="govno refactoring" />
     <MESSAGE value="UI + particles edit + bear icons time fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI + particles edit + bear icons time fix" />
+    <MESSAGE value="Cicle light fix" />
+    <MESSAGE value="NEW START: All materials and models deleted. + new platform model + new bear models" />
+    <MESSAGE value="+ new resource models" />
+    <MESSAGE value="Snow particles change and other" />
+    <MESSAGE value="Rename scripts + new models" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename scripts + new models" />
   </component>
 </project>
