@@ -11,10 +11,11 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private Building building;
     [SerializeField] private Resource resource;
     public bool isReady;
+    public float health = 100f;
     public Vector2Int size;
     [Header("Workers")] public float steps; // Текущее кол-во "работы" до обнуления
 
-    public int workersOfBears, workersOfDrone;
+    public int workersCount;
 
     private MeshRenderer _mainRenderer;
     private Color _standartMaterialColor;
@@ -65,7 +66,7 @@ public class BuildingController : MonoBehaviour
         if (steps >= 1)
         {
             steps = 0f;
-            float earn = (workersOfBears + workersOfDrone) * Building.ResourceOneWorker;
+            float earn = workersCount * Building.ResourceOneWorker;
             string
                 resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
             switch (Building.TypeResource)

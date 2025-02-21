@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class BuildingSystem : MonoBehaviour
 {
@@ -10,24 +11,34 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField]
     private Vector2Int gridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
 
-    private GameObject _bgObj,
-        _buildMenuStandartButtons,
-        _buildMenuMaterialsButtons,
-        _noteBlock,
-        _droneManage,
-        _bearManage;
+    private BuildingController _selectedBuildController; // Выбранное строение для взаимодействий
+    private Building _selectedBuilding;
 
-    // Кнопки прибавления/убавления рабочих на "фабриках" или дронов
-    private Button _buttonAddBear, _buttonAddDrone, _buttonRemoveBear, _buttonRemoveDrone;
-    private Transform _buildCreateMenuBuildingsTransform;
-
-    private TextMeshProUGUI _textSelectedBuild, _textNameBuild, _textInfoBuild, _textCountBears, _textCountDrones;
-
-    [HideInInspector] public BuildingController selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
-    private BuildingController[,] _grid; // Размещение строений на сетке
-    private BuildingController _flyingBuildingController; // Выделенное строение
+    private BuildingController[,] _grid; // Сетка строений
+    private BuildingController _flyingBuildingController; // Строение в процессе постановки
     private Camera _mainCamera;
     private AllScripts _scripts;
+
+    // UI
+    private GameObject _bgObj,
+        _buildMenuBuildings,
+        _buildMenuResources,
+        _noteBlock,
+        _droneManage,
+        _bearManage,
+        _workerButtons;
+
+    [SerializeField] private GameObject resourceBlockAdd, resourceBlockRemove;
+    private TextMeshProUGUI _resourceAddText, _resourceRemoveText;
+    private Image _resourceAddImage, _resourceRemoveImage;
+    [SerializeField] private Button buttonAddWorker, buttonRemoveWorker;
+
+    [SerializeField] private TextMeshProUGUI textCountWorkers, textNameWorkers, textDestroy;
+    [SerializeField] private TextMeshProUGUI textHealth, textEnergy;
+
+    private Transform _buildCreateMenuBuildingsTransform;
+
+    private TextMeshProUGUI _textSelectedBuild, _textNameBuild, _textInfoBuild;
 
     private void Awake()
     {
@@ -42,21 +53,18 @@ public class BuildingSystem : MonoBehaviour
             .transform.Find("Content");
 
         _bgObj = buildMenu.transform.Find("bg")?.gameObject;
-        _buildMenuStandartButtons = _bgObj?.transform.Find("buildButtons")?.gameObject;
-        _buildMenuMaterialsButtons = _bgObj?.transform.Find("materialStackButtons")?.gameObject;
+        _buildMenuBuildings = _bgObj?.transform.Find("functionalBuildMode")?.gameObject;
+        _buildMenuResources = _bgObj?.transform.Find("materialStackMode")?.gameObject;
+
         _textNameBuild = _bgObj?.transform.Find("TextName")?.GetComponent<TextMeshProUGUI>();
+        _textInfoBuild = _bgObj?.transform.Find("TextBuildInfo")?.GetComponent<TextMeshProUGUI>();
 
-        _textInfoBuild = _buildMenuStandartButtons?.transform.Find("TextBuildInfo")?.GetComponent<TextMeshProUGUI>();
+        _workerButtons = _buildMenuBuildings?.transform.Find("workersButtons")?.gameObject;
 
-        _bearManage = _buildMenuStandartButtons?.transform.Find("bearManage")?.gameObject;
-        _buttonAddBear = _bearManage?.transform.Find("ButtonAddBear")?.GetComponent<Button>();
-        _buttonRemoveBear = _bearManage?.transform.Find("ButtonDeleteBear")?.GetComponent<Button>();
-        _textCountBears = _bearManage?.transform.Find("TextBearCount")?.GetComponent<TextMeshProUGUI>();
-
-        _droneManage = _buildMenuStandartButtons?.transform.Find("droneManage")?.gameObject;
-        _buttonAddDrone = _droneManage?.transform.Find("ButtonAddDrone")?.GetComponent<Button>();
-        _buttonRemoveDrone = _droneManage?.transform.Find("ButtonDeleteDrone")?.GetComponent<Button>();
-        _textCountDrones = _droneManage?.transform.Find("TextDroneCount")?.GetComponent<TextMeshProUGUI>();
+        _resourceAddText = resourceBlockAdd.transform.Find("TextAddResource").GetComponent<TextMeshProUGUI>();
+        _resourceRemoveText = resourceBlockRemove.transform.Find("TextRemoveResource").GetComponent<TextMeshProUGUI>();
+        _resourceAddImage = resourceBlockAdd.transform.Find("ResourceIcon").GetComponent<Image>();
+        _resourceRemoveImage = resourceBlockAdd.transform.Find("ResourceIcon").GetComponent<Image>();
     }
 
     public void SelectBuildingToInteraction(BuildingController buildingController)
@@ -65,17 +73,27 @@ public class BuildingSystem : MonoBehaviour
             return;
         if (!buildingController.isReady) // Потом изменить
             return;
-        selectedBuild = buildingController;
+        _selectedBuildController = buildingController;
         ManageBuildMenu();
     }
 
     public void DisableBuildMenu() => ManageBuildMenu(false); // Для UI кнопки
 
-    private void UpdateWorkersText()
+    private void UpdateBuildingText()
     {
-        _textInfoBuild.text = "+ " + (selectedBuild.workersOfBears + selectedBuild.workersOfDrone) *
-            selectedBuild.Building.ResourceOneWorker;
-        _textCountBears.text = selectedBuild.workersOfBears + "/" + selectedBuild.Building.MaxWorkers;
+        textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
+        textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
+        textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
+        textCountWorkers.text = _selectedBuildController.workersCount + "/" +
+                                _selectedBuildController.Building.MaxWorkers;
+        if (_selectedBuildController.workersCount > 0) // т.е работает
+        {
+            resourceBlockAdd.gameObject.SetActive(true);
+            _resourceAddText.text = "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
+                                    " " + _selectedBuilding.typeResource;
+        }
+        else
+            resourceBlockAdd.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -84,31 +102,13 @@ public class BuildingSystem : MonoBehaviour
     /// <param name="changeWorkers">+/- столько-то рабочих</param>
     public void ManageWorkers(int changeWorkers)
     {
-        selectedBuild.workersOfBears += changeWorkers;
+        _selectedBuildController.workersCount += changeWorkers;
         _scripts.colonyManager.workingBears += changeWorkers; // Костыль
-        UpdateWorkersText();
-        // TODO сделать условие для дронов и медведей selectedBuild.countOfBears == selectedBuild.maxBears
-        if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) == 0 ||
-            selectedBuild.workersOfBears == selectedBuild.Building.MaxWorkers)
-            _bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
-        else
-            ManageBuildMenu();
-    }
-
-    /// <summary>
-    /// Изменение числа дронов в здании
-    /// </summary>
-    /// <param name="changeDrones">+/- столько-то дронов</param>
-    public void ManageDrones(int changeDrones)
-    {
-        selectedBuild.workersOfDrone += changeDrones;
-        _scripts.colonyManager.workingBears += changeDrones; // Костыль
-        UpdateWorkersText();
-
-        // TODO сделать условие для дронов и медведей selectedBuild.countOfBears == selectedBuild.maxBears
-        if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) == 0 ||
-            selectedBuild.workersOfBears == selectedBuild.Building.MaxWorkers)
-            _droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
+        UpdateBuildingText();
+        // TODO сделать условие для ОПРЕДЕЛЕННОЙ ТРАДИЦИИ
+        if (_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears == 0 ||
+            _selectedBuildController.workersCount == _selectedBuildController.Building.MaxWorkers)
+            buttonAddWorker.interactable = false;
         else
             ManageBuildMenu();
     }
@@ -116,35 +116,22 @@ public class BuildingSystem : MonoBehaviour
     /// <summary>
     /// Управление панелью с выставлением числа рабочих/дронов
     /// </summary>
-    /// <param name="bear">Могут работать медведи?</param>
-    /// <param name="drone">Могут работать дроны?</param>
-    private void ManageDroneAndBearPanel(bool bear, bool drone)
+    /// <param name="canWork">Можно работать?</param>
+    private void ManageWorkersPanel(bool canWork)
     {
-        // Установка возможности нажать на кнопку, если в здании работают bear и(ли) drone
-        _buttonAddBear.interactable = bear;
-        _buttonRemoveBear.interactable = bear;
-        _buttonAddDrone.interactable = drone;
-        _buttonRemoveDrone.interactable = drone;
+        _workerButtons.gameObject.SetActive(_selectedBuilding.canWork);
 
-        if (!drone)
-            _textCountDrones.text = "";
-        if (!bear)
-            _textCountBears.text = "";
+        buttonAddWorker.interactable = canWork;
+        buttonRemoveWorker.interactable = canWork;
 
         // Костыль
-        if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) == 0 ||
-            selectedBuild.workersOfBears == selectedBuild.Building.MaxWorkers)
-        {
-            _buttonAddBear.interactable = false;
-            _buttonAddDrone.interactable = false;
-        }
+        if (_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears == 0 ||
+            _selectedBuildController.workersCount == _selectedBuildController.Building.MaxWorkers)
+            buttonAddWorker.interactable = false;
 
-        if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) ==
-            _scripts.colonyManager.maxBears || selectedBuild.workersOfBears == 0)
-        {
-            _buttonRemoveBear.interactable = false;
-            _buttonRemoveDrone.interactable = false;
-        }
+        if (_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears ==
+            _scripts.colonyManager.maxBears || _selectedBuildController.workersCount == 0)
+            buttonRemoveWorker.interactable = false;
     }
 
     /// <summary>
@@ -156,36 +143,27 @@ public class BuildingSystem : MonoBehaviour
         buildMenu.gameObject.SetActive(open);
         if (open)
         {
-            _textNameBuild.text = selectedBuild.Building.BuildingName;
-            if (selectedBuild.Building is Building building) // Если здание
+            _textNameBuild.text = _selectedBuildController.Building.BuildingName;
+            _textInfoBuild.text = _selectedBuildController.Building.Description;
+            if (_selectedBuildController.Building is Building building) // Если здание
             {
-                UpdateWorkersText();
-
-                // Если в здании можно работать
-                if (building.canWork)
-                {
-                    if (building.typeOfWorkers == Traditions.Drone)
-                        ManageDroneAndBearPanel(false, true);
-                    else
-                        ManageDroneAndBearPanel(true, false);
-                }
-                else
-                    ManageDroneAndBearPanel(false, false);
-
-                _buildMenuStandartButtons.transform.Find("ButtonDestroy").transform.Find("TextResourceReturn")
-                    .GetComponent<TextMeshProUGUI>().text = (building.materialsNeed / 2).ToString();
+                _selectedBuilding = building;
+                _buildMenuBuildings.gameObject.SetActive(true);
+                ManageWorkersPanel(building.canWork);
+                UpdateBuildingText();
+                textDestroy.text = (building.materialsNeed / 2).ToString();
             }
             else // Если это ресурс
             {
-                _buildMenuStandartButtons.gameObject.SetActive(false);
-                _buildMenuMaterialsButtons.gameObject.SetActive(true);
+                _buildMenuBuildings.gameObject.SetActive(false);
+                _buildMenuResources.gameObject.SetActive(true);
             }
         }
     }
 
     public void StartPickUpResource()
     {
-        selectedBuild.isReady = false;
+        _selectedBuildController.isReady = false;
         buildMenu.gameObject.SetActive(false);
         // На переделке
         //_scripts.colonyManager.CreateNewTask(TasksMode.GetResource, selectedBuild.gameObject, selectedBuild.Building.stepsNeed);
@@ -248,38 +226,38 @@ public class BuildingSystem : MonoBehaviour
     public void DestroyBuilding(GameObject destroyBuilding = null)
     {
         if (destroyBuilding)
-            selectedBuild = destroyBuilding.GetComponent<BuildingController>();
+            _selectedBuildController = destroyBuilding.GetComponent<BuildingController>();
 
-        if (selectedBuild)
+        if (_selectedBuildController)
         {
             // Получаем координаты здания на сетке
-            int startX = Mathf.RoundToInt(selectedBuild.transform.position.x) - selectedBuild.size.x / 2;
-            int startY = Mathf.RoundToInt(selectedBuild.transform.position.z) - selectedBuild.size.y / 2;
+            int startX = Mathf.RoundToInt(_selectedBuildController.transform.position.x) -
+                         _selectedBuildController.size.x / 2;
+            int startY = Mathf.RoundToInt(_selectedBuildController.transform.position.z) -
+                         _selectedBuildController.size.y / 2;
 
             // Удаляем здание из grid
-            for (int x = 0; x < selectedBuild.size.x; x++)
+            for (int x = 0; x < _selectedBuildController.size.x; x++)
             {
-                for (int y = 0; y < selectedBuild.size.y; y++)
+                for (int y = 0; y < _selectedBuildController.size.y; y++)
                     _grid[startX + x, startY + y] = null; // Очищаем ячейку
             }
 
             // Уничтожаем объект
-            Destroy(selectedBuild.gameObject);
-            if (selectedBuild.Building is Building building)
-            {
-                _scripts.colonyManager.Materials += building.materialsNeed / 2;
-                if (building.energyNeed != 0)
-                {
-                    _scripts.colonyManager.Energy -= building.energyNeed;
+            Destroy(_selectedBuildController.gameObject);
 
-                    APIClient.Instance.CreateLogRequest(
-                        "Потрачена энергия на снос здания",
-                        Player.Instance.playerName,
-                        new Dictionary<string, string>() { { "energy", "-" + building.energyNeed } });
-                }
+            _scripts.colonyManager.Materials += _selectedBuilding.materialsNeed / 2;
+            if (_selectedBuilding.energyNeed != 0)
+            {
+                _scripts.colonyManager.Energy -= _selectedBuilding.energyNeed;
+
+                APIClient.Instance.CreateLogRequest(
+                    "Потрачена энергия на снос здания",
+                    Player.Instance.playerName,
+                    new Dictionary<string, string>() { { "energy", "-" + _selectedBuilding.energyNeed } });
             }
 
-            selectedBuild = null;
+            _selectedBuildController = null;
             buildMenu.gameObject.SetActive(false);
         }
     }
@@ -295,27 +273,25 @@ public class BuildingSystem : MonoBehaviour
                 // Генерация списка зданий к постройке
                 foreach (Transform child in _buildCreateMenuBuildingsTransform)
                 {
-                    // Переделка
-                    /*
                     // Единичная инициализация
-                    BuildingController buildingController = child.gameObject.GetComponent<BuildingController>();
-
-                    // Возможность нажать на кнопку
-                    child.gameObject.GetComponent<Button>().interactable =
-                        buildingController.Building.materialsNeed <= _scripts.colonyManager.Materials &&
-                        buildingController.Building.energyNeed <= _scripts.colonyManager.Energy;
-                    // Смена цены в зависимости от достатка
-                    child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color =
-                        buildingController.Building.materialsNeed <= _scripts.colonyManager.Materials
-                            ? Color.black
-                            : Color.red;
-                    child.transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>().color =
-                        buildingController.Building.energyNeed <= _scripts.colonyManager.Energy
-                            ? Color.black
-                            : Color.red;
-                            */
+                    BuildingBuyInfo building = child.GetComponent<BuildingBuyInfo>();
+                    if (building.building) // Всякое бывает
+                    {
+                        // Возможность нажать на кнопку
+                        building.button.interactable =
+                            building.building.materialsNeed <= _scripts.colonyManager.Materials &&
+                            building.building.energyNeed <= _scripts.colonyManager.Energy;
+                        // Смена цены в зависимости от достатка
+                        building.textPriceMaterial.color =
+                            building.building.materialsNeed <= _scripts.colonyManager.Materials
+                                ? Color.black
+                                : Color.red;
+                        building.textPriceEnergy.color =
+                            building.building.energyNeed <= _scripts.colonyManager.Energy
+                                ? Color.black
+                                : Color.red;
+                    }
                 }
-
 
                 if (!buildingCreateMenu.activeSelf && _flyingBuildingController)
                     Destroy(_flyingBuildingController.gameObject);

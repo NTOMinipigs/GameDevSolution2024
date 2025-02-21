@@ -4,6 +4,8 @@
 public class Resource : ScriptableObject, IBuildable
 {
     [Header("MainInformation")] public string resourceName;
+    [TextArea(0, 10)] public string description;
+    public string Description => description;
     public string BuildingName => resourceName;
 
     public Resources typeResource;
