@@ -16,6 +16,11 @@ public class CutsceneManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Config.ConfigManager.Instance.config.debug)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         textHistory.text = stepText[0];
         bg.sprite = stepSprite[0];
         StartCoroutine(SetText(stepText[0]));
