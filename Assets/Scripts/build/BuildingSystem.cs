@@ -24,7 +24,6 @@ public class BuildingSystem : MonoBehaviour
     private TextMeshProUGUI _textSelectedBuild, _textNameBuild, _textInfoBuild, _textCountBears, _textCountDrones;
 
     [HideInInspector] public BuildingController selectedBuild; // Выбранное строение для взаимодействий(НЕ ДЛЯ СТРОЕНИЯ)
-    [HideInInspector] public Resources selectedResource; // Выбранный ресурс(строение)
     private BuildingController[,] _grid; // Размещение строений на сетке
     private BuildingController _flyingBuildingController; // Выделенное строение
     private Camera _mainCamera;
@@ -75,9 +74,8 @@ public class BuildingSystem : MonoBehaviour
     private void UpdateWorkersText()
     {
         _textInfoBuild.text = "+ " + (selectedBuild.workersOfBears + selectedBuild.workersOfDrone) *
-            selectedBuild.building.resourceOneWorker;
-        _textCountDrones.text = selectedBuild.workersOfDrone + "/" + selectedBuild.building.maxDrones;
-        _textCountBears.text = selectedBuild.workersOfBears + "/" + selectedBuild.building.maxBears;
+            selectedBuild.Building.ResourceOneWorker;
+        _textCountBears.text = selectedBuild.workersOfBears + "/" + selectedBuild.Building.MaxWorkers;
     }
 
     /// <summary>
@@ -91,7 +89,7 @@ public class BuildingSystem : MonoBehaviour
         UpdateWorkersText();
         // TODO сделать условие для дронов и медведей selectedBuild.countOfBears == selectedBuild.maxBears
         if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) == 0 ||
-            selectedBuild.workersOfBears == selectedBuild.building.maxBears)
+            selectedBuild.workersOfBears == selectedBuild.Building.MaxWorkers)
             _bearManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
         else
             ManageBuildMenu();
@@ -109,7 +107,7 @@ public class BuildingSystem : MonoBehaviour
 
         // TODO сделать условие для дронов и медведей selectedBuild.countOfBears == selectedBuild.maxBears
         if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) == 0 ||
-            selectedBuild.workersOfBears == selectedBuild.building.maxBears)
+            selectedBuild.workersOfBears == selectedBuild.Building.MaxWorkers)
             _droneManage.transform.Find("ButtonAddBear").GetComponent<Button>().interactable = false;
         else
             ManageBuildMenu();
@@ -135,7 +133,7 @@ public class BuildingSystem : MonoBehaviour
 
         // Костыль
         if ((_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears) == 0 ||
-            selectedBuild.workersOfBears == selectedBuild.building.maxBears)
+            selectedBuild.workersOfBears == selectedBuild.Building.MaxWorkers)
         {
             _buttonAddBear.interactable = false;
             _buttonAddDrone.interactable = false;
@@ -158,18 +156,16 @@ public class BuildingSystem : MonoBehaviour
         buildMenu.gameObject.SetActive(open);
         if (open)
         {
-            _textNameBuild.text = selectedBuild.building.buildingName;
-            if (selectedBuild.building.typeOfBuilding == Building.TypesOfBuilding.Building) // Если здание
+            _textNameBuild.text = selectedBuild.Building.BuildingName;
+            if (selectedBuild.Building is Building building) // Если здание
             {
                 UpdateWorkersText();
 
                 // Если в здании можно работать
-                if (selectedBuild.building.canWork)
+                if (building.canWork)
                 {
-                    if (selectedBuild.building.typeOfWorkers == Building.TypeOfWorkers.Any)
-                        ManageDroneAndBearPanel(true, false); // Костыль пока дронов нету
-                    else if (selectedBuild.building.typeOfWorkers == Building.TypeOfWorkers.Drone)
-                        ManageDroneAndBearPanel(false, false);
+                    if (building.typeOfWorkers == Traditions.Drone)
+                        ManageDroneAndBearPanel(false, true);
                     else
                         ManageDroneAndBearPanel(true, false);
                 }
@@ -177,7 +173,7 @@ public class BuildingSystem : MonoBehaviour
                     ManageDroneAndBearPanel(false, false);
 
                 _buildMenuStandartButtons.transform.Find("ButtonDestroy").transform.Find("TextResourceReturn")
-                    .GetComponent<TextMeshProUGUI>().text = (selectedBuild.building.materialsNeed / 2).ToString();
+                    .GetComponent<TextMeshProUGUI>().text = (building.materialsNeed / 2).ToString();
             }
             else // Если это ресурс
             {
@@ -191,13 +187,13 @@ public class BuildingSystem : MonoBehaviour
     {
         selectedBuild.isReady = false;
         buildMenu.gameObject.SetActive(false);
-        _scripts.colonyManager.CreateNewTask(TasksMode.GetResource, selectedBuild.gameObject,
-            selectedBuild.building.stepsNeed);
+        // На переделке
+        //_scripts.colonyManager.CreateNewTask(TasksMode.GetResource, selectedBuild.gameObject, selectedBuild.Building.stepsNeed);
     }
 
     public void PickUpResource(GameObject resourceObj)
     {
-        selectedResource = resourceObj.GetComponent<BuildingController>().building.typeResource;
+        Resources selectedResource = resourceObj.GetComponent<BuildingController>().Building.TypeResource;
         string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
         int earn = 0; // Отдельная переменная, т.к. после свитчкейса нужно записать все в лог
 
@@ -238,15 +234,15 @@ public class BuildingSystem : MonoBehaviour
             new Dictionary<string, string>() { { resourceChanged, "+" + earn } });
     }
 
-    public void
-        StartPlacingBuilding(BuildingController buildingControllerPrefab) // Начинаем размещать объект. Метод для кнопки
+    // Начинаем размещать объект. Метод для кнопки
+    public void StartPlacingBuilding(BuildingController buildingControllerPrefab)
     {
         if (_flyingBuildingController)
             Destroy(_flyingBuildingController.gameObject);
 
         _flyingBuildingController = Instantiate(buildingControllerPrefab);
         _noteBlock.gameObject.SetActive(true);
-        _textSelectedBuild.text = _flyingBuildingController.building.buildingName;
+        _textSelectedBuild.text = _flyingBuildingController.Building.BuildingName;
     }
 
     public void DestroyBuilding(GameObject destroyBuilding = null)
@@ -257,27 +253,30 @@ public class BuildingSystem : MonoBehaviour
         if (selectedBuild)
         {
             // Получаем координаты здания на сетке
-            int startX = Mathf.RoundToInt(selectedBuild.transform.position.x) - selectedBuild.building.size.x / 2;
-            int startY = Mathf.RoundToInt(selectedBuild.transform.position.z) - selectedBuild.building.size.y / 2;
+            int startX = Mathf.RoundToInt(selectedBuild.transform.position.x) - selectedBuild.size.x / 2;
+            int startY = Mathf.RoundToInt(selectedBuild.transform.position.z) - selectedBuild.size.y / 2;
 
             // Удаляем здание из grid
-            for (int x = 0; x < selectedBuild.building.size.x; x++)
+            for (int x = 0; x < selectedBuild.size.x; x++)
             {
-                for (int y = 0; y < selectedBuild.building.size.y; y++)
+                for (int y = 0; y < selectedBuild.size.y; y++)
                     _grid[startX + x, startY + y] = null; // Очищаем ячейку
             }
 
             // Уничтожаем объект
             Destroy(selectedBuild.gameObject);
-            _scripts.colonyManager.Materials += selectedBuild.building.materialsNeed / 2;
-            if (selectedBuild.building.energyNeed != 0)
+            if (selectedBuild.Building is Building building)
             {
-                _scripts.colonyManager.Energy -= selectedBuild.building.energyNeed;
+                _scripts.colonyManager.Materials += building.materialsNeed / 2;
+                if (building.energyNeed != 0)
+                {
+                    _scripts.colonyManager.Energy -= building.energyNeed;
 
-                APIClient.Instance.CreateLogRequest(
-                    "Потрачена энергия на снос здания",
-                    Player.Instance.playerName,
-                    new Dictionary<string, string>() { { "energy", "-" + selectedBuild.building.energyNeed } });
+                    APIClient.Instance.CreateLogRequest(
+                        "Потрачена энергия на снос здания",
+                        Player.Instance.playerName,
+                        new Dictionary<string, string>() { { "energy", "-" + building.energyNeed } });
+                }
             }
 
             selectedBuild = null;
@@ -296,23 +295,27 @@ public class BuildingSystem : MonoBehaviour
                 // Генерация списка зданий к постройке
                 foreach (Transform child in _buildCreateMenuBuildingsTransform)
                 {
+                    // Переделка
+                    /*
                     // Единичная инициализация
                     BuildingController buildingController = child.gameObject.GetComponent<BuildingController>();
 
                     // Возможность нажать на кнопку
                     child.gameObject.GetComponent<Button>().interactable =
-                        buildingController.building.materialsNeed <= _scripts.colonyManager.Materials &&
-                        buildingController.building.energyNeed <= _scripts.colonyManager.Energy;
+                        buildingController.Building.materialsNeed <= _scripts.colonyManager.Materials &&
+                        buildingController.Building.energyNeed <= _scripts.colonyManager.Energy;
                     // Смена цены в зависимости от достатка
                     child.transform.Find("TextPrice").GetComponent<TextMeshProUGUI>().color =
-                        buildingController.building.materialsNeed <= _scripts.colonyManager.Materials
+                        buildingController.Building.materialsNeed <= _scripts.colonyManager.Materials
                             ? Color.black
                             : Color.red;
                     child.transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>().color =
-                        buildingController.building.energyNeed <= _scripts.colonyManager.Energy
+                        buildingController.Building.energyNeed <= _scripts.colonyManager.Energy
                             ? Color.black
                             : Color.red;
+                            */
                 }
+
 
                 if (!buildingCreateMenu.activeSelf && _flyingBuildingController)
                     Destroy(_flyingBuildingController.gameObject);
@@ -324,8 +327,8 @@ public class BuildingSystem : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R)) // Поворот здания
             {
-                _flyingBuildingController.building.size = new Vector2Int(_flyingBuildingController.building.size.y,
-                    _flyingBuildingController.building.size.x);
+                _flyingBuildingController.size = new Vector2Int(_flyingBuildingController.size.y,
+                    _flyingBuildingController.size.x);
                 _flyingBuildingController.transform.Rotate(0, 90f, 0);
             }
 
@@ -339,23 +342,23 @@ public class BuildingSystem : MonoBehaviour
                 int x = Mathf.RoundToInt(worldPosition.x);
                 int y = Mathf.RoundToInt(worldPosition.z);
 
-                x -= _flyingBuildingController.building.size.x / 2;
-                y -= _flyingBuildingController.building.size.y / 2;
+                x -= _flyingBuildingController.size.x / 2;
+                y -= _flyingBuildingController.size.y / 2;
 
                 bool available = true;
 
                 // Если здание за сеткой - помечать расположение недействительным
-                if (x < -gridSize.x / 2 || x > gridSize.x / 2 - _flyingBuildingController.building.size.x)
+                if (x < -gridSize.x / 2 || x > gridSize.x / 2 - _flyingBuildingController.size.x)
                     available = false;
-                if (y < -gridSize.y / 2 || y > gridSize.y / 2 - _flyingBuildingController.building.size.y)
+                if (y < -gridSize.y / 2 || y > gridSize.y / 2 - _flyingBuildingController.size.y)
                     available = false;
 
                 // Если здание расположено на другом - помечать расположение недействительным
                 if (available && IsPlaceTaken(x, y)) available = false;
 
                 _flyingBuildingController.transform.position =
-                    new Vector3(x + _flyingBuildingController.building.size.x / 2f, 0,
-                        y + _flyingBuildingController.building.size.y / 2f);
+                    new Vector3(x + _flyingBuildingController.size.x / 2f, 0,
+                        y + _flyingBuildingController.size.y / 2f);
 
                 if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
                     PlaceFlyingBuilding(x, y);
@@ -379,9 +382,9 @@ public class BuildingSystem : MonoBehaviour
     /// <returns></returns>
     private bool IsPlaceTaken(int placeX, int placeY)
     {
-        for (int x = 0; x < _flyingBuildingController.building.size.x; x++)
+        for (int x = 0; x < _flyingBuildingController.size.x; x++)
         {
-            for (int y = 0; y < _flyingBuildingController.building.size.y; y++)
+            for (int y = 0; y < _flyingBuildingController.size.y; y++)
                 if (_grid[placeX + x, placeY + y])
                     return true;
         }
@@ -396,35 +399,39 @@ public class BuildingSystem : MonoBehaviour
     /// <param name="placeY"></param>
     private void PlaceFlyingBuilding(int placeX, int placeY)
     {
-        PlaceBuilding(_flyingBuildingController, placeX, placeY);
-
-        switch (_flyingBuildingController.building.buildingName)
+        if (_flyingBuildingController.Building is Building building)
         {
-            // Кор
-            case "Солнечная панель" when
-                _scripts.questSystem.totalQuest.questName == "StartQuest":
-            case "Фабрика материалов" when
-                _scripts.questSystem.totalQuest.questName == "StartQuest":
-                _scripts.questSystem.MoveNextStep();
-                break;
+            PlaceBuilding(_flyingBuildingController, placeX, placeY);
+
+            switch (_flyingBuildingController.Building.BuildingName)
+            {
+                // Кор
+                case "Солнечная панель" when
+                    _scripts.questSystem.totalQuest.questName == "StartQuest":
+                case "Фабрика материалов" when
+                    _scripts.questSystem.totalQuest.questName == "StartQuest":
+                    _scripts.questSystem.MoveNextStep();
+                    break;
+            }
+
+            _scripts.colonyManager.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
+                building.stepsNeed);
+            _flyingBuildingController.SetBuilding();
+            _scripts.colonyManager.Energy -= building.energyNeed;
+            _scripts.colonyManager.Materials -= building.materialsNeed;
+
+            // Логи на создание здания
+            APIClient.Instance.CreateLogRequest(
+                "Затраты энергии и материалов на постройку здания",
+                Player.Instance.playerName,
+                new Dictionary<string, string>()
+                {
+                    { "energy", "-1" },
+                    { "materials", "-" + building.materialsNeed }
+                }
+            );
         }
 
-        _scripts.colonyManager.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
-            _flyingBuildingController.building.stepsNeed);
-        _flyingBuildingController.SetBuilding();
-        _scripts.colonyManager.Energy -= _flyingBuildingController.building.energyNeed;
-        _scripts.colonyManager.Materials -= _flyingBuildingController.building.materialsNeed;
-
-        // Логи на создание здания
-        APIClient.Instance.CreateLogRequest(
-            "Затраты энергии и материалов на постройку здания",
-            Player.Instance.playerName,
-            new Dictionary<string, string>()
-            {
-                { "energy", "-1" },
-                { "materials", "-" + _flyingBuildingController.building.materialsNeed }
-            }
-        );
         _flyingBuildingController = null;
         _noteBlock.gameObject.SetActive(false);
         buildingCreateMenu.gameObject.SetActive(false);
@@ -438,9 +445,9 @@ public class BuildingSystem : MonoBehaviour
     /// <param name="placeY">Координата по Y</param>
     private void PlaceBuilding(BuildingController buildingController, int placeX, int placeY)
     {
-        for (int x = 0; x < buildingController.building.size.x; x++)
+        for (int x = 0; x < buildingController.size.x; x++)
         {
-            for (int y = 0; y < buildingController.building.size.y; y++)
+            for (int y = 0; y < buildingController.size.y; y++)
                 _grid[placeX + x, placeY + y] = buildingController;
         }
     }
@@ -452,44 +459,47 @@ public class BuildingSystem : MonoBehaviour
     public void SetBuildSettings(BuildingController build)
     {
         // Склады и тд
-        selectedResource = build.building.typeResource;
-        string resource = "";
-        switch (selectedResource)
+        Resources selectedResource = build.Building.TypeResource;
+        if (build.Building is Building building)
         {
-            case Resources.Material:
-                _scripts.colonyManager.MaxMaterials += build.building.resourceGive;
-                resource = "maxMaterials";
-                break;
-            case Resources.MaterialPlus:
-                _scripts.colonyManager.MaxMaterialsPlus += build.building.resourceGive;
-                resource = "maxMaterialsPlus";
-                break;
-            case Resources.Food:
-                _scripts.colonyManager.MaxFood += build.building.resourceGive;
-                resource = "maxFood";
-                break;
-            case Resources.Honey:
-                _scripts.colonyManager.MaxHoney += build.building.resourceGive;
-                resource = "maxHoney";
-                break;
-            case Resources.BioFuel:
-                _scripts.colonyManager.MaxBiofuel += build.building.resourceGive;
-                resource = "maxBiofuel";
-                break;
-            case Resources.Bears:
-                _scripts.colonyManager.maxBears += build.building.resourceGive;
-                resource = "maxBears";
-                break;
-            case Resources.Energy:
-                _scripts.colonyManager.Energy += build.building.resourceGive;
-                _scripts.colonyManager.MaxEnergy += build.building.resourceGive;
-                resource = "energy";
-                break;
-        }
+            string resource = "";
+            switch (selectedResource)
+            {
+                case Resources.Material:
+                    _scripts.colonyManager.MaxMaterials += building.resourceGive;
+                    resource = "maxMaterials";
+                    break;
+                case Resources.MaterialPlus:
+                    _scripts.colonyManager.MaxMaterialsPlus += building.resourceGive;
+                    resource = "maxMaterialsPlus";
+                    break;
+                case Resources.Food:
+                    _scripts.colonyManager.MaxFood += building.resourceGive;
+                    resource = "maxFood";
+                    break;
+                case Resources.Honey:
+                    _scripts.colonyManager.MaxHoney += building.resourceGive;
+                    resource = "maxHoney";
+                    break;
+                case Resources.BioFuel:
+                    _scripts.colonyManager.MaxBiofuel += building.resourceGive;
+                    resource = "maxBiofuel";
+                    break;
+                case Resources.Bears:
+                    _scripts.colonyManager.maxBears += building.resourceGive;
+                    resource = "maxBears";
+                    break;
+                case Resources.Energy:
+                    _scripts.colonyManager.Energy += building.resourceGive;
+                    _scripts.colonyManager.MaxEnergy += building.resourceGive;
+                    resource = "energy";
+                    break;
+            }
 
-        APIClient.Instance.CreateLogRequest(
-            "Повышение лимитов за здание",
-            Player.Instance.playerName,
-            new Dictionary<string, string> { { resource, "+" + build.building.resourceGive } });
+            APIClient.Instance.CreateLogRequest(
+                "Повышение лимитов за здание",
+                Player.Instance.playerName,
+                new Dictionary<string, string> { { resource, "+" + building.resourceGive } });
+        }
     }
 }

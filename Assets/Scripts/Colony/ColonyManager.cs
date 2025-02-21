@@ -282,7 +282,7 @@ public class ColonyManager : MonoBehaviour
         _maxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
         _maxEnergy = inventory.Resources["maxEnergy"];
     }
-    
+
     /// <summary>
     /// Получаем медведя по его dev имени
     /// </summary>
@@ -470,8 +470,10 @@ public class ColonyManager : MonoBehaviour
             buildingController.SetNormal();
             buildingController.isReady = true;
             scripts.buildingSystem.SetBuildSettings(buildingController);
-            if (buildingController.building.scoutHome)
-                scoutHome = true;
+            if (buildingController.Building is Building building) // Настройки для зданий
+            {
+                scoutHome = building.scoutHome;
+            }
         }
         else if (task.taskMode == TasksMode.GetResource)
             scripts.buildingSystem.PickUpResource(task.objectOfTask);

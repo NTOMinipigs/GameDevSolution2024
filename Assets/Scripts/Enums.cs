@@ -45,8 +45,10 @@ public enum Traditions
     Constructors, 
     [Description("Программист")]
     Programmers,
-    [Description("БиоИнженер")]
+    [Description("Био инженер")]
     BioEngineers,
+    [Description("Дрон")]
+    Drone,
     [Description("Хром")]
     Chrom
 }

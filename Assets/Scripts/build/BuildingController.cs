@@ -3,40 +3,51 @@ using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
-    [Header("MainInformation")] public Building building;
-    public bool isReady;
+    [Header("MainInformation")]
+    // Я не придумал, как лучше определять SelectedBuilding. Костыль.
+    // Назначается либо buildig, либо resource
+    public IBuildable Building;
 
+    [SerializeField] private Building building;
+    [SerializeField] private Resource resource;
+    public bool isReady;
+    public Vector2Int size;
     [Header("Workers")] public float steps; // Текущее кол-во "работы" до обнуления
 
     public int workersOfBears, workersOfDrone;
 
-    [SerializeField] private MeshRenderer mainRenderer;
+    private MeshRenderer _mainRenderer;
     private Color _standartMaterialColor;
     private AllScripts _scripts;
 
     private void Awake()
     {
-        _standartMaterialColor = mainRenderer.material.color;
+        _mainRenderer = GetComponent<MeshRenderer>();
+        _standartMaterialColor = _mainRenderer.material.color;
         _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
+        if (building)
+            Building = building;
+        if (resource)
+            Building = resource;
     }
 
     // Смена цвета по возможности расстановки
-    public void SetTransparent(bool available) => mainRenderer.material.color = available ? Color.green : Color.red;
+    public void SetTransparent(bool available) => _mainRenderer.material.color = available ? Color.green : Color.red;
 
     // Смена цвета на нормальный
-    public void SetNormal() => mainRenderer.material.color = _standartMaterialColor;
+    public void SetNormal() => _mainRenderer.material.color = _standartMaterialColor;
 
     // Процесс стройки
-    public void SetBuilding() => mainRenderer.material.color = Color.black;
+    public void SetBuilding() => _mainRenderer.material.color = Color.black;
 
     // Отрисовка в editor юнити сетки строения
     private void OnDrawGizmosSelected()
     {
-        Vector3 offset = new Vector3(-building.size.x * 0.5f + 0.5f, 0, -building.size.y * 0.5f + 0.5f);
+        Vector3 offset = new Vector3(-size.x * 0.5f + 0.5f, 0, -size.y * 0.5f + 0.5f);
 
-        for (int x = 0; x < building.size.x; x++)
+        for (int x = 0; x < size.x; x++)
         {
-            for (int y = 0; y < building.size.y; y++)
+            for (int y = 0; y < size.y; y++)
             {
                 Gizmos.color = (x + y) % 2 == 0 ? new Color(0.88f, 0f, 1f, 0.3f) : new Color(1f, 0.68f, 0f, 0.3f);
                 Gizmos.DrawCube(transform.position + offset + new Vector3(x, 0, y), new Vector3(1, .1f, 1));
@@ -49,14 +60,15 @@ public class BuildingController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (!isReady || building.typeOfBuilding != Building.TypesOfBuilding.Building || !building.canWork) return;
+        if (!isReady) return;
         steps += 0.0005f;
         if (steps >= 1)
         {
             steps = 0f;
-            float earn = (workersOfBears + workersOfDrone) * building.resourceOneWorker;
-            string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
-            switch (building.typeResource)
+            float earn = (workersOfBears + workersOfDrone) * Building.ResourceOneWorker;
+            string
+                resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
+            switch (Building.TypeResource)
             {
                 case Resources.Material:
                     _scripts.colonyManager.Materials += earn;

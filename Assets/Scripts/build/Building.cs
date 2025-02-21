@@ -1,38 +1,24 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Building", menuName = "Building")]
-public class Building : ScriptableObject
+public class Building : ScriptableObject, IBuildable
 {
     [Header("MainInformation")] public string buildingName;
-    
-    public enum TypesOfBuilding
-    {
-        Building,
-        Resource
-    }
-
-    public TypesOfBuilding typeOfBuilding;
+    public string BuildingName => buildingName;
     public Resources typeResource;
+    public Resources TypeResource => typeResource;
     [Header("Workers")] public bool canWork;
-    public TypeOfWorkers typeOfWorkers;
-
-    public enum TypeOfWorkers
-    {
-        Any,
-        Beekeepers,
-        Constructors,
-        Programmers,
-        BioEngineers,
-        Drone
-    }
+    public Traditions typeOfWorkers;
 
     [Header("BuildingSettings")] public bool scoutHome;
-    public Vector2Int size = Vector2Int.one;
-    public int maxDrones, maxBears;
+    public int maxWorkers;
+    public int MaxWorkers => maxWorkers;
 
     public int
         resourceGive,
         resourceOneWorker; // Сколько здание дает баффов при постройке + после производства +сколько "работы" за одного рабочего
 
-    public float materialsNeed, specMaterialsNeed, stepsNeed, energyNeed;
+    public int ResourceOneWorker => resourceOneWorker;
+    public float materialsNeed, specMaterialsNeed, energyNeed;
+    [Range(0, 10f)] public float stepsNeed;
 }

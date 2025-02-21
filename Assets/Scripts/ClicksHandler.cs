@@ -30,16 +30,16 @@ public class ClicksHandler : MonoBehaviour
                 case "building":
                     buildingController = hit.collider.gameObject.GetComponent<BuildingController>();
                     if (buildingController.isReady)
-                        textRayTotal.text = buildingController.building.buildingName;
+                        textRayTotal.text = buildingController.Building.BuildingName;
                     else
-                        textRayTotal.text = buildingController.building.buildingName + "(Строится...)";
+                        textRayTotal.text = buildingController.Building.BuildingName + "(Строится...)";
                     break;
                 case "materialStack":
                     buildingController= hit.collider.gameObject.GetComponent<BuildingController>();
                     if (buildingController.isReady)
-                        textRayTotal.text = buildingController.building.buildingName;
+                        textRayTotal.text = buildingController.Building.BuildingName;
                     else
-                        textRayTotal.text = buildingController.building.buildingName + "(Добывается...)";
+                        textRayTotal.text = buildingController.Building.BuildingName + "(Добывается...)";
                     break;
             }
         }
