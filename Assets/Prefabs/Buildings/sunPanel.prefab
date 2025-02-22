@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1089940180690010852}
   - component: {fileID: 8578301001783333174}
   - component: {fileID: 4464236167510319452}
+  - component: {fileID: 8031532304416351612}
   m_Layer: 6
   m_Name: sunPanel
   m_TagString: building
@@ -130,3 +131,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.378163, y: 6.6261635, z: 4.2533274}
   m_Center: {x: 0, y: 1.2524503, z: 0}
+--- !u!114 &8031532304416351612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6662235729561869382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265e7fbed18dc49f2bb0a8b5a17b6fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

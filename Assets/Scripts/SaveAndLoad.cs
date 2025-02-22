@@ -28,10 +28,10 @@ public class SaveAndLoad : MonoBehaviour
             CreateNewGame();
         }
         
+        LoadGame();
         // Загрузите игру в режиме debug, если 
         if (Config.ConfigManager.Instance.config.debug)
             LoadDebugGame();  
-        LoadGame();
     }
 
     /// <summary>
@@ -104,6 +104,11 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateNewGame()
     {
+        scripts.colonyManager.Food = 10;
+        scripts.colonyManager.MaxMaterials = 50;
+        scripts.colonyManager.MaxBiofuel = 15;
+        scripts.colonyManager.MaxFood = 10;
+        scripts.colonyManager.maxBears = 10;
         CreateBears();
         scripts.questSystem.StartFirst();
     }
@@ -119,6 +124,7 @@ public class SaveAndLoad : MonoBehaviour
         colonyManager.GenerateNewBear(Traditions.Programmers);
         colonyManager.GenerateNewBear(Traditions.Constructors);
         colonyManager.GenerateNewBear(Traditions.BioEngineers);
+        //colonyManager.GenerateNewBear(Traditions.Drone);
     }
 
     /// <summary>

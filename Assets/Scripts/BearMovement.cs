@@ -10,6 +10,7 @@ public class BearMovement : MonoBehaviour
     private bool wait = true;
     private bool doingTask;
     [SerializeField] private Vector3 moveTarget;
+    [SerializeField] private LayerMask rayInteractLayerMask;
     public AllScripts scripts;
     private Animator animator;
 
@@ -21,28 +22,22 @@ public class BearMovement : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (scripts.colonyManager.GetBearTask(totalBear) != null)
-        {
-            if (collider.gameObject == scripts.colonyManager.GetBearTask(totalBear).objectOfTask)
-                doingTask = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider collider)
-    {
-        if (scripts.colonyManager.GetBearTask(totalBear) != null)
-        {
-            if (collider.gameObject == scripts.colonyManager.GetBearTask(totalBear).objectOfTask)
-                doingTask = false;
-        }
-    }
-
     private void Update()
     {
         BearTask newTask = scripts.colonyManager.GetBearTask(totalBear);
-        if (newTask != null)
+        
+        var taskColliders = Physics.OverlapSphere(transform.position, 3f, rayInteractLayerMask);
+        if (taskColliders.Length > 0)
+        {
+            if (newTask != null)
+                doingTask = taskColliders[0].gameObject == newTask.objectOfTask;
+            else
+                doingTask = false;
+        }
+        else
+            doingTask = false;
+        
+        if (newTask != null && !doingTask)
             moveTarget = new Vector3(newTask.objectOfTask.transform.position.x, transform.position.y, newTask.objectOfTask.transform.position.z);
 
         if (wait && newTask == null)
@@ -82,7 +77,10 @@ public class BearMovement : MonoBehaviour
         BearTask newTask = scripts.colonyManager.GetBearTask(totalBear);
         if (doingTask)
         {
-            newTask.totalSteps += 0.01f;
+            newTask.totalSteps += 0.001f;
+            if (newTask.objectOfTask.tag == "building")
+                newTask.objectOfTask.GetComponent<BuildingController>().reveal.progress = newTask.totalSteps;
+            
             if (newTask.totalSteps >= newTask.needSteps)
             {
                 scripts.colonyManager.EndTask(newTask);

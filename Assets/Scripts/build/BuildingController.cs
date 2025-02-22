@@ -18,6 +18,7 @@ public class BuildingController : MonoBehaviour
     public int workersCount;
 
     private MeshRenderer _mainRenderer;
+    [HideInInspector]public RevealByProgress reveal; // Штука для редактирования материала
     private Color _standartMaterialColor;
     private AllScripts _scripts;
 
@@ -25,6 +26,7 @@ public class BuildingController : MonoBehaviour
     {
         _mainRenderer = GetComponent<MeshRenderer>();
         _standartMaterialColor = _mainRenderer.material.color;
+        reveal = GetComponent<RevealByProgress>();
         _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         if (building)
             Building = building;
@@ -39,7 +41,7 @@ public class BuildingController : MonoBehaviour
     public void SetNormal() => _mainRenderer.material.color = _standartMaterialColor;
 
     // Процесс стройки
-    public void SetBuilding() => _mainRenderer.material.color = Color.black;
+    public void SetBuilding() => reveal.progress = 0f;
 
     // Отрисовка в editor юнити сетки строения
     private void OnDrawGizmosSelected()

@@ -68,8 +68,6 @@ public class BuildingSystem : MonoBehaviour
     {
         if (_scripts.CheckOpenedWindows(true)) // Если какая-то менюха уже открыта
             return;
-        if (!buildingController.isReady) // Потом изменить
-            return;
         _selectedBuildController = buildingController;
         ManageBuildMenu();
     }
@@ -78,19 +76,29 @@ public class BuildingSystem : MonoBehaviour
 
     private void UpdateBuildingText()
     {
-        textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
-        textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
-        textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
-        textCountWorkers.text = _selectedBuildController.workersCount + "/" +
-                                _selectedBuildController.Building.MaxWorkers;
-        if (_selectedBuildController.workersCount > 0) // т.е работает
+        if (_selectedBuildController.isReady)
         {
-            resourceBlockAdd.gameObject.SetActive(true);
-            _resourceAddText.text = "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
-                                    " " + _selectedBuilding.typeResource;
+            textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
+            textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
+            textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
+            textCountWorkers.text = _selectedBuildController.workersCount + "/" +
+                                    _selectedBuildController.Building.MaxWorkers;
+            if (_selectedBuildController.workersCount > 0) // т.е работает
+            {
+                resourceBlockAdd.gameObject.SetActive(true);
+                _resourceAddText.text =
+                    "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
+                    " " + _selectedBuilding.typeResource;
+            }
+            else
+                resourceBlockAdd.gameObject.SetActive(false);
         }
         else
+        {
+            textHealth.text = "Состояние: СТРОЙКА";
+            textEnergy.text = "";
             resourceBlockAdd.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -116,7 +124,7 @@ public class BuildingSystem : MonoBehaviour
     /// <param name="canWork">Можно работать?</param>
     private void ManageWorkersPanel(bool canWork)
     {
-        _workerButtons.gameObject.SetActive(_selectedBuilding.canWork);
+        _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isReady);
 
         buttonAddWorker.interactable = canWork;
         buttonRemoveWorker.interactable = canWork;
@@ -339,7 +347,7 @@ public class BuildingSystem : MonoBehaviour
                 if (available && IsPlaceTaken(x, y)) available = false;
 
                 _flyingBuildingController.transform.position =
-                    new Vector3(x + _flyingBuildingController.size.x / 2f, 0,
+                    new Vector3(x + _flyingBuildingController.size.x / 2f, 4,
                         y + _flyingBuildingController.size.y / 2f);
 
                 if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 

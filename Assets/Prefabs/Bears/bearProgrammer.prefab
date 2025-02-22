@@ -309,10 +309,13 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  speed: 0
+  speed: 2
   rotationSpeed: 5
   startWaitTime: 0
   moveTarget: {x: 0, y: 0, z: 0}
+  rayInteractLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   scripts: {fileID: 0}
 --- !u!95 &2195506918510954276
 Animator:
