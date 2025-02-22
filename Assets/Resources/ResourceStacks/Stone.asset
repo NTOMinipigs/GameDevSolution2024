@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30c3b7b8588d4527a9d37df8c5e4bef5, type: 3}
-  m_Name: BioFuelContainer
+  m_Name: Stone
   m_EditorClassIdentifier: 
-  resourceName: "\u0411\u0438\u043E \u0442\u043E\u043F\u043B\u0438\u0432\u043E"
+  resourceName: "\u041A\u0430\u043C\u0435\u043D\u044C"
   description: 
-  typeResource: 2
-  maxDrones: 3
+  typeResource: 0
+  maxDrones: 10
   resourceOneWorker: 3
-  stepsNeed: 1
+  stepsNeed: 2

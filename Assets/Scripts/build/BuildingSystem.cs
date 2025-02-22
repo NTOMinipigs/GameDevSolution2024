@@ -34,7 +34,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private Button buttonAddWorker, buttonRemoveWorker;
 
     [SerializeField] private TextMeshProUGUI textCountWorkers, textNameWorkers, textDestroy;
-    [SerializeField] private TextMeshProUGUI textHealth, textEnergy;
+    [SerializeField] private TextMeshProUGUI textHealth, textEnergy, textResourceName, textResourceRemain;
 
 
     private TextMeshProUGUI _textSelectedBuild, _textNameBuild, _textInfoBuild;
@@ -101,6 +101,15 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
+    private void UpdateResourceText()
+    {
+        textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource;
+        textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
+        textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
+        textCountWorkers.text = _selectedBuildController.workersCount + "/" +
+                                _selectedBuildController.Building.MaxWorkers;
+    }
+
     /// <summary>
     /// Изменение числа рабочих в здании
     /// </summary>
@@ -162,16 +171,9 @@ public class BuildingSystem : MonoBehaviour
             {
                 _buildMenuBuildings.gameObject.SetActive(false);
                 _buildMenuResources.gameObject.SetActive(true);
+                UpdateResourceText();
             }
         }
-    }
-
-    public void StartPickUpResource()
-    {
-        _selectedBuildController.isReady = false;
-        buildMenu.gameObject.SetActive(false);
-        // На переделке
-        //_scripts.colonyManager.CreateNewTask(TasksMode.GetResource, selectedBuild.gameObject, selectedBuild.Building.stepsNeed);
     }
 
     public void PickUpResource(GameObject resourceObj)
@@ -233,7 +235,7 @@ public class BuildingSystem : MonoBehaviour
         buildingsBearMenu.SetActive(false);
         buildingsWorkMenu.SetActive(false);
         buildingsSienceMenu.SetActive(false);
-        
+
         page.SetActive(true);
         // Обновление списка зданий к постройке
         foreach (Transform child in page.transform)

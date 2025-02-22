@@ -24,4 +24,4 @@ MonoBehaviour:
   materialsNeed: 50
   specMaterialsNeed: 0
   energyNeed: 1
-  stepsNeed: 1
+  stepsNeed: 3
