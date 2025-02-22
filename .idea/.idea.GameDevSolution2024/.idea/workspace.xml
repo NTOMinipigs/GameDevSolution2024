@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +33,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Scripts/adaptiveScroll.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Resources/Buildings/BearHouse.asset" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -205,7 +207,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739711684466</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Building and resources =&gt; now with interface + small building refactoring(start)">
+      <option name="closed" value="true" />
+      <created>1740163344173</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1740163344173</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Building menu changes + UI change + other(I forgot)">
+      <option name="closed" value="true" />
+      <created>1740169382423</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1740169382423</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +250,8 @@
     <MESSAGE value="+ new resource models" />
     <MESSAGE value="Snow particles change and other" />
     <MESSAGE value="Rename scripts + new models" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename scripts + new models" />
+    <MESSAGE value="Building and resources =&gt; now with interface + small building refactoring(start)" />
+    <MESSAGE value="Building menu changes + UI change + other(I forgot)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Building menu changes + UI change + other(I forgot)" />
   </component>
 </project>

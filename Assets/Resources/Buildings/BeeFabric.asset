@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f7316469798469d9bbaef64be0ebede, type: 3}
-  m_Name: MetalFabric
+  m_Name: BeeFabric
   m_EditorClassIdentifier: 
-  buildingName: "\u0424\u0430\u0431\u0440\u0438\u043A\u0430 \u0441\u044B\u0440\u044C\u044F"
+  buildingName: "\u0424\u0430\u0431\u0440\u0438\u043A\u0430 \u043C\u0451\u0434\u0430"
   description: 
-  typeResource: 0
+  typeResource: 3
   canWork: 1
-  typeOfWorkers: 5
+  typeOfWorkers: 1
   scoutHome: 0
-  maxWorkers: 10
+  maxWorkers: 5
   resourceGive: 50
-  resourceOneWorker: 5
-  materialsNeed: 50
+  resourceOneWorker: 4
+  materialsNeed: 30
   specMaterialsNeed: 0
   energyNeed: 1
   stepsNeed: 1

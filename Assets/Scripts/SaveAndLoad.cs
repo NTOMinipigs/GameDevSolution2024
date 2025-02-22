@@ -13,7 +13,7 @@ public class SaveAndLoad : MonoBehaviour
     private AllScripts scripts;
     // Часть необходимых методов для инициализации
 
-    void Start()
+    private void Start()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
@@ -24,24 +24,20 @@ public class SaveAndLoad : MonoBehaviour
         {
             // Загрузите игру в режиме debug, если 
             if (Config.ConfigManager.Instance.config.debug)
-            {
                 CreateDebugGame();  
-            } 
             CreateNewGame();
         }
         
         // Загрузите игру в режиме debug, если 
         if (Config.ConfigManager.Instance.config.debug)
-        {
             LoadDebugGame();  
-        } 
         LoadGame();
     }
 
     /// <summary>
     /// Запустите это если флаг debug в конфиге true
     /// </summary>
-    void CreateDebugGame()
+    private void CreateDebugGame()
     {
         // Проставляем начальные ресурсы игроку, сразу много чтобы можно было удобно дебажить
         scripts.colonyManager.Materials = 100;
@@ -63,7 +59,7 @@ public class SaveAndLoad : MonoBehaviour
     /// <summary>
     /// Запустите это если флаг debug в конфиге true, чтобы загрузить игру
     /// </summary>
-    void LoadDebugGame()
+    private void LoadDebugGame()
     {
         // Убиваем фпс чтобы игра не жрала много
         Application.targetFrameRate = 20;
@@ -73,7 +69,7 @@ public class SaveAndLoad : MonoBehaviour
     /// <summary>
     /// При закрытии игры сработает это
     /// </summary>
-    void OnApplicationQuit()
+    private void OnApplicationQuit()
     {
         SaveGame();
     }

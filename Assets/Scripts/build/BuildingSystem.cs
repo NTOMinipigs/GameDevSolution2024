@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class BuildingSystem : MonoBehaviour
 {
@@ -28,6 +27,7 @@ public class BuildingSystem : MonoBehaviour
         _bearManage,
         _workerButtons;
 
+    [SerializeField] private GameObject buildingsBearMenu, buildingsWorkMenu, buildingsSienceMenu;
     [SerializeField] private GameObject resourceBlockAdd, resourceBlockRemove;
     private TextMeshProUGUI _resourceAddText, _resourceRemoveText;
     private Image _resourceAddImage, _resourceRemoveImage;
@@ -36,7 +36,6 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textCountWorkers, textNameWorkers, textDestroy;
     [SerializeField] private TextMeshProUGUI textHealth, textEnergy;
 
-    private Transform _buildCreateMenuBuildingsTransform;
 
     private TextMeshProUGUI _textSelectedBuild, _textNameBuild, _textInfoBuild;
 
@@ -49,8 +48,6 @@ public class BuildingSystem : MonoBehaviour
         // Общая инициализация
         _noteBlock = buildingCreateMenu.transform.Find("NoteBlock")?.gameObject;
         _textSelectedBuild = _noteBlock?.transform.Find("TextSelectedBuild").GetComponent<TextMeshProUGUI>();
-        _buildCreateMenuBuildingsTransform = buildingCreateMenu.transform.Find("Scroll View").transform.Find("Viewport")
-            .transform.Find("Content");
 
         _bgObj = buildMenu.transform.Find("bg")?.gameObject;
         _buildMenuBuildings = _bgObj?.transform.Find("functionalBuildMode")?.gameObject;
@@ -223,6 +220,37 @@ public class BuildingSystem : MonoBehaviour
         _textSelectedBuild.text = _flyingBuildingController.Building.BuildingName;
     }
 
+    public void ChangeBuildingPage(GameObject page)
+    {
+        buildingsBearMenu.SetActive(false);
+        buildingsWorkMenu.SetActive(false);
+        buildingsSienceMenu.SetActive(false);
+        
+        page.SetActive(true);
+        // Обновление списка зданий к постройке
+        foreach (Transform child in page.transform)
+        {
+            // Единичная инициализация
+            BuildingBuyInfo building = child.GetComponent<BuildingBuyInfo>();
+            if (building.building) // Всякое бывает
+            {
+                // Возможность нажать на кнопку
+                building.button.interactable =
+                    building.building.materialsNeed <= _scripts.colonyManager.Materials &&
+                    building.building.energyNeed <= _scripts.colonyManager.Energy;
+                // Смена цены в зависимости от достатка
+                building.textPriceMaterial.color =
+                    building.building.materialsNeed <= _scripts.colonyManager.Materials
+                        ? Color.white
+                        : Color.red;
+                building.textPriceEnergy.color =
+                    building.building.energyNeed <= _scripts.colonyManager.Energy
+                        ? Color.white
+                        : Color.red;
+            }
+        }
+    }
+
     public void DestroyBuilding(GameObject destroyBuilding = null)
     {
         if (destroyBuilding)
@@ -270,29 +298,7 @@ public class BuildingSystem : MonoBehaviour
             {
                 buildingCreateMenu.gameObject.SetActive(!buildingCreateMenu.activeSelf);
                 _noteBlock.gameObject.SetActive(false);
-                // Генерация списка зданий к постройке
-                foreach (Transform child in _buildCreateMenuBuildingsTransform)
-                {
-                    // Единичная инициализация
-                    BuildingBuyInfo building = child.GetComponent<BuildingBuyInfo>();
-                    if (building.building) // Всякое бывает
-                    {
-                        // Возможность нажать на кнопку
-                        building.button.interactable =
-                            building.building.materialsNeed <= _scripts.colonyManager.Materials &&
-                            building.building.energyNeed <= _scripts.colonyManager.Energy;
-                        // Смена цены в зависимости от достатка
-                        building.textPriceMaterial.color =
-                            building.building.materialsNeed <= _scripts.colonyManager.Materials
-                                ? Color.black
-                                : Color.red;
-                        building.textPriceEnergy.color =
-                            building.building.energyNeed <= _scripts.colonyManager.Energy
-                                ? Color.black
-                                : Color.red;
-                    }
-                }
-
+                ChangeBuildingPage(buildingsBearMenu); // Исходная
                 if (!buildingCreateMenu.activeSelf && _flyingBuildingController)
                     Destroy(_flyingBuildingController.gameObject);
             }
