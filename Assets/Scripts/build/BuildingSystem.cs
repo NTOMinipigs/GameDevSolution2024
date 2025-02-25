@@ -88,7 +88,7 @@ public class BuildingSystem : MonoBehaviour
                 resourceBlockAdd.gameObject.SetActive(true);
                 _resourceAddText.text =
                     "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
-                    " " + _selectedBuilding.typeResource;
+                    " " + _selectedBuilding.typeResource.GetString();
             }
             else
                 resourceBlockAdd.gameObject.SetActive(false);
@@ -103,7 +103,7 @@ public class BuildingSystem : MonoBehaviour
 
     private void UpdateResourceText()
     {
-        textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource;
+        textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
         textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
         textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
         textCountWorkers.text = _selectedBuildController.workersCount + "/" +

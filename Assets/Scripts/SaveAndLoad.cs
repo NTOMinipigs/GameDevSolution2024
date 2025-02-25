@@ -40,11 +40,6 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateDebugGame()
     {
         // Проставляем начальные ресурсы игроку, сразу много чтобы можно было удобно дебажить
-        scripts.colonyManager.Materials = 100;
-        scripts.colonyManager.Energy = 100;
-        scripts.colonyManager.Biofuel = 100;
-        scripts.colonyManager.Food = 100;
-        scripts.colonyManager.Honey = 100;
         scripts.colonyManager.MaterialsPlus = 100;
         scripts.colonyManager.MaxMaterials = 200;
         scripts.colonyManager.MaxEnergy = 200;
@@ -52,7 +47,11 @@ public class SaveAndLoad : MonoBehaviour
         scripts.colonyManager.MaxFood = 200;
         scripts.colonyManager.MaxHoney = 200;
         scripts.colonyManager.MaxMaterialsPlus = 200;
-        
+        scripts.colonyManager.Materials = 100;
+        scripts.colonyManager.Energy = 100;
+        scripts.colonyManager.Biofuel = 100;
+        scripts.colonyManager.Food = 100;
+        scripts.colonyManager.Honey = 100;
         // TODO: Добавь сюда дефолтных построек
     }
 
