@@ -45,6 +45,7 @@ public class GameMenuManager : MonoBehaviour
         scripts.cameraMove.sensitivity = scripts.preference.sensitivityOfCamera;
         scripts.preference.globalVolume = volumeSlider.value;
         scripts.preference.postProcessing = postProcessingToggle.isOn;
+        scripts.musicManager.UpdateVolumeRatio(volumeSlider.value * 0.01f);
         ManagePreferensMenu();
     }
 
