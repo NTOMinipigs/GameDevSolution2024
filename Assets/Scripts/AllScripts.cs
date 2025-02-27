@@ -1,3 +1,4 @@
+using Alerts;
 using UnityEngine;
 
 public class AllScripts : MonoBehaviour
@@ -14,6 +15,7 @@ public class AllScripts : MonoBehaviour
     public TravelingManager TM;
     public Preference preference;
     public MusicManager musicManager;
+    public AlertsManager alertsManager;
 
     public bool CheckOpenedWindows(bool mode, bool extraOpen = false) //  Общий метод для проверки "открыто ли какое-либо меню"
     {

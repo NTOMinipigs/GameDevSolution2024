@@ -26566,6 +26566,7 @@ GameObject:
   - component: {fileID: 1346596986}
   - component: {fileID: 1346596998}
   - component: {fileID: 1346596999}
+  - component: {fileID: 1346597002}
   m_Layer: 0
   m_Name: scripts
   m_TagString: Untagged
@@ -26600,7 +26601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8684ac9a468884c8e0fcda8914d5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  APIClient_: {fileID: 0}
+  APIClient_: {fileID: 1346597002}
   clicksHandler: {fileID: 1727350351}
   cameraMove: {fileID: 1727350354}
   zoom: {fileID: 1727350355}
@@ -26612,6 +26613,7 @@ MonoBehaviour:
   TM: {fileID: 1346596990}
   preference: {fileID: 1346596997}
   musicManager: {fileID: 1346596991}
+  alertsManager: {fileID: 0}
 --- !u!114 &1346596987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27331,6 +27333,18 @@ MonoBehaviour:
   textDestroy: {fileID: 726470346}
   textHealth: {fileID: 845764767}
   textEnergy: {fileID: 1674362384}
+--- !u!114 &1346597002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483e766f3e4bbfd4fbe03b4e3c0db99e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1353461284
 GameObject:
   m_ObjectHideFlags: 0

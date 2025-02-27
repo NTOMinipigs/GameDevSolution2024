@@ -126,8 +126,6 @@ namespace Alerts
             
             // Убиваем сам объект
             StartCoroutine(DestroyEffect());
-
-
         }
     }
 }

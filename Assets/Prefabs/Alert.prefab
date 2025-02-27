@@ -162,8 +162,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6215068404050374082}
   - {fileID: 6742233912391719510}
+  - {fileID: 6215068404050374082}
   - {fileID: 7092913773212410617}
   - {fileID: 448649806096061992}
   m_Father: {fileID: 0}
@@ -281,7 +281,7 @@ SpriteRenderer:
   m_Color: {r: 0, g: 0.8140773, b: 0.9622642, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

@@ -15,8 +15,18 @@ using UnityEngine.SceneManagement;
 [SuppressMessage("ReSharper", "MissingXmlDoc")] // I suppress xmldocwarn because many fields don't need it
 public class APIClient : MonoBehaviour
 {
+    // components
+    
+    
+    /// <summary>
+    /// положи сюда allScripts компонент
+    /// </summary>
+    public AllScripts allScripts;
+    
+    
     // HttpClient block
-
+    
+    
     /// <summary>
     /// UUID игры
     /// </summary>
@@ -40,12 +50,13 @@ public class APIClient : MonoBehaviour
     /// <summary>
     /// Инициализируем Singleton
     /// </summary>
-    private void Awake()
+    private async void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (Instance == null)
         {
             Instance = this;
-            Initialize();
+            await Initialize();
         }
         else
         {
@@ -53,11 +64,11 @@ public class APIClient : MonoBehaviour
         }
     }
 
-    private void Initialize()
+    private async Task Initialize()
     {
         _uuid = Config.ConfigManager.Instance.config.api_key;
         _baseUri = "https://" + _host + "/api/games/" + _uuid + "/";
-        StartCoroutine(CheckPing());
+        await CheckPing();
     }
 
     /// <summary>
@@ -65,28 +76,26 @@ public class APIClient : MonoBehaviour
     /// </summary>
     /// <param name="callback"></param>
     /// <returns></returns>
-    public IEnumerator<WaitForSeconds> CheckPing()
+    public async Task CheckPing()
     {
         while (true)
         {
-            Ping ping = new Ping("1.1.1.1");
-            float startTime = Time.time;
-
-            while (!ping.isDone)
+            using (UnityWebRequest unityWebRequest = new UnityWebRequest(_baseUri, "GET"))
             {
-                if (Time.time - startTime > 5f) // Таймаут в 5 секунд
+                float startTime = Time.time;
+                unityWebRequest.downloadHandler = new DownloadHandlerBuffer();
+                UnityWebRequestAsyncOperation unityWebRequestAsyncOperation = unityWebRequest.SendWebRequest();
+                while (!unityWebRequestAsyncOperation.isDone && Time.time - startTime < 5f)
                 {
-                    Debug.Log("Ping не отвечает");
-                    NoInternetConnection();
-                    yield break;
+                    await Task.Yield();
                 }
 
-                yield return new WaitForSeconds(10);
-            }
+                if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError)
+                {
+                    NoInternetConnection();
+                }
 
-            if (ping.time < 0)
-            {
-                NoInternetConnection();
+                await Task.Delay(1000);
             }
         }
     }
@@ -99,6 +108,7 @@ public class APIClient : MonoBehaviour
         SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
         saveAndLoad.SaveGame();
         SceneManager.LoadScene("Menu");
+        allScripts.alertsManager.ShowAlert("Нет подключения к инернету!");
     }
 
     // records block
