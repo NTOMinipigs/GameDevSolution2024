@@ -297,6 +297,19 @@ public class ColonyManager : MonoBehaviour
         return _bearsInColonyDict[gameName];
     }
 
+    public int GetCountFreeBearsOfTradition(Traditions tradition)
+    {
+        int freeWorkersOfTradition = 0;
+        for (int i = 0; i < bearsInColony.Count; i++)
+        {
+            Bear newBear = bearsInColony[i];
+            if (newBear.tradition == tradition && newBear.activity == Activities.Chill)
+                freeWorkersOfTradition++;
+        }
+
+        return freeWorkersOfTradition;
+    }
+    
     /// <summary>
     /// Вернет случайного медведя в обмен на традицию (вынесено из метода GenerateNewBear)
     /// </summary>
@@ -411,11 +424,12 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Получить свободного медведя
     /// </summary>
-    private Bear GetChillBear()
+    private Bear GetChillBear(Traditions bearTradition)
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) && bear.tradition != Traditions.Chrom)
+            if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) &&
+                (bear.tradition == bearTradition || bearTradition == Traditions.None))
                 return bear;
         }
 
@@ -447,7 +461,10 @@ public class ColonyManager : MonoBehaviour
                 Traditions.BioEngineers,
                 _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.BioEngineers))
             },
-            { Traditions.Drone, 0 }
+            {
+                Traditions.Drone,
+                _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.Drone))
+            }
         };
 
         // Словарь для хранения текущего количества работников каждой традиции
@@ -477,11 +494,11 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Создать задачу на медведе
     /// </summary>
-    public void CreateNewTask(TasksMode newTaskMode, GameObject objectOfTask, float steps)
+    public void CreateNewTask(TasksMode newTaskMode, GameObject objectOfTask, Traditions traditionToTask, float steps)
     {
-        // TODO: сделать возможнсть работы по кастам
-        BearTask task = new BearTask(newTaskMode, objectOfTask, steps);
-        Bear chillBear = GetChillBear();
+        BearTask task = new BearTask(newTaskMode, objectOfTask, traditionToTask, steps);
+
+        Bear chillBear = GetChillBear(traditionToTask);
         if (chillBear != null)
         {
             task.selectedBear = chillBear;
@@ -499,7 +516,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (BearTask task in bearTasks)
         {
-            if (task.selectedBear == null)
+            if (task.selectedBear == null && bear.tradition == task.traditionForTask)
             {
                 task.selectedBear = bear;
                 bear.activity = Activities.Work;
@@ -582,7 +599,7 @@ public class ColonyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bearsCountText.text = (bearsInColony.Count - scripts.colonyManager.workingBears) + "/" + maxBears; // костыль
+        bearsCountText.text = bearsInColony.Count + "/" + maxBears; // костыль
         if (bearsListMenu.activeSelf)
         {
             foreach (Transform child in bearsListContainer.transform)

@@ -177,7 +177,7 @@ public class SaveAndLoad : MonoBehaviour
                 throw new ArgumentException("Invalid bear game name: " + task["BearGameName"]);
 
             // Инициализируем задачу
-            BearTask bearTask = new BearTask(tasksMode, objectOfTask, (float)(double)task["needSteps"]);
+            BearTask bearTask = new BearTask(tasksMode, objectOfTask, Traditions.None, (float)(double)task["needSteps"]);
             bearTask.selectedBear = bearObject;
             bearTask.totalSteps = (float)(double)task["totalSteps"];
         }

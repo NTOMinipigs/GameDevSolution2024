@@ -96,7 +96,7 @@ public class BearMovement : MonoBehaviour
             if (newTask.objectOfTask.tag == "building")
                 newTask.objectOfTask.GetComponent<BuildingController>().reveal.progress = newTask.totalSteps;
 
-            if (newTask.totalSteps >= newTask.needSteps)
+            if (newTask.needSteps != -1f && newTask.totalSteps >= newTask.needSteps)
             {
                 scripts.colonyManager.EndTask(newTask);
                 Debug.Log(newTask.objectOfTask);

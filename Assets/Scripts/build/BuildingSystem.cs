@@ -32,8 +32,9 @@ public class BuildingSystem : MonoBehaviour
     private TextMeshProUGUI _resourceAddText, _resourceRemoveText;
     private Image _resourceAddImage, _resourceRemoveImage;
     [SerializeField] private Button buttonAddWorker, buttonRemoveWorker;
+    [SerializeField] private Button buttonAddWorkerResources, buttonRemoveWorkerResources;
 
-    [SerializeField] private TextMeshProUGUI textCountWorkers, textNameWorkers, textDestroy;
+    [SerializeField] private TextMeshProUGUI textCountWorkers, textCountWorkersResource, textNameWorkers, textDestroy;
     [SerializeField] private TextMeshProUGUI textHealth, textEnergy, textResourceName, textResourceRemain;
 
 
@@ -80,7 +81,7 @@ public class BuildingSystem : MonoBehaviour
         {
             textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
             textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
-            textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
+            textNameWorkers.text = _selectedBuilding.typeOfWorkers.GetString();
             textCountWorkers.text = _selectedBuildController.workersCount + "/" +
                                     _selectedBuildController.Building.MaxWorkers;
             if (_selectedBuildController.workersCount > 0) // т.е работает
@@ -105,47 +106,90 @@ public class BuildingSystem : MonoBehaviour
     {
         textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
         textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
-        textNameWorkers.text = _selectedBuilding.typeOfWorkers.ToString();
-        textCountWorkers.text = _selectedBuildController.workersCount + "/" +
-                                _selectedBuildController.Building.MaxWorkers;
+        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" +
+                                        _selectedBuildController.Building.MaxWorkers;
     }
 
     /// <summary>
-    /// Изменение числа рабочих в здании
+    /// Добавление рабочего в здание
     /// </summary>
-    /// <param name="changeWorkers">+/- столько-то рабочих</param>
-    public void ManageWorkers(int changeWorkers)
+    public void AddWorkerToBuilding()
     {
-        _selectedBuildController.workersCount += changeWorkers;
-        _scripts.colonyManager.workingBears += changeWorkers; // Костыль
-        UpdateBuildingText();
-        // TODO сделать условие для ОПРЕДЕЛЕННОЙ ТРАДИЦИИ
-        if (_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears == 0 ||
-            _selectedBuildController.workersCount == _selectedBuildController.Building.MaxWorkers)
-            buttonAddWorker.interactable = false;
+        _selectedBuildController.workersCount++;
+        _scripts.colonyManager.CreateNewTask(TasksMode.Create, _selectedBuildController.gameObject,
+            _selectedBuilding.typeOfWorkers, -1f);
+
+        ManageBuildMenu();
+    }
+
+    /// <summary>
+    /// Добавление рабочего в здание
+    /// </summary>
+    public void AddWorkerToResource()
+    {
+        _selectedBuildController.workersCount++;
+        _scripts.colonyManager.CreateNewTask(TasksMode.GetResource, _selectedBuildController.gameObject,
+            Traditions.Drone, -1f);
+
+        ManageBuildMenu();
+    }
+
+    /// <summary>
+    /// Убрать рабочего из здания/руды
+    /// </summary>
+    public void RemoveWorker(bool resource = false)
+    {
+        void FindAndEndTask(Traditions tradition)
+        {
+            foreach (Bear bear in _scripts.colonyManager.bearsInColony)
+            {
+                if (bear.tradition == tradition)
+                {
+                    BearTask task = _scripts.colonyManager.GetBearTask(bear);
+                    if (task.objectOfTask == _selectedBuildController.gameObject)
+                        _scripts.colonyManager.EndTask(task);
+                }
+            }
+        }
+
+        _selectedBuildController.workersCount--;
+        if (!resource)
+        {
+            UpdateBuildingText();
+            FindAndEndTask(_selectedBuilding.typeOfWorkers);
+        }
         else
-            ManageBuildMenu();
+        {
+            UpdateResourceText();
+            FindAndEndTask(Traditions.Drone);
+        }
+
+        ManageBuildMenu();
     }
 
     /// <summary>
     /// Управление панелью с выставлением числа рабочих/дронов
     /// </summary>
     /// <param name="canWork">Можно работать?</param>
-    private void ManageWorkersPanel(bool canWork)
+    /// <param name="resource"></param>
+    private void ManageWorkersPanel(bool canWork, bool resource = false)
     {
-        _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isReady);
+        if (!resource) // Если это строение
+        {
+            int freeWorkersOfTradition =
+                _scripts.colonyManager.GetCountFreeBearsOfTradition(_selectedBuilding.typeOfWorkers);
+            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isReady);
 
-        buttonAddWorker.interactable = canWork;
-        buttonRemoveWorker.interactable = canWork;
-
-        // Костыль
-        if (_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears == 0 ||
-            _selectedBuildController.workersCount == _selectedBuildController.Building.MaxWorkers)
-            buttonAddWorker.interactable = false;
-
-        if (_scripts.colonyManager.bearsInColony.Count - _scripts.colonyManager.workingBears ==
-            _scripts.colonyManager.maxBears || _selectedBuildController.workersCount == 0)
-            buttonRemoveWorker.interactable = false;
+            buttonAddWorker.interactable = canWork && freeWorkersOfTradition != 0;
+            buttonRemoveWorker.interactable = canWork && _selectedBuildController.workersCount != 0;
+        }
+        else // Если ресурс
+        {
+            int freeWorkersOfTradition =
+                _scripts.colonyManager.GetCountFreeBearsOfTradition(Traditions.Drone);
+            buttonAddWorkerResources.interactable = canWork && freeWorkersOfTradition != 0;
+            buttonRemoveWorkerResources.interactable = canWork && _selectedBuildController.workersCount != 0;
+        }
     }
 
     /// <summary>
@@ -163,14 +207,16 @@ public class BuildingSystem : MonoBehaviour
             {
                 _selectedBuilding = building;
                 _buildMenuBuildings.gameObject.SetActive(true);
+                _buildMenuResources.gameObject.SetActive(false);
                 ManageWorkersPanel(building.canWork);
                 UpdateBuildingText();
                 textDestroy.text = (building.materialsNeed / 2).ToString();
             }
-            else // Если это ресурс
+            else // Если ресурс
             {
                 _buildMenuBuildings.gameObject.SetActive(false);
                 _buildMenuResources.gameObject.SetActive(true);
+                ManageWorkersPanel(true, true);
                 UpdateResourceText();
             }
         }
@@ -407,6 +453,7 @@ public class BuildingSystem : MonoBehaviour
             }
 
             _scripts.colonyManager.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
+                Traditions.Drone,
                 building.stepsNeed);
             _flyingBuildingController.SetBuilding();
             _scripts.colonyManager.Energy -= building.energyNeed;

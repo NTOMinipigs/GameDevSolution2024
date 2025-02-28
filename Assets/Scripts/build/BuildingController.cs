@@ -64,7 +64,7 @@ public class BuildingController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isReady) return;
-        steps += 0.0005f;
+        steps += 0.005f;
         if (steps >= 1)
         {
             steps = 0f;

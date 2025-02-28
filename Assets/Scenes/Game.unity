@@ -3197,15 +3197,15 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: DestroyBuilding
-        m_Mode: 2
+        m_MethodName: RemoveWorker
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &204576494
 MonoBehaviour:
@@ -8581,8 +8581,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: ManageWorkers
-        m_Mode: 3
+        m_MethodName: RemoveWorker
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -27163,7 +27163,6 @@ MonoBehaviour:
   APIClient_: {fileID: 1346597002}
   clicksHandler: {fileID: 1727350351}
   cameraMove: {fileID: 1727350354}
-  zoom: {fileID: 1727350355}
   colonyManager: {fileID: 1346596987}
   dialogManager: {fileID: 1346596988}
   buildingSystem: {fileID: 1346597001}
@@ -27885,7 +27884,10 @@ MonoBehaviour:
   resourceBlockRemove: {fileID: 310173902}
   buttonAddWorker: {fileID: 1364418620}
   buttonRemoveWorker: {fileID: 533119008}
+  buttonAddWorkerResources: {fileID: 1473670615}
+  buttonRemoveWorkerResources: {fileID: 204576493}
   textCountWorkers: {fileID: 1373252054}
+  textCountWorkersResource: {fileID: 1029886850}
   textNameWorkers: {fileID: 1051122932}
   textDestroy: {fileID: 726470346}
   textHealth: {fileID: 845764767}
@@ -28076,8 +28078,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: ManageWorkers
-        m_Mode: 3
+        m_MethodName: AddWorkerToBuilding
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -30000,11 +30002,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: DestroyBuilding
-        m_Mode: 2
+        m_MethodName: AddWorkerToResource
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -35292,6 +35294,8 @@ MonoBehaviour:
     m_Bits: 64
   minBounds: {x: -30, y: -55}
   maxBounds: {x: 30, y: 45}
+  minZoom: 20
+  maxZoom: 60
 --- !u!114 &1727350355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35304,9 +35308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f357f7755144a2da472bee89b3b181a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minZoom: 20
-  maxZoom: 55
-  sensitivity: 10
 --- !u!1001 &1735617240
 PrefabInstance:
   m_ObjectHideFlags: 0
