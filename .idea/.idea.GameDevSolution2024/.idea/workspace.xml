@@ -6,39 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1 1.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1 1.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear2.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear2.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle1.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle1.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle2.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle2.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk1.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk1.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk2.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk2.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/bear.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/bear.fbx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/bear.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/bear.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBeekeeper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBeekeeper.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBio.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBio.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearConstructor.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearConstructor.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearProgrammer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearProgrammer.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/Zoom.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/Zoom.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/Bear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/Bear.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" afterDir="false" />
@@ -166,7 +142,7 @@
       <workItem from="1740413768474" duration="1210000" />
       <workItem from="1740472636143" duration="9259000" />
       <workItem from="1740668464554" duration="598000" />
-      <workItem from="1740750919306" duration="4523000" />
+      <workItem from="1740750919306" duration="10486000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />

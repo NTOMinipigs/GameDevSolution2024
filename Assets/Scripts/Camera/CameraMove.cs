@@ -12,7 +12,14 @@ public class CameraMove : MonoBehaviour
     [SerializeField] private LayerMask layerMaskInteract;
     public Vector2 minBounds; // Минимальные границы
     public Vector2 maxBounds; // Максимальные границы
-    
+
+    [SerializeField] public float minZoom = 20f;
+
+    [SerializeField] public float maxZoom = 60f;
+    private Camera _camera;
+
+    private void Start() => _camera = GetComponent<Camera>();
+
     private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -40,8 +47,17 @@ public class CameraMove : MonoBehaviour
             _isDragging = false;
     }
 
+    public void MoveAndZoom(Vector3 posToMove, float zoomModif)
+    {
+        transform.position = new Vector3(posToMove.x, transform.position.y, posToMove.z - 35f);
+        GetComponent<Camera>().fieldOfView = zoomModif;
+    }
+    
     private void LateUpdate() // Для плавного перемещения
     {
+        _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 5;
+        _camera.fieldOfView = Mathf.Clamp(_camera.fieldOfView, minZoom, maxZoom);
+        
         if (_isDragging && !blockMove) // Пока мышка держится, ну и блокировки нету
         {
             _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.deltaTime;

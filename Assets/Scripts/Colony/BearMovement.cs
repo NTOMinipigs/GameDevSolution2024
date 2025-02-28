@@ -42,9 +42,11 @@ public class BearMovement : MonoBehaviour
             moveTarget = new Vector3(newTask.objectOfTask.transform.position.x, transform.position.y,
                 newTask.objectOfTask.transform.position.z);
 
-        if (_wait && newTask == null)
+        if (_wait && newTask == null || !totalBear.canMove)
         {
             _animator.SetBool("walk", false);
+            // Если не может двигаться - таймер не двигаем
+            if (!totalBear.canMove) return;
             waitTime -= Time.deltaTime;
             if (waitTime < 0)
             {
@@ -58,17 +60,23 @@ public class BearMovement : MonoBehaviour
         }
         else
         {
+            if (moveTarget == Vector3.zero) // Ну вдруг
+            {
+                _wait = true;
+                waitTime = startWaitTime;
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, moveTarget, speed * Time.deltaTime);
             _animator.SetBool("walk", true);
 
             // Поворачиваем объект в сторону moveTarget
-            Vector3 direction = (moveTarget - transform.position).normalized; // Вычисляем направление
-            if (direction != Vector3.zero) // Проверяем, что направление не нулевое
+            Vector3 direction = (moveTarget - transform.position).normalized;
+            if (direction != Vector3.zero)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(-direction); // Создаем вращение
                 transform.rotation =
                     Quaternion.Slerp(transform.rotation, lookRotation,
-                        rotationSpeed * Time.deltaTime); // Плавно поворачиваем
+                        rotationSpeed * Time.deltaTime);
             }
 
             if (Vector3.Distance(transform.position, moveTarget) < 0.5f)

@@ -10,28 +10,28 @@ using UnityEngine;
 /// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
-    private AllScripts scripts;
+    private AllScripts _scripts;
     // Часть необходимых методов для инициализации
 
     private void Start()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
-        
+        _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
+
         bool loadResult = systemSaver.LoadGame();
         // Если файл сохранения не найден
         if (!loadResult)
         {
             // Загрузите игру в режиме debug, если 
             if (Config.ConfigManager.Instance.config.debug)
-                CreateDebugGame();  
+                CreateDebugGame();
             CreateNewGame();
         }
-        
+
         LoadGame();
         // Загрузите игру в режиме debug, если 
         if (Config.ConfigManager.Instance.config.debug)
-            LoadDebugGame();  
+            LoadDebugGame();
     }
 
     /// <summary>
@@ -40,18 +40,18 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateDebugGame()
     {
         // Проставляем начальные ресурсы игроку, сразу много чтобы можно было удобно дебажить
-        scripts.colonyManager.MaterialsPlus = 100;
-        scripts.colonyManager.MaxMaterials = 200;
-        scripts.colonyManager.MaxEnergy = 200;
-        scripts.colonyManager.MaxBiofuel = 200;
-        scripts.colonyManager.MaxFood = 200;
-        scripts.colonyManager.MaxHoney = 200;
-        scripts.colonyManager.MaxMaterialsPlus = 200;
-        scripts.colonyManager.Materials = 100;
-        scripts.colonyManager.Energy = 100;
-        scripts.colonyManager.Biofuel = 100;
-        scripts.colonyManager.Food = 100;
-        scripts.colonyManager.Honey = 100;
+        _scripts.colonyManager.MaterialsPlus = 100;
+        _scripts.colonyManager.MaxMaterials = 200;
+        _scripts.colonyManager.MaxEnergy = 200;
+        _scripts.colonyManager.MaxBiofuel = 200;
+        _scripts.colonyManager.MaxFood = 200;
+        _scripts.colonyManager.MaxHoney = 200;
+        _scripts.colonyManager.MaxMaterialsPlus = 200;
+        _scripts.colonyManager.Materials = 100;
+        _scripts.colonyManager.Energy = 100;
+        _scripts.colonyManager.Biofuel = 100;
+        _scripts.colonyManager.Food = 100;
+        _scripts.colonyManager.Honey = 100;
         // TODO: Добавь сюда дефолтных построек
     }
 
@@ -103,13 +103,13 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateNewGame()
     {
-        scripts.colonyManager.Food = 10;
-        scripts.colonyManager.MaxMaterials = 50;
-        scripts.colonyManager.MaxBiofuel = 15;
-        scripts.colonyManager.MaxFood = 10;
-        scripts.colonyManager.maxBears = 10;
+        _scripts.colonyManager.Food = 10;
+        _scripts.colonyManager.MaxMaterials = 50;
+        _scripts.colonyManager.MaxBiofuel = 15;
+        _scripts.colonyManager.MaxFood = 10;
+        _scripts.colonyManager.maxBears = 10;
         CreateBears();
-        scripts.questSystem.StartFirst();
+        _scripts.questSystem.StartFirst();
     }
 
     /// <summary>
@@ -125,8 +125,8 @@ public class SaveAndLoad : MonoBehaviour
         colonyManager.GenerateNewBear(Traditions.BioEngineers);
         colonyManager.GenerateNewBear(Traditions.Drone);
         colonyManager.GenerateNewBear(Traditions.Drone);
-
-        //colonyManager.GenerateNewBear(Traditions.Drone);
+        colonyManager.GenerateNewBear(Traditions.Drone);
+        colonyManager.GenerateNewBear(Traditions.Drone);
     }
 
     /// <summary>

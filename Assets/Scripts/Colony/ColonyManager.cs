@@ -487,7 +487,7 @@ public class ColonyManager : MonoBehaviour
             task.selectedBear = chillBear;
             chillBear.activity = Activities.Work;
         }
-        
+
         UpdateWorkersCount();
         bearTasks.Add(task);
     }
@@ -564,13 +564,16 @@ public class ColonyManager : MonoBehaviour
 
             foreach (Bear bear in bearsInColony)
             {
-                GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity,
-                    bearsListContainer.transform);
-                newObj.name = bear.gameName;
+                if (bear.tradition != Traditions.Drone)
+                {
+                    GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity,
+                        bearsListContainer.transform);
+                    newObj.name = bear.gameName;
 
-                Image image = newObj.transform.Find("Icon").GetComponent<Image>();
-                image.sprite = bear.sprite;
-                image.SetNativeSize();
+                    Image image = newObj.transform.Find("Icon").GetComponent<Image>();
+                    image.sprite = bear.sprite;
+                    image.SetNativeSize();
+                }
             }
 
             bearsListAs.UpdateContentSize();
