@@ -198,13 +198,14 @@ public class ColonyManager : MonoBehaviour
     public int maxBears;
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
-    [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
+    public GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = Array.Empty<string>();
 
     [SerializeField] private SerializableBear[] spriteBeekeepers,
         spriteConstructors,
         spriteProgrammers,
-        spriteBioengineers = Array.Empty<SerializableBear>();
+        spriteBioengineers,
+        spriteDrones = Array.Empty<SerializableBear>();
 
     [SerializeField] private TextMeshProUGUI bearsCountText;
 
@@ -313,6 +314,8 @@ public class ColonyManager : MonoBehaviour
                 [Random.Range(0, spriteProgrammers.Length - 1)],
             Traditions.BioEngineers => spriteBioengineers[
                 Random.Range(0, spriteBioengineers.Length - 1)],
+            Traditions.Drone => spriteDrones[
+                Random.Range(0, spriteDrones.Length - 1)],
             _ => throw new ArgumentException("Tradition " + tradition + " not found!")
         };
     }

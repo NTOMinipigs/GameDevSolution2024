@@ -15848,7 +15848,7 @@ GameObject:
   - component: {fileID: 951526950}
   - component: {fileID: 951526951}
   m_Layer: 0
-  m_Name: Drone1
+  m_Name: DroneSprite1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15882,8 +15882,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 0
-  sprite: {fileID: -1804682130, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
-  prefab: {fileID: 5963445485985904587, guid: 166166b8e3ab4964386c9f4dee924ca8, type: 3}
+  sprite: {fileID: -2144758209, guid: 9699dabeda7e04f4a90db574e58a28b9, type: 3}
+  prefab: {fileID: 5099475814821419011, guid: f6769e184d76b9c4381fa8dbb3e92f46, type: 3}
 --- !u!1 &952294846
 GameObject:
   m_ObjectHideFlags: 0
@@ -27265,6 +27265,9 @@ MonoBehaviour:
   - {fileID: 1431031838}
   - {fileID: 295978280}
   - {fileID: 1916744353}
+  spriteDrones:
+  - {fileID: 1522636978}
+  - {fileID: 951526951}
   bearsCountText: {fileID: 355838913}
   dronesText: {fileID: 903015197}
   beekeepersText: {fileID: 1130402217}
@@ -31059,7 +31062,7 @@ GameObject:
   - component: {fileID: 1522636977}
   - component: {fileID: 1522636978}
   m_Layer: 0
-  m_Name: Drone
+  m_Name: DroneSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31093,8 +31096,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 0
-  sprite: {fileID: 926015040, guid: afc58f5b461f54d488ff7b65cdb03450, type: 3}
-  prefab: {fileID: 5963445485985904587, guid: 166166b8e3ab4964386c9f4dee924ca8, type: 3}
+  sprite: {fileID: -589185560, guid: 9699dabeda7e04f4a90db574e58a28b9, type: 3}
+  prefab: {fileID: 5099475814821419011, guid: f6769e184d76b9c4381fa8dbb3e92f46, type: 3}
 --- !u!1 &1530153489
 GameObject:
   m_ObjectHideFlags: 0

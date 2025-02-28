@@ -6,9 +6,41 @@
   <component name="ChangeListManager">
     <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1 1.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1 1.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear1.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear2.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bear2.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/bearIdle.anim.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle1.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle1.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle2.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearIdle2.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk1.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk1.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk2.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/bearWalk2.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/bear.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/bear.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/bear.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/bear.fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBeekeeper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBeekeeper.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBio.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearBio.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearConstructor.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearConstructor.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearProgrammer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/bearProgrammer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +67,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Other/accid___(Ru)_0 SDF.asset" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Scripts/MenuManager.cs.meta" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy/Editor/ViewSwitcher.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -92,13 +123,15 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="772">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="772" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -131,6 +164,9 @@
       <workItem from="1739899381117" duration="1461000" />
       <workItem from="1740221550148" duration="12156000" />
       <workItem from="1740413768474" duration="1210000" />
+      <workItem from="1740472636143" duration="9259000" />
+      <workItem from="1740668464554" duration="598000" />
+      <workItem from="1740750919306" duration="4523000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -260,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740263099866</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="UI change + workers text(maybe refactoring later) + some fixes">
+      <option name="closed" value="true" />
+      <created>1740509481801</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1740509481801</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,6 +337,7 @@
     <MESSAGE value="Light edit + font change + other small changes" />
     <MESSAGE value="Process of building change + material of process build" />
     <MESSAGE value="Small resource update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small resource update" />
+    <MESSAGE value="UI change + workers text(maybe refactoring later) + some fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI change + workers text(maybe refactoring later) + some fixes" />
   </component>
 </project>

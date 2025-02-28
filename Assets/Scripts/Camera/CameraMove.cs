@@ -22,12 +22,13 @@ public class CameraMove : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
             {
-                if (hit.collider.gameObject.tag == "bear")
+                if (hit.collider.gameObject.CompareTag("bear"))
                 {
                     Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
-                    scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
+                    if (selectedBear.tradition != Traditions.Drone)
+                        scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
-                else if (hit.collider.gameObject.tag == "materialStack" || hit.collider.gameObject.tag == "building")
+                else if (hit.collider.gameObject.CompareTag("materialStack") || hit.collider.gameObject.CompareTag("building"))
                     scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<BuildingController>());
             }
 

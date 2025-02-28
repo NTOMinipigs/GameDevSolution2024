@@ -123,6 +123,9 @@ public class SaveAndLoad : MonoBehaviour
         colonyManager.GenerateNewBear(Traditions.Programmers);
         colonyManager.GenerateNewBear(Traditions.Constructors);
         colonyManager.GenerateNewBear(Traditions.BioEngineers);
+        colonyManager.GenerateNewBear(Traditions.Drone);
+        colonyManager.GenerateNewBear(Traditions.Drone);
+
         //colonyManager.GenerateNewBear(Traditions.Drone);
     }
 
