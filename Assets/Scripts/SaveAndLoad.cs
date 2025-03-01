@@ -184,6 +184,8 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void LoadBuilds()
     {
+        BuildingSaveSystem buildingSaveSystem = gameObject.GetComponent<BuildingSaveSystem>();
+        buildingSaveSystem.PlaceBuildFromSave();
     }
 
 

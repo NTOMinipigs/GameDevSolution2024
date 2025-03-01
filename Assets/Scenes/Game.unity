@@ -26567,6 +26567,7 @@ GameObject:
   - component: {fileID: 1346596998}
   - component: {fileID: 1346596999}
   - component: {fileID: 1346597002}
+  - component: {fileID: 1346597003}
   m_Layer: 0
   m_Name: scripts
   m_TagString: Untagged
@@ -26614,6 +26615,7 @@ MonoBehaviour:
   preference: {fileID: 1346596997}
   musicManager: {fileID: 1346596991}
   alertsManager: {fileID: 0}
+  buildingSaveSystem: {fileID: 0}
 --- !u!114 &1346596987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27343,6 +27345,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 483e766f3e4bbfd4fbe03b4e3c0db99e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allScripts: {fileID: 0}
+--- !u!114 &1346597003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346596984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f8a715f7854eb7b67f4943f437181d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1353461284

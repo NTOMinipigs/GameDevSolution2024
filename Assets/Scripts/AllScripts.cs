@@ -16,6 +16,7 @@ public class AllScripts : MonoBehaviour
     public Preference preference;
     public MusicManager musicManager;
     public AlertsManager alertsManager;
+    public BuildingSaveSystem buildingSaveSystem;
 
     public bool CheckOpenedWindows(bool mode, bool extraOpen = false) //  Общий метод для проверки "открыто ли какое-либо меню"
     {
