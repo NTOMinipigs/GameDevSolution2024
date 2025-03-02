@@ -69,6 +69,13 @@ public class BuildingController : MonoBehaviour
         {
             steps = 0f;
             float earn = workersCount * Building.ResourceOneWorker;
+
+            // Не стоит отправлять запрос на сервер, если кол-во ресурсов не изменяется
+            if (earn == 0) 
+            {
+                return; 
+            }
+
             string
                 resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
             switch (Building.TypeResource)

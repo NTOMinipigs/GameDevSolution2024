@@ -6,4 +6,5 @@ public class BuildingSave
     public int x;
     public int z;
     public string buildingName;
+    public bool isReady;
 }

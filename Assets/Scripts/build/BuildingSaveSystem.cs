@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,6 +22,9 @@ public class BuildingSaveSystem : MonoBehaviour
     
     public GameObject farm;
     public GameObject house;
+    public GameObject stone;
+    public GameObject foodBox;
+    public GameObject honeyBox;
 
     /// <summary>
     /// Получите префаб по имени
@@ -31,16 +35,63 @@ public class BuildingSaveSystem : MonoBehaviour
     {
         return (GameObject)typeof(BuildingSaveSystem).GetField(pfefabName).GetValue(this);
     }
+    
 
+    /// <summary>
+    /// Дай мне count случайных координат в диапазоне от minX до maxX и от minY до maxY 
+    /// </summary>
+    /// <param name="count">Количество требуемых координат</param>
+    /// <param name="minX">min X</param>
+    /// <param name="maxX">max X</param>
+    /// <param name="minY">min Y</param>
+    /// <param name="maxY">max Y</param>
+    /// <returns>генератор - count раз вернет случайнуюю координату в диапазоне</returns>
+    public static IEnumerable<Vector2> GenerateUniqueCoordinates(int count, float minX, float maxX, float minY, float maxY)
+    {
+        HashSet<Vector2> coordinates = new HashSet<Vector2>();
 
+        while (coordinates.Count < count)
+        {
+            float x = Random.Range(minX, maxX);
+            float y = Random.Range(minY, maxY);
+            Vector2 newCoord = new Vector2(x, y);
+
+            if (coordinates.Add(newCoord)) // HashSet.Add вернёт true, если элемент уникален
+            {
+                yield return newCoord;
+            }
+        }
+    }
+    
     /// <summary>
     /// В этом методе опишите логику создания построек, при создании новой игры
     /// В этом методе НЕЛЬЗЯ самостоятельно создавать постройки на сцене, шаманить только с файлом сохранения
     /// </summary>
     public void CreateStartBuilds()
     {
-        CreateBuildSave(-18, 7, "house");
-        CreateBuildSave(-22, 4, "farm");
+        // Случайная генерация руд
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(4, 80, -80, 80, -80f))
+        {
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "stone", true);
+        }
+        
+        // Случайная генерация боксов с едой
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(2, 80, -80, 80, -80f))
+        {
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "foodBox", true);
+
+        }
+        
+        // Случайная генерация боксов с медом
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(1, 80, -80, 80, -80f))
+        {
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "honeyBox", true);
+
+        }
+
+        // тестовые
+        CreateBuildSave(-22, 40, "house", true);
+        CreateBuildSave(-22, 4, "farm", true);
     }
     
     /// <summary>
@@ -53,7 +104,7 @@ public class BuildingSaveSystem : MonoBehaviour
             // Создаем объект на сцене
             BuildingController buildingController = GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
             _buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
-            buildingController.transform.position.Set(buildingSave.x, 0, buildingSave.z);
+            buildingController.transform.position = new Vector3(buildingSave.x, 3f, buildingSave.z);
             Instantiate(buildingController);
         }
     }
@@ -65,13 +116,14 @@ public class BuildingSaveSystem : MonoBehaviour
     /// <param name="z">z постройки</param>
     /// <param name="prefabName">Название префаба, как поле в классе</param>
 
-    public void CreateBuildSave(int x, int z, string prefabName)
+    public void CreateBuildSave(int x, int z, string prefabName, bool isReady)
     {
         // Создаем buildingSave объект, который в последствии будет сохранен
         BuildingSave buildingSave = new BuildingSave();
         buildingSave.x = x;
         buildingSave.z = z;
         buildingSave.buildingName = prefabName;
+        buildingSave.isReady = isReady;
         
         _systemSaver.gameSave.buildingSaves.Add(buildingSave);
     }

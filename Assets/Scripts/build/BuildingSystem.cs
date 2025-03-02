@@ -443,7 +443,7 @@ public class BuildingSystem : MonoBehaviour
         if (_flyingBuildingController.Building is Building building)
         {
             PlaceBuilding(_flyingBuildingController, placeX, placeY);
-            _scripts.buildingSaveSystem.CreateBuildSave(placeX, placeY, _flyingBuildingController.name); // Создаем сохранение постройки
+            _scripts.buildingSaveSystem.CreateBuildSave(placeX, placeY, _flyingBuildingController.name, false); // Создаем сохранение постройки
 
             switch (_flyingBuildingController.Building.BuildingName)
             {
