@@ -81,6 +81,7 @@ public class SaveAndLoad : MonoBehaviour
     {
         LoadBears();
         LoadTasks();
+        LoadBuilds();
     }
 
     /// <summary>
@@ -103,13 +104,14 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateNewGame()
     {
+        CreateBears();
+        CreateBuilds();
+        _scripts.questSystem.StartFirst();
         _scripts.colonyManager.Food = 10;
         _scripts.colonyManager.MaxMaterials = 50;
         _scripts.colonyManager.MaxBiofuel = 15;
         _scripts.colonyManager.MaxFood = 10;
         _scripts.colonyManager.maxBears = 10;
-        CreateBears();
-        _scripts.questSystem.StartFirst();
     }
 
     /// <summary>
@@ -134,6 +136,7 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateBuilds()
     {
+        _scripts.buildingSaveSystem.CreateStartBuilds();
     }
 
 
@@ -188,6 +191,8 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void LoadBuilds()
     {
+        BuildingSaveSystem buildingSaveSystem = gameObject.GetComponent<BuildingSaveSystem>();
+        buildingSaveSystem.PlaceBuildFromSave();
     }
 
 

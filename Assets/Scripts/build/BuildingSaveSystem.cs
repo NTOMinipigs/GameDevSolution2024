@@ -1,0 +1,156 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+/// <summary>
+/// Этот класс расширяет возможнности Building-системы, с минимальным воздействием на все остальныее ее компоненты
+/// </summary>
+[System.Serializable]
+public class BuildingSaveSystem : MonoBehaviour
+{
+    /// <summary>
+    /// Вставьте сюда systemSaver, он используется в коде в дальнейшем
+    /// </summary>
+    public SystemSaver _systemSaver;
+
+    /// <summary>
+    /// Вставьте сюда buildingSystem, он используется в коде в дальнейшем  
+    /// </summary>
+    public BuildingSystem _buildingSystem;
+
+    // --------------------- prefabs ------------------------------
+    
+    public GameObject farm;
+    public GameObject house;
+    public GameObject stone;
+    public GameObject foodBox;
+    public GameObject honeyBox;
+
+    /// <summary>
+    /// Получите префаб по имени
+    /// </summary>
+    /// <param name="pfefabName">название префаба</param>
+    /// <returns></returns>
+    private GameObject GetPrefabByName(string pfefabName)
+    {
+        return (GameObject)typeof(BuildingSaveSystem).GetField(pfefabName).GetValue(this);
+    }
+    
+
+    /// <summary>
+    /// Дай мне count случайных координат в диапазоне от minX до maxX и от minY до maxY 
+    /// </summary>
+    /// <param name="count">Количество требуемых координат</param>
+    /// <param name="minX">min X</param>
+    /// <param name="maxX">max X</param>
+    /// <param name="minY">min Y</param>
+    /// <param name="maxY">max Y</param>
+    /// <returns>генератор - count раз вернет случайнуюю координату в диапазоне</returns>
+    public static IEnumerable<Vector2> GenerateUniqueCoordinates(int count, float minX, float maxX, float minY, float maxY)
+    {
+        HashSet<Vector2> coordinates = new HashSet<Vector2>();
+
+        while (coordinates.Count < count)
+        {
+            float x = Random.Range(minX, maxX);
+            float y = Random.Range(minY, maxY);
+            Vector2 newCoord = new Vector2(x, y);
+
+            if (coordinates.Add(newCoord)) // HashSet.Add вернёт true, если элемент уникален
+            {
+                yield return newCoord;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// В этом методе опишите логику создания построек, при создании новой игры
+    /// В этом методе НЕЛЬЗЯ самостоятельно создавать постройки на сцене, шаманить только с файлом сохранения
+    /// </summary>
+    public void CreateStartBuilds()
+    {
+        // Случайная генерация руд
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(4, 80, -80, 80, -80f))
+        {
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "stone", true);
+        }
+        
+        // Случайная генерация боксов с едой
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(2, 80, -80, 80, -80f))
+        {
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "foodBox", true);
+
+        }
+        
+        // Случайная генерация боксов с медом
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(1, 80, -80, 80, -80f))
+        {
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "honeyBox", true);
+
+        }
+
+        // тестовые
+        CreateBuildSave(-22, 40, "house", true);
+        CreateBuildSave(-22, 4, "farm", true);
+    }
+    
+    /// <summary>
+    /// Создаст все постройки из сохранения. Используйте один раз при запуске игры
+    /// </summary>
+    public void PlaceBuildFromSave()
+    {
+        foreach (BuildingSave buildingSave in _systemSaver.gameSave.buildingSaves)
+        {
+            // Создаем объект на сцене
+            BuildingController buildingController = GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
+            _buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
+            buildingController.transform.position = new Vector3(buildingSave.x, 3f, buildingSave.z);
+            Instantiate(buildingController);
+        }
+    }
+
+    /// <summary>
+    /// Создайте новый сейв постройки
+    /// </summary>
+    /// <param name="x">x постройки</param>
+    /// <param name="z">z постройки</param>
+    /// <param name="prefabName">Название префаба, как поле в классе</param>
+
+    public void CreateBuildSave(int x, int z, string prefabName, bool isReady)
+    {
+        // Создаем buildingSave объект, который в последствии будет сохранен
+        BuildingSave buildingSave = new BuildingSave();
+        buildingSave.x = x;
+        buildingSave.z = z;
+        buildingSave.buildingName = prefabName;
+        buildingSave.isReady = isReady;
+        
+        _systemSaver.gameSave.buildingSaves.Add(buildingSave);
+    }
+
+
+    /// <summary>
+    /// Удалите building из сохраненных построек
+    /// Удаление построек можно реализовать более быстрым, но мне лень
+    /// </summary>
+    /// <param name="x">x постройки</param>
+    /// <param name="z">z постройки</param>
+    public void DestroyBuildingSave(int x, int z)
+    {
+        //  Перебираем все элементы, для того чтобы найти совпадающие координаты
+        for (int i = 0; i < _systemSaver.gameSave.buildingSaves.Count; i++)
+        {
+            BuildingSave buildingSaveFromGameSave = _systemSaver.gameSave.buildingSaves.ElementAt(i);
+            if (buildingSaveFromGameSave.x == x)
+            {
+                if (buildingSaveFromGameSave.z == z)
+                {
+                    _systemSaver.gameSave.buildingSaves.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
+    }
+
+}

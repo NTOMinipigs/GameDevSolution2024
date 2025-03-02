@@ -7,6 +7,6 @@ using System.Collections.Generic;
 public class GameSave
 {
     public List<Bear> bears = new();
-    public List<BuildingsSave> buildingSaves = new();
+    public List<BuildingSave> buildingSaves = new();
     public List<Dictionary<string, object>> tasksSaves = new();
 }

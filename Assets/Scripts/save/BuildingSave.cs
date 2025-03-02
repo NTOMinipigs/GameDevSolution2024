@@ -1,10 +1,10 @@
 /// <summary>
 /// В этом формате хранятся постройки
 /// </summary>
-public class BuildingsSave
+public class BuildingSave
 {
-    public float x;
-    public float z;
-    public string type;
+    public int x;
+    public int z;
     public string buildingName;
+    public bool isReady;
 }

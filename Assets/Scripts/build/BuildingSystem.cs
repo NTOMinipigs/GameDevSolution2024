@@ -327,6 +327,9 @@ public class BuildingSystem : MonoBehaviour
                     _grid[startX + x, startY + y] = null; // Очищаем ячейку
             }
 
+            _scripts.buildingSaveSystem.DestroyBuildingSave(
+                (int)_selectedBuildController.transform.position.x,
+                (int)_selectedBuildController.transform.position.z); // Удаляем buildingsave из списка сохраненных
             // Уничтожаем объект
             Destroy(_selectedBuildController.gameObject);
 
@@ -440,6 +443,7 @@ public class BuildingSystem : MonoBehaviour
         if (_flyingBuildingController.Building is Building building)
         {
             PlaceBuilding(_flyingBuildingController, placeX, placeY);
+            _scripts.buildingSaveSystem.CreateBuildSave(placeX, placeY, _flyingBuildingController.name, false); // Создаем сохранение постройки
 
             switch (_flyingBuildingController.Building.BuildingName)
             {
@@ -482,7 +486,7 @@ public class BuildingSystem : MonoBehaviour
     /// <param name="buildingController">Постройка которую нужно поставить</param>
     /// <param name="placeX">Координата по X</param>
     /// <param name="placeY">Координата по Y</param>
-    private void PlaceBuilding(BuildingController buildingController, int placeX, int placeY)
+    public void PlaceBuilding(BuildingController buildingController, int placeX, int placeY)
     {
         for (int x = 0; x < buildingController.size.x; x++)
         {

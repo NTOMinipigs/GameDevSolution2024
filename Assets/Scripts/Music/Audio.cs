@@ -28,6 +28,44 @@ public class Audio
     }
     
     /// <summary>
+    /// Реальная громкость аудио
+    /// </summary>
+    private float _volume = 1f;
+    
+    /// <summary>
+    /// getter and getter for _volume field
+    /// setter: update volume for audiosource
+    /// </summary>
+    public float Volume
+    {
+        get => _volumeRatio;
+        set
+        {
+            _volume = value;
+            Source.volume = _volume * _volumeRatio;
+        }
+    }
+
+    /// <summary>
+    /// Коэффициент настраивается через меню настроек
+    /// </summary>
+    private float _volumeRatio = 1f;
+    
+    /// <summary>
+    /// getter and setter for _volumeRatio field
+    /// setter: update volume for audiosource
+    /// </summary>
+    public float volumeRatio
+    {
+        get => _volumeRatio;
+        set
+        {
+            _volumeRatio = value;
+            Source.volume = Volume * _volumeRatio;
+        }
+    }
+    
+    /// <summary>
     /// Прокси между AudioSource.Play() и Audio
     /// Нужно для обратной совместимки
     /// </summary>
@@ -45,7 +83,7 @@ public class Audio
         Source.Stop();
         
         // Ресетаем параметры трека
-        Source.volume = 1.0f;  
+        Volume = 1.0f;  
     }
 
     /// <summary>
@@ -79,11 +117,11 @@ public class Audio
         while (time < FadeDuration)
         {
             time += Time.deltaTime;
-            Source.volume = Mathf.Lerp(startVolume, targetVolume, time / FadeDuration);
+            Volume = Mathf.Lerp(startVolume, targetVolume, time / FadeDuration);
             yield return null;
         }
 
-        Source.volume = targetVolume;
+        Volume = targetVolume;
     }
     
     /// <summary>
@@ -92,7 +130,7 @@ public class Audio
     /// <returns></returns>
     public IEnumerator PlayWithFadeEffect()
     {
-        Source.volume = 0f;
+        Volume = 0f;
         Source.Play();
         yield return FadeEffect(1f); // входной фейд эффект
         
