@@ -40,7 +40,7 @@ public class GameEventsManager : MonoBehaviour
                 for (int i = 0; i < 10; i++)
                 {
                     yield return new WaitForSeconds(0.00000001f);
-                    _directLight.intensity += 0.008f;
+                    _directLight.intensity += 0.004f;
                 }
             }
             else
@@ -48,7 +48,7 @@ public class GameEventsManager : MonoBehaviour
                 for (int i = 0; i < 10; i++)
                 {
                     yield return new WaitForSeconds(0.00000001f);
-                    _directLight.intensity -= 0.00825f;
+                    _directLight.intensity -= 0.0075f;
                 }
             }
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ArgumentException = System.ArgumentException;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,9 @@ using Random = UnityEngine.Random;
 public class ColonyManager : MonoBehaviour
 {
     [Header("Main resources")]
+
+    # region Resources
+
     // Структура каждого ресурса: _ресурсText _ресурсPrivate Ресурс _максимумРесурсаПриват МаксимумРесурса
     // _ресурс/_максимумРесурсаПриват
     [Header("-Honey")]
@@ -25,10 +29,7 @@ public class ColonyManager : MonoBehaviour
         get => _honey;
         set
         {
-            if (value > MaxHoney && MaxHoney != 0)
-                _honey = MaxHoney;
-            else
-                _honey = value;
+            _honey = value >= MaxHoney ? MaxHoney : value;
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             honeyText.text = _honey + "/" + _maxHoney;
         }
@@ -55,10 +56,7 @@ public class ColonyManager : MonoBehaviour
         get => _biofuel;
         set
         {
-            if (value > MaxBiofuel && MaxBiofuel != 0)
-                _biofuel = MaxBiofuel;
-            else
-                _biofuel = value;
+            _biofuel = value >= MaxBiofuel ? MaxBiofuel : value;
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             biofuelText.text = _biofuel + "/" + _maxBiofuel;
         }
@@ -85,10 +83,7 @@ public class ColonyManager : MonoBehaviour
         get => _energy;
         set
         {
-            if (value > MaxEnergy && MaxEnergy != 0)
-                _energy = MaxEnergy;
-            else
-                _energy = value;
+            _energy = value >= MaxEnergy ? MaxEnergy : value;
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             energyText.text = _energy + "/" + _maxEnergy;
         }
@@ -117,11 +112,7 @@ public class ColonyManager : MonoBehaviour
         get => _materials;
         set
         {
-            if (value > MaxMaterials && MaxMaterials != 0)
-                _materials = MaxMaterials;
-            else
-                _materials = value;
-            _materials = value;
+            _materials = value >= MaxMaterials ? MaxMaterials : value;
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             materialsText.text = _materials + "/" + _maxMaterials;
         }
@@ -148,10 +139,7 @@ public class ColonyManager : MonoBehaviour
         get => _materialsPlus;
         set
         {
-            if (value > MaxMaterialsPlus && MaxMaterialsPlus != 0)
-                _materialsPlus = MaxMaterialsPlus;
-            else
-                _materialsPlus = value;
+            _materialsPlus = value >= MaxMaterialsPlus ? MaxMaterialsPlus : value;
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             materialsPlusText.text = _materialsPlus + "/" + _maxMaterialsPlus;
         }
@@ -178,10 +166,7 @@ public class ColonyManager : MonoBehaviour
         get => _food;
         set
         {
-            if (value > MaxFood && MaxFood != 0)
-                _food = MaxFood;
-            else
-                _food = value;
+            _food = value >= MaxFood ? MaxFood : value;
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             foodText.text = _food + "/" + _maxFood;
         }
@@ -200,24 +185,43 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("Bears")] public List<Bear> bearsInColony;
-    public Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
+    # endregion
+
+    [Header("Bears")]
+
+    #region Bears
+
+    public List<Bear> bearsInColony;
+
+    private readonly Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
+    private readonly Dictionary<string, Traditions> _bearsTraditionsInColonyDict = new Dictionary<string, Traditions>();
     public int maxBears;
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
-    [SerializeField] private GameObject spawnBears; // Потом сделать spawnBears более рандомным
+    public GameObject spawnBears; // Потом сделать spawnBears более рандомным
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = Array.Empty<string>();
 
     [SerializeField] private SerializableBear[] spriteBeekeepers,
         spriteConstructors,
         spriteProgrammers,
-        spriteBioengineers = Array.Empty<SerializableBear>();
+        spriteBioengineers,
+        spriteDrones = Array.Empty<SerializableBear>();
 
     [SerializeField] private TextMeshProUGUI bearsCountText;
+
+    [SerializeField] private TextMeshProUGUI dronesText,
+        beekeepersText,
+        constructorsText,
+        programmersText,
+        bioengineersText;
+
     public GameObject bearsListMenu;
     [SerializeField] private GameObject bearsListContainer;
     [SerializeField] private GameObject cardBearPrefab;
     [SerializeField] private AdaptiveScroll bearsListAs;
+
+    #endregion
+
 
     [Header("Other")] public bool scoutHome;
     [SerializeField] private AllScripts scripts;
@@ -293,6 +297,19 @@ public class ColonyManager : MonoBehaviour
         return _bearsInColonyDict[gameName];
     }
 
+    public int GetCountFreeBearsOfTradition(Traditions tradition)
+    {
+        int freeWorkersOfTradition = 0;
+        for (int i = 0; i < bearsInColony.Count; i++)
+        {
+            Bear newBear = bearsInColony[i];
+            if (newBear.tradition == tradition && newBear.activity == Activities.Chill)
+                freeWorkersOfTradition++;
+        }
+
+        return freeWorkersOfTradition;
+    }
+    
     /// <summary>
     /// Вернет случайного медведя в обмен на традицию (вынесено из метода GenerateNewBear)
     /// </summary>
@@ -310,6 +327,8 @@ public class ColonyManager : MonoBehaviour
                 [Random.Range(0, spriteProgrammers.Length - 1)],
             Traditions.BioEngineers => spriteBioengineers[
                 Random.Range(0, spriteBioengineers.Length - 1)],
+            Traditions.Drone => spriteDrones[
+                Random.Range(0, spriteDrones.Length - 1)],
             _ => throw new ArgumentException("Tradition " + tradition + " not found!")
         };
     }
@@ -377,6 +396,8 @@ public class ColonyManager : MonoBehaviour
         newBear.sprite = serializableBear.sprite; // Добавлено, т.к как-то не сохраняется и не назначается, хз
         bearsInColony.Add(newBear);
         _bearsInColonyDict.Add(newBear.gameName, newBear);
+        _bearsTraditionsInColonyDict.Add(newBear.gameName, newBear.tradition);
+        UpdateWorkersCount();
         if ((Traditions)Enum.Parse(typeof(Traditions), newBear.tradition.ToString()) != Traditions.Chrom)
         {
             GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z),
@@ -403,11 +424,12 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Получить свободного медведя
     /// </summary>
-    private Bear GetChillBear()
+    private Bear GetChillBear(Traditions bearTradition)
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) && bear.tradition != Traditions.Chrom)
+            if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) &&
+                (bear.tradition == bearTradition || bearTradition == Traditions.None))
                 return bear;
         }
 
@@ -415,19 +437,75 @@ public class ColonyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Сгенерировать имя основываясь на гендере
+    ///  Подсчитывает число работников каждой традиции
     /// </summary>
-    public void CreateNewTask(TasksMode newTaskMode, GameObject objectOfTask, float steps)
+    private void UpdateWorkersCount()
     {
-        // TODO: сделать возможнсть работы по кастам
-        BearTask task = new BearTask(newTaskMode, objectOfTask, steps);
-        Bear chillBear = GetChillBear();
+        // TODO: сделать обновление на определенную традицию, А НЕ НА ВСЁ НАХУЙ
+        // Максимальное кол-во работников на традицию
+        var maxCounts = new Dictionary<Traditions, int>
+        {
+            {
+                Traditions.Beekeepers,
+                _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.Beekeepers))
+            },
+            {
+                Traditions.Constructors,
+                _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.Constructors))
+            },
+            {
+                Traditions.Programmers,
+                _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.Programmers))
+            },
+            {
+                Traditions.BioEngineers,
+                _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.BioEngineers))
+            },
+            {
+                Traditions.Drone,
+                _bearsTraditionsInColonyDict.Count(kvp => kvp.Value.Equals(Traditions.Drone))
+            }
+        };
+
+        // Словарь для хранения текущего количества работников каждой традиции
+        var currentCounts = new Dictionary<Traditions, int>();
+
+        foreach (Bear bear in bearsInColony)
+        {
+            if (bear.activity != Activities.Chill) continue;
+            if (currentCounts.ContainsKey(bear.tradition))
+                currentCounts[bear.tradition]++;
+            else
+                currentCounts[bear.tradition] = 1; // Если традиция не была добавлена, инициализируем ее
+        }
+
+        // Обновление текстов
+        beekeepersText.text =
+            $"{currentCounts.GetValueOrDefault(Traditions.Beekeepers, 0)}/{maxCounts[Traditions.Beekeepers]}";
+        constructorsText.text =
+            $"{currentCounts.GetValueOrDefault(Traditions.Constructors, 0)}/{maxCounts[Traditions.Constructors]}";
+        programmersText.text =
+            $"{currentCounts.GetValueOrDefault(Traditions.Programmers, 0)}/{maxCounts[Traditions.Programmers]}";
+        bioengineersText.text =
+            $"{currentCounts.GetValueOrDefault(Traditions.BioEngineers, 0)}/{maxCounts[Traditions.BioEngineers]}";
+        dronesText.text = $"{currentCounts.GetValueOrDefault(Traditions.Drone, 0)}/{maxCounts[Traditions.Drone]}";
+    }
+
+    /// <summary>
+    /// Создать задачу на медведе
+    /// </summary>
+    public void CreateNewTask(TasksMode newTaskMode, GameObject objectOfTask, Traditions traditionToTask, float steps)
+    {
+        BearTask task = new BearTask(newTaskMode, objectOfTask, traditionToTask, steps);
+
+        Bear chillBear = GetChillBear(traditionToTask);
         if (chillBear != null)
         {
             task.selectedBear = chillBear;
             chillBear.activity = Activities.Work;
         }
 
+        UpdateWorkersCount();
         bearTasks.Add(task);
     }
 
@@ -438,7 +516,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (BearTask task in bearTasks)
         {
-            if (task.selectedBear == null)
+            if (task.selectedBear == null && bear.tradition == task.traditionForTask)
             {
                 task.selectedBear = bear;
                 bear.activity = Activities.Work;
@@ -503,13 +581,16 @@ public class ColonyManager : MonoBehaviour
 
             foreach (Bear bear in bearsInColony)
             {
-                GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity,
-                    bearsListContainer.transform);
-                newObj.name = bear.gameName;
+                if (bear.tradition != Traditions.Drone)
+                {
+                    GameObject newObj = Instantiate(cardBearPrefab, Vector3.zero, Quaternion.identity,
+                        bearsListContainer.transform);
+                    newObj.name = bear.gameName;
 
-                Image image = newObj.transform.Find("Icon").GetComponent<Image>();
-                image.sprite = bear.sprite;
-                image.SetNativeSize();
+                    Image image = newObj.transform.Find("Icon").GetComponent<Image>();
+                    image.sprite = bear.sprite;
+                    image.SetNativeSize();
+                }
             }
 
             bearsListAs.UpdateContentSize();
@@ -518,7 +599,7 @@ public class ColonyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bearsCountText.text = (bearsInColony.Count - scripts.colonyManager.workingBears) + "/" + maxBears; // костыль
+        bearsCountText.text = bearsInColony.Count + "/" + maxBears; // костыль
         if (bearsListMenu.activeSelf)
         {
             foreach (Transform child in bearsListContainer.transform)

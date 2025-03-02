@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FoodBox
   m_EditorClassIdentifier: 
   resourceName: "\u042F\u0449\u0438\u043A \u0435\u0434\u044B"
+  description: 
   typeResource: 4
-  maxDrones: 0
-  resourceOneWorker: 0
-  stepsNeed: 0
+  maxDrones: 2
+  resourceOneWorker: 2
+  stepsNeed: 2

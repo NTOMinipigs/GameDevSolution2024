@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7186273843134206328}
   - component: {fileID: 6587788099441993233}
   - component: {fileID: 5145811800094046421}
+  - component: {fileID: 8358219946302566306}
   m_Layer: 6
   m_Name: farm
   m_TagString: building
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2620097241554261857}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -22, y: 4.46, z: -17.74}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 84.62277}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -128,5 +129,17 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.18711111, y: 0.1803466, z: 0.059999987}
-  m_Center: {x: -0.061885748, y: -0.0601733, z: 0}
+  m_Size: {x: 0.18711111, y: 0.1803466, z: 0.055231296}
+  m_Center: {x: -0.061885748, y: -0.060173303, z: 0.002384357}
+--- !u!114 &8358219946302566306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2620097241554261857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265e7fbed18dc49f2bb0a8b5a17b6fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
