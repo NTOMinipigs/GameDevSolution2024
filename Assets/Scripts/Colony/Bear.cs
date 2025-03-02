@@ -52,6 +52,11 @@ public class Bear
     [JsonProperty("tired")] public float tired;
 
     /// <summary>
+    /// Может двигаться или нет
+    /// </summary>
+    public bool canMove = true;
+    
+    /// <summary>
     /// x
     /// </summary>
     [JsonProperty("x")] public float x;

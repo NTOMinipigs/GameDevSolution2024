@@ -5,7 +5,6 @@ public class AllScripts : MonoBehaviour
     public APIClient APIClient_;
     public ClicksHandler clicksHandler;
     public CameraMove cameraMove;
-    public Zoom zoom;
     public ColonyManager colonyManager;
     public DialogManager dialogManager;
     public BuildingSystem buildingSystem;

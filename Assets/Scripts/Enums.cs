@@ -23,12 +23,19 @@ public enum Activities
 [SuppressMessage("ReSharper", "MissingXmlDoc")]
 public enum Resources
 {
+    [Description("Материалы")]
     Material,
+    [Description("Материалы++")]
     MaterialPlus,
+    [Description("Биотопливо")]
     BioFuel,
+    [Description("Мёд")]
     Honey,
+    [Description("Еда")]
     Food,
+    [Description("Энергия")]
     Energy,
+    [Description("Население")]
     Bears
 }
 

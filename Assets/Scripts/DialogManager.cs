@@ -11,16 +11,16 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textName, textDialog;
     [SerializeField] private Image iconImage;
     public GameObject dialogMenu;
-    
+
     public Dialog[] dialogs = Array.Empty<Dialog>();
     private Dictionary<string, Dialog> _dialogsDict = new Dictionary<string, Dialog>();
-    
+
     [SerializeField] private int totalStep;
     private Dialog _activatedDialog;
     private DialogStep _selectedStep;
     private Bear _selectedBear;
     private bool _animatingText, _canStepNext;
-    
+
     [SerializeField] private AllScripts scripts;
 
     private void Start()
@@ -28,7 +28,7 @@ public class DialogManager : MonoBehaviour
         foreach (Dialog totalDialog in dialogs)
             _dialogsDict.Add(totalDialog.nameDialog, totalDialog);
     }
-    
+
     /// <summary>
     /// Метод возвращает диалог по имени
     /// </summary>
@@ -45,7 +45,8 @@ public class DialogManager : MonoBehaviour
     /// <param name="dialogName">Название диалога</param>
     /// <param name="gameNameBear">Dev имя медведя, для произвольного диалого</param>
     /// <param name="blockWithOtherMenu">Блокировать иные окна?</param>
-    public void ActivateDialog(string dialogName, string gameNameBear = "", bool blockWithOtherMenu = false) // Старт диалога
+    public void ActivateDialog(string dialogName, string gameNameBear = "",
+        bool blockWithOtherMenu = false) // Старт диалога
     {
         if (scripts.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
@@ -53,7 +54,7 @@ public class DialogManager : MonoBehaviour
         scripts.musicManager.AudioLoops["snow_steps"].Play();
 
         if (_activatedDialog != null) return;
-        
+
         _activatedDialog = GetDialog(dialogName);
         dialogMenu.gameObject.SetActive(true);
         scripts.cameraMove.blockMove = true;
@@ -82,6 +83,7 @@ public class DialogManager : MonoBehaviour
 
     private void DialogUpdateAction()
     {
+        _selectedBear.canMove = true;
         if (_selectedBear != null)
         {
             _selectedStep.nameBear = _selectedBear.bearName;
@@ -91,6 +93,9 @@ public class DialogManager : MonoBehaviour
         else
             _selectedBear = _selectedStep.SetBear(scripts.colonyManager);
 
+        _selectedBear.canMove = false;
+        scripts.cameraMove.MoveAndZoom(GameObject.Find(_selectedBear.gameName).transform.position, 20f);
+
         textName.text = _selectedBear?.bearName + " | " + _selectedBear?.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));
         iconImage.sprite = _selectedStep.icon;
@@ -99,11 +104,13 @@ public class DialogManager : MonoBehaviour
 
     private void DialogMoveNext()
     {
-        if ((totalStep + 1) == _activatedDialog.steps.Length) // Окончание обычного диалога
+        if (totalStep + 1 == _activatedDialog.steps.Length) // Окончание обычного диалога
         {
+            _selectedBear.canMove = true;
             DialogCLose();
             return;
         }
+
         totalStep++;
         _selectedStep = _activatedDialog.steps[totalStep];
         if (_selectedStep.questStart != "")
@@ -111,7 +118,7 @@ public class DialogManager : MonoBehaviour
         DialogUpdateAction();
     }
 
-    public void DialogCLose()
+    private void DialogCLose()
     {
         scripts.musicManager.AudioLoops["snow_steps"].Stop();
         totalStep = 0;
@@ -160,6 +167,7 @@ public class DialogManager : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
         }
+
         _animatingText = false;
     }
 }
@@ -167,8 +175,7 @@ public class DialogManager : MonoBehaviour
 [System.Serializable]
 public class Dialog
 {
-    [Header("Main")]
-    public string nameDialog;
+    [Header("Main")] public string nameDialog;
     public DialogStep[] steps = new DialogStep[0];
 }
 
@@ -192,6 +199,7 @@ public class DialogStep
                 return totalBear;
             }
         }
+
         return null;
     }
 }

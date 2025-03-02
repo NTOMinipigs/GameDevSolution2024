@@ -12,7 +12,7 @@ public class BearTask
     [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("taskMode")] public TasksMode taskMode;
     public GameObject objectOfTask;
     public Bear selectedBear;
-
+    public Traditions traditionForTask;
     /// <summary>
     /// Текущее
     /// </summary>
@@ -35,10 +35,11 @@ public class BearTask
     [JsonProperty("BearGameName")]
     public string bearGameName => selectedBear.gameName;
 
-    public BearTask(TasksMode taskMode, GameObject objectOfTask, float needSteps)
+    public BearTask(TasksMode taskMode, GameObject objectOfTask, Traditions traditionForTask, float needSteps)
     {
         this.taskMode = taskMode;
         this.objectOfTask = objectOfTask;
+        this.traditionForTask = traditionForTask;
         this.needSteps = needSteps;
     }
 }
