@@ -4,33 +4,45 @@ using UnityEngine;
 /// <summary>
 /// Этот класс расширяет возможнности Building-системы, с минимальным воздействием на все остальныее ее компоненты
 /// </summary>
+[System.Serializable]
 public class BuildingSaveSystem : MonoBehaviour
 {
     /// <summary>
     /// Вставьте сюда systemSaver, он используется в коде в дальнейшем
     /// </summary>
-    private SystemSaver _systemSaver;
+    public SystemSaver _systemSaver;
 
     /// <summary>
     /// Вставьте сюда buildingSystem, он используется в коде в дальнейшем  
     /// </summary>
-    private BuildingSystem _buildingSystem;
+    public BuildingSystem _buildingSystem;
 
     // --------------------- prefabs ------------------------------
     
-    private GameObject farm;
-    private GameObject house;
+    public GameObject farm;
+    public GameObject house;
 
     /// <summary>
     /// Получите префаб по имени
     /// </summary>
     /// <param name="pfefabName">название префаба</param>
     /// <returns></returns>
-    private BuildingController GetPrefabByName(string pfefabName)
+    private GameObject GetPrefabByName(string pfefabName)
     {
-        return (BuildingController)typeof(BuildingSaveSystem).GetField(pfefabName).GetValue(this);
+        return (GameObject)typeof(BuildingSaveSystem).GetField(pfefabName).GetValue(this);
     }
 
+
+    /// <summary>
+    /// В этом методе опишите логику создания построек, при создании новой игры
+    /// В этом методе НЕЛЬЗЯ самостоятельно создавать постройки на сцене, шаманить только с файлом сохранения
+    /// </summary>
+    public void CreateStartBuilds()
+    {
+        CreateBuildSave(-18, 7, "house");
+        CreateBuildSave(-22, 4, "farm");
+    }
+    
     /// <summary>
     /// Создаст все постройки из сохранения. Используйте один раз при запуске игры
     /// </summary>
@@ -39,7 +51,7 @@ public class BuildingSaveSystem : MonoBehaviour
         foreach (BuildingSave buildingSave in _systemSaver.gameSave.buildingSaves)
         {
             // Создаем объект на сцене
-            BuildingController buildingController = GetPrefabByName(buildingSave.buildingName);
+            BuildingController buildingController = GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
             _buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
             buildingController.transform.position.Set(buildingSave.x, 0, buildingSave.z);
             Instantiate(buildingController);

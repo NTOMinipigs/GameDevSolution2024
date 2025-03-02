@@ -92,7 +92,7 @@ public class APIClient : MonoBehaviour
 
                 if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError)
                 {
-                    NoInternetConnection();
+                   // NoInternetConnection();
                 }
 
                 await Task.Delay(1000);

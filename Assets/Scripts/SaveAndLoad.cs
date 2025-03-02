@@ -84,8 +84,9 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void LoadGame()
     {
-        LoadBears();
+        //LoadBears();
         LoadTasks();
+        LoadBuilds();
     }
 
     /// <summary>
@@ -108,7 +109,8 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateNewGame()
     {
-        CreateBears();
+        //CreateBears();
+        CreateBuilds();
         scripts.questSystem.StartFirst();
     }
 
@@ -130,6 +132,7 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateBuilds()
     {
+        scripts.buildingSaveSystem.CreateStartBuilds();
     }
 
 
