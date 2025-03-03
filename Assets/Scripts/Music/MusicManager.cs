@@ -79,7 +79,19 @@ public class MusicManager : MonoBehaviour
         );
         AudioLoops["MusicLoop"].Play();
     }
-    
-    
-    
+
+    /// <summary>
+    /// Обновим коэффициент громкости для всех audiosource в Audios
+    /// </summary>
+    /// <param name="volumeRatio"></param>
+    public void UpdateVolumeRatio(float volumeRatio)
+    {
+        foreach (Audio audio in  Audios.Values)
+        {
+            audio.volumeRatio = volumeRatio;
+        }
+    }
+
+
+
 }

@@ -33,7 +33,7 @@ namespace Alerts
         // ------------- ui elements ----------------
 
         [SerializeField] private TextMeshProUGUI textMeshPro;
-        [SerializeField] private SpriteRenderer progressBar;
+        [SerializeField] private RectTransform progressBar;
         [SerializeField] private CanvasGroup canvasGroup;
 
 
@@ -104,12 +104,12 @@ namespace Alerts
         private IEnumerator ProgressBarEffects()
         {
             float elapsedTime = 0f;
-            float startWidth = progressBar.size.x;
+            float startWidth = progressBar.sizeDelta.x;
 
             while (elapsedTime < alertLifeDuration)
             {
                 float newWidth = Mathf.Lerp(startWidth, 0, elapsedTime / alertLifeDuration);
-                progressBar.size = new Vector2(newWidth, progressBar.size.y);
+                progressBar.sizeDelta = new Vector2(newWidth, progressBar.sizeDelta.y);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
@@ -126,8 +126,6 @@ namespace Alerts
             
             // Убиваем сам объект
             StartCoroutine(DestroyEffect());
-
-
         }
     }
 }
