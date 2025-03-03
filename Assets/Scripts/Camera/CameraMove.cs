@@ -60,7 +60,7 @@ public class CameraMove : MonoBehaviour
         
         if (_isDragging && !blockMove) // Пока мышка держится, ну и блокировки нету
         {
-            _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.deltaTime;
+            _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.fixedDeltaTime;
 
             Vector3 newPosition = transform.position + new Vector3(-_delta.x, 0, -_delta.y);
             // Ограничиваем

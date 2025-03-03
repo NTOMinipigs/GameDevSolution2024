@@ -10,15 +10,32 @@ public class BuildingController : MonoBehaviour
 
     [SerializeField] private Building building;
     [SerializeField] private Resource resource;
+
+    /// <summary>
+    /// Уже построено?
+    /// </summary>
+    public bool isBuild;
+
+    /// <summary>
+    /// Активно/работает?
+    /// </summary>
     public bool isReady;
+
     public float health = 100f;
     public Vector2Int size;
-    [Header("Workers")] public float steps; // Текущее кол-во "работы" до обнуления
 
+    /// <summary>
+    /// Условный таймер работы
+    /// </summary>
+    [Header("Workers")] public float steps;
+
+    /// <summary>
+    /// Число рабочих в здании
+    /// </summary>
     public int workersCount;
 
     private MeshRenderer _mainRenderer;
-    [HideInInspector]public RevealByProgress reveal; // Штука для редактирования материала
+    [HideInInspector] public RevealByProgress reveal; // Штука для редактирования материала
     private Color _standartMaterialColor;
     private AllScripts _scripts;
 
@@ -64,17 +81,16 @@ public class BuildingController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isReady) return;
-        steps += 0.005f;
+        if (workersCount > 1)
+            steps += 0.005f;
         if (steps >= 1)
         {
             steps = 0f;
             float earn = workersCount * Building.ResourceOneWorker;
 
             // Не стоит отправлять запрос на сервер, если кол-во ресурсов не изменяется
-            if (earn == 0) 
-            {
-                return; 
-            }
+            if (earn == 0)
+                return;
 
             string
                 resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов

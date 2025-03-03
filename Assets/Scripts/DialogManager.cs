@@ -83,9 +83,9 @@ public class DialogManager : MonoBehaviour
 
     private void DialogUpdateAction()
     {
-        _selectedBear.canMove = true;
         if (_selectedBear != null)
         {
+            _selectedBear.canMove = true;
             _selectedStep.nameBear = _selectedBear.bearName;
             _selectedStep.traditionBear = _selectedBear.tradition;
             _selectedStep.icon = _selectedBear.sprite;
@@ -94,7 +94,8 @@ public class DialogManager : MonoBehaviour
             _selectedBear = _selectedStep.SetBear(scripts.colonyManager);
 
         _selectedBear.canMove = false;
-        scripts.cameraMove.MoveAndZoom(GameObject.Find(_selectedBear.gameName).transform.position, 20f);
+        if (GameObject.Find(_selectedBear.gameName))
+            scripts.cameraMove.MoveAndZoom(GameObject.Find(_selectedBear.gameName).transform.position, 20f);
 
         textName.text = _selectedBear?.bearName + " | " + _selectedBear?.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));

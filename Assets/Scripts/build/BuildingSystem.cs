@@ -77,7 +77,7 @@ public class BuildingSystem : MonoBehaviour
 
     private void UpdateBuildingText()
     {
-        if (_selectedBuildController.isReady)
+        if (_selectedBuildController.isBuild)
         {
             textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
             textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
@@ -178,7 +178,7 @@ public class BuildingSystem : MonoBehaviour
         {
             int freeWorkersOfTradition =
                 _scripts.colonyManager.GetCountFreeBearsOfTradition(_selectedBuilding.typeOfWorkers);
-            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isReady);
+            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isBuild);
 
             buttonAddWorker.interactable = canWork && freeWorkersOfTradition != 0;
             buttonRemoveWorker.interactable = canWork && _selectedBuildController.workersCount != 0;
@@ -272,6 +272,7 @@ public class BuildingSystem : MonoBehaviour
             Destroy(_flyingBuildingController.gameObject);
 
         _flyingBuildingController = Instantiate(buildingControllerPrefab);
+        _flyingBuildingController.name.Replace("(Clone)", "");
         _noteBlock.gameObject.SetActive(true);
         _textSelectedBuild.text = _flyingBuildingController.Building.BuildingName;
     }

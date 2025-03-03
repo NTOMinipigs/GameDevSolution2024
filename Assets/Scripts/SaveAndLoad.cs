@@ -80,8 +80,8 @@ public class SaveAndLoad : MonoBehaviour
     private void LoadGame()
     {
         LoadBears();
-        LoadTasks();
         LoadBuilds();
+        LoadTasks();
     }
 
     /// <summary>

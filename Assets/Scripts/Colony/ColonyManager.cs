@@ -546,6 +546,7 @@ public class ColonyManager : MonoBehaviour
         {
             BuildingController buildingController = task.objectOfTask.GetComponent<BuildingController>();
             buildingController.SetNormal();
+            buildingController.isBuild = true;
             buildingController.isReady = true;
             scripts.buildingSystem.SetBuildSettings(buildingController);
             if (buildingController.Building is Building building) // Настройки для зданий
@@ -553,8 +554,8 @@ public class ColonyManager : MonoBehaviour
                 scoutHome = building.scoutHome;
             }
         }
-        else if (task.taskMode == TasksMode.GetResource)
-            scripts.buildingSystem.PickUpResource(task.objectOfTask);
+        //else if (task.taskMode == TasksMode.GetResource)
+            //scripts.buildingSystem.PickUpResource(task.objectOfTask);
 
         Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
