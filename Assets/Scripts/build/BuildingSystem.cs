@@ -534,8 +534,8 @@ public class BuildingSystem : MonoBehaviour
                     resource = "maxBears";
                     break;
                 case Resources.Energy:
-                    _scripts.colonyManager.Energy += building.resourceGive;
                     _scripts.colonyManager.MaxEnergy += building.resourceGive;
+                    _scripts.colonyManager.Energy += building.resourceGive;
                     resource = "energy";
                     break;
             }

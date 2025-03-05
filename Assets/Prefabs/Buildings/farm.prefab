@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6587788099441993233}
   - component: {fileID: 5145811800094046421}
   - component: {fileID: 8358219946302566306}
+  - component: {fileID: 5844859301519566173}
   m_Layer: 6
   m_Name: farm
   m_TagString: building
@@ -50,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: bcb3459816a5f2b4d997c21442e32319, type: 2}
   resource: {fileID: 0}
+  isBuild: 0
   isReady: 0
   health: 100
   size: {x: 0, y: 0}
@@ -144,3 +146,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265e7fbed18dc49f2bb0a8b5a17b6fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &5844859301519566173
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2620097241554261857}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.18711111, y: 0.20082839, z: 0.06571185}
+  m_Center: {x: -0.061885748, y: -0.059446298, z: 0.0022173992}
