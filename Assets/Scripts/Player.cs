@@ -6,6 +6,20 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; } = new();
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject); // Уничтожаем дубликат
+        }
+    }
+    
+    
+    public static Player Instance { get; private set; }   
     public string playerName;
 }

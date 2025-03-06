@@ -37,7 +37,7 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private string _baseUri;
 
-    private string _host = "2025.nti-gamedev.ru";
+    private string _host = "gamedev.justiks.ru";
 
 
     // Singleton block
@@ -52,7 +52,6 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private async void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         if (Instance == null)
         {
             Instance = this;
