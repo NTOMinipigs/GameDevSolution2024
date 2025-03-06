@@ -222,7 +222,6 @@ public class ColonyManager : MonoBehaviour
 
     #endregion
 
-
     [Header("Other")] public bool scoutHome;
     [SerializeField] private AllScripts scripts;
     private SystemSaver _systemSaver;
@@ -309,7 +308,7 @@ public class ColonyManager : MonoBehaviour
 
         return freeWorkersOfTradition;
     }
-    
+
     /// <summary>
     /// Вернет случайного медведя в обмен на традицию (вынесено из метода GenerateNewBear)
     /// </summary>
@@ -397,7 +396,6 @@ public class ColonyManager : MonoBehaviour
         bearsInColony.Add(newBear);
         _bearsInColonyDict.Add(newBear.gameName, newBear);
         _bearsTraditionsInColonyDict.Add(newBear.gameName, newBear.tradition);
-        UpdateWorkersCount();
         if ((Traditions)Enum.Parse(typeof(Traditions), newBear.tradition.ToString()) != Traditions.Chrom)
         {
             GameObject bearObj = Instantiate(serializableBear.prefab, new Vector3(newBear.x, newBear.y, newBear.z),
@@ -439,7 +437,7 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     ///  Подсчитывает число работников каждой традиции
     /// </summary>
-    private void UpdateWorkersCount()
+    public void UpdateWorkersCount()
     {
         // TODO: сделать обновление на определенную традицию, А НЕ НА ВСЁ НАХУЙ
         // Максимальное кол-во работников на традицию
@@ -503,9 +501,9 @@ public class ColonyManager : MonoBehaviour
         {
             task.selectedBear = chillBear;
             chillBear.activity = Activities.Work;
+            UpdateWorkersCount();
         }
 
-        UpdateWorkersCount();
         bearTasks.Add(task);
     }
 
@@ -533,7 +531,7 @@ public class ColonyManager : MonoBehaviour
     {
         foreach (BearTask task in bearTasks)
         {
-            if (task.selectedBear == bear)
+            if (task.selectedBear.gameName == bear.gameName)
                 return task;
         }
 
@@ -542,10 +540,12 @@ public class ColonyManager : MonoBehaviour
 
     public void EndTask(BearTask task)
     {
+        UpdateWorkersCount();
         if (task.taskMode == TasksMode.Build)
         {
             BuildingController buildingController = task.objectOfTask.GetComponent<BuildingController>();
             buildingController.SetNormal();
+            buildingController.isBuild = true;
             buildingController.isReady = true;
             scripts.buildingSystem.SetBuildSettings(buildingController);
             if (buildingController.Building is Building building) // Настройки для зданий
@@ -553,8 +553,8 @@ public class ColonyManager : MonoBehaviour
                 scoutHome = building.scoutHome;
             }
         }
-        else if (task.taskMode == TasksMode.GetResource)
-            scripts.buildingSystem.PickUpResource(task.objectOfTask);
+        //else if (task.taskMode == TasksMode.GetResource)
+        //scripts.buildingSystem.PickUpResource(task.objectOfTask);
 
         Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
@@ -564,7 +564,24 @@ public class ColonyManager : MonoBehaviour
         else
             SetTaskToBear(selectedBear);
     }
-
+    
+    public void FindAndEndTask(Traditions tradition, GameObject taskObj, bool endAllTask = false)
+    {
+        foreach (Bear bear in bearsInColony)
+        {
+            if (bear.tradition == tradition)
+            {
+                BearTask task = GetBearTask(bear);
+                if (task != null && task.objectOfTask == taskObj)
+                {
+                    EndTask(task);
+                    if (!endAllTask)
+                        break;
+                }
+            }
+        }
+    }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))

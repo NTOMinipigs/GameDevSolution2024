@@ -78,6 +78,7 @@ MonoBehaviour:
     serializableBear: 
     hungry: 0
     tired: 0
+    canMove: 0
     x: 0
     y: 0
     z: 0
@@ -188,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 26fa7738b07a758478226dc91056c3d9, type: 3}
       propertyPath: m_Name
-      value: drone
+      value: bear
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

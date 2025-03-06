@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8600495125878806232}
   - component: {fileID: 8192782695998192856}
   - component: {fileID: 5640696833115382670}
+  - component: {fileID: 3772896663150105259}
   m_Layer: 6
   m_Name: beeFabric
   m_TagString: building
@@ -50,11 +51,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: c60f3cfd1e9fb34469fd3868501b4320, type: 2}
   resource: {fileID: 0}
+  isBuild: 0
   isReady: 0
   health: 100
   size: {x: 0, y: 0}
   steps: 0
   workersCount: 0
+  reveal: {fileID: 0}
 --- !u!33 &3613205957180844331
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -143,3 +146,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265e7fbed18dc49f2bb0a8b5a17b6fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &3772896663150105259
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145897682669896236}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.8469586, y: 5.7834024, z: 7.9529314}
+  m_Center: {x: 0.0858531, y: 0.24797595, z: 0.8650656}

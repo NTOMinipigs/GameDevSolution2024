@@ -75,9 +75,9 @@ public class BuildingSystem : MonoBehaviour
 
     public void DisableBuildMenu() => ManageBuildMenu(false); // Для UI кнопки
 
-    private void UpdateBuildingText()
+    public void UpdateBuildingText()
     {
-        if (_selectedBuildController.isReady)
+        if (_selectedBuildController.isBuild)
         {
             textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
             textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
@@ -102,7 +102,7 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
-    private void UpdateResourceText()
+    public void UpdateResourceText()
     {
         textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
         textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
@@ -139,29 +139,16 @@ public class BuildingSystem : MonoBehaviour
     /// </summary>
     public void RemoveWorker(bool resource = false)
     {
-        void FindAndEndTask(Traditions tradition)
-        {
-            foreach (Bear bear in _scripts.colonyManager.bearsInColony)
-            {
-                if (bear.tradition == tradition)
-                {
-                    BearTask task = _scripts.colonyManager.GetBearTask(bear);
-                    if (task.objectOfTask == _selectedBuildController.gameObject)
-                        _scripts.colonyManager.EndTask(task);
-                }
-            }
-        }
-
         _selectedBuildController.workersCount--;
         if (!resource)
         {
             UpdateBuildingText();
-            FindAndEndTask(_selectedBuilding.typeOfWorkers);
+            _scripts.colonyManager.FindAndEndTask(_selectedBuilding.typeOfWorkers, _selectedBuildController.gameObject);
         }
         else
         {
             UpdateResourceText();
-            FindAndEndTask(Traditions.Drone);
+            _scripts.colonyManager.FindAndEndTask(Traditions.Drone, _selectedBuildController.gameObject);
         }
 
         ManageBuildMenu();
@@ -171,14 +158,14 @@ public class BuildingSystem : MonoBehaviour
     /// Управление панелью с выставлением числа рабочих/дронов
     /// </summary>
     /// <param name="canWork">Можно работать?</param>
-    /// <param name="resource"></param>
+    /// <param name="resource">Это ресурс?</param>
     private void ManageWorkersPanel(bool canWork, bool resource = false)
     {
-        if (!resource) // Если это строение
+        if (!resource) // Если это не ресурс
         {
             int freeWorkersOfTradition =
                 _scripts.colonyManager.GetCountFreeBearsOfTradition(_selectedBuilding.typeOfWorkers);
-            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isReady);
+            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isBuild);
 
             buttonAddWorker.interactable = canWork && freeWorkersOfTradition != 0;
             buttonRemoveWorker.interactable = canWork && _selectedBuildController.workersCount != 0;
@@ -222,49 +209,6 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
-    public void PickUpResource(GameObject resourceObj)
-    {
-        Resources selectedResource = resourceObj.GetComponent<BuildingController>().Building.TypeResource;
-        string resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
-        int earn = 0; // Отдельная переменная, т.к. после свитчкейса нужно записать все в лог
-
-        switch (selectedResource)
-        {
-            case Resources.Material:
-                earn = Random.Range(15, 40);
-                resourceChanged = "materials";
-                _scripts.colonyManager.Materials += earn;
-                break;
-            case Resources.MaterialPlus:
-                earn = Random.Range(1, 5);
-                resourceChanged = "materialPlus";
-                _scripts.colonyManager.MaterialsPlus += earn;
-                break;
-            case Resources.Food:
-                earn = Random.Range(1, 10);
-                resourceChanged = "food";
-                _scripts.colonyManager.Food += earn;
-                break;
-            case Resources.Honey:
-                earn = Random.Range(5, 10);
-                resourceChanged = "honey";
-                _scripts.colonyManager.Honey += earn;
-                break;
-            case Resources.BioFuel:
-                earn = Random.Range(5, 15);
-                resourceChanged = "bioFuel";
-                _scripts.colonyManager.Biofuel += earn;
-                break;
-        }
-
-        DestroyBuilding(resourceObj);
-        // Лог
-        APIClient.Instance.CreateLogRequest(
-            "Новые ресурсы произведенные в результате работы некоторого строения",
-            Player.Instance.playerName,
-            new Dictionary<string, string>() { { resourceChanged, "+" + earn } });
-    }
-
     // Начинаем размещать объект. Метод для кнопки
     public void StartPlacingBuilding(BuildingController buildingControllerPrefab)
     {
@@ -272,6 +216,7 @@ public class BuildingSystem : MonoBehaviour
             Destroy(_flyingBuildingController.gameObject);
 
         _flyingBuildingController = Instantiate(buildingControllerPrefab);
+        _flyingBuildingController.name.Replace("(Clone)", "");
         _noteBlock.gameObject.SetActive(true);
         _textSelectedBuild.text = _flyingBuildingController.Building.BuildingName;
     }
@@ -443,7 +388,8 @@ public class BuildingSystem : MonoBehaviour
         if (_flyingBuildingController.Building is Building building)
         {
             PlaceBuilding(_flyingBuildingController, placeX, placeY);
-            _scripts.buildingSaveSystem.CreateBuildSave(placeX, placeY, _flyingBuildingController.name, false); // Создаем сохранение постройки
+            _scripts.buildingSaveSystem.CreateBuildSave(placeX, placeY, _flyingBuildingController.name,
+                false); // Создаем сохранение постройки
 
             switch (_flyingBuildingController.Building.BuildingName)
             {
@@ -533,8 +479,8 @@ public class BuildingSystem : MonoBehaviour
                     resource = "maxBears";
                     break;
                 case Resources.Energy:
-                    _scripts.colonyManager.Energy += building.resourceGive;
                     _scripts.colonyManager.MaxEnergy += building.resourceGive;
+                    _scripts.colonyManager.Energy += building.resourceGive;
                     resource = "energy";
                     break;
             }

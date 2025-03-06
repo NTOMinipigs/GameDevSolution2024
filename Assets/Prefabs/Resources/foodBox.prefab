@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8301647762413533708}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -74, y: 3, z: -4}
+  m_LocalPosition: {x: -10, y: 3, z: -52}
   m_LocalScale: {x: 100, y: 262.1561, z: 34.534973}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 0}
   resource: {fileID: 11400000, guid: 499c51f71063342469c5a857cf9b5df4, type: 2}
+  isBuild: 0
   isReady: 1
   health: 100
   size: {x: 0, y: 0}

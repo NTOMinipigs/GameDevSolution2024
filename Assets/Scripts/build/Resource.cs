@@ -16,5 +16,4 @@ public class Resource : ScriptableObject, IBuildable
 
     public int resourceOneWorker; // сколько ресурсов за одного рабочего
     public int ResourceOneWorker => resourceOneWorker;
-    [Range(0, 10f)] public float stepsNeed;
 }

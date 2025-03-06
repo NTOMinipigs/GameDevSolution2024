@@ -13,7 +13,7 @@ public class GameEventsManager : MonoBehaviour
     {
         _textTime = GameObject.Find("TextTime").GetComponent<TextMeshProUGUI>();
         _directLight = GameObject.Find("Directional Light").GetComponent<Light>();
-        _directLight.intensity = 0.5f; // Стартовое значение
+        _directLight.intensity = 0.3f; // Стартовое значение
         StartCoroutine(WorldTimeChange());
     }
 
@@ -40,7 +40,7 @@ public class GameEventsManager : MonoBehaviour
                 for (int i = 0; i < 10; i++)
                 {
                     yield return new WaitForSeconds(0.00000001f);
-                    _directLight.intensity += 0.004f;
+                    _directLight.intensity += 0.0035f;
                 }
             }
             else
@@ -48,7 +48,7 @@ public class GameEventsManager : MonoBehaviour
                 for (int i = 0; i < 10; i++)
                 {
                     yield return new WaitForSeconds(0.00000001f);
-                    _directLight.intensity -= 0.0075f;
+                    _directLight.intensity -= 0.006f;
                 }
             }
         }
