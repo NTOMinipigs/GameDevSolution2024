@@ -8,8 +8,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Preference preference; // Нужно сделать загрузку и сохранение
     [SerializeField] private GameObject menuNickname;
     [SerializeField] private TMP_InputField inputFieldNickname;
+    [SerializeField] private Player player;
+    [SerializeField] private APIClient apiClient;
 
-    private Dictionary<string, int> emptyInventory = new Dictionary<string, int>()
+    private Dictionary<string, int> emptyInventory = new()
     {
         {"materials", 0},
         {"food", 0},
@@ -29,7 +31,7 @@ public class MenuManager : MonoBehaviour
     {
         if (Config.ConfigManager.Instance.config.debug)
         {
-            Player.Instance.playerName = "test";
+            player.playerName = "test";
             StartGame();
         }
     }
@@ -44,33 +46,33 @@ public class MenuManager : MonoBehaviour
         if (inputFieldNickname.text != "")
         {
             menuNickname.gameObject.SetActive(false);
-            List<APIClient.UserInventory> users = await APIClient.Instance.GetUsersListRequest();
+            List<APIClient.UserInventory> users = await apiClient.GetUsersListRequest();
 
             foreach (APIClient.UserInventory user in users)
             {
                 // Если пользователь уже существует
                 if (inputFieldNickname.text == user.Name)
                 {
-                    Player.Instance.playerName = inputFieldNickname.text;
+                    player.playerName = inputFieldNickname.text;
                     return;
                 }
             }
 
             // Иначе
-            APIClient.UserInventory userInventory = await APIClient.Instance.CreatePlayerRequest(inputFieldNickname.text, emptyInventory);
+            APIClient.UserInventory userInventory = await apiClient.CreatePlayerRequest(inputFieldNickname.text, emptyInventory);
             if (userInventory == null) // Если произошла ошибка в запросе
             {
                 return;
             }
 
-            Player.Instance.playerName = inputFieldNickname.text;
+            player.playerName = inputFieldNickname.text;
             menuNickname.gameObject.SetActive(false);
         }
     }
 
-    public async void SetQuest()
+    public void SetQuest()
     {
-        Player.Instance.playerName = "nickname";
+        player.playerName = "nickname";
         menuNickname.gameObject.SetActive(false);
     }
 }

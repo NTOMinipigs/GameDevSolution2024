@@ -53,7 +53,6 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private async void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         if (Instance == null)
         {
             Instance = this;
