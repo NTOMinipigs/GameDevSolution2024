@@ -10,22 +10,39 @@ public class BuildingController : MonoBehaviour
 
     [SerializeField] private Building building;
     [SerializeField] private Resource resource;
+
+    /// <summary>
+    /// Уже построено?
+    /// </summary>
+    public bool isBuild;
+
+    /// <summary>
+    /// Активно/работает?
+    /// </summary>
     public bool isReady;
+
     public float health = 100f;
     public Vector2Int size;
-    [Header("Workers")] public float steps; // Текущее кол-во "работы" до обнуления
 
+    /// <summary>
+    /// Условный таймер работы
+    /// </summary>
+    [Header("Workers")] public float steps;
+
+    /// <summary>
+    /// Число рабочих в здании
+    /// </summary>
     public int workersCount;
 
     private MeshRenderer _mainRenderer;
-    [HideInInspector]public RevealByProgress reveal; // Штука для редактирования материала
-    private Color _standartMaterialColor;
+    [HideInInspector] public RevealByProgress reveal; // Штука для редактирования материала
+    private Color _standardMaterialColor;
     private AllScripts _scripts;
 
     private void Awake()
     {
         _mainRenderer = GetComponent<MeshRenderer>();
-        _standartMaterialColor = _mainRenderer.material.color;
+        _standardMaterialColor = _mainRenderer.material.color;
         reveal = GetComponent<RevealByProgress>();
         _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         if (building)
@@ -38,7 +55,7 @@ public class BuildingController : MonoBehaviour
     public void SetTransparent(bool available) => _mainRenderer.material.color = available ? Color.green : Color.red;
 
     // Смена цвета на нормальный
-    public void SetNormal() => _mainRenderer.material.color = _standartMaterialColor;
+    public void SetNormal() => _mainRenderer.material.color = _standardMaterialColor;
 
     // Процесс стройки
     public void SetBuilding() => reveal.progress = 0f;
@@ -64,17 +81,29 @@ public class BuildingController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isReady) return;
-        steps += 0.005f;
+        if (workersCount > 1)
+        {
+            steps += 0.005f;
+            health -= 0.065f;
+            if (health < 0)
+            {
+                if (resource) // Ну то есть это ресуурс
+                    _scripts.colonyManager.FindAndEndTask(Traditions.Drone, gameObject, true);
+                else if (building)
+                    _scripts.colonyManager.FindAndEndTask(building.typeOfWorkers, gameObject, true);
+                _scripts.buildingSystem.buildingCreateMenu.SetActive(false);
+                Destroy(gameObject);
+            }
+        }
+
         if (steps >= 1)
         {
             steps = 0f;
             float earn = workersCount * Building.ResourceOneWorker;
 
             // Не стоит отправлять запрос на сервер, если кол-во ресурсов не изменяется
-            if (earn == 0) 
-            {
-                return; 
-            }
+            if (earn == 0)
+                return;
 
             string
                 resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
@@ -102,6 +131,11 @@ public class BuildingController : MonoBehaviour
                     break;
             }
 
+            if (resource) // Ну то есть это ресуурс
+                _scripts.buildingSystem.UpdateResourceText();
+            else if (building)
+                _scripts.buildingSystem.UpdateBuildingText();
+            
             // Лог
             APIClient.Instance.CreateLogRequest(
                 "Новые ресурсы произведенные в результате работы некоторого строения",

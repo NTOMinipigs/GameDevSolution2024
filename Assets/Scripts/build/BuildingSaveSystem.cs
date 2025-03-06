@@ -11,20 +11,23 @@ public class BuildingSaveSystem : MonoBehaviour
     /// <summary>
     /// Вставьте сюда systemSaver, он используется в коде в дальнейшем
     /// </summary>
-    public SystemSaver _systemSaver;
+    public SystemSaver systemSaver;
 
     /// <summary>
     /// Вставьте сюда buildingSystem, он используется в коде в дальнейшем  
     /// </summary>
-    public BuildingSystem _buildingSystem;
+    public BuildingSystem buildingSystem;
 
     // --------------------- prefabs ------------------------------
-    
+
+    public GameObject sunPanel;
     public GameObject farm;
     public GameObject house;
+    public GameObject fabricMaterial;
     public GameObject stone;
     public GameObject foodBox;
     public GameObject honeyBox;
+    public GameObject bioFuel;
 
     /// <summary>
     /// Получите префаб по имени
@@ -35,7 +38,6 @@ public class BuildingSaveSystem : MonoBehaviour
     {
         return (GameObject)typeof(BuildingSaveSystem).GetField(pfefabName).GetValue(this);
     }
-    
 
     /// <summary>
     /// Дай мне count случайных координат в диапазоне от minX до maxX и от minY до maxY 
@@ -46,7 +48,8 @@ public class BuildingSaveSystem : MonoBehaviour
     /// <param name="minY">min Y</param>
     /// <param name="maxY">max Y</param>
     /// <returns>генератор - count раз вернет случайнуюю координату в диапазоне</returns>
-    public static IEnumerable<Vector2> GenerateUniqueCoordinates(int count, float minX, float maxX, float minY, float maxY)
+    public static IEnumerable<Vector2> GenerateUniqueCoordinates(int count, float minX, float maxX, float minY,
+        float maxY)
     {
         HashSet<Vector2> coordinates = new HashSet<Vector2>();
 
@@ -57,12 +60,10 @@ public class BuildingSaveSystem : MonoBehaviour
             Vector2 newCoord = new Vector2(x, y);
 
             if (coordinates.Add(newCoord)) // HashSet.Add вернёт true, если элемент уникален
-            {
                 yield return newCoord;
-            }
         }
     }
-    
+
     /// <summary>
     /// В этом методе опишите логику создания построек, при создании новой игры
     /// В этом методе НЕЛЬЗЯ самостоятельно создавать постройки на сцене, шаманить только с файлом сохранения
@@ -71,39 +72,38 @@ public class BuildingSaveSystem : MonoBehaviour
     {
         // Случайная генерация руд
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(4, 80, -80, 80, -80f))
-        {
             CreateBuildSave((int)vector2.x, (int)vector2.y, "stone", true);
-        }
-        
+
         // Случайная генерация боксов с едой
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(2, 80, -80, 80, -80f))
-        {
             CreateBuildSave((int)vector2.x, (int)vector2.y, "foodBox", true);
 
-        }
-        
         // Случайная генерация боксов с медом
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(1, 80, -80, 80, -80f))
-        {
             CreateBuildSave((int)vector2.x, (int)vector2.y, "honeyBox", true);
 
-        }
+        // Случайная генерация боксов с био топливом
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(1, 80, -80, 80, -80f))
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "bioFuel", true);
 
-        // тестовые
-        CreateBuildSave(-22, 40, "house", true);
-        CreateBuildSave(-22, 4, "farm", true);
+        if (Config.ConfigManager.Instance.config.debug)
+        {
+            CreateBuildSave(-22, 40, "house", true);
+            CreateBuildSave(-22, 4, "farm", true);
+        }
     }
-    
+
     /// <summary>
     /// Создаст все постройки из сохранения. Используйте один раз при запуске игры
     /// </summary>
     public void PlaceBuildFromSave()
     {
-        foreach (BuildingSave buildingSave in _systemSaver.gameSave.buildingSaves)
+        foreach (BuildingSave buildingSave in systemSaver.gameSave.buildingSaves)
         {
             // Создаем объект на сцене
-            BuildingController buildingController = GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
-            _buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
+            BuildingController buildingController =
+                GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
+            buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
             buildingController.transform.position = new Vector3(buildingSave.x, 3f, buildingSave.z);
             Instantiate(buildingController);
         }
@@ -115,7 +115,6 @@ public class BuildingSaveSystem : MonoBehaviour
     /// <param name="x">x постройки</param>
     /// <param name="z">z постройки</param>
     /// <param name="prefabName">Название префаба, как поле в классе</param>
-
     public void CreateBuildSave(int x, int z, string prefabName, bool isReady)
     {
         // Создаем buildingSave объект, который в последствии будет сохранен
@@ -124,10 +123,9 @@ public class BuildingSaveSystem : MonoBehaviour
         buildingSave.z = z;
         buildingSave.buildingName = prefabName;
         buildingSave.isReady = isReady;
-        
-        _systemSaver.gameSave.buildingSaves.Add(buildingSave);
-    }
 
+        systemSaver.gameSave.buildingSaves.Add(buildingSave);
+    }
 
     /// <summary>
     /// Удалите building из сохраненных построек
@@ -138,19 +136,17 @@ public class BuildingSaveSystem : MonoBehaviour
     public void DestroyBuildingSave(int x, int z)
     {
         //  Перебираем все элементы, для того чтобы найти совпадающие координаты
-        for (int i = 0; i < _systemSaver.gameSave.buildingSaves.Count; i++)
+        for (int i = 0; i < systemSaver.gameSave.buildingSaves.Count; i++)
         {
-            BuildingSave buildingSaveFromGameSave = _systemSaver.gameSave.buildingSaves.ElementAt(i);
+            BuildingSave buildingSaveFromGameSave = systemSaver.gameSave.buildingSaves.ElementAt(i);
             if (buildingSaveFromGameSave.x == x)
             {
                 if (buildingSaveFromGameSave.z == z)
                 {
-                    _systemSaver.gameSave.buildingSaves.RemoveAt(i);
+                    systemSaver.gameSave.buildingSaves.RemoveAt(i);
                     return;
                 }
             }
         }
-
     }
-
 }

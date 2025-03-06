@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8578301001783333174}
   - component: {fileID: 4464236167510319452}
   - component: {fileID: 8031532304416351612}
+  - component: {fileID: 7700604541828252952}
   m_Layer: 6
   m_Name: sunPanel
   m_TagString: building
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6662235729561869382}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -35, y: 3, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50,11 +51,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 11400000, guid: 10b605db3f1818f4d9883f91be8f059f, type: 2}
   resource: {fileID: 0}
+  isBuild: 0
   isReady: 0
   health: 100
   size: {x: 0, y: 0}
   steps: 0
   workersCount: 0
+  reveal: {fileID: 0}
 --- !u!33 &1089940180690010852
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,8 +132,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.378163, y: 6.6261635, z: 4.2533274}
-  m_Center: {x: 0, y: 1.2524503, z: 0}
+  m_Size: {x: 4.378163, y: 6.6261635, z: 6.234517}
+  m_Center: {x: 0, y: 1.2524505, z: -0.99059486}
 --- !u!114 &8031532304416351612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,3 +146,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265e7fbed18dc49f2bb0a8b5a17b6fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &7700604541828252952
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6662235729561869382}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.8099747, y: 8.282704, z: 6.6456904}
+  m_Center: {x: 0.014667511, y: 1.5655627, z: 0.66451573}

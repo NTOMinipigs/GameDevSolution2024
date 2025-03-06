@@ -14,6 +14,7 @@ public class BearMovement : MonoBehaviour
     [SerializeField] private LayerMask rayInteractLayerMask;
     public AllScripts scripts;
     private Animator _animator;
+    private GameObject _bearModel;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class BearMovement : MonoBehaviour
         transform.eulerAngles = new Vector3(0, 0, 0);
         scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         _animator = GetComponent<Animator>();
+        _bearModel = transform.Find("bear").gameObject;
     }
 
     private void Update()
@@ -92,16 +94,26 @@ public class BearMovement : MonoBehaviour
         BearTask newTask = scripts.colonyManager.GetBearTask(totalBear);
         if (_doingTask)
         {
+            totalBear.canMove = false;
             newTask.totalSteps += 0.001f;
             if (newTask.objectOfTask.tag == "building")
-                newTask.objectOfTask.GetComponent<BuildingController>().reveal.progress = newTask.totalSteps;
+            {
+                BuildingController bc = newTask.objectOfTask.GetComponent<BuildingController>();
+                if (!bc.isBuild)
+                    bc.reveal.progress = newTask.totalSteps;
+                _bearModel.gameObject.SetActive(false);
+            }
 
             if (newTask.needSteps != -1f && newTask.totalSteps >= newTask.needSteps)
             {
                 scripts.colonyManager.EndTask(newTask);
-                Debug.Log(newTask.objectOfTask);
                 _doingTask = false;
             }
+        }
+        else
+        {
+            _bearModel.gameObject.SetActive(true);
+            totalBear.canMove = true;
         }
 
         // Говно реализация, переделать

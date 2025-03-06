@@ -80,8 +80,8 @@ public class SaveAndLoad : MonoBehaviour
     private void LoadGame()
     {
         LoadBears();
-        LoadTasks();
         LoadBuilds();
+        LoadTasks();
     }
 
     /// <summary>
@@ -152,6 +152,7 @@ public class SaveAndLoad : MonoBehaviour
 
         foreach (Bear bear in systemSaver.gameSave.bears)
             colonyManager.BearSpawn(bear);
+        colonyManager.UpdateWorkersCount();
     }
 
     /// <summary>
@@ -180,7 +181,8 @@ public class SaveAndLoad : MonoBehaviour
                 throw new ArgumentException("Invalid bear game name: " + task["BearGameName"]);
 
             // Инициализируем задачу
-            BearTask bearTask = new BearTask(tasksMode, objectOfTask, Traditions.None, (float)(double)task["needSteps"]);
+            BearTask bearTask =
+                new BearTask(tasksMode, objectOfTask, Traditions.None, (float)(double)task["needSteps"]);
             bearTask.selectedBear = bearObject;
             bearTask.totalSteps = (float)(double)task["totalSteps"];
         }

@@ -57,6 +57,7 @@ MonoBehaviour:
     serializableBear: 
     hungry: 0
     tired: 0
+    canMove: 0
     x: 0
     y: 0
     z: 0
@@ -136,7 +137,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1001 &6959659535526542140
 PrefabInstance:
