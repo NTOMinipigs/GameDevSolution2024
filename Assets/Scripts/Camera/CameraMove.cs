@@ -50,15 +50,18 @@ public class CameraMove : MonoBehaviour
     public void MoveAndZoom(Vector3 posToMove, float zoomModif)
     {
         transform.position = new Vector3(posToMove.x, transform.position.y, posToMove.z - 35f);
-        GetComponent<Camera>().fieldOfView = zoomModif;
+        _camera.fieldOfView = zoomModif;
     }
     
     private void LateUpdate() // Для плавного перемещения
     {
-        _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 5;
-        _camera.fieldOfView = Mathf.Clamp(_camera.fieldOfView, minZoom, maxZoom);
+        if (!blockMove)
+        {
+            _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 5;
+            _camera.fieldOfView = Mathf.Clamp(_camera.fieldOfView, minZoom, maxZoom);
+        }
         
-        if (_isDragging && !blockMove) // Пока мышка держится, ну и блокировки нету
+        if (_isDragging && !blockMove) // Пока кнопка нажата, ну и блокировки нету
         {
             _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.fixedDeltaTime;
 

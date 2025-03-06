@@ -16,17 +16,17 @@ using UnityEngine.SceneManagement;
 public class APIClient : MonoBehaviour
 {
     // components
-    
-    
+
+
     /// <summary>
     /// положи сюда allScripts компонент
     /// </summary>
     public AllScripts allScripts;
-    
-    
+
+
     // HttpClient block
-    
-    
+
+
     /// <summary>
     /// UUID игры
     /// </summary>
@@ -37,7 +37,8 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private string _baseUri;
 
-    private string _host = "2025.nti-gamedev.ru";
+    //private string _host = "2025.nti-gamedev.ru";
+    private string _host = "gamedev.justiks.ru";
 
 
     // Singleton block
@@ -92,7 +93,7 @@ public class APIClient : MonoBehaviour
 
                 if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError)
                 {
-                   // NoInternetConnection();
+                    // NoInternetConnection();
                 }
 
                 await Task.Delay(1000);

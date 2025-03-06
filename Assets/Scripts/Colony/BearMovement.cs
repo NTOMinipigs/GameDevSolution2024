@@ -98,7 +98,9 @@ public class BearMovement : MonoBehaviour
             newTask.totalSteps += 0.001f;
             if (newTask.objectOfTask.tag == "building")
             {
-                newTask.objectOfTask.GetComponent<BuildingController>().reveal.progress = newTask.totalSteps;
+                BuildingController bc = newTask.objectOfTask.GetComponent<BuildingController>();
+                if (!bc.isBuild)
+                    bc.reveal.progress = newTask.totalSteps;
                 _bearModel.gameObject.SetActive(false);
             }
 

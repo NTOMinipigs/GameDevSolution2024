@@ -36,13 +36,13 @@ public class BuildingController : MonoBehaviour
 
     private MeshRenderer _mainRenderer;
     [HideInInspector] public RevealByProgress reveal; // Штука для редактирования материала
-    private Color _standartMaterialColor;
+    private Color _standardMaterialColor;
     private AllScripts _scripts;
 
     private void Awake()
     {
         _mainRenderer = GetComponent<MeshRenderer>();
-        _standartMaterialColor = _mainRenderer.material.color;
+        _standardMaterialColor = _mainRenderer.material.color;
         reveal = GetComponent<RevealByProgress>();
         _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         if (building)
@@ -55,7 +55,7 @@ public class BuildingController : MonoBehaviour
     public void SetTransparent(bool available) => _mainRenderer.material.color = available ? Color.green : Color.red;
 
     // Смена цвета на нормальный
-    public void SetNormal() => _mainRenderer.material.color = _standartMaterialColor;
+    public void SetNormal() => _mainRenderer.material.color = _standardMaterialColor;
 
     // Процесс стройки
     public void SetBuilding() => reveal.progress = 0f;
@@ -82,7 +82,20 @@ public class BuildingController : MonoBehaviour
     {
         if (!isReady) return;
         if (workersCount > 1)
+        {
             steps += 0.005f;
+            health -= 0.065f;
+            if (health < 0)
+            {
+                if (resource) // Ну то есть это ресуурс
+                    _scripts.colonyManager.FindAndEndTask(Traditions.Drone, gameObject, true);
+                else if (building)
+                    _scripts.colonyManager.FindAndEndTask(building.typeOfWorkers, gameObject, true);
+                _scripts.buildingSystem.buildingCreateMenu.SetActive(false);
+                Destroy(gameObject);
+            }
+        }
+
         if (steps >= 1)
         {
             steps = 0f;
@@ -118,6 +131,11 @@ public class BuildingController : MonoBehaviour
                     break;
             }
 
+            if (resource) // Ну то есть это ресуурс
+                _scripts.buildingSystem.UpdateResourceText();
+            else if (building)
+                _scripts.buildingSystem.UpdateBuildingText();
+            
             // Лог
             APIClient.Instance.CreateLogRequest(
                 "Новые ресурсы произведенные в результате работы некоторого строения",
