@@ -1648,7 +1648,13 @@ MonoBehaviour:
   m_text: "\u041A\u0430\u043A\u043E\u0439-\u0442\u043E \u043B\u044E\u0442\u044B\u0439
     \u0442\u0435\u043A\u0441\u0442 \u043A\u043E\u0439-\u0442\u043E \u043B\u044E\u0442\u044B\u0439
     \u0442\u0435\u043A\u0441\u0442 \u041A\u0430\u043A\u043E\u0439-\u0442\u043E \u043B\u044E\u0442\u044B\u0439
-    \u0442\u0435\u043A\u0441\u0442   "
+    \u0442\u0435\u043A\u0441\u0442  \u041A\u0430\u043A\u043E\u0439-\u0442\u043E \u043B\u044E\u0442\u044B\u0439
+    \u0442\u0435\u043A\u0441\u0442 \u043A\u043E\u0439-\u0442\u043E \u043B\u044E\u0442\u044B\u0439
+    \u0442\u0435\u043A\u0441\u0442 \u041A\u0430\u043A\u043E\u0439-\u0442\u043E \u043B\u044E\u0442\u044B\u0439
+    \u0442\u0435\u043A\u0441\u0442   \u041A\u0430\u043A\u043E\u0439-\u0442\u043E
+    \u043B\u044E\u0442\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 \u043A\u043E\u0439-\u0442\u043E
+    \u043B\u044E\u0442\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 \u041A\u0430\u043A\u043E\u0439-\u0442\u043E
+    \u043B\u044E\u0442\u044B\u0439 \u0442\u0435\u043A\u0441\u0442    "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f34a33fc072ebd04885eefd3f55e7a10, type: 2}
   m_sharedMaterial: {fileID: -2556083084988116109, guid: f34a33fc072ebd04885eefd3f55e7a10, type: 2}
@@ -1657,8 +1663,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1707,7 +1713,7 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
-  m_uvLineOffset: 0
+  m_uvLineOffset: 5
   m_geometrySortingOrder: 0
   m_IsTextObjectScaleStatic: 0
   m_VertexBufferAutoSizeReduction: 0
@@ -7078,7 +7084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8962264, g: 0.73212785, b: 0.629895, a: 1}
+  m_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11890,7 +11896,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -23994,8 +24000,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -27061,7 +27067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8684ac9a468884c8e0fcda8914d5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  APIClient_: {fileID: 1346597002}
+  apiClient: {fileID: 0}
   clicksHandler: {fileID: 1727350351}
   cameraMove: {fileID: 1727350354}
   colonyManager: {fileID: 1346596987}
@@ -27074,6 +27080,7 @@ MonoBehaviour:
   musicManager: {fileID: 1346596991}
   alertsManager: {fileID: 0}
   buildingSaveSystem: {fileID: 1346597003}
+  gameEventsManager: {fileID: 0}
 --- !u!114 &1346596987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27765,6 +27772,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7fb4cac8f0bf04c985cca1404fc49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameEventsMenu: {fileID: 1803996131}
+  textEventName: {fileID: 1103229407}
+  textEventDescription: {fileID: 110999820}
+  allGameEvents: []
 --- !u!114 &1346597001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32790,7 +32801,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -33134,7 +33145,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -34546,7 +34557,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -39469,7 +39480,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1

@@ -15,7 +15,7 @@ public class TravelingManager : MonoBehaviour
     private PlaceOfTravel _selectedPlace; // Выбранное место на карте
 
     [Header("Настройки")] public GameObject travelMenu;
-    private GameObject _infoOfPlaceMenu, _blockOfTravel, _resultOfTravelMenu;
+    private GameObject _infoOfPlaceMenu, _blockOfTravel;
     private TextMeshProUGUI _textNameLocation, _textDescriptionLocation, _precentOfKnowPlanet;
     private Button _travelButton;
     private int _maxPlaces;
@@ -35,7 +35,6 @@ public class TravelingManager : MonoBehaviour
             _infoOfPlaceMenu?.transform.Find("TextLocationDescription")?.GetComponent<TextMeshProUGUI>();
         _precentOfKnowPlanet = _infoOfPlaceMenu?.transform.Find("TextPrecent")?.GetComponent<TextMeshProUGUI>();
         _blockOfTravel = _infoOfPlaceMenu?.transform.Find("StartTravelBlock")?.gameObject;
-        _resultOfTravelMenu = GameObject.Find("menuEvent");
         _travelButton = _blockOfTravel?.transform.Find("Button")?.GetComponent<Button>();
 
         foreach (PlaceOfTravel pot in allPlaces)
@@ -106,61 +105,6 @@ public class TravelingManager : MonoBehaviour
             "Мир исследован на " + (1 - (allPlaces.Length - _maxPlaces)) * 100 + "%";
     }
 
-    /// <summary>
-    /// Блять что это
-    /// </summary>
-    public void ActivateTravelResult()
-    {
-        _resultOfTravelMenu.gameObject.SetActive(true);
-        _resultOfTravelMenu.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text =
-            "Экспедиция вернулась: " + _activatedPlace.nameOfPlace;
-        _resultOfTravelMenu.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text =
-            _activatedPlace.resultText;
-        _activatedPlace.placeIsChecked = true;
-        foreach (Reward reward in _activatedPlace.rewards)
-        {
-            switch (reward.typeOfReward)
-            {
-                case Resources.Material:
-                    _scripts.colonyManager.Materials += reward.count;
-                    break;
-                case Resources.MaterialPlus:
-                    _scripts.colonyManager.MaterialsPlus += reward.count;
-                    break;
-                case Resources.Food:
-                    _scripts.colonyManager.Food += reward.count;
-                    break;
-                case Resources.Honey:
-                    _scripts.colonyManager.Honey += reward.count;
-                    break;
-                case Resources.BioFuel:
-                    _scripts.colonyManager.Biofuel += reward.count;
-                    break;
-                case Resources.Bears:
-                    for (int i = 0; i < reward.count; i++)
-                    {
-                        // Получаем все значения перечисления Traditions
-                        Traditions[] traditions = (Traditions[])System.Enum.GetValues(typeof(Traditions));
-
-                        // Генерируем случайный индекс
-                        int randomIndex = Random.Range(0, traditions.Length);
-                        _scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
-                    }
-
-                    break;
-            }
-        }
-
-        Time.timeScale = 0.05f;
-        _activatedPlace = new PlaceOfTravel(); // Очистка
-    }
-
-    public void DisableTravelResult() // Для UI
-    {
-        _resultOfTravelMenu.gameObject.SetActive(false);
-        Time.timeScale = 1f;
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -170,14 +114,17 @@ public class TravelingManager : MonoBehaviour
     private void FixedUpdate()
     {
         if (_activatedPlace == null) return;
-        
+
         // Каждую секунду
         _timeElapsed += Time.deltaTime;
         _activatedPlace.timeNow += Mathf.FloorToInt(_timeElapsed);
         _timeElapsed -= Mathf.FloorToInt(_timeElapsed);
         if (_activatedPlace.timeNow >= _activatedPlace.timeToGoing)
         {
-            ActivateTravelResult();
+            _scripts.gameEventsManager.ActivateEvent(new GameEvent(_activatedPlace.nameOfPlace,
+                _activatedPlace.description));
+            _activatedPlace.placeIsChecked = true;
+            _activatedPlace = new PlaceOfTravel(); // Очистка
             _timeElapsed = 0f;
             _activatedPlace.gameName = "";
         }

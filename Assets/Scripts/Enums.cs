@@ -70,6 +70,13 @@ public enum TasksMode
     Create
 }
 
+[Serializable]
+public class Reward
+{
+    public float count;
+    public Resources typeOfReward;
+}
+
 /// <summary>
 /// Расширение для Enums, позволяет использовать DescriptionAttribute для задания поведения GetString метода
 /// </summary>
