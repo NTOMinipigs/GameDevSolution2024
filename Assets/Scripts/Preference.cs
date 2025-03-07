@@ -1,15 +1,22 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class Preference : MonoBehaviour
 {
+    public static Preference Singleton { get; private set; }
     [SerializeField] private GameObject preferenceMenu;
     public float sensitivityOfCamera = 5f;
     private Slider sliderOfSens;
     public float globalVolume = 100f;
     private Slider sliderOfVolume;
     public bool postProcessing = true;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     public void ManagePrefenceMenu()
     {

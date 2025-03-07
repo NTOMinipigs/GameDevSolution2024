@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class ColonyManager : MonoBehaviour
 {
+    public static ColonyManager Singleton { get; private set; }
     [Header("Main resources")]
 
     # region Resources
@@ -223,7 +224,6 @@ public class ColonyManager : MonoBehaviour
     #endregion
 
     [Header("Other")] public bool scoutHome;
-    [SerializeField] private AllScripts scripts;
     private SystemSaver _systemSaver;
 
     private Dictionary<string, Func<float>> _materialsRefs;
@@ -243,6 +243,11 @@ public class ColonyManager : MonoBehaviour
 
             return sendDictionary;
         }
+    }
+
+    private void Awake()
+    {
+        Singleton = this;
     }
 
     private async void Start()
@@ -547,14 +552,14 @@ public class ColonyManager : MonoBehaviour
             buildingController.SetNormal();
             buildingController.isBuild = true;
             buildingController.isReady = true;
-            scripts.buildingSystem.SetBuildSettings(buildingController);
+            BuildingSystem.Singleton.SetBuildSettings(buildingController);
             if (buildingController.Building is Building building) // Настройки для зданий
             {
                 scoutHome = building.scoutHome;
             }
         }
         //else if (task.taskMode == TasksMode.GetResource)
-        //scripts.buildingSystem.PickUpResource(task.objectOfTask);
+        //BuildingSystem.Singleton.PickUpResource(task.objectOfTask);
 
         Bear selectedBear = task.selectedBear;
         bearTasks.Remove(task);
@@ -586,11 +591,11 @@ public class ColonyManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (scripts.CheckOpenedWindows(!bearsListMenu.activeSelf)) // Если какая-то менюха уже открыта
+            if (GameMenuManager.Singleton.CheckOpenedWindows(!bearsListMenu.activeSelf)) // Если какая-то менюха уже открыта
                 return;
 
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);
-            scripts.cameraMove.blockMove = bearsListMenu.activeSelf;
+            CameraMove.Singleton.blockMove = bearsListMenu.activeSelf;
             if (!bearsListMenu.activeSelf) return;
 
             foreach (Transform child in bearsListContainer.transform)

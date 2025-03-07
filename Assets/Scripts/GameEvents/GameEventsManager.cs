@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class GameEventsManager : MonoBehaviour
 {
+    public static GameEventsManager Singleton { get; private set; }
     public GameObject gameEventsMenu;
     [SerializeField] private TextMeshProUGUI textEventName, textEventDescription;
     [SerializeField] private GameEvent[] allGameEvents = new GameEvent[0];
@@ -14,14 +16,17 @@ public class GameEventsManager : MonoBehaviour
     private int _worldHours, _worldMinuts;
     private TextMeshProUGUI _textTime;
     private Light _directLight;
-    private AllScripts _scripts;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     private void Start()
     {
         _textTime = GameObject.Find("TextTime").GetComponent<TextMeshProUGUI>();
         _directLight = GameObject.Find("Directional Light").GetComponent<Light>();
         _directLight.intensity = 0.3f; // Стартовое значение
-        _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         foreach (GameEvent ge in allGameEvents)
             _allGameEventsDict.Add(ge.gameName, ge);
 
@@ -49,19 +54,19 @@ public class GameEventsManager : MonoBehaviour
             switch (reward.typeOfReward)
             {
                 case Resources.Material:
-                    _scripts.colonyManager.Materials += reward.count;
+                    ColonyManager.Singleton.Materials += reward.count;
                     break;
                 case Resources.MaterialPlus:
-                    _scripts.colonyManager.MaterialsPlus += reward.count;
+                    ColonyManager.Singleton.MaterialsPlus += reward.count;
                     break;
                 case Resources.Food:
-                    _scripts.colonyManager.Food += reward.count;
+                    ColonyManager.Singleton.Food += reward.count;
                     break;
                 case Resources.Honey:
-                    _scripts.colonyManager.Honey += reward.count;
+                    ColonyManager.Singleton.Honey += reward.count;
                     break;
                 case Resources.BioFuel:
-                    _scripts.colonyManager.Biofuel += reward.count;
+                    ColonyManager.Singleton.Biofuel += reward.count;
                     break;
                 case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
@@ -71,7 +76,7 @@ public class GameEventsManager : MonoBehaviour
 
                         // Генерируем случайный индекс
                         int randomIndex = Random.Range(0, traditions.Length);
-                        _scripts.colonyManager.GenerateNewBear(traditions[randomIndex]);
+                        ColonyManager.Singleton.GenerateNewBear(traditions[randomIndex]);
                     }
 
                     break;

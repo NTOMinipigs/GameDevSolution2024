@@ -12,7 +12,6 @@ public class CutsceneManager : MonoBehaviour
     [SerializeField] private Image bg;
     [SerializeField] private GameObject fadeObj; // Лол
     private bool _animatingText, _canStepNext;
-    [SerializeField] private AllScripts scripts;
 
     private void Awake()
     {
@@ -44,7 +43,7 @@ public class CutsceneManager : MonoBehaviour
         else
         {
             this.gameObject.SetActive(false);
-            scripts.dialogManager.ActivateDialog("afterPrehistory");
+            DialogManager.Singleton.ActivateDialog("afterPrehistory");
         }
     }
 

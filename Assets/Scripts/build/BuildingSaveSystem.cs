@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Этот класс расширяет возможнности Building-системы, с минимальным воздействием на все остальныее ее компоненты
@@ -8,6 +10,7 @@ using UnityEngine;
 [System.Serializable]
 public class BuildingSaveSystem : MonoBehaviour
 {
+    public static BuildingSaveSystem Singleton { get; private set; }
     /// <summary>
     /// Вставьте сюда systemSaver, он используется в коде в дальнейшем
     /// </summary>
@@ -28,6 +31,11 @@ public class BuildingSaveSystem : MonoBehaviour
     public GameObject foodBox;
     public GameObject honeyBox;
     public GameObject bioFuel;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     /// <summary>
     /// Получите префаб по имени

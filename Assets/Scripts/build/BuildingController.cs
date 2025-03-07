@@ -37,14 +37,12 @@ public class BuildingController : MonoBehaviour
     private MeshRenderer _mainRenderer;
     [HideInInspector] public RevealByProgress reveal; // Штука для редактирования материала
     private Color _standardMaterialColor;
-    private AllScripts _scripts;
 
     private void Awake()
     {
         _mainRenderer = GetComponent<MeshRenderer>();
         _standardMaterialColor = _mainRenderer.material.color;
         reveal = GetComponent<RevealByProgress>();
-        _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         if (building)
             Building = building;
         if (resource)
@@ -88,10 +86,10 @@ public class BuildingController : MonoBehaviour
             if (health < 0)
             {
                 if (resource) // Ну то есть это ресуурс
-                    _scripts.colonyManager.FindAndEndTask(Traditions.Drone, gameObject, true);
+                    ColonyManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);
                 else if (building)
-                    _scripts.colonyManager.FindAndEndTask(building.typeOfWorkers, gameObject, true);
-                _scripts.buildingSystem.buildingCreateMenu.SetActive(false);
+                    ColonyManager.Singleton.FindAndEndTask(building.typeOfWorkers, gameObject, true);
+                BuildingSystem.Singleton.buildingCreateMenu.SetActive(false);
                 Destroy(gameObject);
             }
         }
@@ -110,31 +108,31 @@ public class BuildingController : MonoBehaviour
             switch (Building.TypeResource)
             {
                 case Resources.Material:
-                    _scripts.colonyManager.Materials += earn;
+                    ColonyManager.Singleton.Materials += earn;
                     resourceChanged = "materials";
                     break;
                 case Resources.MaterialPlus:
-                    _scripts.colonyManager.MaterialsPlus += earn;
+                    ColonyManager.Singleton.MaterialsPlus += earn;
                     resourceChanged = "materialsPlus";
                     break;
                 case Resources.Food:
-                    _scripts.colonyManager.Food += earn;
+                    ColonyManager.Singleton.Food += earn;
                     resourceChanged = "food";
                     break;
                 case Resources.Honey:
-                    _scripts.colonyManager.Honey += earn;
+                    ColonyManager.Singleton.Honey += earn;
                     resourceChanged = "honey";
                     break;
                 case Resources.BioFuel:
-                    _scripts.colonyManager.Biofuel += earn;
+                    ColonyManager.Singleton.Biofuel += earn;
                     resourceChanged = "bioFuel";
                     break;
             }
 
             if (resource) // Ну то есть это ресуурс
-                _scripts.buildingSystem.UpdateResourceText();
+                BuildingSystem.Singleton.UpdateResourceText();
             else if (building)
-                _scripts.buildingSystem.UpdateBuildingText();
+                BuildingSystem.Singleton.UpdateBuildingText();
             
             // Лог
             APIClient.Instance.CreateLogRequest(

@@ -4,22 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="GameEvents proto + traveling change">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/UI/buildMenu.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/UI/buildMenu.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/drone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/drone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enums.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEventsManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEventsManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/PlaceOfTravel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/PlaceOfTravel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Alerts/AlertsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Alerts/AlertsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEventsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEventsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameMenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Music/MusicLoop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Music/MusicLoop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Music/MusicManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Music/MusicManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Preference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Preference.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/QuestSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/QuestSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSaveSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSaveSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/TravelingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/TravelingManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +53,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ed969b0e627d471da4848289f9c322df46ae00/7f/b3f1cf97/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Other/accid___(Ru)_0 SDF.asset" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy/Editor/ViewSwitcher.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -147,6 +154,7 @@
       <workItem from="1740750919306" duration="17900000" />
       <workItem from="1741178506833" duration="5774000" />
       <workItem from="1741259609304" duration="15269000" />
+      <workItem from="1741374695730" duration="1674000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -300,7 +308,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741275113755</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="GameEvents proto + traveling change">
+      <option name="closed" value="true" />
+      <created>1741374747302</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1741374747302</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,6 +352,7 @@
     <MESSAGE value="UI change + workers text(maybe refactoring later) + some fixes" />
     <MESSAGE value="Workers work inside + some fixes" />
     <MESSAGE value="Bug fixes + health resource destroy" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes + health resource destroy" />
+    <MESSAGE value="GameEvents proto + traveling change" />
+    <option name="LAST_COMMIT_MESSAGE" value="GameEvents proto + traveling change" />
   </component>
 </project>

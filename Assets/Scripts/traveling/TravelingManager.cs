@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class TravelingManager : MonoBehaviour
 {
+    public static TravelingManager Singleton { get; private set; }
     [Header("Точки интереса")] [SerializeField]
     private PlaceOfTravel[] allPlaces = Array.Empty<PlaceOfTravel>(); // Все места.
 
@@ -20,11 +21,14 @@ public class TravelingManager : MonoBehaviour
     private Button _travelButton;
     private int _maxPlaces;
     private float _timeElapsed;
-    private AllScripts _scripts;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     private void Start()
     {
-        _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
         _maxPlaces = allPlaces.Length;
 
         // Инициализация
@@ -48,7 +52,7 @@ public class TravelingManager : MonoBehaviour
     private void OpenTravelMenu(bool canTravel = false)
     {
         // Если какая-то менюха уже открыта
-        if (_scripts.CheckOpenedWindows(!travelMenu.activeSelf)) return;
+        if (GameMenuManager.Singleton.CheckOpenedWindows(!travelMenu.activeSelf)) return;
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
         _infoOfPlaceMenu.gameObject.SetActive(false); // Закрытие информации о месте, если была открыта
         if (!travelMenu.activeSelf) return;
@@ -58,7 +62,7 @@ public class TravelingManager : MonoBehaviour
         if (_blockOfTravel.activeSelf)
             _travelButton.interactable =
                 (_activatedPlace.gameName == "" &&
-                 _scripts.colonyManager.Food >= _activatedPlace.foodNeed); // Если исследование не идет
+                 ColonyManager.Singleton.Food >= _activatedPlace.foodNeed); // Если исследование не идет
     }
 
     /// <summary>
@@ -108,7 +112,7 @@ public class TravelingManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
-            OpenTravelMenu(_scripts.colonyManager.scoutHome);
+            OpenTravelMenu(ColonyManager.Singleton.scoutHome);
     }
 
     private void FixedUpdate()
@@ -121,7 +125,7 @@ public class TravelingManager : MonoBehaviour
         _timeElapsed -= Mathf.FloorToInt(_timeElapsed);
         if (_activatedPlace.timeNow >= _activatedPlace.timeToGoing)
         {
-            _scripts.gameEventsManager.ActivateEvent(new GameEvent(_activatedPlace.nameOfPlace,
+            GameEventsManager.Singleton.ActivateEvent(new GameEvent(_activatedPlace.nameOfPlace,
                 _activatedPlace.description));
             _activatedPlace.placeIsChecked = true;
             _activatedPlace = new PlaceOfTravel(); // Очистка

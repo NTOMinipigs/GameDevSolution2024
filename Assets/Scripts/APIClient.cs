@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Alerts;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -16,14 +17,7 @@ using UnityEngine.SceneManagement;
 public class APIClient : MonoBehaviour
 {
     // components
-
-
-    /// <summary>
-    /// положи сюда allScripts компонент
-    /// </summary>
-    public AllScripts allScripts;
-
-
+    
     // HttpClient block
 
 
@@ -109,7 +103,7 @@ public class APIClient : MonoBehaviour
         SaveAndLoad saveAndLoad = gameObject.GetComponent<SaveAndLoad>();
         saveAndLoad.SaveGame();
         SceneManager.LoadScene("Menu");
-        allScripts.alertsManager.ShowAlert("Нет подключения к инернету!");
+        AlertsManager.Singleton.ShowAlert("Нет подключения к инернету!");
     }
 
     // records block
