@@ -7,18 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: corpseBee
-    second: {fileID: 2100000, guid: 9e8590010a0ba384bab3273d7982c756, type: 2}
+      name: antena
+    second: {fileID: 2100000, guid: 8ee932d6daf560b4eb6077bcbe150362, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: glassBee
-    second: {fileID: 2100000, guid: 6d5d25296f972f242844aa1a59880394, type: 2}
+      name: beeCorpse
+    second: {fileID: 2100000, guid: 7a30e2e708a360a44a1341877bcc42eb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: technoDoor
-    second: {fileID: 2100000, guid: 8cf43e49d0cf4914daa7211005e0a476, type: 2}
+      name: door
+    second: {fileID: 2100000, guid: ea34f313f1859494abf28670802b862b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -48,7 +48,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 3
+    globalScale: 2
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -103,7 +103,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.03
+    globalScale: 0.02
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

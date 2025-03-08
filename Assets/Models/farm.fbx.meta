@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: bodyFarmer
-    second: {fileID: 2100000, guid: ca42ed903c07b7c4e8dd6019ca224892, type: 2}
+      name: blackThing
+    second: {fileID: 2100000, guid: 8ee932d6daf560b4eb6077bcbe150362, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -17,8 +17,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: gryadki
-    second: {fileID: 2100000, guid: 003bb389eabb06641bff1dcd4a1ecb1f, type: 2}
+      name: grassCorpse
+    second: {fileID: 2100000, guid: 2f5d46c119144af4e8f0d9c0420b1f93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stairsAndBase
+    second: {fileID: 2100000, guid: 4d99ae38b51f64c4eb5c405b42b3106f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -103,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.03
+    globalScale: 3
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

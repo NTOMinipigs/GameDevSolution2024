@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: glassBee
+  m_Name: stairsAndBase
   m_Shader: {fileID: 4800000, guid: 30453297e76f94544b6cc3fedff6c165, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ALPHAPREMULTIPLY_ON
+  - _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 403edceb0fe80aa40b433e3902ae060b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -45,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c874188d541bb4f46a2c103d68016c97, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6cd360cabcd36e94aaac68e6c1c356a2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -66,14 +66,14 @@ Material:
     - _BoundsMaxY: 0.5
     - _BoundsMinY: -0.5
     - _BumpScale: 1
-    - _Cutoff: 0.509
+    - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.832
+    - _Glossiness: 0.444
     - _GlossyReflections: 1
-    - _Metallic: 0.645
-    - _Mode: 3
+    - _Metallic: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RevealProgress: 1
@@ -81,11 +81,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _BoundaryColor: {r: 1, g: 1, b: 0, a: 1}
-    - _Color: {r: 0.7264151, g: 0.50230837, b: 0, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.28571427, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _HiddenColor: {r: 0.15, g: 0.15, b: 0.15, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

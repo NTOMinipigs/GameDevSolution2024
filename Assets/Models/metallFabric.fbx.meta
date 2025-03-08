@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 25b1644a9a74e2f45a1c493035d50740
+guid: 132f71e2d09cc64408b6cb0013d3c453
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -12,18 +12,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: corpseFabric
-    second: {fileID: 2100000, guid: cd81b1436af529344b2e693c38f06c9d, type: 2}
+      name: burExtra
+    second: {fileID: 2100000, guid: 21c574d63e44c9f43ab87be2c6e67265, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: materialSi
-    second: {fileID: 2100000, guid: 2470be5214689b940a0b7cd9cbab2304, type: 2}
+      name: burStart
+    second: {fileID: 2100000, guid: 9d9ad00357518e646b20ca4422ec6387, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: technoDoor
-    second: {fileID: 2100000, guid: 8cf43e49d0cf4914daa7211005e0a476, type: 2}
+      name: fabricCorpse
+    second: {fileID: 2100000, guid: 9724dd332b63ff149b12e7192ae0f6da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: megaDoor
+    second: {fileID: 2100000, guid: ea34f313f1859494abf28670802b862b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -53,7 +58,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 2.5
+    globalScale: 2
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -108,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.024999999
+    globalScale: 0.02
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
