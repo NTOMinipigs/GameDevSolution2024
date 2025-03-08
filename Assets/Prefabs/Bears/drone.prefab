@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5748349172644368720}
   - component: {fileID: 1072386704314573407}
   - component: {fileID: 7085650985689414988}
+  - component: {fileID: 4234481364481539732}
   m_Layer: 6
   m_Name: drone
   m_TagString: bear
@@ -89,7 +90,6 @@ MonoBehaviour:
   rayInteractLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  scripts: {fileID: 0}
 --- !u!54 &1072386704314573407
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!95 &7085650985689414988
 Animator:
@@ -139,6 +139,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &4234481364481539732
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099475814821419011}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &382132042908653643
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class DialogManager : MonoBehaviour
@@ -14,7 +12,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private Image iconImage;
     public GameObject dialogMenu;
 
-    public Dialog[] dialogs = Array.Empty<Dialog>();
+    public Dialog[] dialogs = new Dialog[0];
     private Dictionary<string, Dialog> _dialogsDict = new Dictionary<string, Dialog>();
 
     [SerializeField] private int totalStep;

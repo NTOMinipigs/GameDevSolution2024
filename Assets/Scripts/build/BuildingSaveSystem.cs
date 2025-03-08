@@ -113,7 +113,8 @@ public class BuildingSaveSystem : MonoBehaviour
                 GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
             buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
             buildingController.transform.position = new Vector3(buildingSave.x, 3f, buildingSave.z);
-            Instantiate(buildingController);
+            var buildingInWorld = Instantiate(buildingController);
+            buildingInWorld.gameObject.name = buildingInWorld.name.Replace("(Clone)", "");
         }
     }
 

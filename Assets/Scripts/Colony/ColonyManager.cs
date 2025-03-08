@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class ColonyManager : MonoBehaviour
 {
     public static ColonyManager Singleton { get; private set; }
+
     [Header("Main resources")]
 
     # region Resources
@@ -361,7 +362,7 @@ public class ColonyManager : MonoBehaviour
     /// </summary>
     /// <param name="tradition"></param>
     /// <exception cref="ArgumentException"></exception>
-    public void GenerateNewBear(Traditions tradition)
+    public Bear GenerateNewBear(Traditions tradition)
     {
         SerializableBear serializableBear = GetSerializableBear(tradition);
         string bearName = GetBearName(serializableBear.gender);
@@ -370,6 +371,7 @@ public class ColonyManager : MonoBehaviour
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition,
             serializableBear.sprite);
         SaveBear(newBear, serializableBear.name);
+        return newBear;
     }
 
     /// <summary>
@@ -534,10 +536,13 @@ public class ColonyManager : MonoBehaviour
 
     public BearTask GetBearTask(Bear bear)
     {
-        foreach (BearTask task in bearTasks)
+        if (bearTasks.Count > 0 && bear != null)
         {
-            if (task.selectedBear.gameName == bear.gameName)
-                return task;
+            foreach (BearTask task in bearTasks)
+            {
+                if (task.selectedBear.gameName == bear.gameName)
+                    return task;
+            }
         }
 
         return null;
@@ -569,7 +574,7 @@ public class ColonyManager : MonoBehaviour
         else
             SetTaskToBear(selectedBear);
     }
-    
+
     public void FindAndEndTask(Traditions tradition, GameObject taskObj, bool endAllTask = false)
     {
         foreach (Bear bear in bearsInColony)
@@ -586,12 +591,13 @@ public class ColonyManager : MonoBehaviour
             }
         }
     }
-    
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (GameMenuManager.Singleton.CheckOpenedWindows(!bearsListMenu.activeSelf)) // Если какая-то менюха уже открыта
+            if (GameMenuManager.Singleton.CheckOpenedWindows(!bearsListMenu
+                    .activeSelf)) // Если какая-то менюха уже открыта
                 return;
 
             bearsListMenu.gameObject.SetActive(!bearsListMenu.activeSelf);

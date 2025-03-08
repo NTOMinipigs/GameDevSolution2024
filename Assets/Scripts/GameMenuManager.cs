@@ -20,10 +20,10 @@ public class GameMenuManager : MonoBehaviour
     /// <summary>
     /// Проверяет - открыто какое-нибудь окно или нет
     /// </summary>
-    /// <param name="mode">Если принимает false - то возвращет false</param>
+    /// <param name="mode">Принимает true - если в планах открыть новое меню</param>
     /// <param name="extraOpen">Открытие не смотря на другие условия</param>
     /// <returns></returns>
-    public bool CheckOpenedWindows(bool mode, bool extraOpen = false)
+    public bool CheckOpenedWindows(bool mode = true, bool extraOpen = false)
     {
         if (!mode) // Если окно закрывается, то скипать проверку
             return false;

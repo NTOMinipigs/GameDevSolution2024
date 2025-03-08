@@ -79,18 +79,18 @@ public class BuildingController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isReady) return;
-        if (workersCount > 1)
+        if (workersCount > 0)
         {
             steps += 0.005f;
-            health -= 0.065f;
-            if (health < 0)
+            if (resource) // Если ресурс
             {
-                if (resource) // Ну то есть это ресуурс
+                health -= 0.065f;
+                if (health < 0)
+                {
                     ColonyManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);
-                else if (building)
-                    ColonyManager.Singleton.FindAndEndTask(building.typeOfWorkers, gameObject, true);
-                BuildingSystem.Singleton.buildingCreateMenu.SetActive(false);
-                Destroy(gameObject);
+                    BuildingSystem.Singleton.buildingCreateMenu.SetActive(false);
+                    Destroy(gameObject);
+                }
             }
         }
 
@@ -133,7 +133,7 @@ public class BuildingController : MonoBehaviour
                 BuildingSystem.Singleton.UpdateResourceText();
             else if (building)
                 BuildingSystem.Singleton.UpdateBuildingText();
-            
+
             // Лог
             APIClient.Instance.CreateLogRequest(
                 "Новые ресурсы произведенные в результате работы некоторого строения",

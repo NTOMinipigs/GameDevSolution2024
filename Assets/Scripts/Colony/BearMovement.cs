@@ -90,16 +90,17 @@ public class BearMovement : MonoBehaviour
     private void FixedUpdate()
     {
         BearTask newTask = ColonyManager.Singleton.GetBearTask(totalBear);
-        if (_doingTask)
+        if (_doingTask && newTask != null)
         {
             totalBear.canMove = false;
             newTask.totalSteps += 0.001f;
             if (newTask.objectOfTask.tag == "building")
             {
                 BuildingController bc = newTask.objectOfTask.GetComponent<BuildingController>();
-                if (!bc.isBuild)
+                if (!bc.isBuild) // Если строится
                     bc.reveal.progress = newTask.totalSteps;
-                _bearModel.gameObject.SetActive(false);
+                else // Если просто работа
+                    _bearModel.gameObject.SetActive(false);
             }
 
             if (newTask.needSteps != -1f && newTask.totalSteps >= newTask.needSteps)

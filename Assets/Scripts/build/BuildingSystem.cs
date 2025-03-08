@@ -71,7 +71,7 @@ public class BuildingSystem : MonoBehaviour
 
     public void SelectBuildingToInteraction(BuildingController buildingController)
     {
-        if (GameMenuManager.Singleton) // Если какая-то менюха уже открыта
+        if (GameMenuManager.Singleton.CheckOpenedWindows()) // Если какая-то менюха уже открыта
             return;
         _selectedBuildController = buildingController;
         ManageBuildMenu();
@@ -147,7 +147,8 @@ public class BuildingSystem : MonoBehaviour
         if (!resource)
         {
             UpdateBuildingText();
-            ColonyManager.Singleton.FindAndEndTask(_selectedBuilding.typeOfWorkers, _selectedBuildController.gameObject);
+            ColonyManager.Singleton.FindAndEndTask(_selectedBuilding.typeOfWorkers,
+                _selectedBuildController.gameObject);
         }
         else
         {
@@ -220,7 +221,6 @@ public class BuildingSystem : MonoBehaviour
             Destroy(_flyingBuildingController.gameObject);
 
         _flyingBuildingController = Instantiate(buildingControllerPrefab);
-        _flyingBuildingController.name.Replace("(Clone)", "");
         _noteBlock.gameObject.SetActive(true);
         _textSelectedBuild.text = _flyingBuildingController.Building.BuildingName;
     }
@@ -302,7 +302,8 @@ public class BuildingSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab)) // Активация меню какое здание построить
         {
-            if (!GameMenuManager.Singleton.CheckOpenedWindows(!buildingCreateMenu.activeSelf)) // Если какая-то менюха уже открыта
+            if (!GameMenuManager.Singleton.CheckOpenedWindows(!buildingCreateMenu
+                    .activeSelf)) // Если какая-то менюха уже открыта
             {
                 buildingCreateMenu.gameObject.SetActive(!buildingCreateMenu.activeSelf);
                 _noteBlock.gameObject.SetActive(false);
@@ -391,6 +392,7 @@ public class BuildingSystem : MonoBehaviour
     {
         if (_flyingBuildingController.Building is Building building)
         {
+            _flyingBuildingController.name = _flyingBuildingController.name.Replace("(Clone)", "");
             PlaceBuilding(_flyingBuildingController, placeX, placeY);
             BuildingSaveSystem.Singleton.CreateBuildSave(placeX, placeY, _flyingBuildingController.name,
                 false); // Создаем сохранение постройки

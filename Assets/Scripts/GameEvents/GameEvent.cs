@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public class GameEvent
 {
     /// <summary>
@@ -14,8 +16,16 @@ public class GameEvent
     /// <summary>
     /// Отображаемое описание ивента
     /// </summary>
-    public string eventDescription;
+    [TextArea(0, 5)]public string eventDescription;
 
+    /// <summary>
+    /// Одноразовый ивент?
+    /// </summary>
+    public bool onceEvent;
+    
+    /// <summary>
+    /// Ресурсовые награды
+    /// </summary>
     public Reward[] eventRewards = new Reward[0];
     
     public GameEvent()

@@ -4,29 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="GameEvents proto + traveling change">
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Alerts/AlertsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Alerts/AlertsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AllScripts.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/UI/buildMenu.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/UI/buildMenu.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animatoins/drone.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animatoins/drone.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bears/drone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bears/drone.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/Bear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/Bear.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEvent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEventsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEventsManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameMenuManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Music/MusicLoop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Music/MusicLoop.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Music/MusicManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Music/MusicManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Preference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Preference.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/QuestSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/QuestSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingBuyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingBuyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSaveSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSaveSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/traveling/TravelingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/traveling/TravelingManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,13 +110,15 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19952">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="19952" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -154,7 +156,8 @@
       <workItem from="1740750919306" duration="17900000" />
       <workItem from="1741178506833" duration="5774000" />
       <workItem from="1741259609304" duration="15269000" />
-      <workItem from="1741374695730" duration="1674000" />
+      <workItem from="1741374695730" duration="2372000" />
+      <workItem from="1741416976712" duration="8824000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -316,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741374747302</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="All scripts deleted -&gt; singletons added">
+      <option name="closed" value="true" />
+      <created>1741376451584</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1741376451584</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,6 +364,52 @@
     <MESSAGE value="Workers work inside + some fixes" />
     <MESSAGE value="Bug fixes + health resource destroy" />
     <MESSAGE value="GameEvents proto + traveling change" />
-    <option name="LAST_COMMIT_MESSAGE" value="GameEvents proto + traveling change" />
+    <MESSAGE value="All scripts deleted -&gt; singletons added" />
+    <option name="LAST_COMMIT_MESSAGE" value="All scripts deleted -&gt; singletons added" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs</url>
+          <line>36</line>
+          <properties documentPath="E:\projects\bear\GameDevSolution2024\Assets\Scripts\Camera\CameraMove.cs" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="1050" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1097" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs</url>
+          <line>42</line>
+          <properties documentPath="E:\projects\bear\GameDevSolution2024\Assets\Scripts\Camera\CameraMove.cs" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="1441" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1547" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/build/BuildingSaveSystem.cs</url>
+          <line>46</line>
+          <properties documentPath="E:\projects\bear\GameDevSolution2024\Assets\Scripts\build\BuildingSaveSystem.cs" containingFunctionPresentation="Method 'GetPrefabByName'">
+            <startOffsets>
+              <option value="1320" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1402" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
