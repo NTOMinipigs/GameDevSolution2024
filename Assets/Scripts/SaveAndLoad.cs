@@ -10,13 +10,11 @@ using UnityEngine;
 /// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
-    private AllScripts _scripts;
     // Часть необходимых методов для инициализации
 
     private void Start()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
-        _scripts = GameObject.Find("scripts").GetComponent<AllScripts>();
 
         bool loadResult = systemSaver.LoadGame();
         // Если файл сохранения не найден
@@ -40,18 +38,18 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateDebugGame()
     {
         // Проставляем начальные ресурсы игроку, сразу много чтобы можно было удобно дебажить
-        _scripts.colonyManager.MaterialsPlus = 100;
-        _scripts.colonyManager.MaxMaterials = 200;
-        _scripts.colonyManager.MaxEnergy = 200;
-        _scripts.colonyManager.MaxBiofuel = 200;
-        _scripts.colonyManager.MaxFood = 200;
-        _scripts.colonyManager.MaxHoney = 200;
-        _scripts.colonyManager.MaxMaterialsPlus = 200;
-        _scripts.colonyManager.Materials = 100;
-        _scripts.colonyManager.Energy = 100;
-        _scripts.colonyManager.Biofuel = 100;
-        _scripts.colonyManager.Food = 100;
-        _scripts.colonyManager.Honey = 100;
+        ColonyManager.Singleton.MaterialsPlus = 100;
+        ColonyManager.Singleton.MaxMaterials = 200;
+        ColonyManager.Singleton.MaxEnergy = 200;
+        ColonyManager.Singleton.MaxBiofuel = 200;
+        ColonyManager.Singleton.MaxFood = 200;
+        ColonyManager.Singleton.MaxHoney = 200;
+        ColonyManager.Singleton.MaxMaterialsPlus = 200;
+        ColonyManager.Singleton.Materials = 100;
+        ColonyManager.Singleton.Energy = 100;
+        ColonyManager.Singleton.Biofuel = 100;
+        ColonyManager.Singleton.Food = 100;
+        ColonyManager.Singleton.Honey = 100;
         // TODO: Добавь сюда дефолтных построек
     }
 
@@ -106,12 +104,12 @@ public class SaveAndLoad : MonoBehaviour
     {
         CreateBears();
         CreateBuilds();
-        _scripts.questSystem.StartFirst();
-        _scripts.colonyManager.Food = 10;
-        _scripts.colonyManager.MaxMaterials = 50;
-        _scripts.colonyManager.MaxBiofuel = 15;
-        _scripts.colonyManager.MaxFood = 10;
-        _scripts.colonyManager.maxBears = 10;
+        QuestSystem.Singleton.StartFirst();
+        ColonyManager.Singleton.Food = 10;
+        ColonyManager.Singleton.MaxMaterials = 50;
+        ColonyManager.Singleton.MaxBiofuel = 15;
+        ColonyManager.Singleton.MaxFood = 10;
+        ColonyManager.Singleton.maxBears = 10;
     }
 
     /// <summary>
@@ -136,7 +134,7 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateBuilds()
     {
-        _scripts.buildingSaveSystem.CreateStartBuilds();
+        BuildingSaveSystem.Singleton.CreateStartBuilds();
     }
 
 

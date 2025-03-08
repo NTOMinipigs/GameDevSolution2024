@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -5,15 +6,38 @@ using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
+    public static GameMenuManager Singleton { get; private set; }
     public GameObject gameMenu;
     [SerializeField] private GameObject mainMenu, preferenceMenu;
     [SerializeField] private Slider sensSlider, volumeSlider;
     [SerializeField] private Toggle postProcessingToggle;
-    [SerializeField] private AllScripts scripts;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
+
+    /// <summary>
+    /// Проверяет - открыто какое-нибудь окно или нет
+    /// </summary>
+    /// <param name="mode">Принимает true - если в планах открыть новое меню</param>
+    /// <param name="extraOpen">Открытие не смотря на другие условия</param>
+    /// <returns></returns>
+    public bool CheckOpenedWindows(bool mode = true, bool extraOpen = false)
+    {
+        if (!mode) // Если окно закрывается, то скипать проверку
+            return false;
+
+        return (DialogManager.Singleton.dialogMenu.activeSelf || QuestSystem.Singleton.questMenu.activeSelf ||
+                ColonyManager.Singleton.bearsListMenu.activeSelf ||
+                BuildingSystem.Singleton.buildingCreateMenu.activeSelf ||
+                BuildingSystem.Singleton.buildMenu.activeSelf || TravelingManager.Singleton.travelMenu.activeSelf ||
+                gameMenu.activeSelf) && !extraOpen;
+    }
 
     public void ManageGameMenu()
     {
-        if (scripts.CheckOpenedWindows(!gameMenu.activeSelf)) // Если какая-то менюха уже открыта
+        if (CheckOpenedWindows(!gameMenu.activeSelf)) // Если какая-то менюха уже открыта
             return;
 
         gameMenu.gameObject.SetActive(!gameMenu.activeSelf);
@@ -33,19 +57,19 @@ public class GameMenuManager : MonoBehaviour
         mainMenu.gameObject.SetActive(!preferenceMenu.activeSelf);
         if (preferenceMenu.activeSelf)
         {
-            sensSlider.value = scripts.preference.sensitivityOfCamera;
-            volumeSlider.value = scripts.preference.globalVolume;
-            postProcessingToggle.isOn = scripts.preference.postProcessing;
+            sensSlider.value = Preference.Singleton.sensitivityOfCamera;
+            volumeSlider.value = Preference.Singleton.globalVolume;
+            postProcessingToggle.isOn = Preference.Singleton.postProcessing;
         }
     }
 
     public void SavePreferens()
     {
-        scripts.preference.sensitivityOfCamera = sensSlider.value;
-        scripts.cameraMove.sensitivity = scripts.preference.sensitivityOfCamera;
-        scripts.preference.globalVolume = volumeSlider.value;
-        scripts.preference.postProcessing = postProcessingToggle.isOn;
-        scripts.musicManager.UpdateVolumeRatio(volumeSlider.value * 0.01f);
+        Preference.Singleton.sensitivityOfCamera = sensSlider.value;
+        CameraMove.Singleton.sensitivity = Preference.Singleton.sensitivityOfCamera;
+        Preference.Singleton.globalVolume = volumeSlider.value;
+        Preference.Singleton.postProcessing = postProcessingToggle.isOn;
+        MusicManager.Singleton.UpdateVolumeRatio(volumeSlider.value * 0.01f);
         ManagePreferensMenu();
     }
 

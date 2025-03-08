@@ -9,16 +9,22 @@ namespace Alerts
     /// </summary>
     public class AlertsManager : MonoBehaviour
     {
+        public static AlertsManager Singleton { get; private set; }
+
         // Филды хранящие геймобжекты сериализующиеся в юнити
         [SerializeField] private Alert alertPrefab;
         [SerializeField] private Transform alertContainer;
-        
-        void Awake()
+
+        private void Awake()
         {
             DontDestroyOnLoad(gameObject.transform.parent.gameObject);
+            if (Singleton == null)
+                Singleton = this;
+            else
+                Destroy(gameObject.transform.parent.gameObject);
         }
 
-        void Start()
+        private void Start()
         {
             ShowAlert("С возвращением!");
         }

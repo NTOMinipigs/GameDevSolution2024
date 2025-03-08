@@ -15,6 +15,8 @@ public class BuildingBuyInfo : MonoBehaviour
     {
         button = GetComponent<Button>();
         textPriceMaterial = transform.Find("TextPrice").GetComponent<TextMeshProUGUI>();
+        textPriceMaterial.text = building.materialsNeed.ToString();
         textPriceEnergy = transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>();
+        textPriceEnergy.text = building.energyNeed.ToString();
     }
 }

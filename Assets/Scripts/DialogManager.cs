@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +7,12 @@ using Random = UnityEngine.Random;
 
 public class DialogManager : MonoBehaviour
 {
+    public static DialogManager Singleton { get; private set; }
     [SerializeField] private TextMeshProUGUI textName, textDialog;
     [SerializeField] private Image iconImage;
     public GameObject dialogMenu;
 
-    public Dialog[] dialogs = Array.Empty<Dialog>();
+    public Dialog[] dialogs = new Dialog[0];
     private Dictionary<string, Dialog> _dialogsDict = new Dictionary<string, Dialog>();
 
     [SerializeField] private int totalStep;
@@ -21,7 +21,10 @@ public class DialogManager : MonoBehaviour
     private Bear _selectedBear;
     private bool _animatingText, _canStepNext;
 
-    [SerializeField] private AllScripts scripts;
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     private void Start()
     {
@@ -48,19 +51,19 @@ public class DialogManager : MonoBehaviour
     public void ActivateDialog(string dialogName, string gameNameBear = "",
         bool blockWithOtherMenu = false) // Старт диалога
     {
-        if (scripts.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
+        if (GameMenuManager.Singleton.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
 
-        scripts.musicManager.AudioLoops["snow_steps"].Play();
+        MusicManager.Singleton.AudioLoops["snow_steps"].Play();
 
         if (_activatedDialog != null) return;
 
         _activatedDialog = GetDialog(dialogName);
         dialogMenu.gameObject.SetActive(true);
-        scripts.cameraMove.blockMove = true;
+        CameraMove.Singleton.blockMove = true;
         _selectedStep = _activatedDialog.steps[0];
         if (gameNameBear != "")
-            _selectedBear = scripts.colonyManager.GetBear(gameNameBear);
+            _selectedBear = ColonyManager.Singleton.GetBear(gameNameBear);
         DialogUpdateAction();
     }
 
@@ -91,11 +94,11 @@ public class DialogManager : MonoBehaviour
             _selectedStep.icon = _selectedBear.sprite;
         }
         else
-            _selectedBear = _selectedStep.SetBear(scripts.colonyManager);
+            _selectedBear = _selectedStep.SetBear(ColonyManager.Singleton);
 
         _selectedBear.canMove = false;
         if (GameObject.Find(_selectedBear.gameName))
-            scripts.cameraMove.MoveAndZoom(GameObject.Find(_selectedBear.gameName).transform.position, 20f);
+            CameraMove.Singleton.MoveAndZoom(GameObject.Find(_selectedBear.gameName).transform.position, 20f);
 
         textName.text = _selectedBear?.bearName + " | " + _selectedBear?.TraditionStr;
         StartCoroutine(SetText(_selectedStep.text));
@@ -115,17 +118,17 @@ public class DialogManager : MonoBehaviour
         totalStep++;
         _selectedStep = _activatedDialog.steps[totalStep];
         if (_selectedStep.questStart != "")
-            scripts.questSystem.ActivateQuest(_selectedStep.questStart);
+            QuestSystem.Singleton.ActivateQuest(_selectedStep.questStart);
         DialogUpdateAction();
     }
 
     private void DialogCLose()
     {
-        scripts.musicManager.AudioLoops["snow_steps"].Stop();
+        MusicManager.Singleton.AudioLoops["snow_steps"].Stop();
         totalStep = 0;
         dialogMenu.gameObject.SetActive(false);
         _activatedDialog = null;
-        scripts.cameraMove.blockMove = false;
+        CameraMove.Singleton.blockMove = false;
     }
 
     private string CodeTextReplace(string text)

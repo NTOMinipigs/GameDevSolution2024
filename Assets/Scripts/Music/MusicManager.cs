@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using UnityEngine.Rendering;
 /// </summary>
 public class MusicManager : MonoBehaviour
 {
+    public static MusicManager Singleton { get; private set; }
     /// <summary>
     /// Список MusicLoops заготовленных заранее
     /// </summary>
@@ -21,7 +23,12 @@ public class MusicManager : MonoBehaviour
     /// См. на сцене GameObject Music и Sounds!
     /// </summary>
     public readonly Dictionary<string, Audio> Audios = new();
-    
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
+
     public void Start()
     {
         // Добавляем все известные музыкальные треки в список аудио

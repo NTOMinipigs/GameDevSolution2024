@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
+    public static CameraMove Singleton { get; private set; }
     private bool _isDragging;
     private Vector3 _lastMousePosition, _delta;
     private GameObject _choicedBear;
     public float sensitivity;
     public bool blockMove;
-    [SerializeField] private AllScripts scripts;
     [SerializeField] private LayerMask layerMaskInteract;
     public Vector2 minBounds; // Минимальные границы
     public Vector2 maxBounds; // Максимальные границы
@@ -17,6 +17,11 @@ public class CameraMove : MonoBehaviour
 
     [SerializeField] public float maxZoom = 60f;
     private Camera _camera;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     private void Start() => _camera = GetComponent<Camera>();
 
@@ -31,12 +36,12 @@ public class CameraMove : MonoBehaviour
             {
                 if (hit.collider.gameObject.CompareTag("bear"))
                 {
-                    Bear selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                    Bear selectedBear = ColonyManager.Singleton.GetBear(hit.collider.gameObject.name);
                     if (selectedBear.tradition != Traditions.Drone)
-                        scripts.dialogManager.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
+                        DialogManager.Singleton.ActivateBearInteractionDialog(selectedBear); // Говорим с медведем
                 }
                 else if (hit.collider.gameObject.CompareTag("materialStack") || hit.collider.gameObject.CompareTag("building"))
-                    scripts.buildingSystem.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<BuildingController>());
+                    BuildingSystem.Singleton.SelectBuildingToInteraction(hit.collider.gameObject.GetComponent<BuildingController>());
             }
 
             _isDragging = true;

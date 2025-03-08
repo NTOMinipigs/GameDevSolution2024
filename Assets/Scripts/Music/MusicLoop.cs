@@ -36,11 +36,6 @@ public class AudioLoop
     /// Возможно тебе нужно воиспроизвести цикл только один раз?
     /// </summary>
     public readonly bool PlayOnce;
-    
-    /// <summary>
-    /// Костыль
-    /// </summary>
-    private static AllScripts _allScripts = GameObject.FindObjectOfType<AllScripts>();
 
     /// <summary>
     /// Длина фейд эффекта
@@ -98,7 +93,7 @@ public class AudioLoop
         }
         
         // Записываем корутину в филд, и отправляем исполняться
-        _playExecutorCoroutine = _allScripts.StartCoroutine(PlayExecutor());
+        _playExecutorCoroutine = MusicManager.Singleton.StartCoroutine(PlayExecutor());
     }
     
     /// <summary>
@@ -123,7 +118,7 @@ public class AudioLoop
             if (FadeEffect)
             {
                 // Запустим первый трек и начнем дожидаться фейд эффекта в конце
-                _allScripts.StartCoroutine(CurrentAudio.PlayWithFadeEffect());
+                MusicManager.Singleton.StartCoroutine(CurrentAudio.PlayWithFadeEffect());
                 yield return new WaitForSeconds(CurrentAudio.Source.clip.length - _fadeEffectLength); 
             }
             
@@ -174,7 +169,7 @@ public class AudioLoop
                 if (PlayOnce)
                 {
                     // Плейлист закончился, дропаем корутину
-                    _allScripts.StopCoroutine(_playExecutorCoroutine);
+                    MusicManager.Singleton.StopCoroutine(_playExecutorCoroutine);
                     return;
                 }
                 
@@ -195,7 +190,7 @@ public class AudioLoop
     public void Stop()
     {
         // Убиваем корутину Play
-        _allScripts.StopCoroutine(_playExecutorCoroutine);
+        MusicManager.Singleton.StopCoroutine(_playExecutorCoroutine);
         _playExecutorCoroutine = null;
         _currentIndex = 0;
         CurrentAudio.Stop();
@@ -208,7 +203,7 @@ public class AudioLoop
     public void Pause()
     {
         // Убиваем корутину Play
-        _allScripts.StopCoroutine(_playExecutorCoroutine);
+        MusicManager.Singleton.StopCoroutine(_playExecutorCoroutine);
         _playExecutorCoroutine = null;
         CurrentAudio.Pause();
     }
@@ -221,6 +216,6 @@ public class AudioLoop
     {
         CurrentAudio.Resume();
         yield return new WaitForSeconds(CurrentAudio.Source.clip.length - CurrentAudio.Source.time); // Ждем конца текущего трека
-        _allScripts.StartCoroutine(PlayExecutor());
+        MusicManager.Singleton.StartCoroutine(PlayExecutor());
     }
 }

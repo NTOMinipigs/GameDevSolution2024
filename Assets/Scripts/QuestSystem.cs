@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Система квестов (q for open it)
 /// </summary>
 public class QuestSystem : MonoBehaviour
 {
+    public static QuestSystem Singleton { get; private set; }
     public GameObject questMenu;
     [SerializeField] private GameObject prehistoryObj;
     [SerializeField] private TextMeshProUGUI totalQuestText;
@@ -14,7 +17,11 @@ public class QuestSystem : MonoBehaviour
     [SerializeField] private quest[] questsInGame = new quest[0];
     public int totalStep;
     public quest totalQuest;
-    [SerializeField] private AllScripts scripts;
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     public quest FindQuest(string questName)
     {
@@ -60,7 +67,7 @@ public class QuestSystem : MonoBehaviour
     private void DoStep(int step)
     {
         if (totalQuest.steps[step].startStepWithDialog != "")
-            scripts.dialogManager.ActivateDialog(totalQuest.steps[step].startStepWithDialog);
+            DialogManager.Singleton.ActivateDialog(totalQuest.steps[step].startStepWithDialog);
     }
 
     public void UpdateQuestUI()
@@ -83,10 +90,10 @@ public class QuestSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (!scripts.CheckOpenedWindows(!questMenu.activeSelf)) // Если какая-то менюха уже открыта
+            if (!GameMenuManager.Singleton.CheckOpenedWindows(!questMenu.activeSelf)) // Если какая-то менюха уже открыта
             {
                 questMenu.gameObject.SetActive(!questMenu.activeSelf);
-                scripts.cameraMove.blockMove = questMenu.activeSelf;
+                CameraMove.Singleton.blockMove = questMenu.activeSelf;
                 UpdateQuestUI();
             }
         }

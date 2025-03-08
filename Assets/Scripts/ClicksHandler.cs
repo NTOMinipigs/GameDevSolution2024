@@ -6,7 +6,6 @@ public class ClicksHandler : MonoBehaviour
     private Bear _selectedBear;
     [SerializeField] private TextMeshProUGUI textRayTotal;
     [SerializeField] private LayerMask layerMaskInteract;
-    [SerializeField] private AllScripts scripts;
 
     /// <summary>
     /// Показать текущий статус сущности после клика
@@ -24,7 +23,7 @@ public class ClicksHandler : MonoBehaviour
             switch (hit.collider.gameObject.tag)
             {
                 case "bear":
-                    _selectedBear = scripts.colonyManager.GetBear(hit.collider.gameObject.name);
+                    _selectedBear = ColonyManager.Singleton.GetBear(hit.collider.gameObject.name);
                     textRayTotal.text = _selectedBear.TraditionStr;
                     break;
                 case "building":

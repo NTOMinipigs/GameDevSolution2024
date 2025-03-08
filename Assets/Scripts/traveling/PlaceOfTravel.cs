@@ -16,10 +16,3 @@ public class PlaceOfTravel
     [HideInInspector] public GameObject buttonInMap;
     public Reward[] rewards = new Reward[0];
 }
-
-[System.Serializable]
-public class Reward
-{
-    public float count;
-    public Resources typeOfReward;
-}

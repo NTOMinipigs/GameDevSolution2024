@@ -13,18 +13,20 @@ public class Bear
     /// 2д спрайт медведя в диалоге
     /// </summary>
     [JsonIgnore] public Sprite sprite;
-    
+
     /// <summary>
     /// Объект Tradition из enum. Определяет профессию медвдея
     /// Сереализуемый объект в json
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("tradition")] public Traditions tradition;
-    
+    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("tradition")]
+    public Traditions tradition;
+
     /// <summary>
     /// Объект Activity из enum. Определяет активность медведя
     /// Сереализуемый объект в json
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("activity")]  public Activities activity;
+    [JsonConverter(typeof(StringEnumConverter))] [JsonProperty("activity")]
+    public Activities activity;
 
     /// <summary>
     /// gameName - имя медведя которое видит разработчик (gameObject name)
@@ -55,7 +57,7 @@ public class Bear
     /// Может двигаться или нет
     /// </summary>
     public bool canMove = true;
-    
+
     /// <summary>
     /// x
     /// </summary>
@@ -71,18 +73,24 @@ public class Bear
     /// </summary>
     [JsonProperty("z")] public float z;
 
-    
+
     /// <summary>
     /// Получить строку традиции. УСТАРЕЛО! Оставил для обратной совместимки, используй TraditionManager
     /// </summary>
-     public string TraditionStr => tradition.GetString();
+    public string TraditionStr => tradition.GetString();
 
     /// <summary>
     /// Получить строку активности. УСТАРЕЛО! Оставил для обратной совместимки, используй ActivityManager
     /// </summary>
     public string ActivityStr => activity.GetString();
 
-    
+    /// <summary>
+    /// Просто пустышка
+    /// </summary>
+    public Bear()
+    {
+    }
+
     /// <summary>
     /// Конструктор медведя
     /// </summary>

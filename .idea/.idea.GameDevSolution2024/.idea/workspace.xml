@@ -4,24 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="GameEvents manager base + a lot of fixes">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/APIClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveAndLoad.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/build/BuildingSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StreamingAssets/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/bodyFarmer.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/bodyFarmer.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/corpseBee.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/corpseBee.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/glassBee.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/glassBee.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/gryadki.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/gryadki.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/technoDoor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/technoDoor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/fabricMaterial.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/fabricMaterial.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/farm.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/farm.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/farm.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/farm.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/beeFabric.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/beeFabric.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/fabricMaterial.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/fabricMaterial.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/sunPanel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/sunPanel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/bodyFarmerTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/bodyFarmerTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricNormal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricNormal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricTexture.png.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +61,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ed969b0e627d471da4848289f9c322df46ae00/7f/b3f1cf97/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/projects/bear/GameDevSolution2024/Assets/Other/accid___(Ru)_0 SDF.asset" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy/Editor/ViewSwitcher.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -104,10 +118,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="20380">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19952">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="20380" />
+      <option name="pid" value="19952" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
         <list>
@@ -149,7 +163,9 @@
       <workItem from="1740668464554" duration="598000" />
       <workItem from="1740750919306" duration="17900000" />
       <workItem from="1741178506833" duration="5774000" />
-      <workItem from="1741259609304" duration="8957000" />
+      <workItem from="1741259609304" duration="15269000" />
+      <workItem from="1741374695730" duration="2372000" />
+      <workItem from="1741416976712" duration="10681000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -295,7 +311,39 @@
       <option name="project" value="LOCAL" />
       <updated>1741200934811</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Bug fixes + health resource destroy">
+      <option name="closed" value="true" />
+      <created>1741275113755</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1741275113755</updated>
+    </task>
+    <task id="LOCAL-00020" summary="GameEvents proto + traveling change">
+      <option name="closed" value="true" />
+      <created>1741374747302</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1741374747302</updated>
+    </task>
+    <task id="LOCAL-00021" summary="All scripts deleted -&gt; singletons added">
+      <option name="closed" value="true" />
+      <created>1741376451584</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1741376451584</updated>
+    </task>
+    <task id="LOCAL-00022" summary="GameEvents manager base + a lot of fixes">
+      <option name="closed" value="true" />
+      <created>1741438989597</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1741438989597</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,6 +378,55 @@
     <MESSAGE value="Small resource update" />
     <MESSAGE value="UI change + workers text(maybe refactoring later) + some fixes" />
     <MESSAGE value="Workers work inside + some fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Workers work inside + some fixes" />
+    <MESSAGE value="Bug fixes + health resource destroy" />
+    <MESSAGE value="GameEvents proto + traveling change" />
+    <MESSAGE value="All scripts deleted -&gt; singletons added" />
+    <MESSAGE value="GameEvents manager base + a lot of fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="GameEvents manager base + a lot of fixes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs</url>
+          <line>36</line>
+          <properties documentPath="E:\projects\bear\GameDevSolution2024\Assets\Scripts\Camera\CameraMove.cs" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="1050" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1097" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Camera/CameraMove.cs</url>
+          <line>42</line>
+          <properties documentPath="E:\projects\bear\GameDevSolution2024\Assets\Scripts\Camera\CameraMove.cs" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="1441" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1547" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/build/BuildingSaveSystem.cs</url>
+          <line>46</line>
+          <properties documentPath="E:\projects\bear\GameDevSolution2024\Assets\Scripts\build\BuildingSaveSystem.cs" containingFunctionPresentation="Method 'GetPrefabByName'">
+            <startOffsets>
+              <option value="1320" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1402" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
