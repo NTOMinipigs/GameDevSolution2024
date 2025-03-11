@@ -1,16 +1,27 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+
+/// <summary>
+/// Управляет главным меню
+/// </summary>
 public class MenuManager : MonoBehaviour
 {
+    #region хуйня полная  
+
     [SerializeField] private Preference preference; // Нужно сделать загрузку и сохранение
     [SerializeField] private GameObject menuNickname;
     [SerializeField] private TMP_InputField inputFieldNickname;
     [SerializeField] private Player player;
     [SerializeField] private APIClient apiClient;
+    [SerializeField] private GameObject enterToGameCanvas;
+    [SerializeField] private GameObject authCanvas;
+    
 
+    
     private Dictionary<string, int> emptyInventory = new()
     {
         {"materials", 0},
@@ -26,6 +37,9 @@ public class MenuManager : MonoBehaviour
         {"maxBears", 0},
         {"maxMaterialPlus", 0},
     };
+    
+    #endregion
+
 
     private void Start()
     {
@@ -40,12 +54,18 @@ public class MenuManager : MonoBehaviour
     public void ExitGame() => Application.Quit();
     public void OpenPreferencs() => preference.ManagePrefenceMenu();
 
+    private void ActivateEnterMenu()
+    {
+        authCanvas.SetActive(false);
+        enterToGameCanvas.SetActive(true);
+    }
+
     public async void ActivateNickname() // Вызывать при первом старте?
     {
 
         if (inputFieldNickname.text != "")
         {
-            menuNickname.gameObject.SetActive(false);
+            ActivateEnterMenu();
             List<APIClient.UserInventory> users = await apiClient.GetUsersListRequest();
 
             foreach (APIClient.UserInventory user in users)
@@ -66,13 +86,16 @@ public class MenuManager : MonoBehaviour
             }
 
             player.playerName = inputFieldNickname.text;
-            menuNickname.gameObject.SetActive(false);
+            ActivateEnterMenu();
         }
     }
 
     public void SetQuest()
     {
         player.playerName = "nickname";
-        menuNickname.gameObject.SetActive(false);
+        ActivateEnterMenu();
     }
+    
+    
+    
 }
