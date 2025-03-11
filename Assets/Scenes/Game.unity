@@ -27173,6 +27173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7866e64f1d7a90e4fb82d2559d424f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 15, z: -20}
+  smoothSpeed: 5
+  camera: {fileID: 1727350349}
   textName: {fileID: 1830313224}
   textDialog: {fileID: 1082012928}
   iconImage: {fileID: 45634956}
