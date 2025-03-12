@@ -24,7 +24,7 @@ public class ClicksHandler : MonoBehaviour
             {
                 case "bear":
                     _selectedBear = ColonyManager.Singleton.GetBear(hit.collider.gameObject.name);
-                    textRayTotal.text = _selectedBear.TraditionStr;
+                    textRayTotal.text = _selectedBear.tradition.GetString();
                     break;
                 case "building":
                     buildingController = hit.collider.gameObject.GetComponent<BuildingController>();

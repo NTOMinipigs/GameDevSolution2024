@@ -100,7 +100,7 @@ public class DialogManager : MonoBehaviour
         if (GameObject.Find(_selectedBear.gameName))
             CameraMove.Singleton.MoveAndZoom(GameObject.Find(_selectedBear.gameName).transform.position, 20f);
 
-        textName.text = _selectedBear?.bearName + " | " + _selectedBear?.TraditionStr;
+        textName.text = _selectedBear?.bearName + " | " + _selectedBear?.tradition.GetString();
         StartCoroutine(SetText(_selectedStep.text));
         iconImage.sprite = _selectedStep.icon;
         iconImage.SetNativeSize();
@@ -134,7 +134,7 @@ public class DialogManager : MonoBehaviour
     private string CodeTextReplace(string text)
     {
         if (text.Contains("{activity}"))
-            return text.Replace("{activity}", _selectedBear.ActivityStr);
+            return text.Replace("{activity}", _selectedBear.activity.GetString());
         return text;
     }
 

@@ -4,37 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="GameEvents manager base + a lot of fixes">
+    <list default="true" id="1b67a886-73a5-4aed-8e8e-4de73cbabf45" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearEffects.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/BearEffects.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameDevSolution2024/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/bodyFarmer.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/bodyFarmer.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/corpseBee.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/corpseBee.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/glassBee.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/glassBee.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/gryadki.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/gryadki.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Buildings/technoDoor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Buildings/technoDoor.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/beeFabric.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/fabricMaterial.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/fabricMaterial.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/farm.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/farm.fbx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/farm.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/farm.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/beeFabric.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/beeFabric.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/fabricMaterial.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/fabricMaterial.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/farm.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Buildings/sunPanel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Buildings/sunPanel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/beeFabricTexture.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/bodyFarmerTexture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/bodyFarmerTexture.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricNormal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricNormal.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricTexture.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/fabricTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Other/accid___(Ru)_0 SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/bioFuel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/foodBox.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/honeyBox.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/stone.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ClicksHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/Bear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/Bear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Colony/ColonyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DialogManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEventsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameEvents/GameEventsManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,15 +102,13 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19952">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="19952" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -165,7 +147,8 @@
       <workItem from="1741178506833" duration="5774000" />
       <workItem from="1741259609304" duration="15269000" />
       <workItem from="1741374695730" duration="2372000" />
-      <workItem from="1741416976712" duration="10681000" />
+      <workItem from="1741416976712" duration="13049000" />
+      <workItem from="1741615011925" duration="604000" />
     </task>
     <task id="LOCAL-00001" summary="GameTime added + day/night light changes">
       <option name="closed" value="true" />
@@ -343,7 +326,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741438989597</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fucking remodel of buildings(from bad to bad)">
+      <option name="closed" value="true" />
+      <created>1741469444319</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1741469444319</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -382,7 +373,8 @@
     <MESSAGE value="GameEvents proto + traveling change" />
     <MESSAGE value="All scripts deleted -&gt; singletons added" />
     <MESSAGE value="GameEvents manager base + a lot of fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="GameEvents manager base + a lot of fixes" />
+    <MESSAGE value="fucking remodel of buildings(from bad to bad)" />
+    <option name="LAST_COMMIT_MESSAGE" value="fucking remodel of buildings(from bad to bad)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
