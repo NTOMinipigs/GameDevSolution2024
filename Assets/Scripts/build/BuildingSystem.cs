@@ -120,7 +120,7 @@ public class BuildingSystem : MonoBehaviour
     public void AddWorkerToBuilding()
     {
         _selectedBuildController.workersCount++;
-        ColonyManager.Singleton.CreateNewTask(TasksMode.Create, _selectedBuildController.gameObject,
+        BearTaskManager.Singleton.CreateNewTask(TasksMode.Create, _selectedBuildController.gameObject,
             _selectedBuilding.typeOfWorkers, -1f);
 
         ManageBuildMenu();
@@ -132,7 +132,7 @@ public class BuildingSystem : MonoBehaviour
     public void AddWorkerToResource()
     {
         _selectedBuildController.workersCount++;
-        ColonyManager.Singleton.CreateNewTask(TasksMode.GetResource, _selectedBuildController.gameObject,
+        BearTaskManager.Singleton.CreateNewTask(TasksMode.GetResource, _selectedBuildController.gameObject,
             Traditions.Drone, -1f);
 
         ManageBuildMenu();
@@ -147,13 +147,13 @@ public class BuildingSystem : MonoBehaviour
         if (!resource)
         {
             UpdateBuildingText();
-            ColonyManager.Singleton.FindAndEndTask(_selectedBuilding.typeOfWorkers,
+            BearTaskManager.Singleton.FindAndEndTask(_selectedBuilding.typeOfWorkers,
                 _selectedBuildController.gameObject);
         }
         else
         {
             UpdateResourceText();
-            ColonyManager.Singleton.FindAndEndTask(Traditions.Drone, _selectedBuildController.gameObject);
+            BearTaskManager.Singleton.FindAndEndTask(Traditions.Drone, _selectedBuildController.gameObject);
         }
 
         ManageBuildMenu();
@@ -298,73 +298,6 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab)) // Активация меню какое здание построить
-        {
-            if (!GameMenuManager.Singleton.CheckOpenedWindows(!buildingCreateMenu
-                    .activeSelf)) // Если какая-то менюха уже открыта
-            {
-                buildingCreateMenu.gameObject.SetActive(!buildingCreateMenu.activeSelf);
-                _noteBlock.gameObject.SetActive(false);
-                ChangeBuildingPage(buildingsBearMenu); // Исходная
-                if (!buildingCreateMenu.activeSelf && _flyingBuildingController)
-                    Destroy(_flyingBuildingController.gameObject);
-            }
-        }
-
-        // TODO: сделать отмену выбора текущего здания + смену выбранного здания на другое(оно мб работает)
-        if (_flyingBuildingController) // Если зданиее не выделено
-        {
-            if (Input.GetKeyDown(KeyCode.R)) // Поворот здания
-            {
-                _flyingBuildingController.size = new Vector2Int(_flyingBuildingController.size.y,
-                    _flyingBuildingController.size.x);
-                _flyingBuildingController.transform.Rotate(0, 90f, 0);
-            }
-
-            var groundPlane = new Plane(Vector3.up, Vector3.zero);
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition); // Пускаем луч из камеры
-
-            if (groundPlane.Raycast(ray, out float position)) // Хз это за хуйня
-            {
-                Vector3 worldPosition = ray.GetPoint(position);
-
-                int x = Mathf.RoundToInt(worldPosition.x);
-                int y = Mathf.RoundToInt(worldPosition.z);
-
-                x -= _flyingBuildingController.size.x / 2;
-                y -= _flyingBuildingController.size.y / 2;
-
-                bool available = true;
-
-                // Если здание за сеткой - помечать расположение недействительным
-                if (x < -gridSize.x / 2 || x > gridSize.x / 2 - _flyingBuildingController.size.x)
-                    available = false;
-                if (y < -gridSize.y / 2 || y > gridSize.y / 2 - _flyingBuildingController.size.y)
-                    available = false;
-
-                // Если здание расположено на другом - помечать расположение недействительным
-                if (available && IsPlaceTaken(x, y)) available = false;
-
-                _flyingBuildingController.transform.position =
-                    new Vector3(x + _flyingBuildingController.size.x / 2f, 4,
-                        y + _flyingBuildingController.size.y / 2f);
-
-                if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
-                    PlaceFlyingBuilding(x, y);
-
-                if (Input.GetMouseButtonDown(1)) // Отмена ставить строение
-                {
-                    Destroy(_flyingBuildingController.gameObject);
-                    _noteBlock.gameObject.SetActive(false);
-                }
-
-                _flyingBuildingController.SetTransparent(available); // Смена окраски
-            }
-        }
-    }
-
     /// <summary>
     /// Проверка - занято ли место
     /// </summary>
@@ -408,7 +341,7 @@ public class BuildingSystem : MonoBehaviour
                     break;
             }
 
-            ColonyManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
+            BearTaskManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
                 Traditions.Drone,
                 building.stepsNeed);
             _flyingBuildingController.SetBuilding();
@@ -495,6 +428,72 @@ public class BuildingSystem : MonoBehaviour
                 "Повышение лимитов за здание",
                 Player.Instance.playerName,
                 new Dictionary<string, string> { { resource, "+" + building.resourceGive } });
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab)) // Активация меню какое здание построить
+        {
+            if (!GameMenuManager.Singleton.CheckOpenedWindows(!buildingCreateMenu
+                    .activeSelf)) // Если какая-то менюха уже открыта
+            {
+                buildingCreateMenu.gameObject.SetActive(!buildingCreateMenu.activeSelf);
+                _noteBlock.gameObject.SetActive(false);
+                ChangeBuildingPage(buildingsBearMenu); // Исходная
+                if (!buildingCreateMenu.activeSelf && _flyingBuildingController)
+                    Destroy(_flyingBuildingController.gameObject);
+            }
+        }
+
+        if (_flyingBuildingController) // Если зданиее не выделено
+        {
+            if (Input.GetKeyDown(KeyCode.R)) // Поворот здания
+            {
+                _flyingBuildingController.size = new Vector2Int(_flyingBuildingController.size.y,
+                    _flyingBuildingController.size.x);
+                _flyingBuildingController.transform.Rotate(0, 90f, 0);
+            }
+
+            var groundPlane = new Plane(Vector3.up, Vector3.zero);
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition); // Пускаем луч из камеры
+
+            if (groundPlane.Raycast(ray, out float position)) // Хз это за хуйня
+            {
+                Vector3 worldPosition = ray.GetPoint(position);
+
+                int x = Mathf.RoundToInt(worldPosition.x);
+                int y = Mathf.RoundToInt(worldPosition.z);
+
+                x -= _flyingBuildingController.size.x / 2;
+                y -= _flyingBuildingController.size.y / 2;
+
+                bool available = true;
+
+                // Если здание за сеткой - помечать расположение недействительным
+                if (x < -gridSize.x / 2 || x > gridSize.x / 2 - _flyingBuildingController.size.x)
+                    available = false;
+                if (y < -gridSize.y / 2 || y > gridSize.y / 2 - _flyingBuildingController.size.y)
+                    available = false;
+
+                // Если здание расположено на другом - помечать расположение недействительным
+                if (available && IsPlaceTaken(x, y)) available = false;
+
+                _flyingBuildingController.transform.position =
+                    new Vector3(x + _flyingBuildingController.size.x / 2f, 4,
+                        y + _flyingBuildingController.size.y / 2f);
+
+                if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
+                    PlaceFlyingBuilding(x, y);
+
+                if (Input.GetMouseButtonDown(1)) // Отмена ставить строение
+                {
+                    Destroy(_flyingBuildingController.gameObject);
+                    _noteBlock.gameObject.SetActive(false);
+                }
+
+                _flyingBuildingController.SetTransparent(available); // Смена окраски
+            }
         }
     }
 }

@@ -49,7 +49,7 @@ public class Bear
     [JsonProperty("hungry")] public float hungry;
 
     /// <summary>
-    /// Настроение медведя
+    /// Усталость медведя
     /// </summary>
     [JsonProperty("tired")] public float tired;
 
@@ -72,17 +72,6 @@ public class Bear
     /// z
     /// </summary>
     [JsonProperty("z")] public float z;
-
-
-    /// <summary>
-    /// Получить строку традиции. УСТАРЕЛО! Оставил для обратной совместимки, используй TraditionManager
-    /// </summary>
-    public string TraditionStr => tradition.GetString();
-
-    /// <summary>
-    /// Получить строку активности. УСТАРЕЛО! Оставил для обратной совместимки, используй ActivityManager
-    /// </summary>
-    public string ActivityStr => activity.GetString();
 
     /// <summary>
     /// Просто пустышка

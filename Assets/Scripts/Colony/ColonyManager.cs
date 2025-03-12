@@ -13,7 +13,8 @@ using Random = UnityEngine.Random;
 public class ColonyManager : MonoBehaviour
 {
     public static ColonyManager Singleton { get; private set; }
-
+    public BearTaskManager BearTaskManager = new BearTaskManager();
+    
     [Header("Main resources")]
 
     # region Resources
@@ -249,12 +250,12 @@ public class ColonyManager : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
+        BearTaskManager.Initialize();
     }
 
     private async void Start()
     {
         _systemSaver = gameObject.GetComponent<SystemSaver>();
-
         // Здесь инициализируется словарь с значениями-ссылками на ресурсы
         _materialsRefs = new Dictionary<string, Func<float>>()
         {
@@ -374,6 +375,17 @@ public class ColonyManager : MonoBehaviour
         return newBear;
     }
 
+    public Bear GenerateNewBearWithRandomTradition()
+    {
+        Bear newBear = new Bear();
+        // Рандомный выбор по ВЫБРАННЫМ традициям
+        int traditionRandom = Random.Range(1, 5);
+        newBear = GenerateNewBear((Traditions)traditionRandom);
+
+        BearSpawn(newBear);
+        return newBear;
+    }
+
     /// <summary>
     /// Генерирует ЗАДАННОГО медведя
     /// </summary>
@@ -392,6 +404,7 @@ public class ColonyManager : MonoBehaviour
         SaveBear(newBear, serializableBear.name);
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// Осуществляет создание медведей на поле
     /// </summary>
@@ -429,11 +442,11 @@ public class ColonyManager : MonoBehaviour
     /// <summary>
     /// Получить свободного медведя
     /// </summary>
-    private Bear GetChillBear(Traditions bearTradition)
+    public Bear GetChillBear(Traditions bearTradition)
     {
         foreach (Bear bear in bearsInColony)
         {
-            if ((bear.activity == Activities.Chill || GetBearTask(bear) == null) &&
+            if ((bear.activity == Activities.Chill || BearTaskManager.Singleton.GetBearTask(bear) == null) &&
                 (bear.tradition == bearTradition || bearTradition == Traditions.None))
                 return bear;
         }
@@ -497,99 +510,48 @@ public class ColonyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Создать задачу на медведе
+    /// Выдать награды
     /// </summary>
-    public void CreateNewTask(TasksMode newTaskMode, GameObject objectOfTask, Traditions traditionToTask, float steps)
+    /// <param name="eventRewards">Список наград</param>
+    /// <returns></returns>
+    public string GiveRewards(Reward[] eventRewards)
     {
-        BearTask task = new BearTask(newTaskMode, objectOfTask, traditionToTask, steps);
-
-        Bear chillBear = GetChillBear(traditionToTask);
-        if (chillBear != null)
+        string textReward = "";
+        foreach (Reward reward in eventRewards)
         {
-            task.selectedBear = chillBear;
-            chillBear.activity = Activities.Work;
-            UpdateWorkersCount();
-        }
-
-        bearTasks.Add(task);
-    }
-
-    /// <summary>
-    /// Выдать освободившемуся медведю новую задачу
-    /// </summary>
-    private void SetTaskToBear(Bear bear)
-    {
-        foreach (BearTask task in bearTasks)
-        {
-            if (task.selectedBear == null && bear.tradition == task.traditionForTask)
+            switch (reward.typeOfReward)
             {
-                task.selectedBear = bear;
-                bear.activity = Activities.Work;
-                break;
+                case Resources.Material:
+                    Materials += reward.count;
+                    textReward += "+" + Resources.Material + " x" + reward.count + "\n";
+                    break;
+                case Resources.MaterialPlus:
+                    MaterialsPlus += reward.count;
+                    textReward += "+" + Resources.MaterialPlus + " x" + reward.count + "\n";
+                    break;
+                case Resources.Food:
+                    Food += reward.count;
+                    textReward += "+" + Resources.Food + " x" + reward.count + "\n";
+                    break;
+                case Resources.Honey:
+                    Honey += reward.count;
+                    textReward += "+" + Resources.Honey + " x" + reward.count + "\n";
+                    break;
+                case Resources.BioFuel:
+                    Biofuel += reward.count;
+                    textReward += "+" + Resources.BioFuel + " x" + reward.count + "\n";
+                    break;
+                case Resources.Bears:
+                    for (int i = 0; i < reward.count; i++)
+                    {
+                        Bear newBear = GenerateNewBearWithRandomTradition();
+                        textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";
+                    }
+                    break;
             }
         }
 
-        // Если работы не нашлось
-        if (GetBearTask(bear) == null)
-            bear.activity = Activities.Chill;
-    }
-
-    public BearTask GetBearTask(Bear bear)
-    {
-        if (bearTasks.Count > 0 && bear != null)
-        {
-            foreach (BearTask task in bearTasks)
-            {
-                if (task.selectedBear.gameName == bear.gameName)
-                    return task;
-            }
-        }
-
-        return null;
-    }
-
-    public void EndTask(BearTask task)
-    {
-        UpdateWorkersCount();
-        if (task.taskMode == TasksMode.Build)
-        {
-            BuildingController buildingController = task.objectOfTask.GetComponent<BuildingController>();
-            buildingController.SetNormal();
-            buildingController.isBuild = true;
-            buildingController.isReady = true;
-            BuildingSystem.Singleton.SetBuildSettings(buildingController);
-            if (buildingController.Building is Building building) // Настройки для зданий
-            {
-                scoutHome = building.scoutHome;
-            }
-        }
-        //else if (task.taskMode == TasksMode.GetResource)
-        //BuildingSystem.Singleton.PickUpResource(task.objectOfTask);
-
-        Bear selectedBear = task.selectedBear;
-        bearTasks.Remove(task);
-
-        if (selectedBear.tired >= 5 || selectedBear.hungry >= 5)
-            selectedBear.activity = Activities.Chill;
-        else
-            SetTaskToBear(selectedBear);
-    }
-
-    public void FindAndEndTask(Traditions tradition, GameObject taskObj, bool endAllTask = false)
-    {
-        foreach (Bear bear in bearsInColony)
-        {
-            if (bear.tradition == tradition)
-            {
-                BearTask task = GetBearTask(bear);
-                if (task != null && task.objectOfTask == taskObj)
-                {
-                    EndTask(task);
-                    if (!endAllTask)
-                        break;
-                }
-            }
-        }
+        return textReward;
     }
 
     private void Update()
@@ -634,7 +596,8 @@ public class ColonyManager : MonoBehaviour
             {
                 Bear bear = GetBear(child.name);
                 child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName +
-                    "\nТрадиция: " + bear.TraditionStr + "\nТекущее дело: " + bear.ActivityStr + "\nУсталость/голод: " +
+                    "\nТрадиция: " + bear.tradition.GetString() + "\nТекущее дело: " + bear.activity.GetString() +
+                    "\nУсталость/голод: " +
                     (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
             }
         }
