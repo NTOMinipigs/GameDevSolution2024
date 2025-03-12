@@ -80,6 +80,7 @@ public class SaveAndLoad : MonoBehaviour
         LoadBears();
         LoadBuilds();
         LoadTasks();
+        LoadPreference();
     }
 
     /// <summary>
@@ -95,7 +96,7 @@ public class SaveAndLoad : MonoBehaviour
     }
 
 
-    // Часть иниициализации (Create)
+    # region Create
 
     /// <summary>
     /// Вызывает методы создания игры, например создает медведей постройки и т.д.
@@ -104,6 +105,7 @@ public class SaveAndLoad : MonoBehaviour
     {
         CreateBears();
         CreateBuilds();
+        CreatePreference();
         QuestSystem.Singleton.StartFirst();
         ColonyManager.Singleton.Food = 10;
         ColonyManager.Singleton.MaxMaterials = 50;
@@ -137,8 +139,16 @@ public class SaveAndLoad : MonoBehaviour
         BuildingSaveSystem.Singleton.CreateStartBuilds();
     }
 
+    private void CreatePreference()
+    {
+        SystemSaver.Singleton.gameSave.PreferenceSave.sensitivity = 5f;
+        SystemSaver.Singleton.gameSave.PreferenceSave.globalVolume = 100f;
+        SystemSaver.Singleton.gameSave.PreferenceSave.postProcessing = true;
+    }
 
-    // Часть Загрузки (Load)
+    #endregion
+    
+    # region load
 
     /// <summary>
     /// Загрузит медведей из json'а
@@ -186,6 +196,8 @@ public class SaveAndLoad : MonoBehaviour
         }
     }
 
+    
+    
     /// <summary>
     /// Загрузить постройки из json
     /// </summary>
@@ -196,7 +208,19 @@ public class SaveAndLoad : MonoBehaviour
     }
 
 
-    // Часть сохранения (Save)
+    /// <summary>
+    /// Загрузить настройки из json
+    /// </summary>
+    private void LoadPreference()
+    {
+        Preference.Singleton.globalVolume = SystemSaver.Singleton.gameSave.PreferenceSave.globalVolume;
+        Preference.Singleton.sensitivityOfCamera = SystemSaver.Singleton.gameSave.PreferenceSave.sensitivity;
+        Preference.Singleton.postProcessing = SystemSaver.Singleton.gameSave.PreferenceSave.postProcessing;
+    }
+    
+    #endregion
+
+    #region save
 
     /// <summary>
     /// Сохранить медведей, сведения о них, например позиции
@@ -248,11 +272,6 @@ public class SaveAndLoad : MonoBehaviour
             systemSaver.gameSave.tasksSaves.Add(saveData);
         }
     }
-
-    /// <summary>
-    /// Сохранять постройки в json
-    /// </summary>
-    private void SaveBuilds()
-    {
-    }
+    
+    #endregion
 }

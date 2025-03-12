@@ -176,11 +176,6 @@ public class DialogManager : MonoBehaviour
     {
         if (_activatedDialog != null)
         {
-            if (_selectedBear != null)
-            {
-                GameObject gameObject  = GameObject.Find(_selectedBear.gameName);
-                camera.transform.position = gameObject.transform.position + offset;
-            }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (_animatingText)
@@ -192,6 +187,11 @@ public class DialogManager : MonoBehaviour
                 }
                 else
                     DialogMoveNext();
+            }
+            if (_selectedBear != null)
+            {
+                GameObject gameObject  = GameObject.Find(_selectedBear.gameName);
+                camera.transform.position = gameObject.transform.position + offset;
             }
         }
     }
