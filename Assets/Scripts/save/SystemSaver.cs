@@ -9,6 +9,12 @@ public class SystemSaver : MonoBehaviour
 {
 
     /// <summary>
+    /// Singleton
+    /// </summary>
+    public static SystemSaver Singleton { get; private set; }
+
+    
+    /// <summary>
     /// Здесь хранится информация о игре
     /// </summary>
     public GameSave gameSave;
@@ -18,6 +24,14 @@ public class SystemSaver : MonoBehaviour
     /// В singleton паттерне конструктор приватный
     /// </summary>
     private SystemSaver() {}
+    
+    /// <summary>
+    /// awake
+    /// </summary>
+    private void Awake()
+    {
+        Singleton = this;
+    }
     
 
     /// <summary>

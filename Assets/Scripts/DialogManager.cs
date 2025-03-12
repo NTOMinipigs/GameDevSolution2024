@@ -7,13 +7,38 @@ using Random = UnityEngine.Random;
 
 public class DialogManager : MonoBehaviour
 {
+    #region BearSpec
+
+    /// <summary>
+    /// расстояние от камеры до объекта
+    /// </summary>
+    public Vector3 offset;
+    
+    /// <summary>
+    /// Скорость сглаживания
+    /// </summary>
+    public float zoomSpeed;
+
+    /// <summary>
+    /// Камера
+    /// </summary>
+    public Camera camera;
+
+    /// <summary>
+    /// Сохрани здесь позицию камеры, до того как ты прикрепился к медведю
+    /// </summary>
+    private Vector3 beforeCamPosition;
+    
+    #endregion
+    
+    
     public static DialogManager Singleton { get; private set; }
     [SerializeField] private TextMeshProUGUI textName, textDialog;
     [SerializeField] private Image iconImage;
     public GameObject dialogMenu;
 
     public Dialog[] dialogs = new Dialog[0];
-    private Dictionary<string, Dialog> _dialogsDict = new Dictionary<string, Dialog>();
+    private Dictionary<string, Dialog> _dialogsDict = new();
 
     [SerializeField] private int totalStep;
     private Dialog _activatedDialog;
@@ -51,6 +76,8 @@ public class DialogManager : MonoBehaviour
     public void ActivateDialog(string dialogName, string gameNameBear = "",
         bool blockWithOtherMenu = false) // Старт диалога
     {
+        beforeCamPosition = camera.transform.position;
+        
         if (GameMenuManager.Singleton.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
 
@@ -129,6 +156,13 @@ public class DialogManager : MonoBehaviour
         dialogMenu.gameObject.SetActive(false);
         _activatedDialog = null;
         CameraMove.Singleton.blockMove = false;
+        _selectedBear = null;
+        camera.transform.position = beforeCamPosition;
+    }
+
+    private void CameraBack()
+    {
+        
     }
 
     private string CodeTextReplace(string text)
@@ -154,8 +188,27 @@ public class DialogManager : MonoBehaviour
                 else
                     DialogMoveNext();
             }
+            if (_selectedBear != null)
+            {
+                GameObject gameObject  = GameObject.Find(_selectedBear.gameName);
+                camera.transform.position = gameObject.transform.position + offset;
+            }
         }
     }
+
+    // void LateUpdate()
+    // {
+    //     if (_selectedBear != null)
+    //     {
+    //         GameObject bearGameObject = GameObject.Find(_selectedBear.gameName).gameObject;
+    //         Vector3 updatePosition = bearGameObject.transform.position + offset;
+    //         camera.transform.position = Vector3.Lerp(
+    //             bearGameObject.transform.position,
+    //             updatePosition,
+    //             smoothSpeed * Time.deltaTime
+    //             );
+    //     }
+    // }
 
     private IEnumerator SetText(string text)
     {
