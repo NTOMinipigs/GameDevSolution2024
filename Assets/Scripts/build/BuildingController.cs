@@ -87,7 +87,7 @@ public class BuildingController : MonoBehaviour
                 health -= 0.065f;
                 if (health < 0)
                 {
-                    ColonyManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);
+                    BearTaskManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);
                     BuildingSystem.Singleton.buildingCreateMenu.SetActive(false);
                     Destroy(gameObject);
                 }

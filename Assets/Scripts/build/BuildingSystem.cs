@@ -120,7 +120,7 @@ public class BuildingSystem : MonoBehaviour
     public void AddWorkerToBuilding()
     {
         _selectedBuildController.workersCount++;
-        ColonyManager.Singleton.CreateNewTask(TasksMode.Create, _selectedBuildController.gameObject,
+        BearTaskManager.Singleton.CreateNewTask(TasksMode.Create, _selectedBuildController.gameObject,
             _selectedBuilding.typeOfWorkers, -1f);
 
         ManageBuildMenu();
@@ -132,7 +132,7 @@ public class BuildingSystem : MonoBehaviour
     public void AddWorkerToResource()
     {
         _selectedBuildController.workersCount++;
-        ColonyManager.Singleton.CreateNewTask(TasksMode.GetResource, _selectedBuildController.gameObject,
+        BearTaskManager.Singleton.CreateNewTask(TasksMode.GetResource, _selectedBuildController.gameObject,
             Traditions.Drone, -1f);
 
         ManageBuildMenu();
@@ -147,13 +147,13 @@ public class BuildingSystem : MonoBehaviour
         if (!resource)
         {
             UpdateBuildingText();
-            ColonyManager.Singleton.FindAndEndTask(_selectedBuilding.typeOfWorkers,
+            BearTaskManager.Singleton.FindAndEndTask(_selectedBuilding.typeOfWorkers,
                 _selectedBuildController.gameObject);
         }
         else
         {
             UpdateResourceText();
-            ColonyManager.Singleton.FindAndEndTask(Traditions.Drone, _selectedBuildController.gameObject);
+            BearTaskManager.Singleton.FindAndEndTask(Traditions.Drone, _selectedBuildController.gameObject);
         }
 
         ManageBuildMenu();
@@ -408,7 +408,7 @@ public class BuildingSystem : MonoBehaviour
                     break;
             }
 
-            ColonyManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
+            BearTaskManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
                 Traditions.Drone,
                 building.stepsNeed);
             _flyingBuildingController.SetBuilding();

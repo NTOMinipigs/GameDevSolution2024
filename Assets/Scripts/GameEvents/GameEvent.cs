@@ -14,6 +14,11 @@ public class GameEvent
     public string eventName;
 
     /// <summary>
+    /// Тип ивента йоу
+    /// </summary>
+    public TypeOfEvent typeOfEvent;
+
+    /// <summary>
     /// Отображаемое описание ивента
     /// </summary>
     [TextArea(0, 5)]public string eventDescription;

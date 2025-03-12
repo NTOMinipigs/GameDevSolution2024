@@ -78,6 +78,16 @@ public class Reward
 }
 
 /// <summary>
+/// Типы различных ивентов
+/// </summary>
+public enum TypeOfEvent
+{
+    NewResource,
+    Disaster, 
+    ChangeResourceAndDisaster
+}
+
+/// <summary>
 /// Расширение для Enums, позволяет использовать DescriptionAttribute для задания поведения GetString метода
 /// </summary>
 public static class EnumExtensions

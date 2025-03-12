@@ -25,7 +25,7 @@ public class BearMovement : MonoBehaviour
 
     private void Update()
     {
-        BearTask newTask = ColonyManager.Singleton.GetBearTask(totalBear);
+        BearTask newTask = BearTaskManager.Singleton.GetBearTask(totalBear);
 
         var taskColliders = Physics.OverlapSphere(transform.position, 3f, rayInteractLayerMask);
         if (taskColliders.Length > 0)
@@ -89,7 +89,7 @@ public class BearMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        BearTask newTask = ColonyManager.Singleton.GetBearTask(totalBear);
+        BearTask newTask = BearTaskManager.Singleton.GetBearTask(totalBear);
         if (_doingTask && newTask != null)
         {
             totalBear.canMove = false;
@@ -105,7 +105,7 @@ public class BearMovement : MonoBehaviour
 
             if (newTask.needSteps != -1f && newTask.totalSteps >= newTask.needSteps)
             {
-                ColonyManager.Singleton.EndTask(newTask);
+                BearTaskManager.Singleton.EndTask(newTask);
                 _doingTask = false;
             }
         }
