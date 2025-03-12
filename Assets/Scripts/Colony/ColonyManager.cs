@@ -404,6 +404,7 @@ public class ColonyManager : MonoBehaviour
         SaveBear(newBear, serializableBear.name);
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// Осуществляет создание медведей на поле
     /// </summary>

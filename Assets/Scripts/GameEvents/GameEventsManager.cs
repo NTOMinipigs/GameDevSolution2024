@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Класс, контролирующий все события в игре
@@ -32,7 +34,7 @@ public class GameEventsManager : MonoBehaviour
 
     private float _worldTemperature;
     private TextMeshProUGUI _textTemperature;
-    
+
     public int worldHours, worldMinuts;
 
     private int _hoursToNextEvent;
@@ -53,7 +55,7 @@ public class GameEventsManager : MonoBehaviour
             _allGameEventsDict.Add(ge.gameName, ge);
         // Стартовые значения
         _directLight.intensity = 0.3f;
-        _worldTemperature = -25f;
+        WorldTemperature = -25f;
 
         _hoursToNextEvent = Random.Range(3, 10);
 
@@ -65,6 +67,8 @@ public class GameEventsManager : MonoBehaviour
     /// </summary>
     /// <param name="timeScale"></param>
     public void SetTimeScale(float timeScale) => Time.timeScale = timeScale;
+
+    # region Activation of events
 
     public void ActivateEvent(string eventName) => ActivatingEvent(_allGameEventsDict[eventName]);
     public void ActivateEvent(GameEvent gameEvent) => ActivatingEvent(gameEvent);
@@ -78,25 +82,56 @@ public class GameEventsManager : MonoBehaviour
         string textReward = selectedEvent.typeOfEvent switch
         {
             TypeOfEvent.NewResource => ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards),
-            TypeOfEvent.Disaster => ActivateDisaster(),
-            TypeOfEvent.ChangeResourceAndDisaster => ""
+            TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster),
+            TypeOfEvent.ChangeResourceAndDisaster => ActivateDisasterAndReward(selectedEvent),
+            _ => throw new ArgumentOutOfRangeException()
         };
         ActivateEventMenu(selectedEvent, textReward);
     }
 
-    private string ActivateDisaster()
+    /// <summary>
+    /// Активировать бедствие тун тун тун тун тун
+    /// </summary>
+    /// <param name="disaster">Само бедствие</param>
+    /// <returns>Возращает строку с бедствием</returns>
+    private string ActivateDisaster(TypeOfDisaster disaster)
     {
         string textReward = "";
+        if (disaster == TypeOfDisaster.ChangeOfTemperature)
+            textReward = ChangeTemperature();
+
         return textReward;
     }
 
-    private float ChangeTemperature()
+    /// <summary>
+    /// Активирует бедствие и выдает награду
+    /// </summary>
+    /// <param name="selectedEvent">Игровое событие</param>
+    /// <returns></returns>
+    private string ActivateDisasterAndReward(GameEvent selectedEvent)
+    {
+        string textReward = ActivateDisaster(selectedEvent.disaster); // Начальная инициализация
+        textReward += ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards);
+        return textReward;
+    }
+
+    /// <summary>
+    /// Рандомно(от -10 до 10) изменить температуру
+    /// </summary>
+    /// <returns></returns>
+    private string ChangeTemperature()
     {
         float newTemperature = Random.Range(-10, 10);
-        _worldTemperature += newTemperature;
-
-        return newTemperature;
+        WorldTemperature += newTemperature;
+        
+        // Конструкция чисто ради знака
+        if (newTemperature >= 0)
+            return "+" + newTemperature + "\u00b0С";
+        else
+            return newTemperature + "\u00b0С";
     }
+
+    # endregion
 
     # region EventMenu
 
@@ -141,7 +176,7 @@ public class GameEventsManager : MonoBehaviour
             _hoursToNextEvent--;
             if (_hoursToNextEvent == 0) // Если пора активировать ивент
             {
-                GameEvent newEvent = allGameEvents[Random.Range(0, allGameEvents.Length - 1)];
+                GameEvent newEvent = allGameEvents[Random.Range(0, allGameEvents.Length)];
                 bool canActivateEvent = true;
                 if (newEvent.onceEvent) // Если ивент одноразовый
                 {
