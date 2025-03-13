@@ -31,14 +31,14 @@ namespace Cutscene {
         {
             _currentStep++;
 
-            if (stepText.Length < _currentStep)
+            if (stepText.Length - 1 < _currentStep)
             {
                 DropCutscene();
                 return;
             }
             
-            CutsceneView.Singleton.sprite = stepSprite[_currentStep];
-            CutsceneView.Singleton.cutsceneText = stepText[_currentStep];
+            CutsceneView.Singleton.Sprite = stepSprite[_currentStep];
+            CutsceneView.Singleton.CutsceneText = stepText[_currentStep];
         }
 
         /// <summary>

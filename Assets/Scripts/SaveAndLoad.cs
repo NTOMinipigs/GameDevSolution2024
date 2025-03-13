@@ -81,6 +81,7 @@ public class SaveAndLoad : MonoBehaviour
         LoadBuilds();
         LoadTasks();
         LoadPreference();
+        QuestSystem.Singleton.StartFirst();
     }
 
     /// <summary>
@@ -106,7 +107,6 @@ public class SaveAndLoad : MonoBehaviour
         CreateBears();
         CreateBuilds();
         CreatePreference();
-        QuestSystem.Singleton.StartFirst();
         ColonyManager.Singleton.Food = 10;
         ColonyManager.Singleton.MaxMaterials = 50;
         ColonyManager.Singleton.MaxBiofuel = 15;

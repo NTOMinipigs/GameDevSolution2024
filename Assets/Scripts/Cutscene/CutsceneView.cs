@@ -24,24 +24,36 @@ namespace Cutscene
         [SerializeField] private TextMeshProUGUI textHistory;
         [SerializeField] private Image bg;
         [SerializeField] private GameObject fadeObj; // Лол
-        
-        private bool _animatingText, _canStepNext;
+        [SerializeField] public GameObject cutsceneView;
+
+        /// <summary>
+        /// Это должно быть приватным, однако у меня не вышло :sadness:
+        /// </summary>
+        public bool AnimatingText { get; private set; }
+        private bool _canStepNext;
+
+
+        private string _cutsceneText;
         
         #region setters and getters
         
         /// <summary>
         /// Текст в текущей катсцене
         /// </summary>
-        public string cutsceneText
+        public string CutsceneText
         {
-            get => cutsceneText;
-            set => StartCoroutine(UpdateText(value));
+            get => _cutsceneText;
+            set
+            {
+                _cutsceneText = value;
+                StartCoroutine(UpdateText(value));
+            }
         }
 
         /// <summary>
         /// Текущий спрайт
         /// </summary>
-        public Sprite sprite
+        public Sprite Sprite
         {
             set
             {
@@ -73,23 +85,36 @@ namespace Cutscene
         private IEnumerator UpdateText(string text)
         {
             textHistory.text = "";
-            _animatingText = true;
+            AnimatingText = true;
             char[] textChar = text.ToCharArray();
             foreach (char tChar in textChar)
             {
-                if (_animatingText)
+                if (AnimatingText)
                 {
                     textHistory.text += tChar;
                     yield return new WaitForSeconds(0.05f);
                 }
             }
 
-            _animatingText = false;
+            AnimatingText = false;
         }
 
+        /// <summary>
+        /// Пропустите эффект ввода текста
+        /// </summary>
+        public void DropText()
+        {
+            AnimatingText = false;
+            StopAllCoroutines();
+            textHistory.text = CutsceneText;
+        }
+        
+        /// <summary>
+        /// Закройте катсцену
+        /// </summary>
         public void CloseCutscene()
         {
-            gameObject.SetActive(false);
+            cutsceneView.SetActive(false);
         }
         
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cutscene;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -178,6 +179,7 @@ public class DialogManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                if (CutsceneView.Singleton.cutsceneView.active) return;
                 if (_animatingText)
                 {
                     _animatingText = false;
