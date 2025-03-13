@@ -79,6 +79,9 @@ public class GameMenuManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             ManageGameMenu();
+            CameraMove.Singleton.blockMove = !CameraMove.Singleton.blockMove;
+        }
     }
 }
