@@ -73,10 +73,9 @@ public class BearMovement : MonoBehaviour
             Vector3 direction = (moveTarget - transform.position).normalized;
             if (direction != Vector3.zero)
             {
-                Quaternion lookRotation = Quaternion.LookRotation(-direction); // Создаем вращение
-                transform.rotation =
-                    Quaternion.Slerp(transform.rotation, lookRotation,
-                        rotationSpeed * Time.deltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                targetRotation *= Quaternion.Euler(0, 90, 0); // они почему-то хуярят боком, я просто доворачиваю на 90 градусов
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
             }
 
             if (Vector3.Distance(transform.position, moveTarget) < 0.5f)
