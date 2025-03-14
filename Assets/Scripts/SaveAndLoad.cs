@@ -11,26 +11,6 @@ using UnityEngine;
 /// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
-    
-    #region consts
-    private Dictionary<string, int> _emptyInventory = new()
-    {
-        {"materials", 0},
-        {"food", 0},
-        {"bioFuel", 0},
-        {"honey", 0},
-        {"materialPlus", 0},
-        {"energy", 0},
-        {"maxMaterials", 0},
-        {"maxFood", 0},
-        {"maxBioFuel", 0},
-        {"maxHoney", 0},
-        {"maxBears", 0},
-        {"maxMaterialPlus", 0},
-        {"maxEnergy", 0}
-    };
-    #endregion
-    
     /// <summary>
     /// Этот флаг указывает на first boot, костыль
     /// </summary>
@@ -49,7 +29,7 @@ public class SaveAndLoad : MonoBehaviour
             // Загрузите игру в режиме debug, если 
             if (Config.ConfigManager.Instance.config.debug)
                 CreateDebugGame();
-                CreateNewGame();
+            CreateNewGame();
         }
 
         LoadGame();
@@ -136,11 +116,6 @@ public class SaveAndLoad : MonoBehaviour
         CreatePreference();
         CreateInventory();
         firstBoot = true;
-        ColonyManager.Singleton.MaxMaterials = 50;
-        ColonyManager.Singleton.MaxBiofuel = 15;
-        ColonyManager.Singleton.MaxFood = 10;
-        ColonyManager.Singleton.MaxBears = 10;
-        ColonyManager.Singleton.Food = 10;
     }
 
     /// <summary>
@@ -180,13 +155,31 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateInventory()
     {
+    Dictionary<string, int> initInventory = new()
+    {
+        {"materials", 0},
+        {"food", 10},
+        {"bioFuel", 15},
+        {"honey", 0},
+        {"materialPlus", 0},
+        {"energy", 0},
+        {"maxMaterials", 50},
+        {"maxFood", 10},
+        {"maxBioFuel", 15},
+        {"maxHoney", 0},
+        {"maxBears", 10},
+        {"maxMaterialPlus", 0},
+        {"maxEnergy", 0}
+    };
+        
         APIClient.Instance
             .CreatePlayerRequest(
                 Player.Instance.playerName,
-                _emptyInventory);
+                initInventory);
     }
 
     #endregion
+    
     
     # region load
 
@@ -261,23 +254,12 @@ public class SaveAndLoad : MonoBehaviour
     /// <summary>
     /// Загрузите инвентарь
     /// </summary>
-    private void LoadInventory()
+    private async Task LoadInventory()
     {
         APIClient.UserInventory inventory =
-            APIClient.Instance.GetUserInventoryRequest(Player.Instance.playerName).GetAwaiter().GetResult();
+            await APIClient.Instance.GetUserInventoryRequest(Player.Instance.playerName);
         if (inventory == null) return;
-        ColonyManager cl = ColonyManager.Singleton;
-        cl.Materials = inventory.Resources["materials"];
-        cl.Food = inventory.Resources["food"];
-        cl.Biofuel = inventory.Resources["bioFuel"];
-        cl.Honey = inventory.Resources["honey"];
-        cl.MaterialsPlus = inventory.Resources["materialPlus"];
-        cl.Energy = inventory.Resources["energy"];
-        cl.MaxMaterials = inventory.Resources["maxMaterials"];
-        cl.MaxFood = inventory.Resources["maxFood"];
-        cl.MaxBears = inventory.Resources["maxBears"];
-        cl.MaxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
-        cl.MaxEnergy = inventory.Resources["maxEnergy"];
+        ColonyManager.Singleton.SetInventory(inventory);
     }
     
     #endregion
