@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 public class BuildingSystem : MonoBehaviour
 {
     public static BuildingSystem Singleton { get; private set; }
     public GameObject buildingCreateMenu, buildMenu;
 
-    [SerializeField]
-    private Vector2Int gridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
+    [Header("Grid")]
+    public Vector2Int gridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
+    public BuildingController[,] Grid; // Сетка строений
 
     private BuildingController _selectedBuildController; // Выбранное строение для взаимодействий
     private Building _selectedBuilding;
 
-    private BuildingController[,] _grid; // Сетка строений
     private BuildingController _flyingBuildingController; // Строение в процессе постановки
     private Camera _mainCamera;
 
@@ -34,7 +36,9 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private Button buttonAddWorker, buttonRemoveWorker;
     [SerializeField] private Button buttonAddWorkerResources, buttonRemoveWorkerResources;
 
-    [SerializeField] private TextMeshProUGUI textCountWorkers, textCountWorkersResource, textNameWorkers, textDestroy;
+    [SerializeField]
+    private TextMeshProUGUI textCountWorkers, textCountWorkersResource, textNameWorkers, textDestroy, textStop;
+
     [SerializeField] private TextMeshProUGUI textHealth, textEnergy, textResourceName, textResourceRemain;
 
 
@@ -47,7 +51,6 @@ public class BuildingSystem : MonoBehaviour
 
     private void Start()
     {
-        _grid = new BuildingController[gridSize.x, gridSize.y];
         _mainCamera = Camera.main;
 
         // Общая инициализация
@@ -77,41 +80,31 @@ public class BuildingSystem : MonoBehaviour
         ManageBuildMenu();
     }
 
-    public void DisableBuildMenu() => ManageBuildMenu(false); // Для UI кнопки
+    # region WorkersManager
 
-    public void UpdateBuildingText()
+    /// <summary>
+    /// Управление панелью с выставлением числа рабочих/дронов
+    /// </summary>
+    /// <param name="canWork">Можно работать?</param>
+    /// <param name="resource">Это ресурс?</param>
+    private void ManageWorkersPanel(bool canWork, bool resource = false)
     {
-        if (_selectedBuildController.isBuild)
+        if (!resource) // Если это не ресурс
         {
-            textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
-            textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
-            textNameWorkers.text = _selectedBuilding.typeOfWorkers.GetString();
-            textCountWorkers.text = _selectedBuildController.workersCount + "/" +
-                                    _selectedBuildController.Building.MaxWorkers;
-            if (_selectedBuildController.workersCount > 0) // т.е работает
-            {
-                resourceBlockAdd.gameObject.SetActive(true);
-                _resourceAddText.text =
-                    "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
-                    " " + _selectedBuilding.typeResource.GetString();
-            }
-            else
-                resourceBlockAdd.gameObject.SetActive(false);
-        }
-        else
-        {
-            textHealth.text = "Состояние: СТРОЙКА";
-            textEnergy.text = "";
-            resourceBlockAdd.gameObject.SetActive(false);
-        }
-    }
+            int freeWorkersOfTradition =
+                ColonyManager.Singleton.GetCountFreeBearsOfTradition(_selectedBuilding.typeOfWorkers);
+            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isBuild);
 
-    public void UpdateResourceText()
-    {
-        textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
-        textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
-        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" +
-                                        _selectedBuildController.Building.MaxWorkers;
+            buttonAddWorker.interactable = canWork && freeWorkersOfTradition != 0;
+            buttonRemoveWorker.interactable = canWork && _selectedBuildController.workersCount != 0;
+        }
+        else // Если ресурс
+        {
+            int freeWorkersOfTradition =
+                ColonyManager.Singleton.GetCountFreeBearsOfTradition(Traditions.Drone);
+            buttonAddWorkerResources.interactable = canWork && freeWorkersOfTradition != 0;
+            buttonRemoveWorkerResources.interactable = canWork && _selectedBuildController.workersCount != 0;
+        }
     }
 
     /// <summary>
@@ -159,30 +152,9 @@ public class BuildingSystem : MonoBehaviour
         ManageBuildMenu();
     }
 
-    /// <summary>
-    /// Управление панелью с выставлением числа рабочих/дронов
-    /// </summary>
-    /// <param name="canWork">Можно работать?</param>
-    /// <param name="resource">Это ресурс?</param>
-    private void ManageWorkersPanel(bool canWork, bool resource = false)
-    {
-        if (!resource) // Если это не ресурс
-        {
-            int freeWorkersOfTradition =
-                ColonyManager.Singleton.GetCountFreeBearsOfTradition(_selectedBuilding.typeOfWorkers);
-            _workerButtons.gameObject.SetActive(_selectedBuilding.canWork && _selectedBuildController.isBuild);
+    #endregion
 
-            buttonAddWorker.interactable = canWork && freeWorkersOfTradition != 0;
-            buttonRemoveWorker.interactable = canWork && _selectedBuildController.workersCount != 0;
-        }
-        else // Если ресурс
-        {
-            int freeWorkersOfTradition =
-                ColonyManager.Singleton.GetCountFreeBearsOfTradition(Traditions.Drone);
-            buttonAddWorkerResources.interactable = canWork && freeWorkersOfTradition != 0;
-            buttonRemoveWorkerResources.interactable = canWork && _selectedBuildController.workersCount != 0;
-        }
-    }
+    #region BuildMenu
 
     /// <summary>
     /// Управление меню строительства
@@ -214,7 +186,52 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
+    public void DisableBuildMenu() => ManageBuildMenu(false); // Для UI кнопки
+
+    public void UpdateBuildingText()
+    {
+        if (_selectedBuildController.isBuild)
+        {
+            textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
+            if (_selectedBuildController.isReady)
+                textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
+            else
+                textEnergy.text = "Потребление энергии: -" + 0;
+            textNameWorkers.text = _selectedBuilding.typeOfWorkers.GetString();
+            textCountWorkers.text = _selectedBuildController.workersCount + "/" +
+                                    _selectedBuildController.Building.MaxWorkers;
+            if (_selectedBuildController.workersCount > 0) // т.е работает
+            {
+                resourceBlockAdd.gameObject.SetActive(true);
+                _resourceAddText.text =
+                    "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
+                    " " + _selectedBuilding.typeResource.GetString();
+            }
+            else
+                resourceBlockAdd.gameObject.SetActive(false);
+        }
+        else
+        {
+            textHealth.text = "Состояние: СТРОЙКА";
+            textEnergy.text = "";
+            resourceBlockAdd.gameObject.SetActive(false);
+        }
+    }
+
+    public void UpdateResourceText()
+    {
+        textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
+        textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
+        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" +
+                                        _selectedBuildController.Building.MaxWorkers;
+    }
+
+    #endregion
+
+    #region ManageBuild
+
     // Начинаем размещать объект. Метод для кнопки
+
     public void StartPlacingBuilding(BuildingController buildingControllerPrefab)
     {
         if (_flyingBuildingController)
@@ -225,35 +242,104 @@ public class BuildingSystem : MonoBehaviour
         _textSelectedBuild.text = _flyingBuildingController.Building.BuildingName;
     }
 
-    public void ChangeBuildingPage(GameObject page)
+    /// <summary>
+    /// Проверка - занято ли место
+    /// </summary>
+    /// <param name="placeX">Место по x</param>
+    /// <param name="placeY">Место по y</param>
+    /// <returns></returns>
+    private bool IsPlaceTaken(int placeX, int placeY)
     {
-        buildingsBearMenu.SetActive(false);
-        buildingsWorkMenu.SetActive(false);
-        buildingsSienceMenu.SetActive(false);
-
-        page.SetActive(true);
-        // Обновление списка зданий к постройке
-        foreach (Transform child in page.transform)
+        for (int x = 0; x < _flyingBuildingController.size.x; x++)
         {
-            // Единичная инициализация
-            BuildingBuyInfo building = child.GetComponent<BuildingBuyInfo>();
-            if (building.building) // Всякое бывает
+            for (int y = 0; y < _flyingBuildingController.size.y; y++)
             {
-                // Возможность нажать на кнопку
-                building.button.interactable =
-                    building.building.materialsNeed <= ColonyManager.Singleton.Materials &&
-                    building.building.energyNeed <= ColonyManager.Singleton.Energy;
-                // Смена цены в зависимости от достатка
-                building.textPriceMaterial.color =
-                    building.building.materialsNeed <= ColonyManager.Singleton.Materials
-                        ? Color.white
-                        : Color.red;
-                building.textPriceEnergy.color =
-                    building.building.energyNeed <= ColonyManager.Singleton.Energy
-                        ? Color.white
-                        : Color.red;
+                if (placeX + x >= 0 && placeX + x < Grid.GetLength(0) && placeY + y >= 0 &&
+                    placeY + y < Grid.GetLength(1))
+                {
+                    if (Grid[placeX + x, placeY + y])
+                        return true;
+                }
             }
         }
+
+        return false;
+    }
+
+    // Отрисовка в editor юнити сетки строения
+    private void OnDrawGizmosSelected()
+    {
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                Gizmos.color = (x + y) % 2 == 0 ? new Color(0.88f, 0f, 1f, 0.3f) : new Color(1f, 0.68f, 0f, 0.3f);
+                Gizmos.DrawCube(transform.position + new Vector3(x, 0, y), new Vector3(1, .1f, 1));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Вызывает PlaceBuilding() и ставит выбранное(flying) здание
+    /// </summary>
+    /// <param name="placeX"></param>
+    /// <param name="placeY"></param>
+    private void PlaceFlyingBuilding(int placeX, int placeY)
+    {
+        if (_flyingBuildingController.Building is Building building)
+        {
+            _flyingBuildingController.name = _flyingBuildingController.name.Replace("(Clone)", "");
+            PlaceBuilding(_flyingBuildingController, placeX, placeY);
+            BuildingSaveSystem.Singleton.CreateBuildSave(placeX, placeY, _flyingBuildingController.name,
+                false); // Создаем сохранение постройки
+
+            switch (_flyingBuildingController.Building.BuildingName)
+            {
+                // Кор
+                case "Солнечная панель":
+                case "Фабрика материалов":
+                    if (QuestSystem.Singleton.totalQuest.questName == "StartQuest")
+                        QuestSystem.Singleton.MoveNextStep();
+                    break;
+            }
+
+            BearTaskManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
+                Traditions.Constructors,
+                building.stepsNeed);
+            _flyingBuildingController.SetBuilding();
+
+            ColonyManager.Singleton.Materials -= building.materialsNeed;
+        }
+
+        _flyingBuildingController = null;
+        _noteBlock.gameObject.SetActive(false);
+        buildingCreateMenu.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Поставит постройку по координатам
+    /// </summary>
+    /// <param name="buildingController">Постройка которую нужно поставить</param>
+    /// <param name="placeX">Координата по X</param>
+    /// <param name="placeY">Координата по Y</param>
+    public void PlaceBuilding(BuildingController buildingController, int placeX, int placeY)
+    {
+        for (int x = 0; x < buildingController.size.x; x++)
+        {
+            for (int y = 0; y < buildingController.size.y; y++)
+            {
+                if (placeX + x >= 0 && placeX + x < Grid.GetLength(0) && placeY + y >= 0 &&
+                    placeY + y < Grid.GetLength(1))
+                    Grid[placeX + x, placeY + y] = buildingController;
+            }
+        }
+    }
+
+    public void DeactivateBuilding()
+    {
+        _selectedBuildController.ChangeIsReady(!_selectedBuildController.isReady);
+        textResourceRemain.text = _selectedBuildController.isReady ? "Остановить" : "Возобновить";
+        UpdateBuildingText();
     }
 
     public void DestroyBuilding(GameObject destroyBuilding = null)
@@ -273,7 +359,7 @@ public class BuildingSystem : MonoBehaviour
             for (int x = 0; x < _selectedBuildController.size.x; x++)
             {
                 for (int y = 0; y < _selectedBuildController.size.y; y++)
-                    _grid[startX + x, startY + y] = null; // Очищаем ячейку
+                    Grid[startX + x, startY + y] = null; // Очищаем ячейку
             }
 
             BuildingSaveSystem.Singleton.DestroyBuildingSave(
@@ -295,88 +381,6 @@ public class BuildingSystem : MonoBehaviour
 
             _selectedBuildController = null;
             buildMenu.gameObject.SetActive(false);
-        }
-    }
-
-    /// <summary>
-    /// Проверка - занято ли место
-    /// </summary>
-    /// <param name="placeX">Место по x</param>
-    /// <param name="placeY">Место по y</param>
-    /// <returns></returns>
-    private bool IsPlaceTaken(int placeX, int placeY)
-    {
-        for (int x = 0; x < _flyingBuildingController.size.x; x++)
-        {
-            for (int y = 0; y < _flyingBuildingController.size.y; y++)
-                if (_grid[placeX + x, placeY + y])
-                    return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Вызывает PlaceBuilding() и ставит выбранное(flying) здание
-    /// </summary>
-    /// <param name="placeX"></param>
-    /// <param name="placeY"></param>
-    private void PlaceFlyingBuilding(int placeX, int placeY)
-    {
-        if (_flyingBuildingController.Building is Building building)
-        {
-            _flyingBuildingController.name = _flyingBuildingController.name.Replace("(Clone)", "");
-            PlaceBuilding(_flyingBuildingController, placeX, placeY);
-            BuildingSaveSystem.Singleton.CreateBuildSave(placeX, placeY, _flyingBuildingController.name,
-                false); // Создаем сохранение постройки
-
-            switch (_flyingBuildingController.Building.BuildingName)
-            {
-                // Кор
-                case "Солнечная панель" when
-                    QuestSystem.Singleton.totalQuest.questName == "StartQuest":
-                case "Фабрика материалов" when
-                    QuestSystem.Singleton.totalQuest.questName == "StartQuest":
-                    QuestSystem.Singleton.MoveNextStep();
-                    break;
-            }
-
-            BearTaskManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
-                Traditions.Drone,
-                building.stepsNeed);
-            _flyingBuildingController.SetBuilding();
-            ColonyManager.Singleton.Energy -= building.energyNeed;
-            ColonyManager.Singleton.Materials -= building.materialsNeed;
-
-            // Логи на создание здания
-            APIClient.Instance.CreateLogRequest(
-                "Затраты энергии и материалов на постройку здания",
-                Player.Instance.playerName,
-                new Dictionary<string, string>()
-                {
-                    { "energy", "-1" },
-                    { "materials", "-" + building.materialsNeed }
-                }
-            );
-        }
-
-        _flyingBuildingController = null;
-        _noteBlock.gameObject.SetActive(false);
-        buildingCreateMenu.gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// Поставит постройку по координатам
-    /// </summary>
-    /// <param name="buildingController">Постройка которую нужно поставить</param>
-    /// <param name="placeX">Координата по X</param>
-    /// <param name="placeY">Координата по Y</param>
-    public void PlaceBuilding(BuildingController buildingController, int placeX, int placeY)
-    {
-        for (int x = 0; x < buildingController.size.x; x++)
-        {
-            for (int y = 0; y < buildingController.size.y; y++)
-                _grid[placeX + x, placeY + y] = buildingController;
         }
     }
 
@@ -431,6 +435,39 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
+    #endregion
+
+    public void ChangeBuildingPage(GameObject page)
+    {
+        buildingsBearMenu.SetActive(false);
+        buildingsWorkMenu.SetActive(false);
+        buildingsSienceMenu.SetActive(false);
+
+        page.SetActive(true);
+        // Обновление списка зданий к постройке
+        foreach (Transform child in page.transform)
+        {
+            // Единичная инициализация
+            BuildingBuyInfo building = child.GetComponent<BuildingBuyInfo>();
+            if (building.building) // Всякое бывает
+            {
+                // Возможность нажать на кнопку
+                building.button.interactable =
+                    building.building.materialsNeed <= ColonyManager.Singleton.Materials &&
+                    building.building.energyNeed <= ColonyManager.Singleton.Energy;
+                // Смена цены в зависимости от достатка
+                building.textPriceMaterial.color =
+                    building.building.materialsNeed <= ColonyManager.Singleton.Materials
+                        ? Color.white
+                        : Color.red;
+                building.textPriceEnergy.color =
+                    building.building.energyNeed <= ColonyManager.Singleton.Energy
+                        ? Color.white
+                        : Color.red;
+            }
+        }
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab)) // Активация меню какое здание построить
@@ -471,9 +508,9 @@ public class BuildingSystem : MonoBehaviour
                 bool available = true;
 
                 // Если здание за сеткой - помечать расположение недействительным
-                if (x < -gridSize.x / 2 || x > gridSize.x / 2 - _flyingBuildingController.size.x)
+                if (x < -gridSize.x / 2 || x + _flyingBuildingController.size.x > gridSize.x / 2)
                     available = false;
-                if (y < -gridSize.y / 2 || y > gridSize.y / 2 - _flyingBuildingController.size.y)
+                if (y < -gridSize.y / 2 || y + _flyingBuildingController.size.y > gridSize.y / 2)
                     available = false;
 
                 // Если здание расположено на другом - помечать расположение недействительным
