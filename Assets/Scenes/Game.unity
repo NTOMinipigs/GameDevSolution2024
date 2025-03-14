@@ -2844,7 +2844,7 @@ MonoBehaviour:
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1749132147082893669, guid: f33c13d5728d9414c93e47c6fc352834, type: 3}
+          m_ObjectArgument: {fileID: 4097540449147384959, guid: f33c13d5728d9414c93e47c6fc352834, type: 3}
           m_ObjectArgumentAssemblyTypeName: BuildingController, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -11444,7 +11444,7 @@ MonoBehaviour:
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 4600306215769614654, guid: 0e70bf068caa3d8448d96185d38e85d9, type: 3}
+          m_ObjectArgument: {fileID: 6847442028142469964, guid: 0e70bf068caa3d8448d96185d38e85d9, type: 3}
           m_ObjectArgumentAssemblyTypeName: BuildingController, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -14183,7 +14183,7 @@ MonoBehaviour:
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1062203479114873451, guid: 656871ed978d8ff48acb368e381f7ca4, type: 3}
+          m_ObjectArgument: {fileID: 1216875495394136779, guid: 656871ed978d8ff48acb368e381f7ca4, type: 3}
           m_ObjectArgumentAssemblyTypeName: BuildingController, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -27049,7 +27049,7 @@ Transform:
   m_GameObject: {fileID: 1346596984}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 240.09924, y: -376.35147, z: 25.453156}
+  m_LocalPosition: {x: -70.27, y: 0, z: -114.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27812,7 +27812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingCreateMenu: {fileID: 904100672}
   buildMenu: {fileID: 432680793}
-  gridSize: {x: 120, y: 180}
+  gridSize: {x: 150, y: 200}
   buildingsBearMenu: {fileID: 109867981}
   buildingsWorkMenu: {fileID: 1871008593}
   buildingsSienceMenu: {fileID: 627803761}
@@ -27857,14 +27857,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   systemSaver: {fileID: 1346596993}
   buildingSystem: {fileID: 1346597001}
-  sunPanel: {fileID: 6662235729561869382, guid: 9e6453d617f0bed458fda817bce545ac, type: 3}
-  farm: {fileID: 7044244291195706481, guid: 0e70bf068caa3d8448d96185d38e85d9, type: 3}
-  house: {fileID: 476155063815453783, guid: 656871ed978d8ff48acb368e381f7ca4, type: 3}
-  fabricMaterial: {fileID: 1975422754290104355, guid: 2b63826ca91b2054f8fa968ec6661ac3, type: 3}
-  stone: {fileID: 479737065158180829, guid: b7f699a1f7c0eb54581a7541aa698eba, type: 3}
-  foodBox: {fileID: 8301647762413533708, guid: 9b5dc075c0a4047409d853336bad571b, type: 3}
-  honeyBox: {fileID: 1532117244557256168, guid: b19852bf97c8cfc499fdb8f091f73c70, type: 3}
-  bioFuel: {fileID: 8388295456316651650, guid: f177df9b20f84ad4291878a2e4b1a040, type: 3}
+  sunPanel: {fileID: 7836560108304010852, guid: 9e6453d617f0bed458fda817bce545ac, type: 3}
+  farm: {fileID: 2475931550828558394, guid: 0e70bf068caa3d8448d96185d38e85d9, type: 3}
+  house: {fileID: 561466435981635599, guid: 656871ed978d8ff48acb368e381f7ca4, type: 3}
+  fabricMaterial: {fileID: 7117277306772264969, guid: 2b63826ca91b2054f8fa968ec6661ac3, type: 3}
+  fabricBee: {fileID: 8620260358167617744, guid: f33c13d5728d9414c93e47c6fc352834, type: 3}
+  stone: {fileID: 2219795843328176615, guid: b7f699a1f7c0eb54581a7541aa698eba, type: 3}
+  foodBox: {fileID: 8439928029714037947, guid: 9b5dc075c0a4047409d853336bad571b, type: 3}
+  honeyBox: {fileID: 4223968620347824100, guid: b19852bf97c8cfc499fdb8f091f73c70, type: 3}
+  bioFuel: {fileID: 1734311333166584778, guid: f177df9b20f84ad4291878a2e4b1a040, type: 3}
 --- !u!114 &1346597004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29432,7 +29433,7 @@ MonoBehaviour:
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 93836123964854559, guid: 2b63826ca91b2054f8fa968ec6661ac3, type: 3}
+          m_ObjectArgument: {fileID: 4909047509050647662, guid: 2b63826ca91b2054f8fa968ec6661ac3, type: 3}
           m_ObjectArgumentAssemblyTypeName: BuildingController, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -37974,7 +37975,7 @@ MonoBehaviour:
         m_MethodName: StartPlacingBuilding
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 5718745096724210844, guid: 9e6453d617f0bed458fda817bce545ac, type: 3}
+          m_ObjectArgument: {fileID: 2885476363876792380, guid: 9e6453d617f0bed458fda817bce545ac, type: 3}
           m_ObjectArgumentAssemblyTypeName: BuildingController, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0

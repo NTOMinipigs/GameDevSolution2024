@@ -40,9 +40,9 @@ public class BuildingController : MonoBehaviour
 
     private void Awake()
     {
-        _mainRenderer = GetComponent<MeshRenderer>();
+        _mainRenderer = transform.Find("model").GetComponent<MeshRenderer>();
         _standardMaterialColor = _mainRenderer.material.color;
-        reveal = GetComponent<RevealByProgress>();
+        reveal = transform.Find("model").GetComponent<RevealByProgress>();
         if (building)
             Building = building;
         if (resource)
@@ -65,8 +65,7 @@ public class BuildingController : MonoBehaviour
     /// <summary>
     /// Переключаем состояние здания - работает или нет
     /// </summary>
-    /// <param name="status"></param>
-    /// <returns>Можно включить?</returns>
+    /// <param name="status">Новое состояние</param>
     public void ChangeIsReady(bool status)
     {
         if (status)
@@ -76,8 +75,11 @@ public class BuildingController : MonoBehaviour
             if (!blockToChange)
                 ColonyManager.Singleton.Energy++;
         }
-        
-        ColonyManager.Singleton.Energy--;
+        else
+        {
+            isReady = false;
+            ColonyManager.Singleton.Energy--;
+        }
     }
     
     // Отрисовка в editor юнити сетки строения

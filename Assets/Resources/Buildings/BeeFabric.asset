@@ -17,11 +17,11 @@ MonoBehaviour:
   typeResource: 3
   canWork: 1
   typeOfWorkers: 1
-  scoutHome: 0
   maxWorkers: 5
+  scoutHome: 0
   resourceGive: 50
   resourceOneWorker: 4
   materialsNeed: 30
   specMaterialsNeed: 0
   energyNeed: 1
-  stepsNeed: 1
+  stepsNeed: 1.5

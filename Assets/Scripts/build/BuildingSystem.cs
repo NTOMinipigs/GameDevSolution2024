@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 public class BuildingSystem : MonoBehaviour
 {
     public static BuildingSystem Singleton { get; private set; }
     public GameObject buildingCreateMenu, buildMenu;
 
-    [SerializeField]
-    private Vector2Int gridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
+    [Header("Grid")]
+    public Vector2Int gridSize = new Vector2Int(10, 10); // Сетка строительсва. P.s значение в юньке не 10 10
+    public BuildingController[,] Grid; // Сетка строений
 
     private BuildingController _selectedBuildController; // Выбранное строение для взаимодействий
     private Building _selectedBuilding;
 
-    private BuildingController[,] _grid; // Сетка строений
     private BuildingController _flyingBuildingController; // Строение в процессе постановки
     private Camera _mainCamera;
 
@@ -34,7 +36,9 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private Button buttonAddWorker, buttonRemoveWorker;
     [SerializeField] private Button buttonAddWorkerResources, buttonRemoveWorkerResources;
 
-    [SerializeField] private TextMeshProUGUI textCountWorkers, textCountWorkersResource, textNameWorkers, textDestroy, textStop;
+    [SerializeField]
+    private TextMeshProUGUI textCountWorkers, textCountWorkersResource, textNameWorkers, textDestroy, textStop;
+
     [SerializeField] private TextMeshProUGUI textHealth, textEnergy, textResourceName, textResourceRemain;
 
 
@@ -47,7 +51,6 @@ public class BuildingSystem : MonoBehaviour
 
     private void Start()
     {
-        _grid = new BuildingController[gridSize.x, gridSize.y];
         _mainCamera = Camera.main;
 
         // Общая инициализация
@@ -250,11 +253,30 @@ public class BuildingSystem : MonoBehaviour
         for (int x = 0; x < _flyingBuildingController.size.x; x++)
         {
             for (int y = 0; y < _flyingBuildingController.size.y; y++)
-                if (_grid[placeX + x, placeY + y])
-                    return true;
+            {
+                if (placeX + x >= 0 && placeX + x < Grid.GetLength(0) && placeY + y >= 0 &&
+                    placeY + y < Grid.GetLength(1))
+                {
+                    if (Grid[placeX + x, placeY + y])
+                        return true;
+                }
+            }
         }
 
         return false;
+    }
+
+    // Отрисовка в editor юнити сетки строения
+    private void OnDrawGizmosSelected()
+    {
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                Gizmos.color = (x + y) % 2 == 0 ? new Color(0.88f, 0f, 1f, 0.3f) : new Color(1f, 0.68f, 0f, 0.3f);
+                Gizmos.DrawCube(transform.position + new Vector3(x, 0, y), new Vector3(1, .1f, 1));
+            }
+        }
     }
 
     /// <summary>
@@ -282,7 +304,7 @@ public class BuildingSystem : MonoBehaviour
             }
 
             BearTaskManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
-                Traditions.Drone,
+                Traditions.Constructors,
                 building.stepsNeed);
             _flyingBuildingController.SetBuilding();
 
@@ -305,7 +327,11 @@ public class BuildingSystem : MonoBehaviour
         for (int x = 0; x < buildingController.size.x; x++)
         {
             for (int y = 0; y < buildingController.size.y; y++)
-                _grid[placeX + x, placeY + y] = buildingController;
+            {
+                if (placeX + x >= 0 && placeX + x < Grid.GetLength(0) && placeY + y >= 0 &&
+                    placeY + y < Grid.GetLength(1))
+                    Grid[placeX + x, placeY + y] = buildingController;
+            }
         }
     }
 
@@ -333,7 +359,7 @@ public class BuildingSystem : MonoBehaviour
             for (int x = 0; x < _selectedBuildController.size.x; x++)
             {
                 for (int y = 0; y < _selectedBuildController.size.y; y++)
-                    _grid[startX + x, startY + y] = null; // Очищаем ячейку
+                    Grid[startX + x, startY + y] = null; // Очищаем ячейку
             }
 
             BuildingSaveSystem.Singleton.DestroyBuildingSave(
@@ -482,9 +508,9 @@ public class BuildingSystem : MonoBehaviour
                 bool available = true;
 
                 // Если здание за сеткой - помечать расположение недействительным
-                if (x < -gridSize.x / 2 || x > gridSize.x / 2 - _flyingBuildingController.size.x)
+                if (x < -gridSize.x / 2 || x + _flyingBuildingController.size.x > gridSize.x / 2)
                     available = false;
-                if (y < -gridSize.y / 2 || y > gridSize.y / 2 - _flyingBuildingController.size.y)
+                if (y < -gridSize.y / 2 || y + _flyingBuildingController.size.y > gridSize.y / 2)
                     available = false;
 
                 // Если здание расположено на другом - помечать расположение недействительным

@@ -27,6 +27,7 @@ public class BuildingSaveSystem : MonoBehaviour
     public GameObject farm;
     public GameObject house;
     public GameObject fabricMaterial;
+    public GameObject fabricBee;
     public GameObject stone;
     public GameObject foodBox;
     public GameObject honeyBox;
@@ -79,15 +80,15 @@ public class BuildingSaveSystem : MonoBehaviour
     public void CreateStartBuilds()
     {
         // Случайная генерация руд
-        foreach (Vector2 vector2 in GenerateUniqueCoordinates(4, 80, -80, 80, -80f))
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(5, 80, -80, 80, -80f))
             CreateBuildSave((int)vector2.x, (int)vector2.y, "stone", true);
 
         // Случайная генерация боксов с едой
-        foreach (Vector2 vector2 in GenerateUniqueCoordinates(2, 80, -80, 80, -80f))
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(3, 80, -80, 80, -80f))
             CreateBuildSave((int)vector2.x, (int)vector2.y, "foodBox", true);
 
         // Случайная генерация боксов с медом
-        foreach (Vector2 vector2 in GenerateUniqueCoordinates(1, 80, -80, 80, -80f))
+        foreach (Vector2 vector2 in GenerateUniqueCoordinates(2, 80, -80, 80, -80f))
             CreateBuildSave((int)vector2.x, (int)vector2.y, "honeyBox", true);
 
         // Случайная генерация боксов с био топливом
@@ -106,6 +107,7 @@ public class BuildingSaveSystem : MonoBehaviour
     /// </summary>
     public void PlaceBuildFromSave()
     {
+        BuildingSystem.Singleton.Grid = new BuildingController[BuildingSystem.Singleton.gridSize.x, BuildingSystem.Singleton.gridSize.y];
         foreach (BuildingSave buildingSave in systemSaver.gameSave.buildingSaves)
         {
             // Создаем объект на сцене
