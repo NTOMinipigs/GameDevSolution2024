@@ -49,7 +49,7 @@ public class SaveAndLoad : MonoBehaviour
             // Загрузите игру в режиме debug, если 
             if (Config.ConfigManager.Instance.config.debug)
                 CreateDebugGame();
-                CreateNewGame();
+            CreateNewGame();
         }
 
         LoadGame();
@@ -199,7 +199,10 @@ public class SaveAndLoad : MonoBehaviour
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
 
         foreach (Bear bear in systemSaver.gameSave.bears)
+        {
             colonyManager.BearSpawn(bear);
+            bear.UpdateModifiers();
+        }
         colonyManager.UpdateWorkersCount();
     }
 

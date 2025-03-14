@@ -56,7 +56,7 @@ public enum Traditions
     BioEngineers,
     [Description("Дрон")]
     Drone,
-    [Description("Хром")]
+    [Description("Первопроходец")]
     Chrom
 }
 
@@ -82,9 +82,9 @@ public class Reward
 /// </summary>
 public enum TypeOfEvent
 {
-    NewResource,
+    None,
+    ChangeBearCharacter,
     Disaster, 
-    ChangeResourceAndDisaster
 }
 
 public enum TypeOfDisaster
