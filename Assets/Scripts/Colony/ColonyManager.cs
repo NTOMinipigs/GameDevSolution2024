@@ -598,4 +598,32 @@ public class ColonyManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Я ебал блять нахуй блять нахуй
+    /// Передайте сюда APIClient.UserInventory и я его заполню
+    /// </summary>
+    /// <param name="inventory">pizdec</param>
+    public void SetInventory(APIClient.UserInventory inventory)
+    {
+        _maxMaterials = inventory.Resources["maxMaterials"];
+        _maxFood = inventory.Resources["maxFood"];
+        _maxBears = inventory.Resources["maxBears"];
+        _maxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
+        _maxEnergy = inventory.Resources["maxEnergy"];
+        _maxBiofuel = inventory.Resources["maxBioFuel"];
+        _materials = inventory.Resources["materials"];
+        _food = inventory.Resources["food"];
+        _biofuel = inventory.Resources["bioFuel"];
+        _honey = inventory.Resources["honey"];
+        _materialsPlus = inventory.Resources["materialPlus"];
+        _energy = inventory.Resources["energy"];
+        honeyText.text = _honey + "/" + _maxHoney;
+        biofuelText.text = _biofuel + "/" + _maxBiofuel;
+        energyText.text = _energy + "/" + _maxEnergy;
+        materialsText.text = _materials + "/" + _maxMaterials;
+        materialsPlusText.text = _materialsPlus + "/" + _maxMaterialsPlus;
+        foodText.text = _food + "/" + _maxFood;
+        bearsCountText.text = bearsInColony.Count + "/" + _maxBears;
+    }
 }
