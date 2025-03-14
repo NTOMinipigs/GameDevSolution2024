@@ -38,13 +38,13 @@ public class SaveAndLoad : MonoBehaviour
     private void CreateDebugGame()
     {
         // Проставляем начальные ресурсы игроку, сразу много чтобы можно было удобно дебажить
-        ColonyManager.Singleton.MaterialsPlus = 100;
         ColonyManager.Singleton.MaxMaterials = 200;
         ColonyManager.Singleton.MaxEnergy = 200;
         ColonyManager.Singleton.MaxBiofuel = 200;
         ColonyManager.Singleton.MaxFood = 200;
         ColonyManager.Singleton.MaxHoney = 200;
         ColonyManager.Singleton.MaxMaterialsPlus = 200;
+        ColonyManager.Singleton.MaterialsPlus = 100;
         ColonyManager.Singleton.Materials = 100;
         ColonyManager.Singleton.Energy = 100;
         ColonyManager.Singleton.Biofuel = 100;
@@ -103,15 +103,15 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateNewGame()
     {
-        CreateBears();
-        CreateBuilds();
-        CreatePreference();
-        QuestSystem.Singleton.StartFirst();
-        ColonyManager.Singleton.Food = 10;
         ColonyManager.Singleton.MaxMaterials = 50;
         ColonyManager.Singleton.MaxBiofuel = 15;
         ColonyManager.Singleton.MaxFood = 10;
         ColonyManager.Singleton.maxBears = 10;
+        ColonyManager.Singleton.Food = 10;
+        CreateBears();
+        CreateBuilds();
+        CreatePreference();
+        QuestSystem.Singleton.StartFirst();
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class SaveAndLoad : MonoBehaviour
     }
 
     #endregion
-    
+
     # region load
 
     /// <summary>
@@ -196,8 +196,7 @@ public class SaveAndLoad : MonoBehaviour
         }
     }
 
-    
-    
+
     /// <summary>
     /// Загрузить постройки из json
     /// </summary>
@@ -217,7 +216,7 @@ public class SaveAndLoad : MonoBehaviour
         Preference.Singleton.sensitivityOfCamera = SystemSaver.Singleton.gameSave.PreferenceSave.sensitivity;
         Preference.Singleton.postProcessing = SystemSaver.Singleton.gameSave.PreferenceSave.postProcessing;
     }
-    
+
     #endregion
 
     #region save
@@ -272,6 +271,6 @@ public class SaveAndLoad : MonoBehaviour
             systemSaver.gameSave.tasksSaves.Add(saveData);
         }
     }
-    
+
     #endregion
 }

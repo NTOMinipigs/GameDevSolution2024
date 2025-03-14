@@ -24,18 +24,19 @@ public class MenuManager : MonoBehaviour
     
     private Dictionary<string, int> emptyInventory = new()
     {
-        {"materials", 0},
-        {"food", 0},
-        {"bioFuel", 0},
-        {"honey", 0},
-        {"materialPlus", 0},
-        {"energy", 0},
         {"maxMaterials", 0},
         {"maxFood", 0},
         {"maxBioFuel", 0},
         {"maxHoney", 0},
         {"maxBears", 0},
         {"maxMaterialPlus", 0},
+        {"maxEnergy", 0},
+        {"materials", 0},
+        {"food", 0},
+        {"bioFuel", 0},
+        {"honey", 0},
+        {"materialPlus", 0},
+        {"energy", 0},
     };
     
     #endregion
@@ -62,7 +63,6 @@ public class MenuManager : MonoBehaviour
 
     public async void ActivateNickname() // Вызывать при первом старте?
     {
-
         if (inputFieldNickname.text != "")
         {
             ActivateEnterMenu();

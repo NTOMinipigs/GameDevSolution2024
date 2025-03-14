@@ -27175,7 +27175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 15, z: -20}
-  smoothSpeed: 5
+  zoomSpeed: 0
   camera: {fileID: 1727350349}
   textName: {fileID: 1830313224}
   textDialog: {fileID: 1082012928}
@@ -27710,9 +27710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preferenceMenu: {fileID: 571291839}
-  sensitivityOfCamera: 5
-  globalVolume: 100
-  postProcessing: 1
 --- !u!114 &1346596998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27829,6 +27826,7 @@ MonoBehaviour:
   textCountWorkersResource: {fileID: 1029886850}
   textNameWorkers: {fileID: 1051122932}
   textDestroy: {fileID: 726470346}
+  textStop: {fileID: 510510802}
   textHealth: {fileID: 845764767}
   textEnergy: {fileID: 1674362384}
   textResourceName: {fileID: 1084898752}
@@ -33076,11 +33074,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1346597001}
         m_TargetAssemblyTypeName: BuildingSystem, Assembly-CSharp
-        m_MethodName: DestroyBuilding
-        m_Mode: 2
+        m_MethodName: DeactivateBuilding
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

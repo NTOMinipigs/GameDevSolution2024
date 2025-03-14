@@ -49,6 +49,8 @@ public class BuildingController : MonoBehaviour
             Building = resource;
     }
 
+    #region ChangeMaterial
+
     // Смена цвета по возможности расстановки
     public void SetTransparent(bool available) => _mainRenderer.material.color = available ? Color.green : Color.red;
 
@@ -58,6 +60,26 @@ public class BuildingController : MonoBehaviour
     // Процесс стройки
     public void SetBuilding() => reveal.progress = 0f;
 
+    #endregion
+    
+    /// <summary>
+    /// Переключаем состояние здания - работает или нет
+    /// </summary>
+    /// <param name="status"></param>
+    /// <returns>Можно включить?</returns>
+    public void ChangeIsReady(bool status)
+    {
+        if (status)
+        {
+            bool blockToChange = ColonyManager.Singleton.Energy + 1 > ColonyManager.Singleton.MaxEnergy;
+            isReady = blockToChange;
+            if (!blockToChange)
+                ColonyManager.Singleton.Energy++;
+        }
+        
+        ColonyManager.Singleton.Energy--;
+    }
+    
     // Отрисовка в editor юнити сетки строения
     private void OnDrawGizmosSelected()
     {
