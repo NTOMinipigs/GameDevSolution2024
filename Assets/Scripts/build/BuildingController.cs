@@ -40,14 +40,16 @@ public class BuildingController : MonoBehaviour
 
     private void Awake()
     {
-        _mainRenderer = GetComponent<MeshRenderer>();
+        _mainRenderer = transform.Find("model").GetComponent<MeshRenderer>();
         _standardMaterialColor = _mainRenderer.material.color;
-        reveal = GetComponent<RevealByProgress>();
+        reveal = transform.Find("model").GetComponent<RevealByProgress>();
         if (building)
             Building = building;
         if (resource)
             Building = resource;
     }
+
+    #region ChangeMaterial
 
     // Смена цвета по возможности расстановки
     public void SetTransparent(bool available) => _mainRenderer.material.color = available ? Color.green : Color.red;
@@ -58,6 +60,28 @@ public class BuildingController : MonoBehaviour
     // Процесс стройки
     public void SetBuilding() => reveal.progress = 0f;
 
+    #endregion
+    
+    /// <summary>
+    /// Переключаем состояние здания - работает или нет
+    /// </summary>
+    /// <param name="status">Новое состояние</param>
+    public void ChangeIsReady(bool status)
+    {
+        if (status)
+        {
+            bool blockToChange = ColonyManager.Singleton.Energy + 1 > ColonyManager.Singleton.MaxEnergy;
+            isReady = blockToChange;
+            if (!blockToChange)
+                ColonyManager.Singleton.Energy++;
+        }
+        else
+        {
+            isReady = false;
+            ColonyManager.Singleton.Energy--;
+        }
+    }
+    
     // Отрисовка в editor юнити сетки строения
     private void OnDrawGizmosSelected()
     {
