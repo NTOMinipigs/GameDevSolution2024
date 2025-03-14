@@ -44,7 +44,6 @@ public class MenuManager : MonoBehaviour
 
     public async void ActivateNickname() // Вызывать при первом старте?
     {
-
         if (inputFieldNickname.text != "")
         {
             ActivateEnterMenu();

@@ -74,13 +74,6 @@ public class Bear
     [JsonProperty("z")] public float z;
 
     /// <summary>
-    /// Просто пустышка
-    /// </summary>
-    public Bear()
-    {
-    }
-
-    /// <summary>
     /// Конструктор медведя
     /// </summary>
     /// <param name="gameName">имя медведя как gameObject</param>

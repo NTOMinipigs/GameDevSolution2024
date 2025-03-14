@@ -370,12 +370,13 @@ public class ColonyManager : MonoBehaviour
         return newBear;
     }
 
+    /// <summary>
+    /// Генерирует случайного медведя по случайной традиции
+    /// </summary>
+    /// <returns></returns>
     public Bear GenerateNewBearWithRandomTradition()
     {
-        Bear newBear = new Bear();
-        // Рандомный выбор по ВЫБРАННЫМ традициям
-        int traditionRandom = Random.Range(1, 5);
-        newBear = GenerateNewBear((Traditions)traditionRandom);
+        Bear newBear = GenerateNewBear((Traditions)Random.Range(1, 5));
 
         BearSpawn(newBear);
         return newBear;

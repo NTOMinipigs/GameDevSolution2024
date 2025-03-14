@@ -22,9 +22,9 @@ MonoBehaviour:
   typeResource: 6
   canWork: 0
   typeOfWorkers: 0
-  scoutHome: 0
   maxWorkers: 0
-  resourceGive: 5
+  scoutHome: 0
+  resourceGive: 3
   resourceOneWorker: 0
   materialsNeed: 20
   specMaterialsNeed: 0

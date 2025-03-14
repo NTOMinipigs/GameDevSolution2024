@@ -70,6 +70,7 @@ public class BearTaskManager
             BuildingSystem.Singleton.SetBuildSettings(buildingController);
             if (buildingController.Building is Building building) // Настройки для зданий
             {
+                ColonyManager.Singleton.Energy -= building.energyNeed;
                 ColonyManager.Singleton.scoutHome = building.scoutHome;
             }
         }
