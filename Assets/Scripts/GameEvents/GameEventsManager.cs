@@ -36,7 +36,7 @@ public class GameEventsManager : MonoBehaviour
     private float _worldTemperature;
     private TextMeshProUGUI _textTemperature;
 
-    public int worldHours, worldMinuts;
+    public int gameDay, worldHours, worldMinuts;
 
     private int _hoursToNextEvent;
     private TextMeshProUGUI _textTime;
@@ -204,6 +204,7 @@ public class GameEventsManager : MonoBehaviour
             {
                 WorldTemperature += Random.Range(-10f, 6.5f);
                 AlertsManager.Singleton.ShowAlert("Температура изменилась до " + WorldTemperature);
+                gameDay++;
                 worldHours = 0;
             }
 
