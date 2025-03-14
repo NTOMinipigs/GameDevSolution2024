@@ -193,6 +193,7 @@ public class DialogManager : MonoBehaviour
             if (_selectedBear != null)
             {
                 GameObject gameObject  = GameObject.Find(_selectedBear.gameName);
+                if (gameObject == null) return; // это костыль мне похер
                 camera.transform.position = gameObject.transform.position + offset;
             }
         }

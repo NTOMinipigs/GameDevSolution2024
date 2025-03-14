@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -10,6 +11,31 @@ using UnityEngine;
 /// </summary>
 public class SaveAndLoad : MonoBehaviour
 {
+    
+    #region consts
+    private Dictionary<string, int> _emptyInventory = new()
+    {
+        {"materials", 0},
+        {"food", 0},
+        {"bioFuel", 0},
+        {"honey", 0},
+        {"materialPlus", 0},
+        {"energy", 0},
+        {"maxMaterials", 0},
+        {"maxFood", 0},
+        {"maxBioFuel", 0},
+        {"maxHoney", 0},
+        {"maxBears", 0},
+        {"maxMaterialPlus", 0},
+        {"maxEnergy", 0}
+    };
+    #endregion
+    
+    /// <summary>
+    /// Этот флаг указывает на first boot, костыль
+    /// </summary>
+    private bool firstBoot = false;
+    
     // Часть необходимых методов для инициализации
 
     private void Start()
@@ -23,7 +49,7 @@ public class SaveAndLoad : MonoBehaviour
             // Загрузите игру в режиме debug, если 
             if (Config.ConfigManager.Instance.config.debug)
                 CreateDebugGame();
-            CreateNewGame();
+                CreateNewGame();
         }
 
         LoadGame();
@@ -81,7 +107,8 @@ public class SaveAndLoad : MonoBehaviour
         LoadBuilds();
         LoadTasks();
         LoadPreference();
-        QuestSystem.Singleton.StartFirst();
+        LoadInventory();
+        if (firstBoot) QuestSystem.Singleton.StartFirst();
     }
 
     /// <summary>
@@ -107,11 +134,13 @@ public class SaveAndLoad : MonoBehaviour
         CreateBears();
         CreateBuilds();
         CreatePreference();
-        ColonyManager.Singleton.Food = 10;
+        CreateInventory();
+        firstBoot = true;
         ColonyManager.Singleton.MaxMaterials = 50;
         ColonyManager.Singleton.MaxBiofuel = 15;
         ColonyManager.Singleton.MaxFood = 10;
-        ColonyManager.Singleton.maxBears = 10;
+        ColonyManager.Singleton.MaxBears = 10;
+        ColonyManager.Singleton.Food = 10;
     }
 
     /// <summary>
@@ -144,6 +173,17 @@ public class SaveAndLoad : MonoBehaviour
         SystemSaver.Singleton.gameSave.PreferenceSave.sensitivity = 5f;
         SystemSaver.Singleton.gameSave.PreferenceSave.globalVolume = 100f;
         SystemSaver.Singleton.gameSave.PreferenceSave.postProcessing = true;
+    }
+
+    /// <summary>
+    /// Создайте инвентарь если его еще нет
+    /// </summary>
+    private void CreateInventory()
+    {
+        APIClient.Instance
+            .CreatePlayerRequest(
+                Player.Instance.playerName,
+                _emptyInventory);
     }
 
     #endregion
@@ -216,6 +256,28 @@ public class SaveAndLoad : MonoBehaviour
         Preference.Singleton.globalVolume = SystemSaver.Singleton.gameSave.PreferenceSave.globalVolume;
         Preference.Singleton.sensitivityOfCamera = SystemSaver.Singleton.gameSave.PreferenceSave.sensitivity;
         Preference.Singleton.postProcessing = SystemSaver.Singleton.gameSave.PreferenceSave.postProcessing;
+    }
+
+    /// <summary>
+    /// Загрузите инвентарь
+    /// </summary>
+    private void LoadInventory()
+    {
+        APIClient.UserInventory inventory =
+            APIClient.Instance.GetUserInventoryRequest(Player.Instance.playerName).GetAwaiter().GetResult();
+        if (inventory == null) return;
+        ColonyManager cl = ColonyManager.Singleton;
+        cl.Materials = inventory.Resources["materials"];
+        cl.Food = inventory.Resources["food"];
+        cl.Biofuel = inventory.Resources["bioFuel"];
+        cl.Honey = inventory.Resources["honey"];
+        cl.MaterialsPlus = inventory.Resources["materialPlus"];
+        cl.Energy = inventory.Resources["energy"];
+        cl.MaxMaterials = inventory.Resources["maxMaterials"];
+        cl.MaxFood = inventory.Resources["maxFood"];
+        cl.MaxBears = inventory.Resources["maxBears"];
+        cl.MaxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
+        cl.MaxEnergy = inventory.Resources["maxEnergy"];
     }
     
     #endregion

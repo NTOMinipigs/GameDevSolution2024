@@ -414,7 +414,7 @@ public class BuildingSystem : MonoBehaviour
                     resource = "maxBiofuel";
                     break;
                 case Resources.Bears:
-                    ColonyManager.Singleton.maxBears += building.resourceGive;
+                    ColonyManager.Singleton.MaxBears += building.resourceGive;
                     resource = "maxBears";
                     break;
                 case Resources.Energy:

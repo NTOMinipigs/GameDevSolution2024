@@ -33,8 +33,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _honey = value >= MaxHoney ? MaxHoney : value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             honeyText.text = _honey + "/" + _maxHoney;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -46,8 +46,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _maxHoney = value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             honeyText.text = _honey + "/" + _maxHoney;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -60,8 +60,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _biofuel = value >= MaxBiofuel ? MaxBiofuel : value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             biofuelText.text = _biofuel + "/" + _maxBiofuel;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -73,8 +73,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _maxBiofuel = value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             biofuelText.text = _biofuel + "/" + _maxBiofuel;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -87,8 +87,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _energy = value >= MaxEnergy ? MaxEnergy : value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             energyText.text = _energy + "/" + _maxEnergy;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -100,8 +100,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _maxEnergy = value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             energyText.text = _energy + "/" + _maxEnergy;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -116,8 +116,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _materials = value >= MaxMaterials ? MaxMaterials : value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             materialsText.text = _materials + "/" + _maxMaterials;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -129,8 +129,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _maxMaterials = value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             materialsText.text = _materials + "/" + _maxMaterials;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -143,8 +143,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _materialsPlus = value >= MaxMaterialsPlus ? MaxMaterialsPlus : value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             materialsPlusText.text = _materialsPlus + "/" + _maxMaterialsPlus;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -156,8 +156,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _maxMaterialsPlus = value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             materialsPlusText.text = _materialsPlus + "/" + _maxMaterialsPlus;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -170,8 +170,8 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _food = value >= MaxFood ? MaxFood : value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             foodText.text = _food + "/" + _maxFood;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -183,8 +183,21 @@ public class ColonyManager : MonoBehaviour
         set
         {
             _maxFood = value;
-            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
             foodText.text = _food + "/" + _maxFood;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
+        }
+    }
+    
+    private int _maxBears;
+
+    public int MaxBears
+    {
+        get => _maxBears;
+        set
+        {
+            _maxBears = value;
+            bearsCountText.text = bearsInColony.Count + "/" + _maxBears;
+            _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
 
@@ -198,7 +211,6 @@ public class ColonyManager : MonoBehaviour
 
     private readonly Dictionary<string, Bear> _bearsInColonyDict = new Dictionary<string, Bear>();
     private readonly Dictionary<string, Traditions> _bearsTraditionsInColonyDict = new Dictionary<string, Traditions>();
-    public int maxBears;
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
     public GameObject spawnBears; // Потом сделать spawnBears более рандомным
@@ -253,7 +265,7 @@ public class ColonyManager : MonoBehaviour
         BearTaskManager.Initialize();
     }
 
-    private async void Start()
+    private void Start()
     {
         _systemSaver = gameObject.GetComponent<SystemSaver>();
         // Здесь инициализируется словарь с значениями-ссылками на ресурсы
@@ -270,27 +282,10 @@ public class ColonyManager : MonoBehaviour
             { "maxFood", () => MaxFood },
             { "maxBioFuel", () => MaxBiofuel },
             { "maxHoney", () => MaxHoney },
-            { "maxBears", () => maxBears },
+            { "maxBears", () => MaxBears },
             { "maxMaterialPlus", () => MaxMaterialsPlus },
             { "maxEnergy", () => MaxEnergy }
         };
-
-        APIClient.UserInventory inventory =
-            await APIClient.Instance.GetUserInventoryRequest(Player.Instance.playerName);
-        if (inventory == null) return;
-        _materials = inventory.Resources["materials"];
-        _food = inventory.Resources["food"];
-        _biofuel = inventory.Resources["bioFuel"];
-        _honey = inventory.Resources["honey"];
-        _materialsPlus = inventory.Resources["materialPlus"];
-        _energy = inventory.Resources["energy"];
-        _maxMaterials = inventory.Resources["maxMaterials"];
-        _maxFood = inventory.Resources["maxFood"];
-        _maxBiofuel = inventory.Resources["maxBioFuel"];
-        _maxHoney = inventory.Resources["maxHoney"];
-        maxBears = inventory.Resources["maxBears"];
-        _maxMaterialsPlus = inventory.Resources["maxMaterialPlus"];
-        _maxEnergy = inventory.Resources["maxEnergy"];
     }
 
     /// <summary>
@@ -589,7 +584,7 @@ public class ColonyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bearsCountText.text = bearsInColony.Count + "/" + maxBears; // костыль
+        bearsCountText.text = bearsInColony.Count + "/" + MaxBears; // костыль
         if (bearsListMenu.activeSelf)
         {
             foreach (Transform child in bearsListContainer.transform)
