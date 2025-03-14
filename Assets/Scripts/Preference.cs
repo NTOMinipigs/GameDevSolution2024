@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class Preference : MonoBehaviour
@@ -10,6 +11,7 @@ public class Preference : MonoBehaviour
     private float _globalVolume;
     private Slider sliderOfVolume;
     private bool _postProcessing;
+    public GameObject camera;
 
     public float sensitivityOfCamera
     {
@@ -17,6 +19,7 @@ public class Preference : MonoBehaviour
         set
         {
             _sensitivityOfCamera = value;
+            CameraMove.Singleton.sensitivity = value;
             SystemSaver.Singleton.gameSave.PreferenceSave.sensitivity = value;
         }
     }
@@ -27,6 +30,7 @@ public class Preference : MonoBehaviour
         set
         {
             _postProcessing = value;
+            UpdatePostProcessing();
             SystemSaver.Singleton.gameSave.PreferenceSave.postProcessing = value;
         }
     }
@@ -54,6 +58,18 @@ public class Preference : MonoBehaviour
             sliderOfSens = preferenceMenu.transform.Find("sensOfCam").GetComponent<Slider>();
             sliderOfVolume = preferenceMenu.transform.Find("volumeChange").GetComponent<Slider>();
         }
+    }
+    
+    /// <summary>
+    /// Обновите постпроцессинг на камере
+    /// </summary>
+    private void UpdatePostProcessing()
+    {
+        PostProcessLayer postProcessLayer = camera.GetComponent<PostProcessLayer>();
+        PostProcessVolume postProcessVolume = camera.GetComponent<PostProcessVolume>();
+        
+        postProcessLayer.enabled = _postProcessing;
+        postProcessVolume.enabled = _postProcessing;
     }
 
     public void Update() // Знаю, что это неправильно... Но как есть

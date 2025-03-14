@@ -1,4 +1,5 @@
 using System;
+using Cutscene;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -35,7 +36,14 @@ public class QuestSystem : MonoBehaviour
 
     public void StartFirst() // Заставка + первый квест
     {
-        prehistoryObj.gameObject.SetActive(true);
+        // Запуск катсцены в самом начале игры
+        if (Config.ConfigManager.Instance.config.debug)
+        {
+            return;
+        }
+
+        CutsceneManager.Singleton.StartCutscene(CutsceneManager.Singleton.FirstCutscene);
+        DialogManager.Singleton.ActivateDialog("afterPrehistory");
     }
 
     public void ActivateQuest(string questName)

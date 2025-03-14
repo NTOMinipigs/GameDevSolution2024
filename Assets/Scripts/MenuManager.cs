@@ -20,25 +20,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject enterToGameCanvas;
     [SerializeField] private GameObject authCanvas;
     
-
-    
-    private Dictionary<string, int> emptyInventory = new()
-    {
-        {"maxMaterials", 0},
-        {"maxFood", 0},
-        {"maxBioFuel", 0},
-        {"maxHoney", 0},
-        {"maxBears", 0},
-        {"maxMaterialPlus", 0},
-        {"maxEnergy", 0},
-        {"materials", 0},
-        {"food", 0},
-        {"bioFuel", 0},
-        {"honey", 0},
-        {"materialPlus", 0},
-        {"energy", 0},
-    };
-    
     #endregion
 
 
@@ -76,13 +57,6 @@ public class MenuManager : MonoBehaviour
                     player.playerName = inputFieldNickname.text;
                     return;
                 }
-            }
-
-            // Иначе
-            APIClient.UserInventory userInventory = await apiClient.CreatePlayerRequest(inputFieldNickname.text, emptyInventory);
-            if (userInventory == null) // Если произошла ошибка в запросе
-            {
-                return;
             }
 
             player.playerName = inputFieldNickname.text;
