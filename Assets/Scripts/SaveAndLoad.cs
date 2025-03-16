@@ -191,7 +191,10 @@ public class SaveAndLoad : MonoBehaviour
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
 
         foreach (Bear bear in systemSaver.gameSave.bears)
+        {
             colonyManager.BearSpawn(bear);
+            bear.UpdateModifiers();
+        }
         colonyManager.UpdateWorkersCount();
     }
 

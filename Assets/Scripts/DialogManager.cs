@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cutscene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class DialogManager : MonoBehaviour
     /// расстояние от камеры до объекта
     /// </summary>
     public Vector3 offset;
-    
+
     /// <summary>
     /// Скорость сглаживания
     /// </summary>
@@ -29,10 +30,10 @@ public class DialogManager : MonoBehaviour
     /// Сохрани здесь позицию камеры, до того как ты прикрепился к медведю
     /// </summary>
     private Vector3 beforeCamPosition;
-    
+
     #endregion
-    
-    
+
+
     public static DialogManager Singleton { get; private set; }
     [SerializeField] private TextMeshProUGUI textName, textDialog;
     [SerializeField] private Image iconImage;
@@ -78,7 +79,7 @@ public class DialogManager : MonoBehaviour
         bool blockWithOtherMenu = false) // Старт диалога
     {
         beforeCamPosition = camera.transform.position;
-        
+
         if (GameMenuManager.Singleton.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
 
@@ -106,7 +107,7 @@ public class DialogManager : MonoBehaviour
         {
             int mode = Random.Range(0, 2);
             if (mode == 0)
-                ActivateDialog("bearTalk" + Random.Range(0, 4), selectedBear.gameName, true);
+                ActivateDialog("bearTalk" + Random.Range(0, 8), selectedBear.gameName, true);
             else if (mode == 1)
                 ActivateDialog("bearActivity", selectedBear.gameName, true);
         }
@@ -163,13 +164,16 @@ public class DialogManager : MonoBehaviour
 
     private void CameraBack()
     {
-        
     }
 
     private string CodeTextReplace(string text)
     {
         if (text.Contains("{activity}"))
             return text.Replace("{activity}", _selectedBear.activity.GetString());
+        if (text.Contains("{totalDay}"))
+            return text.Replace("{totalDay}", GameEventsManager.Singleton.gameDay.ToString());
+        if (text.Contains("{myName}"))
+            return text.Replace("{myName}", _selectedBear.bearName);
         return text;
     }
 
@@ -190,9 +194,10 @@ public class DialogManager : MonoBehaviour
                 else
                     DialogMoveNext();
             }
+
             if (_selectedBear != null)
             {
-                GameObject gameObject  = GameObject.Find(_selectedBear.gameName);
+                GameObject gameObject = GameObject.Find(_selectedBear.gameName);
                 if (gameObject == null) return; // это костыль мне похер
                 camera.transform.position = gameObject.transform.position + offset;
             }

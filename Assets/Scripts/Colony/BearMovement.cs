@@ -66,7 +66,8 @@ public class BearMovement : MonoBehaviour
                 waitTime = startWaitTime;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, moveTarget, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, moveTarget,
+                speed * totalBear.modifySpeed * Time.deltaTime);
             _animator.SetBool("walk", true);
 
             // Поворачиваем объект в сторону moveTarget
@@ -74,7 +75,8 @@ public class BearMovement : MonoBehaviour
             if (direction != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                targetRotation *= Quaternion.Euler(0, 90, 0); // они почему-то хуярят боком, я просто доворачиваю на 90 градусов
+                targetRotation *=
+                    Quaternion.Euler(0, 90, 0); // они почему-то хуярят боком, я просто доворачиваю на 90 градусов
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
             }
 
@@ -92,7 +94,7 @@ public class BearMovement : MonoBehaviour
         if (_doingTask && newTask != null)
         {
             totalBear.canMove = false;
-            newTask.totalSteps += 0.001f;
+            newTask.totalSteps += 0.001f * totalBear.modifyWork;
             if (newTask.objectOfTask.CompareTag("building"))
             {
                 BuildingController bc = newTask.objectOfTask.GetComponent<BuildingController>();
@@ -117,8 +119,8 @@ public class BearMovement : MonoBehaviour
         // Говно реализация, переделать
         if (totalBear.activity == Activities.Work)
         {
-            totalBear.tired += 0.0005f;
-            totalBear.hungry += 0.00007f;
+            totalBear.tired += 0.0005f * totalBear.modifyTired;
+            totalBear.hungry += 0.00007f * totalBear.modifyHungry;
         }
         else if (totalBear.activity == Activities.Chill)
         {
