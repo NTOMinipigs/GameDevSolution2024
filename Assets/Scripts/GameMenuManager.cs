@@ -30,8 +30,7 @@ public class GameMenuManager : MonoBehaviour
 
         return (DialogManager.Singleton.dialogMenu.activeSelf || QuestSystem.Singleton.questMenu.activeSelf ||
                 ColonyManager.Singleton.bearsListMenu.activeSelf ||
-                BuildingSystem.Singleton.buildingCreateMenu.activeSelf ||
-                BuildingSystem.Singleton.buildMenu.activeSelf || TravelingManager.Singleton.travelMenu.activeSelf ||
+                BuildingSystem.Singleton.buildingCreateMenu.activeSelf || TravelingManager.Singleton.travelMenu.activeSelf ||
                 gameMenu.activeSelf) && !extraOpen;
     }
 

@@ -84,10 +84,10 @@ public class SaveAndLoad : MonoBehaviour
     private void LoadGame()
     {
         LoadBears();
-        LoadBuilds();
         LoadTasks();
-        LoadPreference();
         LoadInventory();
+        LoadBuilds();
+        LoadPreference();
         if (firstBoot) QuestSystem.Singleton.StartFirst();
     }
 

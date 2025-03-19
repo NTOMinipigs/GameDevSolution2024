@@ -350,10 +350,10 @@ public class BuildingSystem : MonoBehaviour
         if (_selectedBuildController)
         {
             // Получаем координаты здания на сетке
-            int startX = Mathf.RoundToInt(_selectedBuildController.transform.position.x) -
-                         _selectedBuildController.size.x / 2;
-            int startY = Mathf.RoundToInt(_selectedBuildController.transform.position.z) -
-                         _selectedBuildController.size.y / 2;
+            int startX = Mathf.FloorToInt(_selectedBuildController.transform.position.x) -
+                          _selectedBuildController.size.x / 2;
+            int startY = Mathf.FloorToInt(_selectedBuildController.transform.position.z) -
+                          _selectedBuildController.size.y / 2;
 
             // Удаляем здание из grid
             for (int x = 0; x < _selectedBuildController.size.x; x++)
@@ -520,6 +520,8 @@ public class BuildingSystem : MonoBehaviour
                     new Vector3(x + _flyingBuildingController.size.x / 2f, 4,
                         y + _flyingBuildingController.size.y / 2f);
 
+                _flyingBuildingController.SetTransparent(available); // Смена окраски
+
                 if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
                     PlaceFlyingBuilding(x, y);
 
@@ -529,7 +531,6 @@ public class BuildingSystem : MonoBehaviour
                     _noteBlock.gameObject.SetActive(false);
                 }
 
-                _flyingBuildingController.SetTransparent(available); // Смена окраски
             }
         }
     }
