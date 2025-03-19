@@ -26,8 +26,8 @@ public class BuildingSaveSystem : MonoBehaviour
     public GameObject sunPanel;
     public GameObject farm;
     public GameObject house;
-    public GameObject fabricMaterial;
-    public GameObject fabricBee;
+    public GameObject metallFabric;
+    public GameObject beeFabric;
     public GameObject stone;
     public GameObject foodBox;
     public GameObject honeyBox;

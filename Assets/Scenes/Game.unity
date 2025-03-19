@@ -27993,8 +27993,8 @@ MonoBehaviour:
   sunPanel: {fileID: 7836560108304010852, guid: 9e6453d617f0bed458fda817bce545ac, type: 3}
   farm: {fileID: 2475931550828558394, guid: 0e70bf068caa3d8448d96185d38e85d9, type: 3}
   house: {fileID: 561466435981635599, guid: 656871ed978d8ff48acb368e381f7ca4, type: 3}
-  fabricMaterial: {fileID: 7117277306772264969, guid: 2b63826ca91b2054f8fa968ec6661ac3, type: 3}
-  fabricBee: {fileID: 8620260358167617744, guid: f33c13d5728d9414c93e47c6fc352834, type: 3}
+  metallFabric: {fileID: 7117277306772264969, guid: 2b63826ca91b2054f8fa968ec6661ac3, type: 3}
+  beeFabric: {fileID: 8620260358167617744, guid: f33c13d5728d9414c93e47c6fc352834, type: 3}
   stone: {fileID: 2219795843328176615, guid: b7f699a1f7c0eb54581a7541aa698eba, type: 3}
   foodBox: {fileID: 8439928029714037947, guid: 9b5dc075c0a4047409d853336bad571b, type: 3}
   honeyBox: {fileID: 4223968620347824100, guid: b19852bf97c8cfc499fdb8f091f73c70, type: 3}
