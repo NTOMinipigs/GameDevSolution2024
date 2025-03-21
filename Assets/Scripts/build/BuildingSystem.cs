@@ -517,8 +517,7 @@ public class BuildingSystem : MonoBehaviour
                 if (available && IsPlaceTaken(x, y)) available = false;
 
                 _flyingBuildingController.transform.position =
-                    new Vector3(x + _flyingBuildingController.size.x / 2f, 4,
-                        y + _flyingBuildingController.size.y / 2f);
+                    new Vector3(x + _flyingBuildingController.size.x / 2f, _flyingBuildingController.transform.position.y, y + _flyingBuildingController.size.y / 2f);
 
                 _flyingBuildingController.SetTransparent(available); // Смена окраски
 

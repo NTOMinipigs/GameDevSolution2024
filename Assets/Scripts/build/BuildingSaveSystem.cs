@@ -111,12 +111,11 @@ public class BuildingSaveSystem : MonoBehaviour
         foreach (BuildingSave buildingSave in systemSaver.gameSave.buildingSaves)
         {
             // Создаем объект на сцене
-            BuildingController buildingController =
-                GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
-            buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
-            buildingController.transform.position = new Vector3(buildingSave.x, 3f, buildingSave.z);
-            var buildingInWorld = Instantiate(buildingController);
+            var buildingInWorld = Instantiate(GetPrefabByName(buildingSave.buildingName));
             buildingInWorld.gameObject.name = buildingInWorld.name.Replace("(Clone)", "");
+            BuildingController buildingController = buildingInWorld.GetComponent<BuildingController>();
+            buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
+            buildingController.transform.position = new Vector3(buildingSave.x, buildingInWorld.transform.position.y, buildingSave.z);
         }
     }
 
