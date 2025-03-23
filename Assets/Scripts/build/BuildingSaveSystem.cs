@@ -32,6 +32,8 @@ public class BuildingSaveSystem : MonoBehaviour
     public GameObject foodBox;
     public GameObject honeyBox;
     public GameObject bioFuel;
+    public GameObject expedit;
+    public GameObject dronesFabric;
 
     private void Awake()
     {
