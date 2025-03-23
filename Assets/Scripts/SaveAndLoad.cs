@@ -85,9 +85,10 @@ public class SaveAndLoad : MonoBehaviour
     {
         LoadBears();
         LoadBuilds();
-        LoadTasks();
+        //LoadTasks();
         LoadPreference();
         LoadInventory();
+        LoadGameEvents();
         if (firstBoot) QuestSystem.Singleton.StartFirst();
     }
 
@@ -98,7 +99,7 @@ public class SaveAndLoad : MonoBehaviour
     public void SaveGame()
     {
         SaveBears();
-        SaveTasks();
+        //SaveTasks();
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
         systemSaver.SaveGame();
     }
@@ -115,6 +116,7 @@ public class SaveAndLoad : MonoBehaviour
         CreateBuilds();
         CreatePreference();
         CreateInventory();
+        CreateGameEvents();
         firstBoot = true;
     }
 
@@ -178,6 +180,16 @@ public class SaveAndLoad : MonoBehaviour
                 initInventory);
     }
 
+    /// <summary>
+    /// Создайте новые значения для GameEventsManager
+    /// </summary>
+    private void CreateGameEvents()
+    {
+        GameEventsManager.Singleton.worldHours = 0;
+        GameEventsManager.Singleton.worldMinuts = 0;
+        GameEventsManager.Singleton.WorldTemperature = 0f;
+    }
+
     #endregion
 
     # region load
@@ -198,6 +210,7 @@ public class SaveAndLoad : MonoBehaviour
     /// <summary>
     /// Подргрузка тасков из json
     /// </summary>
+    [Obsolete("Таски больше не сохраняются")]
     private void LoadTasks()
     {
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
@@ -260,6 +273,16 @@ public class SaveAndLoad : MonoBehaviour
         if (inventory == null) return;
         ColonyManager.Singleton.SetInventory(inventory);
     }
+
+    /// <summary>
+    /// Загрузка GameEventsManager (время и температура)
+    /// </summary>
+    private void LoadGameEvents()
+    {
+        GameEventsManager.Singleton.WorldTemperature = SystemSaver.Singleton.gameSave.temperature;
+        GameEventsManager.Singleton.worldHours = SystemSaver.Singleton.gameSave.hours;
+        GameEventsManager.Singleton.worldMinuts = SystemSaver.Singleton.gameSave.minutes;
+    }
     
     #endregion
 
@@ -291,6 +314,7 @@ public class SaveAndLoad : MonoBehaviour
     /// <summary>
     /// Сохранить задачи медведя в json
     /// </summary>
+    [Obsolete("Таски больше не сохраняются")]
     private void SaveTasks()
     {
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();

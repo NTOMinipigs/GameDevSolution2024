@@ -28,18 +28,19 @@ public class GameEventsManager : MonoBehaviour
         set
         {
             _worldTemperature = value;
+            SystemSaver.Singleton.gameSave.temperature = value;
             _textTemperature.text = _worldTemperature + "\u00b0С";
         }
     }
 
     private float _worldTemperature;
-    private TextMeshProUGUI _textTemperature;
+    [SerializeField] private TextMeshProUGUI _textTemperature;
 
     public int worldHours, worldMinuts;
 
     private int _hoursToNextEvent;
-    private TextMeshProUGUI _textTime;
-    private Light _directLight;
+    [SerializeField] private TextMeshProUGUI _textTime;
+    [SerializeField] private Light _directLight;
 
     private void Awake()
     {
@@ -221,6 +222,10 @@ public class GameEventsManager : MonoBehaviour
         }
 
         _textTime.text = worldHours.ToString("D2") + ":" + worldMinuts.ToString("D2");
+        
+        SystemSaver.Singleton.gameSave.hours = worldHours;
+        SystemSaver.Singleton.gameSave.minutes = worldMinuts;
+        
         yield return new WaitForSeconds(3f); // Частота обновления дня
         StartCoroutine(WorldTimeChange());
     }

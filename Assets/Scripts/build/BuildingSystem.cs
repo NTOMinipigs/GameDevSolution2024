@@ -291,7 +291,7 @@ public class BuildingSystem : MonoBehaviour
             _flyingBuildingController.name = _flyingBuildingController.name.Replace("(Clone)", "");
             PlaceBuilding(_flyingBuildingController, placeX, placeY);
             BuildingSaveSystem.Singleton.CreateBuildSave(placeX, placeY, _flyingBuildingController.name,
-                false); // Создаем сохранение постройки
+                false, false, 0); // Создаем сохранение постройки
 
             switch (_flyingBuildingController.Building.BuildingName)
             {
