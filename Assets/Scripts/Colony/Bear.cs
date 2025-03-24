@@ -119,19 +119,30 @@ public class Bear
         this.sprite = sprite;
     }
 
+    /// <summary>
+    /// Выдать рандомную черту характера
+    /// </summary>
+    /// <returns></returns>
     public string AddRandomCharacters()
     {
         BearCharacter newCharacter = ColonyManager.Singleton.allBearCharacters
             [Random.Range(0, ColonyManager.Singleton.allBearCharacters.Length)];
-        bearCharacters.Add(newCharacter);
+        if (bearCharacters.Contains(newCharacter))
+            return AddRandomCharacters();
+        else
+            bearCharacters.Add(newCharacter);
         return newCharacter.gameName;
     }
 
+    /// <summary>
+    /// Получить все черты характера медведя
+    /// </summary>
+    /// <returns></returns>
     public string GetAllCharacters()
     {
         string characters = "";
         foreach (BearCharacter character in bearCharacters)
-            characters += character.gameName;
+            characters += character.gameName + "\n";
 
         return characters;
     }

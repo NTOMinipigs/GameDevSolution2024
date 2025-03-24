@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMove : MonoBehaviour
 {
@@ -32,6 +33,9 @@ public class CameraMove : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) // Начало нажатия левой кнопки
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+                
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMaskInteract))
             {
                 if (hit.collider.gameObject.CompareTag("bear"))
@@ -57,7 +61,7 @@ public class CameraMove : MonoBehaviour
         transform.position = new Vector3(posToMove.x, transform.position.y, posToMove.z - 35f);
         _camera.fieldOfView = zoomModif;
     }
-    
+
     private void LateUpdate() // Для плавного перемещения
     {
         if (!blockMove)
@@ -65,7 +69,7 @@ public class CameraMove : MonoBehaviour
             _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 5;
             _camera.fieldOfView = Mathf.Clamp(_camera.fieldOfView, minZoom, maxZoom);
         }
-        
+
         if (_isDragging && !blockMove) // Пока кнопка нажата, ну и блокировки нету
         {
             _delta = (Input.mousePosition - _lastMousePosition) * sensitivity * Time.fixedDeltaTime;

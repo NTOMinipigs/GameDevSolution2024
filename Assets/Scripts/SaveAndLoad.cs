@@ -15,7 +15,7 @@ public class SaveAndLoad : MonoBehaviour
     /// Этот флаг указывает на first boot, костыль
     /// </summary>
     private bool firstBoot = false;
-    
+
     // Часть необходимых методов для инициализации
 
     private void Start()
@@ -83,11 +83,11 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void LoadGame()
     {
+        LoadPreference();
         LoadBears();
+        LoadInventory();
         LoadBuilds();
         LoadTasks();
-        LoadPreference();
-        LoadInventory();
         if (firstBoot) QuestSystem.Singleton.StartFirst();
     }
 
@@ -155,7 +155,7 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateInventory()
     {
-    Dictionary<string, int> initInventory = new()
+        Dictionary<string, int> initInventory = new()
     {
         {"materials", 0},
         {"food", 10},
@@ -171,7 +171,7 @@ public class SaveAndLoad : MonoBehaviour
         {"maxMaterialPlus", 0},
         {"maxEnergy", 0}
     };
-        
+
         APIClient.Instance
             .CreatePlayerRequest(
                 Player.Instance.playerName,
@@ -263,7 +263,7 @@ public class SaveAndLoad : MonoBehaviour
         if (inventory == null) return;
         ColonyManager.Singleton.SetInventory(inventory);
     }
-    
+
     #endregion
 
     #region save

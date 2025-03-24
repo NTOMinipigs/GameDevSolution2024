@@ -5,7 +5,7 @@ public class BearTaskManager
     public static BearTaskManager Singleton { get; private set; }
 
     public void Initialize() => Singleton = this;
-    
+
     /// <summary>
     /// Создать задачу на медведе
     /// </summary>
@@ -50,8 +50,11 @@ public class BearTaskManager
         {
             foreach (BearTask task in ColonyManager.Singleton.bearTasks)
             {
-                if (task.selectedBear.gameName == bear.gameName)
-                    return task;
+                if (task.selectedBear != null)
+                {
+                    if (task.selectedBear.gameName == bear.gameName)
+                        return task;
+                }
             }
         }
 
@@ -72,6 +75,8 @@ public class BearTaskManager
             {
                 ColonyManager.Singleton.Energy -= building.energyNeed;
                 ColonyManager.Singleton.scoutHome = building.scoutHome;
+                if (building.scoutHome)
+                    Alerts.AlertsManager.Singleton.ShowAlert("В поселении построено Бюро экспедиций!");
             }
         }
         //else if (task.taskMode == TasksMode.GetResource)

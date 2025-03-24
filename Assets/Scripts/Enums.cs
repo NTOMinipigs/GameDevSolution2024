@@ -36,7 +36,9 @@ public enum Resources
     [Description("Энергия")]
     Energy,
     [Description("Население")]
-    Bears
+    Bears,
+    [Description("Дроны")]
+    Drones
 }
 
 /// <summary>

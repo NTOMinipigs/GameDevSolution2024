@@ -114,7 +114,7 @@ public class GameEventsManager : MonoBehaviour
     {
         Bear bear = ColonyManager.Singleton.bearsInColony[Random.Range(0, ColonyManager.Singleton.bearsInColony.Count)];
         string textReward = bear.AddRandomCharacters();
-        return bear + " получает черту характера " + textReward;
+        return bear.bearName + " получает черту характера " + textReward;
     }
 
     /// <summary>

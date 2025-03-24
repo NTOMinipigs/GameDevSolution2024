@@ -52,8 +52,9 @@ MonoBehaviour:
   isReady: 1
   health: 100
   size: {x: 4, y: 4}
-  steps: 0
+  timeToChange: 10
   workersCount: 0
+  stepsReady: 0
   reveal: {fileID: 0}
 --- !u!65 &7719926661222354305
 BoxCollider:

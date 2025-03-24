@@ -299,6 +299,14 @@ public class ColonyManager : MonoBehaviour
         return _bearsInColonyDict[gameName];
     }
 
+    /// <summary>
+    /// Проверка - можно ли поселить еще одного медведя?
+    /// </summary>
+    public bool CanCreateNewBear()
+    {
+        return bearsInColony.Count > MaxBears;
+    }
+
     public int GetCountFreeBearsOfTradition(Traditions tradition)
     {
         int freeWorkersOfTradition = 0;
@@ -542,10 +550,12 @@ public class ColonyManager : MonoBehaviour
                 case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
                     {
-                        Bear newBear = GenerateNewBearWithRandomTradition();
-                        textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";
+                        if (CanCreateNewBear())
+                        {
+                            Bear newBear = GenerateNewBearWithRandomTradition();
+                            textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";  
+                        }
                     }
-
                     break;
             }
         }
