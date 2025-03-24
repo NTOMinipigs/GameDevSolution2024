@@ -25,9 +25,9 @@ public class BuildingController : MonoBehaviour
     public Vector2Int size;
 
     /// <summary>
-    /// Условный таймер работы
+    /// Таймер работы в секундах
     /// </summary>
-    [Header("Workers")] public float steps;
+    [Header("Workers")] public float timeToChange;
 
     /// <summary>
     /// Число рабочих в здании
@@ -47,6 +47,7 @@ public class BuildingController : MonoBehaviour
             Building = building;
         if (resource)
             Building = resource;
+        StartCoroutine(BuildingManageOfTime());
     }
 
     #region ChangeMaterial
@@ -98,71 +99,77 @@ public class BuildingController : MonoBehaviour
     }
 
     /// <summary>
-    /// Заработок с заводов, ферм и прочего
+    /// Работа здания: управление ресурсами, производство и тд. Срабатывает раз в timeToChange секунд
     /// </summary>
-    private void FixedUpdate()
+    private IEnumerator BuildingManageOfTime()
     {
-        if (!isReady) return;
-        if (workersCount > 0)
+        if (isReady)
         {
-            steps += 0.005f;
-            if (resource) // Если ресурс
+            if (workersCount > 0)
             {
-                health -= 0.065f;
-                if (health < 0)
+                float earn = workersCount * Building.ResourceOneWorker;
+                // Не стоит отправлять запрос на сервер, если кол-во ресурсов не изменяется
+                if (earn != 0)
                 {
-                    BearTaskManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);
-                    BuildingSystem.Singleton.buildingCreateMenu.SetActive(false);
-                    Destroy(gameObject);
+                    string
+                        resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
+                    switch (Building.TypeResource)
+                    {
+                        case Resources.Material:
+                            ColonyManager.Singleton.Materials += earn;
+                            resourceChanged = "materials";
+                            break;
+                        case Resources.MaterialPlus:
+                            ColonyManager.Singleton.MaterialsPlus += earn;
+                            resourceChanged = "materialsPlus";
+                            break;
+                        case Resources.Food:
+                            ColonyManager.Singleton.Food += earn;
+                            resourceChanged = "food";
+                            break;
+                        case Resources.Honey:
+                            ColonyManager.Singleton.Honey += earn;
+                            resourceChanged = "honey";
+                            break;
+                        case Resources.BioFuel:
+                            ColonyManager.Singleton.Biofuel += earn;
+                            resourceChanged = "bioFuel";
+                            break;
+                        case Resource.Drones:
+                            if (ColonyManager.Singleton.MaterialPlus > 1 && ColonyManager.Singleton.Material > 50 && ColonyManager.CanCreateNewBear())
+                            {
+                                ColonyManager.Singleton.MaterialPlus--;
+                                ColonyManager.Singleton.Material -= 50;
+                                Bear newDrone = ColonyManager.Singleton.CreateNewBear(Tradition.Drone);
+                                ColonyManager.Singleton.BearSpawn(newDrone);
+                                AlertsManager.Singleton.ShowAlert("Создан новый дрон!");
+                            }
+                    }
+
+                    if (resource) // Ну то есть это ресуурс
+                        BuildingSystem.Singleton.UpdateResourceText();
+                    else if (building)
+                        BuildingSystem.Singleton.UpdateBuildingText();
+
+                    // Лог
+                    APIClient.Instance.CreateLogRequest(
+                        "Новые ресурсы произведенные в результате работы некоторого строения",
+                        Player.Instance.playerName,
+                        new Dictionary<string, string>() { { resourceChanged, "+" + earn } });
+                }
+                if (resource) // Если ресурс
+                {
+                    health -= 2f;
+                    if (health < 0)
+                    {
+                        BearTaskManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);
+                        BuildingSystem.Singleton.buildingCreateMenu.SetActive(false);
+                        Destroy(gameObject);
+                    }
                 }
             }
         }
-
-        if (steps >= 1)
-        {
-            steps = 0f;
-            float earn = workersCount * Building.ResourceOneWorker;
-
-            // Не стоит отправлять запрос на сервер, если кол-во ресурсов не изменяется
-            if (earn == 0)
-                return;
-
-            string
-                resourceChanged = ""; // Здесь хранится строчное представление ресурса, который изменили. Для логов
-            switch (Building.TypeResource)
-            {
-                case Resources.Material:
-                    ColonyManager.Singleton.Materials += earn;
-                    resourceChanged = "materials";
-                    break;
-                case Resources.MaterialPlus:
-                    ColonyManager.Singleton.MaterialsPlus += earn;
-                    resourceChanged = "materialsPlus";
-                    break;
-                case Resources.Food:
-                    ColonyManager.Singleton.Food += earn;
-                    resourceChanged = "food";
-                    break;
-                case Resources.Honey:
-                    ColonyManager.Singleton.Honey += earn;
-                    resourceChanged = "honey";
-                    break;
-                case Resources.BioFuel:
-                    ColonyManager.Singleton.Biofuel += earn;
-                    resourceChanged = "bioFuel";
-                    break;
-            }
-
-            if (resource) // Ну то есть это ресуурс
-                BuildingSystem.Singleton.UpdateResourceText();
-            else if (building)
-                BuildingSystem.Singleton.UpdateBuildingText();
-
-            // Лог
-            APIClient.Instance.CreateLogRequest(
-                "Новые ресурсы произведенные в результате работы некоторого строения",
-                Player.Instance.playerName,
-                new Dictionary<string, string>() { { resourceChanged, "+" + earn } });
-        }
+        yield return new WaitForSeconds(timeToChange);
+        StartCoroutine(BuildingManageOfTime());
     }
 }

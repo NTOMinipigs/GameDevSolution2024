@@ -299,6 +299,11 @@ public class ColonyManager : MonoBehaviour
         return _bearsInColonyDict[gameName];
     }
 
+    public bool CanCreateNewBear()
+    {
+        return bearsInColony.Count > maxBears;
+    }
+
     public int GetCountFreeBearsOfTradition(Traditions tradition)
     {
         int freeWorkersOfTradition = 0;
