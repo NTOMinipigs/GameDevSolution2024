@@ -339,6 +339,7 @@ public class BuildingSystem : MonoBehaviour
     public void DeactivateBuilding()
     {
         _selectedBuildController.ChangeIsReady(!_selectedBuildController.isReady);
+        _selectedBuildController.workersCount = 0;
         textResourceRemain.text = _selectedBuildController.isReady ? "Остановить" : "Возобновить";
     }
 

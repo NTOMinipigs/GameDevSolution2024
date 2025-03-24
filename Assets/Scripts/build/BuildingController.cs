@@ -75,17 +75,18 @@ public class BuildingController : MonoBehaviour
     /// <param name="status">Новое состояние</param>
     public void ChangeIsReady(bool status)
     {
-        if (status)
+        bool blockToChange = ColonyManager.Singleton.Energy + 1 > ColonyManager.Singleton.MaxEnergy;
+        if (status && !blockToChange)
         {
-            bool blockToChange = ColonyManager.Singleton.Energy + 1 > ColonyManager.Singleton.MaxEnergy;
-            isReady = blockToChange;
-            if (!blockToChange)
+            if (isReady != status)
                 ColonyManager.Singleton.Energy++;
+            isReady = true;
         }
         else
         {
+            if (isReady != status)
+                ColonyManager.Singleton.Energy--;
             isReady = false;
-            ColonyManager.Singleton.Energy--;
             BearTaskManager.Singleton.FindAndEndTask(building.typeOfWorkers, gameObject, true);
         }
     }

@@ -101,8 +101,6 @@ public class BearMovement : MonoBehaviour
                 bc.stepsReady = newTask.totalSteps;
                 if (!bc.isBuild) // Если строится
                     bc.reveal.progress = newTask.totalSteps / newTask.needSteps;
-                else // Если просто работа
-                    _bearModel.gameObject.SetActive(false);
             }
 
             if (newTask.needSteps != -1f && newTask.totalSteps >= newTask.needSteps)
@@ -112,10 +110,9 @@ public class BearMovement : MonoBehaviour
             }
         }
         else
-        {
-            _bearModel.gameObject.SetActive(true);
             totalBear.canMove = true;
-        }
+
+        _bearModel.gameObject.SetActive(!_doingTask);
 
         // Говно реализация, переделать
         if (totalBear.activity == Activities.Work)

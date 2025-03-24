@@ -16,5 +16,4 @@ MonoBehaviour:
   description: 
   typeResource: 2
   maxDrones: 3
-  resourceOneWorker: 3
-  stepsNeed: 1
+  resourceOneWorker: 5
