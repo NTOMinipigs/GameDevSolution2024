@@ -154,7 +154,7 @@ MonoBehaviour:
   isReady: 0
   health: 100
   size: {x: 11, y: 15}
-  steps: 0
+  timeToChange: 10
   workersCount: 0
   reveal: {fileID: 0}
 --- !u!65 &7216616764221367458

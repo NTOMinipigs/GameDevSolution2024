@@ -98,6 +98,7 @@ public class BearMovement : MonoBehaviour
             if (newTask.objectOfTask.CompareTag("building"))
             {
                 BuildingController bc = newTask.objectOfTask.GetComponent<BuildingController>();
+                bc.stepsReady = newTask.totalSteps;
                 if (!bc.isBuild) // Если строится
                     bc.reveal.progress = newTask.totalSteps / newTask.needSteps;
                 else // Если просто работа

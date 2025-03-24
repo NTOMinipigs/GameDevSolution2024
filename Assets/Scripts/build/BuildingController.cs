@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingController : MonoBehaviour
@@ -34,6 +35,11 @@ public class BuildingController : MonoBehaviour
     /// </summary>
     public int workersCount;
 
+    /// <summary>
+    /// Сколько нужно шагов для постройки. Только для отображения
+    /// </summary>
+    public float stepsReady;
+
     private MeshRenderer _mainRenderer;
     [HideInInspector] public RevealByProgress reveal; // Штука для редактирования материала
     private Color _standardMaterialColor;
@@ -47,7 +53,7 @@ public class BuildingController : MonoBehaviour
             Building = building;
         if (resource)
             Building = resource;
-        StartCoroutine(BuildingManageOfTime());
+        StartCoroutine(BuildingWork());
     }
 
     #region ChangeMaterial
@@ -62,7 +68,7 @@ public class BuildingController : MonoBehaviour
     public void SetBuilding() => reveal.progress = 0f;
 
     #endregion
-    
+
     /// <summary>
     /// Переключаем состояние здания - работает или нет
     /// </summary>
@@ -80,9 +86,10 @@ public class BuildingController : MonoBehaviour
         {
             isReady = false;
             ColonyManager.Singleton.Energy--;
+            BearTaskManager.Singleton.FindAndEndTask(building.typeOfWorkers, gameObject, true);
         }
     }
-    
+
     // Отрисовка в editor юнити сетки строения
     private void OnDrawGizmosSelected()
     {
@@ -101,7 +108,7 @@ public class BuildingController : MonoBehaviour
     /// <summary>
     /// Работа здания: управление ресурсами, производство и тд. Срабатывает раз в timeToChange секунд
     /// </summary>
-    private IEnumerator BuildingManageOfTime()
+    private IEnumerator BuildingWork()
     {
         if (isReady)
         {
@@ -135,15 +142,16 @@ public class BuildingController : MonoBehaviour
                             ColonyManager.Singleton.Biofuel += earn;
                             resourceChanged = "bioFuel";
                             break;
-                        case Resource.Drones:
-                            if (ColonyManager.Singleton.MaterialPlus > 1 && ColonyManager.Singleton.Material > 50 && ColonyManager.CanCreateNewBear())
+                        case Resources.Drones:
+                            if (ColonyManager.Singleton.MaterialsPlus > 1 && ColonyManager.Singleton.Materials > 50 && ColonyManager.Singleton.CanCreateNewBear())
                             {
-                                ColonyManager.Singleton.MaterialPlus--;
-                                ColonyManager.Singleton.Material -= 50;
-                                Bear newDrone = ColonyManager.Singleton.CreateNewBear(Tradition.Drone);
+                                ColonyManager.Singleton.MaterialsPlus--;
+                                ColonyManager.Singleton.Materials -= 50;
+                                Bear newDrone = ColonyManager.Singleton.GenerateNewBear(Traditions.Drone);
                                 ColonyManager.Singleton.BearSpawn(newDrone);
-                                AlertsManager.Singleton.ShowAlert("Создан новый дрон!");
+                                Alerts.AlertsManager.Singleton.ShowAlert("Создан новый дрон!");
                             }
+                            break;
                     }
 
                     if (resource) // Ну то есть это ресуурс
@@ -170,6 +178,6 @@ public class BuildingController : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(timeToChange);
-        StartCoroutine(BuildingManageOfTime());
+        StartCoroutine(BuildingWork());
     }
 }
