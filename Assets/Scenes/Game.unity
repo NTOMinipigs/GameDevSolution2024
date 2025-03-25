@@ -27706,6 +27706,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSave:
     bears: []
+    temperature: 0
+    hours: 0
+    minutes: 0
 --- !u!114 &1346596996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27854,6 +27857,8 @@ MonoBehaviour:
   gameDay: 0
   worldHours: 0
   worldMinuts: 0
+  _textTime: {fileID: 1818702562}
+  _directLight: {fileID: 1552024198}
 --- !u!114 &1346597001
 MonoBehaviour:
   m_ObjectHideFlags: 0

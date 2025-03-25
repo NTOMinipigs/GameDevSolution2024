@@ -83,24 +83,24 @@ public class BuildingSaveSystem : MonoBehaviour
     {
         // Случайная генерация руд
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(5, 80, -80, 80, -80f))
-            CreateBuildSave((int)vector2.x, (int)vector2.y, "stone", true);
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "stone", true, true, Random.Range(0, 360));
 
         // Случайная генерация боксов с едой
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(3, 80, -80, 80, -80f))
-            CreateBuildSave((int)vector2.x, (int)vector2.y, "foodBox", true);
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "foodBox", true, true, Random.Range(0, 360));
 
         // Случайная генерация боксов с медом
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(2, 80, -80, 80, -80f))
-            CreateBuildSave((int)vector2.x, (int)vector2.y, "honeyBox", true);
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "honeyBox", true, true, Random.Range(0, 360));
 
         // Случайная генерация боксов с био топливом
         foreach (Vector2 vector2 in GenerateUniqueCoordinates(1, 80, -80, 80, -80f))
-            CreateBuildSave((int)vector2.x, (int)vector2.y, "bioFuel", true);
+            CreateBuildSave((int)vector2.x, (int)vector2.y, "bioFuel", true, true, Random.Range(0, 360));
 
         if (Config.ConfigManager.Instance.config.debug)
         {
-            CreateBuildSave(-22, 40, "house", true);
-            CreateBuildSave(-22, 4, "farm", true);
+            CreateBuildSave(-22, 40, "house", true, true, Random.Range(0, 360));
+            CreateBuildSave(-22, 4, "farm", true, true, Random.Range(0, 360));
         }
     }
 
@@ -113,11 +113,15 @@ public class BuildingSaveSystem : MonoBehaviour
         foreach (BuildingSave buildingSave in systemSaver.gameSave.buildingSaves)
         {
             // Создаем объект на сцене
-            var buildingInWorld = Instantiate(GetPrefabByName(buildingSave.buildingName));
-            buildingInWorld.gameObject.name = buildingInWorld.name.Replace("(Clone)", "");
-            BuildingController buildingController = buildingInWorld.GetComponent<BuildingController>();
+            BuildingController buildingController =
+                GetPrefabByName(buildingSave.buildingName).GetComponent<BuildingController>();
             buildingSystem.PlaceBuilding(buildingController, buildingSave.x, buildingSave.z);
-            buildingController.transform.position = new Vector3(buildingSave.x, buildingInWorld.transform.position.y, buildingSave.z);
+            buildingController.transform.position = new Vector3(buildingSave.x, 3f, buildingSave.z);
+            buildingController.transform.eulerAngles =  new Vector3(0, buildingSave.rotation, 0);
+            buildingController.isBuild = buildingSave.isBuild;
+            buildingController.isReady = buildingSave.isReady;
+            var buildingInWorld = Instantiate(buildingController);
+            buildingInWorld.gameObject.name = buildingInWorld.name.Replace("(Clone)", "");
         }
     }
 
@@ -127,7 +131,10 @@ public class BuildingSaveSystem : MonoBehaviour
     /// <param name="x">x постройки</param>
     /// <param name="z">z постройки</param>
     /// <param name="prefabName">Название префаба, как поле в классе</param>
-    public void CreateBuildSave(int x, int z, string prefabName, bool isReady)
+    /// <param name="isReady">Постройка уже выполняет свои функции?</param>
+    /// <param name="isBuild">Постройка уже построена?</param>
+    /// <param name="rotation">transofm.rotation.y (поворот объекта по Y</param>
+    public void CreateBuildSave(int x, int z, string prefabName, bool isReady, bool isBuild, float rotation)
     {
         // Создаем buildingSave объект, который в последствии будет сохранен
         BuildingSave buildingSave = new BuildingSave();
@@ -135,6 +142,8 @@ public class BuildingSaveSystem : MonoBehaviour
         buildingSave.z = z;
         buildingSave.buildingName = prefabName;
         buildingSave.isReady = isReady;
+        buildingSave.isBuild = isBuild;
+        buildingSave.rotation = rotation;
 
         systemSaver.gameSave.buildingSaves.Add(buildingSave);
     }
