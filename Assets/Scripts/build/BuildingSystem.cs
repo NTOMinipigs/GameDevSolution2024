@@ -173,7 +173,6 @@ public class BuildingSystem : MonoBehaviour
                 _buildMenuBuildings.gameObject.SetActive(true);
                 _buildMenuResources.gameObject.SetActive(false);
                 ManageWorkersPanel(building.canWork);
-                UpdateBuildingText();
                 textDestroy.text = (building.materialsNeed / 2).ToString();
             }
             else // Если ресурс
@@ -181,7 +180,6 @@ public class BuildingSystem : MonoBehaviour
                 _buildMenuBuildings.gameObject.SetActive(false);
                 _buildMenuResources.gameObject.SetActive(true);
                 ManageWorkersPanel(true, true);
-                UpdateResourceText();
             }
         }
     }
@@ -190,39 +188,43 @@ public class BuildingSystem : MonoBehaviour
 
     public void UpdateBuildingText()
     {
-        if (_selectedBuildController.isBuild)
+        if (_selectedBuildController.Building is Building updateBuilding)
         {
-            textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
-            if (_selectedBuildController.isReady)
-                textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
-            else
-                textEnergy.text = "Потребление энергии: -" + 0;
-            textNameWorkers.text = _selectedBuilding.typeOfWorkers.GetString();
-            textCountWorkers.text = _selectedBuildController.workersCount + "/" +
-                                    _selectedBuildController.Building.MaxWorkers;
-            if (_selectedBuildController.workersCount > 0) // т.е работает
+            if (_selectedBuildController.isBuild)
             {
-                resourceBlockAdd.gameObject.SetActive(true);
-                _resourceAddText.text =
-                    "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker +
-                    " " + _selectedBuilding.typeResource.GetString();
+                textHealth.text = "Состояние: " + _selectedBuildController.health + "%";
+                if (_selectedBuildController.isReady)
+                    textEnergy.text = "Потребление энергии: -" + _selectedBuilding.energyNeed;
+                else
+                    textEnergy.text = "Потребление энергии: -" + 0;
+                textNameWorkers.text = _selectedBuilding.typeOfWorkers.GetString();
+                textCountWorkers.text = _selectedBuildController.workersCount + "/" +
+                                        _selectedBuildController.Building.MaxWorkers;
+                if (_selectedBuildController.workersCount > 0) // т.е работает
+                {
+                    resourceBlockAdd.gameObject.SetActive(true);
+                    _resourceAddText.text =
+                        "+" + _selectedBuildController.workersCount * _selectedBuildController.Building.ResourceOneWorker + " " + _selectedBuildController.Building.TypeResource.GetString() +
+                        " в " + _selectedBuildController.Building.TimeToChange + "сек";
+                }
+                else
+                    resourceBlockAdd.gameObject.SetActive(false);
             }
             else
+            {
+                textHealth.text = "Состояние: СТРОЙКА\n" + Mathf.Round(100 * _selectedBuildController.stepsReady / updateBuilding.stepsNeed) + "%";
+                textEnergy.text = "";
                 resourceBlockAdd.gameObject.SetActive(false);
-        }
-        else
-        {
-            textHealth.text = "Состояние: СТРОЙКА";
-            textEnergy.text = "";
-            resourceBlockAdd.gameObject.SetActive(false);
+            }
         }
     }
 
     public void UpdateResourceText()
     {
         textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
-        textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
-        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" +
+        textResourceRemain.text = "Осталось: " + _selectedBuildController.health + "\n" + "+" + _selectedBuildController.workersCount * _selectedBuildController.Building.ResourceOneWorker + " " + _selectedBuildController.Building.TypeResource.GetString() +
+                        " в " + _selectedBuildController.Building.TimeToChange + "сек";
+        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" + 
                                         _selectedBuildController.Building.MaxWorkers;
     }
 
@@ -338,8 +340,8 @@ public class BuildingSystem : MonoBehaviour
     public void DeactivateBuilding()
     {
         _selectedBuildController.ChangeIsReady(!_selectedBuildController.isReady);
+        _selectedBuildController.workersCount = 0;
         textResourceRemain.text = _selectedBuildController.isReady ? "Остановить" : "Возобновить";
-        UpdateBuildingText();
     }
 
     public void DestroyBuilding(GameObject destroyBuilding = null)
@@ -350,10 +352,10 @@ public class BuildingSystem : MonoBehaviour
         if (_selectedBuildController)
         {
             // Получаем координаты здания на сетке
-            int startX = Mathf.RoundToInt(_selectedBuildController.transform.position.x) -
-                         _selectedBuildController.size.x / 2;
-            int startY = Mathf.RoundToInt(_selectedBuildController.transform.position.z) -
-                         _selectedBuildController.size.y / 2;
+            int startX = Mathf.FloorToInt(_selectedBuildController.transform.position.x) -
+                          _selectedBuildController.size.x / 2;
+            int startY = Mathf.FloorToInt(_selectedBuildController.transform.position.z) -
+                          _selectedBuildController.size.y / 2;
 
             // Удаляем здание из grid
             for (int x = 0; x < _selectedBuildController.size.x; x++)
@@ -483,6 +485,14 @@ public class BuildingSystem : MonoBehaviour
             }
         }
 
+        if (_selectedBuildController != null)
+        {
+            if (_selectedBuildController.Building is Building newBuilding)
+                UpdateBuildingText();
+            else
+                UpdateResourceText();
+        }
+
         if (_flyingBuildingController) // Если зданиее не выделено
         {
             if (Input.GetKeyDown(KeyCode.R)) // Поворот здания
@@ -517,8 +527,9 @@ public class BuildingSystem : MonoBehaviour
                 if (available && IsPlaceTaken(x, y)) available = false;
 
                 _flyingBuildingController.transform.position =
-                    new Vector3(x + _flyingBuildingController.size.x / 2f, 4,
-                        y + _flyingBuildingController.size.y / 2f);
+                    new Vector3(x + _flyingBuildingController.size.x / 2f, _flyingBuildingController.transform.position.y, y + _flyingBuildingController.size.y / 2f);
+
+                _flyingBuildingController.SetTransparent(available); // Смена окраски
 
                 if (available && Input.GetMouseButtonDown(0)) // При нажатии поставить здание 
                     PlaceFlyingBuilding(x, y);
@@ -529,7 +540,6 @@ public class BuildingSystem : MonoBehaviour
                     _noteBlock.gameObject.SetActive(false);
                 }
 
-                _flyingBuildingController.SetTransparent(available); // Смена окраски
             }
         }
     }

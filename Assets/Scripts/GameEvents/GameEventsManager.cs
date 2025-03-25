@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Alerts;
 using UnityEngine;
 using TMPro;
 using Random = UnityEngine.Random;
@@ -36,7 +37,7 @@ public class GameEventsManager : MonoBehaviour
     private float _worldTemperature;
     [SerializeField] private TextMeshProUGUI _textTemperature;
 
-    public int worldHours, worldMinuts;
+    public int gameDay, worldHours, worldMinuts;
 
     private int _hoursToNextEvent;
     [SerializeField] private TextMeshProUGUI _textTime;
@@ -82,11 +83,14 @@ public class GameEventsManager : MonoBehaviour
     {
         string textReward = selectedEvent.typeOfEvent switch
         {
-            TypeOfEvent.NewResource => ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards),
             TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster),
-            TypeOfEvent.ChangeResourceAndDisaster => ActivateDisasterAndReward(selectedEvent),
+            TypeOfEvent.ChangeBearCharacter => ChangeBearCharacter(),
             _ => throw new ArgumentOutOfRangeException()
         };
+        
+        if (selectedEvent.eventRewards.Length > 0)
+            ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards);
+        
         ActivateEventMenu(selectedEvent, textReward);
     }
 
@@ -105,15 +109,15 @@ public class GameEventsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Активирует бедствие и выдает награду
+    /// Активирует выдачу черты характеру медведю/медведям
     /// </summary>
-    /// <param name="selectedEvent">Игровое событие</param>
-    /// <returns></returns>
-    private string ActivateDisasterAndReward(GameEvent selectedEvent)
+    private string ChangeBearCharacter()
     {
-        string textReward = ActivateDisaster(selectedEvent.disaster); // Начальная инициализация
-        textReward += ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards);
-        return textReward;
+        Bear bear = ColonyManager.Singleton.bearsInColony[Random.Range(0, ColonyManager.Singleton.bearsInColony.Count)];
+        if (bear.tradition == Traditions.Drone) // Дроны не могут получать черты характера. Реролл
+            return ChangeBearCharacter();
+        string textReward = bear.AddRandomCharacters();
+        return bear.bearName + " получает черту характера " + textReward;
     }
 
     /// <summary>
@@ -124,7 +128,7 @@ public class GameEventsManager : MonoBehaviour
     {
         float newTemperature = Random.Range(-10, 10);
         WorldTemperature += newTemperature;
-        
+
         // Конструкция чисто ради знака
         if (newTemperature >= 0)
             return "+" + newTemperature + "\u00b0С";
@@ -200,7 +204,12 @@ public class GameEventsManager : MonoBehaviour
 
             // Начало нового дня
             if (worldHours == 24)
+            {
+                WorldTemperature += Random.Range(-10f, 6.5f);
+                AlertsManager.Singleton.ShowAlert("Температура изменилась до " + WorldTemperature);
+                gameDay++;
                 worldHours = 0;
+            }
 
             // Смена глобального света в зависимости от времени. Цикл для плавности
             if (worldHours < 16)

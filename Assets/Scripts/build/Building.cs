@@ -40,6 +40,8 @@ public class Building : ScriptableObject, IBuildable
     public int resourceOneWorker;
 
     public int ResourceOneWorker => resourceOneWorker;
+    public float timeToChange; 
+    public float TimeToChange => timeToChange;
 
     /// <summary>
     /// Количество материалов для постройки

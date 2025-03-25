@@ -63,7 +63,7 @@ namespace Alerts
             while (elapsed < duration)
             {
                 item.sizeDelta = Vector2.Lerp(startSize, targetSize, elapsed / duration);
-                elapsed += Time.deltaTime;
+                elapsed += Time.fixedDeltaTime;
                 yield return null;
             }
 

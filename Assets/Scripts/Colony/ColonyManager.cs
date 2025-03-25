@@ -14,7 +14,7 @@ public class ColonyManager : MonoBehaviour
 {
     public static ColonyManager Singleton { get; private set; }
     public BearTaskManager BearTaskManager = new BearTaskManager();
-    
+
     [Header("Main resources")]
 
     # region Resources
@@ -187,7 +187,7 @@ public class ColonyManager : MonoBehaviour
             _ = APIClient.Instance.SetUserInventoryRequest(Player.Instance.playerName, SendDictionary);
         }
     }
-    
+
     private int _maxBears;
 
     public int MaxBears
@@ -214,6 +214,7 @@ public class ColonyManager : MonoBehaviour
     public int workingBears; // Временный костыль
     public List<BearTask> bearTasks = new List<BearTask>();
     public GameObject spawnBears; // Потом сделать spawnBears более рандомным
+    public BearCharacter[] allBearCharacters = new BearCharacter[0];
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = Array.Empty<string>();
 
     [SerializeField] private SerializableBear[] spriteBeekeepers,
@@ -298,6 +299,14 @@ public class ColonyManager : MonoBehaviour
         return _bearsInColonyDict[gameName];
     }
 
+    /// <summary>
+    /// Проверка - можно ли поселить еще одного медведя?
+    /// </summary>
+    public bool CanCreateNewBear()
+    {
+        return bearsInColony.Count > MaxBears;
+    }
+
     public int GetCountFreeBearsOfTradition(Traditions tradition)
     {
         int freeWorkersOfTradition = 0;
@@ -366,6 +375,7 @@ public class ColonyManager : MonoBehaviour
         // TODO: сделать норм индексацию
         Bear newBear = new Bear(tradition.ToString() + Random.Range(0, 1000), bearName, tradition,
             serializableBear.sprite);
+        newBear.AddRandomCharacters();
         SaveBear(newBear, serializableBear.name);
         return newBear;
     }
@@ -377,7 +387,7 @@ public class ColonyManager : MonoBehaviour
     public Bear GenerateNewBearWithRandomTradition()
     {
         Bear newBear = GenerateNewBear((Traditions)Random.Range(1, 5));
-
+        newBear.AddRandomCharacters();
         BearSpawn(newBear);
         return newBear;
     }
@@ -519,29 +529,32 @@ public class ColonyManager : MonoBehaviour
             {
                 case Resources.Material:
                     Materials += reward.count;
-                    textReward += "+" + Resources.Material + " x" + reward.count + "\n";
+                    textReward += "+" + Resources.Material.GetString() + " x" + reward.count + "\n";
                     break;
                 case Resources.MaterialPlus:
                     MaterialsPlus += reward.count;
-                    textReward += "+" + Resources.MaterialPlus + " x" + reward.count + "\n";
+                    textReward += "+" + Resources.MaterialPlus.GetString() + " x" + reward.count + "\n";
                     break;
                 case Resources.Food:
                     Food += reward.count;
-                    textReward += "+" + Resources.Food + " x" + reward.count + "\n";
+                    textReward += "+" + Resources.Food.GetString() + " x" + reward.count + "\n";
                     break;
                 case Resources.Honey:
                     Honey += reward.count;
-                    textReward += "+" + Resources.Honey + " x" + reward.count + "\n";
+                    textReward += "+" + Resources.Honey.GetString() + " x" + reward.count + "\n";
                     break;
                 case Resources.BioFuel:
                     Biofuel += reward.count;
-                    textReward += "+" + Resources.BioFuel + " x" + reward.count + "\n";
+                    textReward += "+" + Resources.BioFuel.GetString() + " x" + reward.count + "\n";
                     break;
                 case Resources.Bears:
                     for (int i = 0; i < reward.count; i++)
                     {
-                        Bear newBear = GenerateNewBearWithRandomTradition();
-                        textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";
+                        if (CanCreateNewBear())
+                        {
+                            Bear newBear = GenerateNewBearWithRandomTradition();
+                            textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";  
+                        }
                     }
                     break;
             }
@@ -585,16 +598,17 @@ public class ColonyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bearsCountText.text = bearsInColony.Count + "/" + MaxBears; // костыль
+        bearsCountText.text = bearsInColony.Count + "/" + MaxBears;
         if (bearsListMenu.activeSelf)
         {
             foreach (Transform child in bearsListContainer.transform)
             {
                 Bear bear = GetBear(child.name);
-                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "Имя: " + bear.bearName +
-                    "\nТрадиция: " + bear.tradition.GetString() + "\nТекущее дело: " + bear.activity.GetString() +
-                    "\nУсталость/голод: " +
-                    (Mathf.Round(bear.tired * 10) / 10) + "/" + (Mathf.Round(bear.hungry * 10) / 10);
+                child.transform.Find("TextInfo").GetComponent<TextMeshProUGUI>().text = "<b>Имя</b>: " + bear.bearName +
+                    "\n<b>Традиция</b>: " + bear.tradition.GetString() + "\n<b>Деятельность</b>: " +
+                    bear.activity.GetString() + "\n<b>Усталость/голод</b>: " + (Mathf.Round(bear.tired * 10) / 10) +
+                    "/" + (Mathf.Round(bear.hungry * 10) / 10);
+                child.transform.Find("TextCharacters").GetComponent<TextMeshProUGUI>().text = bear.GetAllCharacters();
             }
         }
     }

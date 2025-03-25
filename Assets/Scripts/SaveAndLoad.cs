@@ -15,7 +15,7 @@ public class SaveAndLoad : MonoBehaviour
     /// Этот флаг указывает на first boot, костыль
     /// </summary>
     private bool firstBoot = false;
-    
+
     // Часть необходимых методов для инициализации
 
     private void Start()
@@ -157,7 +157,7 @@ public class SaveAndLoad : MonoBehaviour
     /// </summary>
     private void CreateInventory()
     {
-    Dictionary<string, int> initInventory = new()
+        Dictionary<string, int> initInventory = new()
     {
         {"materials", 0},
         {"food", 10},
@@ -165,7 +165,7 @@ public class SaveAndLoad : MonoBehaviour
         {"honey", 0},
         {"materialPlus", 0},
         {"energy", 0},
-        {"maxMaterials", 50},
+        {"maxMaterials", 100},
         {"maxFood", 10},
         {"maxBioFuel", 15},
         {"maxHoney", 0},
@@ -203,7 +203,10 @@ public class SaveAndLoad : MonoBehaviour
         ColonyManager colonyManager = gameObject.GetComponent<ColonyManager>();
 
         foreach (Bear bear in systemSaver.gameSave.bears)
+        {
             colonyManager.BearSpawn(bear);
+            bear.UpdateModifiers();
+        }
         colonyManager.UpdateWorkersCount();
     }
 

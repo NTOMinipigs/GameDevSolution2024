@@ -13,10 +13,15 @@ public class BuildingBuyInfo : MonoBehaviour
 
     private void OnEnable()
     {
-        button = GetComponent<Button>();
-        textPriceMaterial = transform.Find("TextPrice").GetComponent<TextMeshProUGUI>();
-        textPriceMaterial.text = building.materialsNeed.ToString();
-        textPriceEnergy = transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>();
-        textPriceEnergy.text = building.energyNeed.ToString();
+        if (building != null)
+        {
+            button = GetComponent<Button>();
+            textPriceMaterial = transform.Find("TextPrice").GetComponent<TextMeshProUGUI>();
+            if (textPriceMaterial)
+                textPriceMaterial.text = building.materialsNeed.ToString();
+            textPriceEnergy = transform.Find("TextPriceEnergy").GetComponent<TextMeshProUGUI>();
+            if (textPriceEnergy)
+                textPriceEnergy.text = building.energyNeed.ToString();
+        }
     }
 }
