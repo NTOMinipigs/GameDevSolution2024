@@ -7,4 +7,6 @@ public class BuildingSave
     public int z;
     public string buildingName;
     public bool isReady;
+    public bool isBuild;
+    public float rotation;
 }
