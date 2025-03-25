@@ -204,8 +204,8 @@ public class BuildingSystem : MonoBehaviour
                 {
                     resourceBlockAdd.gameObject.SetActive(true);
                     _resourceAddText.text =
-                        "+" + _selectedBuildController.workersCount * _selectedBuilding.resourceOneWorker + " " + _selectedBuilding.typeResource.GetString() +
-                        " в " + _selectedBuildController.timeToChange + "сек";
+                        "+" + _selectedBuildController.workersCount * _selectedBuildController.Building.ResourceOneWorker + " " + _selectedBuildController.Building.TypeResource.GetString() +
+                        " в " + _selectedBuildController.Building.TimeToChange + "сек";
                 }
                 else
                     resourceBlockAdd.gameObject.SetActive(false);
@@ -222,8 +222,9 @@ public class BuildingSystem : MonoBehaviour
     public void UpdateResourceText()
     {
         textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
-        textResourceRemain.text = "Осталось: " + _selectedBuildController.health;
-        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" +
+        textResourceRemain.text = "Осталось: " + _selectedBuildController.health + "\n" + "+" + _selectedBuildController.workersCount * _selectedBuildController.Building.ResourceOneWorker + " " + _selectedBuildController.Building.TypeResource.GetString() +
+                        " в " + _selectedBuildController.Building.TimeToChange + "сек";
+        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" + 
                                         _selectedBuildController.Building.MaxWorkers;
     }
 

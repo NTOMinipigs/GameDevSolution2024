@@ -27,4 +27,9 @@ public interface IBuildable
     /// Сколько дается ресурсов за одного работника
     /// </summary>
     public int ResourceOneWorker { get; }
+
+    /// <summary>
+    /// Таймер работы в секундах
+    /// </summary>
+    public float TimeToChange { get; }
 }

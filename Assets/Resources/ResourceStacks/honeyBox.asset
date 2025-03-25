@@ -17,3 +17,4 @@ MonoBehaviour:
   typeResource: 3
   maxDrones: 2
   resourceOneWorker: 5
+  timeToChange: 5

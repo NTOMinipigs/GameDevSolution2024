@@ -109,7 +109,8 @@ public class BearMovement : MonoBehaviour
                 _doingTask = false;
             }
         }
-        else
+
+        if (!_doingTask)
             totalBear.canMove = true;
 
         _bearModel.gameObject.SetActive(!_doingTask);

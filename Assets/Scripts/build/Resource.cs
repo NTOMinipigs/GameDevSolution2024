@@ -16,4 +16,6 @@ public class Resource : ScriptableObject, IBuildable
 
     public int resourceOneWorker; // сколько ресурсов за одного рабочего
     public int ResourceOneWorker => resourceOneWorker;
+    public float timeToChange; 
+    public float TimeToChange => timeToChange;
 }

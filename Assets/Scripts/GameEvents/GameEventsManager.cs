@@ -113,6 +113,8 @@ public class GameEventsManager : MonoBehaviour
     private string ChangeBearCharacter()
     {
         Bear bear = ColonyManager.Singleton.bearsInColony[Random.Range(0, ColonyManager.Singleton.bearsInColony.Count)];
+        if (bear.tradition == Traditions.Drone) // Дроны не могут получать черты характера. Реролл
+            return ChangeBearCharacter();
         string textReward = bear.AddRandomCharacters();
         return bear.bearName + " получает черту характера " + textReward;
     }

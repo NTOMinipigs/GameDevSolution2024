@@ -27,7 +27,8 @@ MonoBehaviour:
   scoutHome: 1
   resourceGive: 0
   resourceOneWorker: 0
-  materialsNeed: 120
+  timeToChange: 0
+  materialsNeed: 200
   specMaterialsNeed: 0
   energyNeed: 2
   stepsNeed: 1.75

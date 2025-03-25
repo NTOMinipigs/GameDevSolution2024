@@ -21,11 +21,12 @@ MonoBehaviour:
   typeResource: 5
   canWork: 0
   typeOfWorkers: 0
-  scoutHome: 0
   maxWorkers: 0
+  scoutHome: 0
   resourceGive: 5
   resourceOneWorker: 0
-  materialsNeed: 20
+  timeToChange: 0
+  materialsNeed: 40
   specMaterialsNeed: 0
   energyNeed: 0
   stepsNeed: 1
