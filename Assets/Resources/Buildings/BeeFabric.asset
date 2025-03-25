@@ -20,8 +20,9 @@ MonoBehaviour:
   maxWorkers: 5
   scoutHome: 0
   resourceGive: 50
-  resourceOneWorker: 4
-  materialsNeed: 30
+  resourceOneWorker: 5
+  timeToChange: 25
+  materialsNeed: 80
   specMaterialsNeed: 0
   energyNeed: 1
   stepsNeed: 1.5

@@ -163,7 +163,7 @@ public class SaveAndLoad : MonoBehaviour
         {"honey", 0},
         {"materialPlus", 0},
         {"energy", 0},
-        {"maxMaterials", 50},
+        {"maxMaterials", 100},
         {"maxFood", 10},
         {"maxBioFuel", 15},
         {"maxHoney", 0},

@@ -25,10 +25,7 @@ public class BuildingController : MonoBehaviour
     public float health = 100f;
     public Vector2Int size;
 
-    /// <summary>
-    /// Таймер работы в секундах
-    /// </summary>
-    [Header("Workers")] public float timeToChange;
+    [Header("Workers")] 
 
     /// <summary>
     /// Число рабочих в здании
@@ -178,7 +175,7 @@ public class BuildingController : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(timeToChange);
+        yield return new WaitForSeconds(Building.TimeToChange);
         StartCoroutine(BuildingWork());
     }
 }
