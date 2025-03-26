@@ -19,6 +19,11 @@ public class GameEvent
     public TypeOfEvent typeOfEvent;
 
     /// <summary>
+    /// Модификатор сложности ивента
+    /// </summary>
+    public int eventDifficult = 1;
+
+    /// <summary>
     /// Отображаемое описание ивента
     /// </summary>
     [TextArea(0, 5)] public string eventDescription;

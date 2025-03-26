@@ -92,7 +92,9 @@ public enum TypeOfEvent
 public enum TypeOfDisaster
 {
     None,
-    ChangeOfTemperature,
+    MinusTemperature,
+    PlusTemperature,
+    DeadFood,
     DisableEnergy,
     MassInfectinon
 }
