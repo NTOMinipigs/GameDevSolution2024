@@ -18,6 +18,7 @@ public class PlaceOfTravel
     [HideInInspector] public int difficulty;
     [HideInInspector] public bool isHome;
     [HideInInspector] public bool placeIsChecked; // Изучено?
+    [HideInInspector] public float foodNeed, bioFuelNeed;
     [HideInInspector] public Sprite placeCellIcon;
     [HideInInspector] public float timeNow; // Сколько уже прошли
     [HideInInspector] public List<Reward> rewards = new List<Reward>();

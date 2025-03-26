@@ -61,8 +61,8 @@ public class TravelingManager : MonoBehaviour
         placesPos[homeX, homeY] = new PlaceOfTravel("Ваше поселение", true);
         placesPos[homeX, homeY].placeCellIcon = spriteHome;
 
-        // Текуущая выбранная клетка. Начинаем с дома
-        for (int d = 0; d < 6; d++) // Возможно в 4 стороны, но это не то
+        // Текущая выбранная клетка. Начинаем с дома
+        for (int d = 0; d < 6; d++)
         {
             int selectedX = homeX;
             int selectedY = homeY;
@@ -72,26 +72,23 @@ public class TravelingManager : MonoBehaviour
                 PlaceOfTravel selectedPlace = allPlaces[Random.Range(0, allPlaces.Length)];
                 PlaceOfTravel newPlace = new PlaceOfTravel(selectedPlace.nameOfPlace, selectedPlace.description, selectedPlace.timeToGoing);
                 newPlace.placeCellIcon = placesCellSprites[Random.Range(0, placesCellSprites.Length - 1)];
-                int newX = selectedX + Random.Range(-1, 1);
-                int newY = selectedY + Random.Range(-1, 1);
-                if ((newX > 0 && newX < placesPos.GetLength(0)) && (newY > 0 && newY < placesPos.GetLength(1)))
+                int newX = selectedX + Random.Range(-1, 2);
+                int newY = selectedY + Random.Range(-1, 2);
+
+                if ((newX >= 0 && newX < placesPos.GetLength(0)) && (newY >= 0 && newY < placesPos.GetLength(1)))
                 {
                     if (placesPos[newX, newY] == null)
                     {
                         placesPos[newX, newY] = newPlace;
-                        // Задаем настройки для здания
 
-                        // Задаем сложность. Сделал так по уебански, потому что я устал...
-                        if ((newX + 1 == homeX || newX - 1 == homeX || newX == homeX) && (newY + 1 == homeY || newY - 1 == homeY || newY == homeY))
-                            placesPos[newX, newY].difficulty = 1;
-                        else if ((newX + 2 == homeX || newX - 2 == homeX || newX == homeX) && (newY + 2 == homeY || newY - 2 == homeY || newY == homeY))
-                            placesPos[newX, newY].difficulty = 2;
-                        else
-                            placesPos[newX, newY].difficulty = 3;
+                        // Задаем сложность.
+                        int distance = Mathf.Max(Mathf.Abs(newX - homeX), Mathf.Abs(newY - homeY));
+                        placesPos[newX, newY].difficulty = distance;
 
                         // Возможные награды за экспедицию
                         for (int rewardsCount = 0; rewardsCount < Random.Range(1, 2 * placesPos[newX, newY].difficulty); rewardsCount++)
                             placesPos[newX, newY].rewards.Add(rewardsInPlaces[Random.Range(0, rewardsInPlaces.Length - 1)]);
+
                         selectedX = newX;
                         selectedY = newY;
                     }
@@ -154,21 +151,24 @@ public class TravelingManager : MonoBehaviour
         string rewards = "";
         foreach (Reward reward in _selectedPlace.rewards)
             rewards += " +" + reward.typeOfReward.GetString() + " x" + reward.count + "\n";
-        _textDescriptionLocation.text = _selectedPlace.description + "Возможные награды: \n" + rewards;
+        _textDescriptionLocation.text = _selectedPlace.description + "Награды: \n" + rewards;
         if (_blockOfTravel.activeSelf)
         {
             TextMeshProUGUI travelInfo =
                 _blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
 
-            //if (_activatedPlace.gameName == "")
-            //travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды";
-            //else
-            //travelInfo.text = "Экспедиция уже начата!";
+            if (_activatedPlace != null)
+                travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды/-" + _selectedPlace.bioFuelNeed + " топлива";
+            else
+                travelInfo.text = "Экспедиция уже начата!";
         }
     }
 
     public void UpdateMap()
     {
+        foreach (Transform child in cellContainer.transform)
+            Destroy(child.gameObject);
+            
         for (int y = 0; y < placesPos.GetLength(1); y++)
         {
             for (int x = 0; x < placesPos.GetLength(0); x++)
@@ -178,31 +178,40 @@ public class TravelingManager : MonoBehaviour
                     var cell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity, cellContainer.transform);
                     cell.GetComponent<Image>().sprite = placesPos[x, y].placeCellIcon;
                     cell.transform.localPosition = new Vector3(x * 115, y * 125, 0);
-                    cell.GetComponent<Button>().interactable = false;
-                    // Т.е в диапозоне поселения
+
+                    // Проверяем, является ли клетка соседней к дому
                     cell.GetComponent<Button>().interactable = (x + 1 == homeX || x - 1 == homeX || x == homeX) && (y + 1 == homeY || y - 1 == homeY || y == homeY);
 
-                    if (cell.GetComponent<Button>().interactable == false) // Если остался выключенным
+                    if (!cell.GetComponent<Button>().interactable) // Если остался выключенным
                     {
                         bool findChecked = false;
-                        // Да мне уже похуй. Поиск ближайших изученных
-                        // Реализация хуйня + оно не работает
-                        for (int x1 = -1; x1 < 1; x1++)
+
+                        // Проверяем соседние клетки
+                        for (int x1 = -1; x1 <= 1; x1++)
                         {
-                            for (int y1 = -1; y1 < 1; y1++)
+                            for (int y1 = -1; y1 <= 1; y1++)
                             {
-                                if (x + x1 < placesPos.GetLength(0) && y + y1 < placesPos.GetLength(1))
+                                if (x1 == 0 && y1 == 0) continue; // Пропускаем саму клетку
+
+                                int neighborX = x + x1;
+                                int neighborY = y + y1;
+
+                                if (neighborX >= 0 && neighborX < placesPos.GetLength(0) && neighborY >= 0 && neighborY < placesPos.GetLength(1))
                                 {
-                                    if (placesPos[x + x1, y + y1] != null)
+                                    if (placesPos[neighborX, neighborY] != null && placesPos[neighborX, neighborY].placeIsChecked)
                                     {
-                                        if (placesPos[x + x1, y + y1].placeIsChecked)
-                                            findChecked = true;
+                                        findChecked = true;
+                                        break;
                                     }
                                 }
                             }
+
+                            if (findChecked) break;
                         }
+
                         cell.GetComponent<Button>().interactable = findChecked;
                     }
+
                     int xForButton = x;
                     int yForButton = y;
                     cell.GetComponent<Button>().onClick.AddListener(() => ChoicePlace(placesPos[xForButton, yForButton]));
