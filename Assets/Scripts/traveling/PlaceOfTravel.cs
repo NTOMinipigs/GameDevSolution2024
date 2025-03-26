@@ -19,7 +19,8 @@ public class PlaceOfTravel
 
     // Задается в коде
     [HideInInspector] public bool isHome;
-    [HideInInspector] public bool placeIsChecked; // Уже проверили
+    [HideInInspector] public bool placeIsChecked; // Изучено?
+    [HideInInspector] public Sprite placeCellIcon;
     [HideInInspector] public float timeNow; // Сколько уже прошли
 
     public PlaceOfTravel()

@@ -10,13 +10,13 @@ public class TravelingManager : MonoBehaviour
     public static TravelingManager Singleton { get; private set; }
     [Header("Точки интереса")]
     [SerializeField]
-    private PlaceOfTravel[] allPlaces = Array.Empty<PlaceOfTravel>(); // Все места.
-    private Dictionary<string, PlaceOfTravel> _allPlacesDict = new Dictionary<string, PlaceOfTravel>();
+    private PlaceOfTravel[] allPlaces = Array.Empty<PlaceOfTravel>(); // Все возможные места.
     private PlaceOfTravel[,] placesPos = new PlaceOfTravel[10, 10];
     private PlaceOfTravel _activatedPlace; // Место, куда уже отправлены медведи
     private PlaceOfTravel _selectedPlace; // Выбранное место на карте
 
     [Header("Настройки")] public GameObject travelMenu;
+    [SerializeField] private GameObject cellContainer, cellPrefab;
     private GameObject _infoOfPlaceMenu, _blockOfTravel;
     private TextMeshProUGUI _textNameLocation, _textDescriptionLocation, _precentOfKnowPlanet;
     private Button _travelButton;
@@ -41,9 +41,6 @@ public class TravelingManager : MonoBehaviour
         _precentOfKnowPlanet = _infoOfPlaceMenu?.transform.Find("TextPrecent")?.GetComponent<TextMeshProUGUI>();
         _blockOfTravel = _infoOfPlaceMenu?.transform.Find("StartTravelBlock")?.gameObject;
         _travelButton = _blockOfTravel?.transform.Find("Button")?.GetComponent<Button>();
-
-        foreach (PlaceOfTravel pot in allPlaces)
-            _allPlacesDict.Add(pot.gameName, pot);
     }
 
     public void CreateNewMap(int seed)
@@ -73,21 +70,6 @@ public class TravelingManager : MonoBehaviour
             selectedX = newX;
             selectedY = newY;
         }
-
-        // Просто чтобы видеть
-        string testStr = "";
-        for (int y = 0; y < 10; y++)
-        {
-            testStr += "\n";
-            for (int x = 0; x < 10; x++)
-            {
-                if (placesPos[x, y] != null)
-                    testStr += "+";
-                else
-                    testStr += "-";
-            }
-        }
-        Debug.Log(testStr);
     }
 
     /// <summary>
@@ -104,10 +86,10 @@ public class TravelingManager : MonoBehaviour
 
         UpdateMap();
         _blockOfTravel.gameObject.SetActive(canTravel);
-        if (_blockOfTravel.activeSelf)
-            _travelButton.interactable =
-                (_activatedPlace.gameName == "" &&
-                 ColonyManager.Singleton.Food >= _activatedPlace.foodNeed); // Если исследование не идет
+        //if (_blockOfTravel.activeSelf)
+            //_travelButton.interactable =
+                //(_activatedPlace.gameName == "" &&
+                 //ColonyManager.Singleton.Food >= _activatedPlace.foodNeed); // Если исследование не идет
     }
 
     /// <summary>
@@ -125,7 +107,7 @@ public class TravelingManager : MonoBehaviour
     /// <param name="placeObj"></param>
     public void ChoicePlace(GameObject placeObj)
     {
-        _selectedPlace = _allPlacesDict[placeObj.name];
+        //_selectedPlace = _allPlacesDict[placeObj.name];
         _infoOfPlaceMenu.gameObject.SetActive(true);
         _textNameLocation.text = _selectedPlace.nameOfPlace;
         _textDescriptionLocation.text = _selectedPlace.description;
@@ -134,24 +116,29 @@ public class TravelingManager : MonoBehaviour
             TextMeshProUGUI travelInfo =
                 _blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
 
-            if (_activatedPlace.gameName == "")
-                travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды";
-            else
-                travelInfo.text = "Экспедиция уже начата!";
+            //if (_activatedPlace.gameName == "")
+                //travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды";
+            //else
+                //travelInfo.text = "Экспедиция уже начата!";
         }
     }
 
     public void UpdateMap()
     {
-        foreach (Transform child in travelMenu.transform.Find("places"))
+        for (int y = 0; y < 10; y++)
         {
-            child.gameObject.GetComponent<Button>().interactable =
-                !_allPlacesDict[child.gameObject.name].placeIsChecked;
-            break;
+            for (int x = 0; x < 10; x++)
+            {
+                if (placesPos[x, y] != null)
+                {
+                    var cell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity, cellContainer.transform);
+                    cell.transform.localPosition = new Vector3(x * 85, y * 85, 0);
+                }
+            }
         }
 
-        _precentOfKnowPlanet.text =
-            "Мир исследован на " + (1 - (allPlaces.Length - _maxPlaces)) * 100 + "%";
+        //_precentOfKnowPlanet.text =
+            //"Мир исследован на " + (1 - (allPlaces.Length - _maxPlaces)) * 100 + "%";
     }
 
     private void Update()

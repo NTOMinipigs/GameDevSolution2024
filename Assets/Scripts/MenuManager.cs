@@ -88,9 +88,8 @@ public class MenuManager : MonoBehaviour
                 // Если пользователь существует
                 if (inputFieldNickname.text == user.Name)
                 {
-                    Debug.Log(user.Seed);
                     player.playerName = inputFieldNickname.text;
-                    player.seed = user.Seed;
+                    player.seed = user.Resources["seed"];
                     ActivateEnterMenu();
                     return;
                 }
