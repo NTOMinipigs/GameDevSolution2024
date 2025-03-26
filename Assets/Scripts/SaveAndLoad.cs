@@ -117,6 +117,7 @@ public class SaveAndLoad : MonoBehaviour
         CreatePreference();
         CreateInventory();
         CreateGameEvents();
+        TravelingManager.Singleton.CreateNewMap(Player.Instance.seed);
         firstBoot = true;
     }
 
@@ -173,11 +174,11 @@ public class SaveAndLoad : MonoBehaviour
         {"maxMaterialPlus", 0},
         {"maxEnergy", 0}
     };
-        
+
         APIClient.Instance
             .CreatePlayerRequest(
                 Player.Instance.playerName,
-                initInventory);
+                initInventory, Player.Instance.seed);
     }
 
     /// <summary>
@@ -286,7 +287,7 @@ public class SaveAndLoad : MonoBehaviour
         GameEventsManager.Singleton.worldHours = SystemSaver.Singleton.gameSave.hours;
         GameEventsManager.Singleton.worldMinuts = SystemSaver.Singleton.gameSave.minutes;
     }
-    
+
     #endregion
 
     #region save

@@ -27854,6 +27854,7 @@ MonoBehaviour:
     onceEvent: 0
     eventRewards: []
     disaster: 0
+  _textTemperature: {fileID: 1686929205}
   gameDay: 0
   worldHours: 0
   worldMinuts: 0

@@ -31,8 +31,8 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private string _baseUri;
 
-    //private string _host = "2025.nti-gamedev.ru";
-    private string _host = "gamedev.justiks.ru";
+    private string _host = "final.2025.nti-gamedev.ru";
+    //private string _host = "gamedev.justiks.ru";
 
 
     // Singleton block
@@ -112,12 +112,14 @@ public class APIClient : MonoBehaviour
     public class UserInventory
     {
         public string Name { get; }
+        public int Seed {get; }
         public Dictionary<string, int> Resources { get; }
 
-        public UserInventory(string name, Dictionary<string, int> resources)
+        public UserInventory(string name, Dictionary<string, int> resources, int seed)
         {
             Name = name;
             Resources = resources;
+            Seed = seed;
         }
     }
 
@@ -328,20 +330,16 @@ public class APIClient : MonoBehaviour
     /// <param name="requestLogin">Логин игрока</param>
     /// <param name="requestResourses">Ресурсы игрока</param>
     /// <returns></returns>
-    public async Task<UserInventory> CreatePlayerRequest(string requestLogin, Dictionary<string, int> requestResourses)
+    public async Task<UserInventory> CreatePlayerRequest(string requestLogin, Dictionary<string, int> requestResourses, int requestSeed)
     {
         object requestBody;
 
         // Формируем тело запроса
         if (requestResourses == null)
-        {
-            requestBody = new { name = requestLogin };
-        }
+            requestBody = new { name = requestLogin, seed = requestSeed };
 
         else
-        {
-            requestBody = new { name = requestLogin, resources = requestResourses };
-        }
+            requestBody = new { name = requestLogin, resources = requestResourses, seed = requestSeed};
 
         return await SendPostAsync<UserInventory>("players/", requestBody); // Отправляем запрос
     }

@@ -20,7 +20,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject enterToGameCanvas;
     [SerializeField] private GameObject authCanvas;
     [SerializeField] private GameObject menuMain, menuNickname, menuMods, menuNewGame;
-    [SerializeField] private TMP_InputField inputFieldNickname;
+    [SerializeField] private TMP_InputField inputFieldNickname, inputFieldSeed;
     [SerializeField] private TextMeshProUGUI textInfo;
     [SerializeField] private Button buttonResume;
 
@@ -39,11 +39,20 @@ public class MenuManager : MonoBehaviour
     }
 
     public void StartGame() => SceneManager.LoadScene("Game");
+    public void CreateNewGame()
+    {
+        if (inputFieldSeed.text == "")
+            return;
+
+        player.seed = int.Parse(inputFieldSeed.text);
+        StartGame();
+    }
 
     public void ManageCreateGameMenu()
     {
         menuNewGame.SetActive(!menuNewGame.activeSelf);
         menuMain.SetActive(!menuNewGame.activeSelf);
+        inputFieldSeed.text = Random.Range(0, 100000).ToString();
     }
 
     public void ManageModsMenu()
@@ -72,15 +81,17 @@ public class MenuManager : MonoBehaviour
     {
         if (inputFieldNickname.text != "")
         {
-            ActivateEnterMenu();
             List<APIClient.UserInventory> users = await apiClient.GetUsersListRequest();
 
             foreach (APIClient.UserInventory user in users)
             {
-                // Если пользователь уже существует
+                // Если пользователь существует
                 if (inputFieldNickname.text == user.Name)
                 {
+                    Debug.Log(user.Seed);
                     player.playerName = inputFieldNickname.text;
+                    player.seed = user.Seed;
+                    ActivateEnterMenu();
                     return;
                 }
             }

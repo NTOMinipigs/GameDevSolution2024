@@ -22,4 +22,5 @@ public class Player : MonoBehaviour
     
     public static Player Instance { get; private set; }   
     public string playerName;
+    public int seed; // Дополнительно создан здесь, чтобы перенести из меню в игру
 }

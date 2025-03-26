@@ -8,10 +8,11 @@ using Random = UnityEngine.Random;
 public class TravelingManager : MonoBehaviour
 {
     public static TravelingManager Singleton { get; private set; }
-    [Header("Точки интереса")] [SerializeField]
+    [Header("Точки интереса")]
+    [SerializeField]
     private PlaceOfTravel[] allPlaces = Array.Empty<PlaceOfTravel>(); // Все места.
-
     private Dictionary<string, PlaceOfTravel> _allPlacesDict = new Dictionary<string, PlaceOfTravel>();
+    private PlaceOfTravel[,] placesPos = new PlaceOfTravel[10, 10];
     private PlaceOfTravel _activatedPlace; // Место, куда уже отправлены медведи
     private PlaceOfTravel _selectedPlace; // Выбранное место на карте
 
@@ -43,6 +44,50 @@ public class TravelingManager : MonoBehaviour
 
         foreach (PlaceOfTravel pot in allPlaces)
             _allPlacesDict.Add(pot.gameName, pot);
+    }
+
+    public void CreateNewMap(int seed)
+    {
+        Random.InitState(seed);
+        bool homeSelected = false;
+
+        // Назначаем дом
+        int homeX = Mathf.RoundToInt(placesPos.GetLength(0) / 2f);
+        int homeY = Mathf.RoundToInt(placesPos.GetLength(1) / 2f);
+        placesPos[homeX, homeY] = new PlaceOfTravel("bearColony", "Ваше поселение", true);
+
+        // Текуущая выбранная клетка. Начинаем с дома
+        int selectedX = homeX;
+        int selectedY = homeY;
+
+        for (int i = 0; i < 30; i++)
+        {
+            PlaceOfTravel newPlace = allPlaces[Random.Range(0, allPlaces.Length)];
+            int newX = selectedX + Random.Range(-1, 1);
+            int newY = selectedY + Random.Range(-1, 1);
+            if ((newX > 0 && newX < placesPos.GetLength(0)) && (newY > 0 && newY < placesPos.GetLength(1)))
+            {
+                if (newX != homeX && newY != homeY) // Клетки могут менять друг друга, но не дом
+                    placesPos[newX, newY] = newPlace;
+            }
+            selectedX = newX;
+            selectedY = newY;
+        }
+
+        // Просто чтобы видеть
+        string testStr = "";
+        for (int y = 0; y < 10; y++)
+        {
+            testStr += "\n";
+            for (int x = 0; x < 10; x++)
+            {
+                if (placesPos[x, y] != null)
+                    testStr += "+";
+                else
+                    testStr += "-";
+            }
+        }
+        Debug.Log(testStr);
     }
 
     /// <summary>
