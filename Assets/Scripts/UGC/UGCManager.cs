@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace UGC
 {
+    /// <summary>
+    /// Manager для UGC, является высшим объектом в иерархии UCG
+    /// </summary>
     public class UGCManager : MonoBehaviour
     {
         
@@ -12,7 +15,19 @@ namespace UGC
         private const string DefaultIcon = "default_icon.png";
         
         private readonly string _pathToMods = Path.Combine(Application.streamingAssetsPath, "Mods");
-        
+
+        /// <summary>
+        /// Instance of UGCManager
+        /// </summary>
+        public static UGCManager Singleton {get; private set;}
+
+        /// <summary>
+        /// Awake
+        /// </summary>
+        void Awake()
+        {
+            Singleton = this; 
+        }
         
         /// <summary>
         /// Создай новый UGC
