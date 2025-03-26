@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -10,21 +10,27 @@ using TMPro;
 /// </summary>
 public class MenuManager : MonoBehaviour
 {
-    #region хуйня полная  
+    #region Переменные 
 
+    [Header("IDK")]
     [SerializeField] private Preference preference; // Нужно сделать загрузку и сохранение
-    [SerializeField] private GameObject menuNickname;
-    [SerializeField] private TMP_InputField inputFieldNickname;
     [SerializeField] private Player player;
     [SerializeField] private APIClient apiClient;
+    [Header("UI")]
     [SerializeField] private GameObject enterToGameCanvas;
     [SerializeField] private GameObject authCanvas;
-    
+    [SerializeField] private GameObject menuMain, menuNickname, menuMods, menuNewGame;
+    [SerializeField] private TMP_InputField inputFieldNickname;
+    [SerializeField] private TextMeshProUGUI textInfo;
+    [SerializeField] private Button buttonResume;
+
     #endregion
 
 
     private void Start()
     {
+        authCanvas.SetActive(true);
+        enterToGameCanvas.SetActive(false);
         if (Config.ConfigManager.Instance.config.debug)
         {
             player.playerName = "test";
@@ -33,6 +39,19 @@ public class MenuManager : MonoBehaviour
     }
 
     public void StartGame() => SceneManager.LoadScene("Game");
+
+    public void ManageCreateGameMenu()
+    {
+        menuNewGame.SetActive(!menuNewGame.activeSelf);
+        menuMain.SetActive(!menuNewGame.activeSelf);
+    }
+
+    public void ManageModsMenu()
+    {
+        menuMods.SetActive(!menuMods.activeSelf);
+        menuMain.SetActive(!menuMods.activeSelf);
+    }
+
     public void ExitGame() => Application.Quit();
     public void OpenPreferencs() => preference.ManagePrefenceMenu();
 
@@ -40,6 +59,13 @@ public class MenuManager : MonoBehaviour
     {
         authCanvas.SetActive(false);
         enterToGameCanvas.SetActive(true);
+        textInfo.text += " " + player.playerName;
+        SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+
+        bool loadResult = systemSaver.LoadGame();
+        // Если файл сохранения не найден
+        if (loadResult)
+            buttonResume.interactable = true;
     }
 
     public async void ActivateNickname() // Вызывать при первом старте?
@@ -69,7 +95,4 @@ public class MenuManager : MonoBehaviour
         player.playerName = "nickname";
         ActivateEnterMenu();
     }
-    
-    
-    
 }
