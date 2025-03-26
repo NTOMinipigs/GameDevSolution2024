@@ -1,6 +1,9 @@
 using System.IO;
+using System.Net.Mime;
 using Newtonsoft.Json;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGC
 {
@@ -9,10 +12,18 @@ namespace UGC
     /// </summary>
     public class UGCManager : MonoBehaviour
     {
-        
+        # region consts
         private const string IconName = "icon.png";
         private const string JsonName = "assets.json";
         private const string DefaultIcon = "default_icon.png";
+        # endregion
+        
+        # region UI
+
+        [SerializeField] private GameObject UGCPreviewPrefab;
+        [SerializeField] public GameObject UGCViewsContent; // ВОообще он должен быть приватным, но я пидорас
+        
+        # endregion
         
         private readonly string _pathToMods = Path.Combine(Application.streamingAssetsPath, "Mods");
 
@@ -85,6 +96,27 @@ namespace UGC
             }
 
             return results;
+        }
+
+
+        /// <summary>
+        /// Покажи все UGC в меню
+        /// </summary>
+        public void ShowAllUGC()
+        {
+            UGCPreview[] ugcs = GetAllUGC();
+            foreach (UGCPreview ugc in ugcs)
+            {
+                GameObject preview = Instantiate(UGCPreviewPrefab, UGCViewsContent.transform);
+                preview.GetComponentInChildren<Image>().sprite = ugc.Icon;
+                
+                TextMeshPro nameComponent =  preview.transform.Find("Name").GetComponent<TextMeshPro>();
+                nameComponent.text = ugc.Name;
+                
+                TextMeshPro descriptionComponent = preview.transform.Find("Description").GetComponent<TextMeshPro>();
+                descriptionComponent.text = ugc.Description;
+            }
+            
         }
          
         /// <summary>

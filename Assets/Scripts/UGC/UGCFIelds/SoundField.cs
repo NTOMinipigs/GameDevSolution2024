@@ -32,20 +32,12 @@ namespace UGC.UGCFIelds
         /// <summary>
         /// название мода 
         /// </summary>
-        private string modName;
-        
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        public SoundField(string modName)
-        {
-            this.modName = modName;
-        }
+        public string modName;
         
         /// <summary>
         /// Клик по кнопке
         /// </summary>
-        private void ButtonClick()
+        public void ButtonClick()
         {
             ImportFile();
         }

@@ -21,5 +21,14 @@ namespace UGC
         /// Описание мода
         /// </summary>
         [JsonProperty("description")] public string Description;
+        
+        [JsonProperty("bear_beekepers")] public string bearBeekepers;
+        [JsonProperty("bear_bio")] public string bearBio;
+        [JsonProperty("bear_construct")] public string bearConstruct;
+        [JsonProperty("bear_progers")] public string bearProgers;
+        [JsonProperty("bear_chrom")] public string bearChrom;
+        [JsonProperty("drones")] public string Drones;
+
+
     }
 }

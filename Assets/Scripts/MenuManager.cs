@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UGC;
 
 
 /// <summary>
@@ -19,7 +20,7 @@ public class MenuManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject enterToGameCanvas;
     [SerializeField] private GameObject authCanvas;
-    [SerializeField] private GameObject menuMain, menuNickname, menuMods, menuNewGame;
+    [SerializeField] private GameObject menuMain, menuNickname, menuMods, menuNewGame, editorMenu;
     [SerializeField] private TMP_InputField inputFieldNickname;
     [SerializeField] private TextMeshProUGUI textInfo;
     [SerializeField] private Button buttonResume;
@@ -50,6 +51,16 @@ public class MenuManager : MonoBehaviour
     {
         menuMods.SetActive(!menuMods.activeSelf);
         menuMain.SetActive(!menuMods.activeSelf);
+        
+        // Обновляем превьюшки модов в мод меню
+
+        // Удаляю все превьюшки в контенте 
+        foreach (Transform child in UGCManager.Singleton.UGCViewsContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        UGCManager.Singleton.ShowAllUGC();
     }
 
     public void ExitGame() => Application.Quit();
@@ -94,5 +105,13 @@ public class MenuManager : MonoBehaviour
     {
         player.playerName = "nickname";
         ActivateEnterMenu();
+    }
+
+    /// <summary>
+    /// включить/выключить Editor для модов
+    /// </summary>
+    public void EditorButtonManage()
+    {
+        editorMenu.SetActive(!editorMenu.activeSelf);
     }
 }

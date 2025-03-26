@@ -16,26 +16,16 @@ namespace UGC.UGCFIelds
         /// Getter for value private set
         /// </summary>
         public object Value => _value;
-
         
         /// <summary>
         /// Название мода
         /// </summary>
-        private string modName;
-
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        /// <param name="name">Название мода</param>
-        public PictureField(string name)
-        {
-            modName = name;
-        }
+        public string modName;
         
         /// <summary>
         /// Вызовите это при нажатие на кнопку
         /// </summary>
-        private void OnButtonClick()
+        public void OnButtonClick()
         {
             ImportImage();
         }
