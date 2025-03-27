@@ -2569,6 +2569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  seed: 0
 --- !u!4 &663564592
 Transform:
   m_ObjectHideFlags: 0
@@ -4116,7 +4117,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1092956386}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1258667950}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: CreateNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1092956386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4754,6 +4767,7 @@ MonoBehaviour:
   menuMods: {fileID: 1254249224}
   menuNewGame: {fileID: 1298216081}
   inputFieldNickname: {fileID: 97118614}
+  inputFieldSeed: {fileID: 1626741550}
   textInfo: {fileID: 2138410979}
   buttonResume: {fileID: 537398706}
 --- !u!4 &1258667951

@@ -32,7 +32,6 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private GameObject buildingsBearMenu, buildingsWorkMenu, buildingsSienceMenu;
     [SerializeField] private GameObject resourceBlockAdd, resourceBlockRemove;
     private TextMeshProUGUI _resourceAddText, _resourceRemoveText;
-    private Image _resourceAddImage, _resourceRemoveImage;
     [SerializeField] private Button buttonAddWorker, buttonRemoveWorker;
     [SerializeField] private Button buttonAddWorkerResources, buttonRemoveWorkerResources;
 
@@ -68,8 +67,6 @@ public class BuildingSystem : MonoBehaviour
 
         _resourceAddText = resourceBlockAdd.transform.Find("TextAddResource").GetComponent<TextMeshProUGUI>();
         _resourceRemoveText = resourceBlockRemove.transform.Find("TextRemoveResource").GetComponent<TextMeshProUGUI>();
-        _resourceAddImage = resourceBlockAdd.transform.Find("ResourceIcon").GetComponent<Image>();
-        _resourceRemoveImage = resourceBlockAdd.transform.Find("ResourceIcon").GetComponent<Image>();
     }
 
     public void SelectBuildingToInteraction(BuildingController buildingController)
