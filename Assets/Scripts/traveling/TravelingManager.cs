@@ -115,6 +115,8 @@ public class TravelingManager : MonoBehaviour
     {
         // Если какая-то менюха уже открыта
         if (GameMenuManager.Singleton.CheckOpenedWindows(!travelMenu.activeSelf)) return;
+        if (QuestSystem.Singleton.GetEndTrigger() == "openMap")
+                QuestSystem.Singleton.MoveNextStep();
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
         _infoOfPlaceMenu.gameObject.SetActive(false); // Закрытие информации о месте, если была открыта
         if (!travelMenu.activeSelf) return;
@@ -151,7 +153,7 @@ public class TravelingManager : MonoBehaviour
         string rewards = "";
         foreach (Reward reward in _selectedPlace.rewards)
             rewards += " +" + reward.typeOfReward.GetString() + " x" + reward.count + "\n";
-        _textDescriptionLocation.text = _selectedPlace.description + "Награды: \n" + rewards;
+        _textDescriptionLocation.text = _selectedPlace.description + "\nНаграды: \n" + rewards;
         if (_blockOfTravel.activeSelf)
         {
             TextMeshProUGUI travelInfo =

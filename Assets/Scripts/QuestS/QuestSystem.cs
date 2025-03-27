@@ -15,18 +15,23 @@ public class QuestSystem : MonoBehaviour
     [SerializeField] private GameObject prehistoryObj;
     [SerializeField] private TextMeshProUGUI totalQuestText;
     private TextMeshProUGUI textName, textDescription, textStep;
-    [SerializeField] private quest[] questsInGame = new quest[0];
+    [SerializeField] private Quest[] questsInGame = new Quest[0];
     public int totalStep;
-    public quest totalQuest;
+    public Quest totalQuest;
 
     private void Awake()
     {
         Singleton = this;
     }
 
-    public quest FindQuest(string questName)
+    private void Start()
     {
-        foreach (quest newQuest in questsInGame)
+        UpdateQuestUI();
+    }
+
+    public Quest FindQuest(string questName)
+    {
+        foreach (Quest newQuest in questsInGame)
         {
             if (newQuest.questName == questName)
                 return newQuest;
@@ -34,13 +39,18 @@ public class QuestSystem : MonoBehaviour
         return null;
     }
 
+    public string GetEndTrigger()
+    {
+        if (totalQuest != null)
+            return totalQuest.steps[totalStep].endTrigger;
+        return "";
+    }
+
     public void StartFirst() // Заставка + первый квест
     {
         // Запуск катсцены в самом начале игры
         if (Config.ConfigManager.Instance.config.debug)
-        {
             return;
-        }
 
         CutsceneManager.Singleton.StartCutscene(CutsceneManager.Singleton.FirstCutscene);
         DialogManager.Singleton.ActivateDialog("afterPrehistory");
@@ -49,7 +59,7 @@ public class QuestSystem : MonoBehaviour
 
     public void ActivateQuest(string questName)
     {
-        quest newQuest = FindQuest(questName);
+        Quest newQuest = FindQuest(questName);
         if (newQuest != null)
         {
             totalQuest = newQuest;
@@ -71,6 +81,7 @@ public class QuestSystem : MonoBehaviour
             }
             DoStep(totalStep);
         }
+        UpdateQuestUI();
     }
 
     private void DoStep(int step)
@@ -93,7 +104,11 @@ public class QuestSystem : MonoBehaviour
             textDescription.text = totalQuest != null ? totalQuest.description : "";
             textStep.text = totalQuest != null ? totalQuest.steps[totalStep].stepName : "";
         }
-        totalQuestText.text = totalQuest.gameName + "\n----------------\n" + totalQuest.steps[totalStep].stepName;
+
+        if (totalQuest == null)
+            totalQuestText.text = "";
+        else
+            totalQuestText.text = totalQuest.gameName + "\n----------------\n" + totalQuest.steps[totalStep].stepName;
     }
 
     private void Update()
@@ -107,23 +122,5 @@ public class QuestSystem : MonoBehaviour
                 UpdateQuestUI();
             }
         }
-        // if (totalQuest != null)
-        //     totalQuestText.text = totalQuest.steps[totalStep].stepName;
-        // else
-        //     totalQuestText.text = "";
     }
-}
-
-[System.Serializable]
-public class quest
-{
-    public string questName, gameName, description;
-    public questStep[] steps = new questStep[0];
-}
-
-[System.Serializable]
-public class questStep
-{
-    public string stepName;
-    public string startStepWithDialog;
 }

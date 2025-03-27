@@ -22,10 +22,18 @@ public class BuildingController : MonoBehaviour
     /// </summary>
     public bool isReady;
 
+    /// <summary>
+    /// ХП здания
+    /// </summary>
     public float health = 100f;
+
+    /// <summary>
+    /// Сколько мы наносим урона РЕСУРСУ
+    /// </summary>
+    public float damageAfterOneGet = 2f;
     public Vector2Int size;
 
-    [Header("Workers")] 
+    [Header("Workers")]
 
     /// <summary>
     /// Число рабочих в здании
@@ -165,7 +173,9 @@ public class BuildingController : MonoBehaviour
                 }
                 if (resource) // Если ресурс
                 {
-                    health -= 2f;
+                    if (QuestSystem.Singleton.GetEndTrigger() == "collectResources")
+                        QuestSystem.Singleton.MoveNextStep();
+                    health -= damageAfterOneGet;
                     if (health < 0)
                     {
                         BearTaskManager.Singleton.FindAndEndTask(Traditions.Drone, gameObject, true);

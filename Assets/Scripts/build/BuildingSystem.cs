@@ -221,7 +221,7 @@ public class BuildingSystem : MonoBehaviour
         textResourceName.text = "Ресурс: " + _selectedBuildController.Building.TypeResource.GetString();
         textResourceRemain.text = "Осталось: " + _selectedBuildController.health + "\n" + "+" + _selectedBuildController.workersCount * _selectedBuildController.Building.ResourceOneWorker + " " + _selectedBuildController.Building.TypeResource.GetString() +
                         " в " + _selectedBuildController.Building.TimeToChange + "сек";
-        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" + 
+        textCountWorkersResource.text = _selectedBuildController.workersCount + "/" +
                                         _selectedBuildController.Building.MaxWorkers;
     }
 
@@ -291,16 +291,6 @@ public class BuildingSystem : MonoBehaviour
             PlaceBuilding(_flyingBuildingController, placeX, placeY);
             BuildingSaveSystem.Singleton.CreateBuildSave(placeX, placeY, _flyingBuildingController.name,
                 false, false, 0); // Создаем сохранение постройки
-
-            switch (_flyingBuildingController.Building.BuildingName)
-            {
-                // Кор
-                case "Солнечная панель":
-                case "Фабрика материалов":
-                    if (QuestSystem.Singleton.totalQuest.questName == "StartQuest")
-                        QuestSystem.Singleton.MoveNextStep();
-                    break;
-            }
 
             BearTaskManager.Singleton.CreateNewTask(TasksMode.Build, _flyingBuildingController.gameObject,
                 Traditions.Constructors,

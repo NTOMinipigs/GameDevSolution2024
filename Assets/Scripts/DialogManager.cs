@@ -43,6 +43,7 @@ public class DialogManager : MonoBehaviour
     private Dictionary<string, Dialog> _dialogsDict = new();
 
     [SerializeField] private int totalStep;
+    private bool interactionDialog;
     private Dialog _activatedDialog;
     private DialogStep _selectedStep;
     private Bear _selectedBear;
@@ -99,6 +100,7 @@ public class DialogManager : MonoBehaviour
     // Старт диалога при взаимодействии с медведем
     public void ActivateBearInteractionDialog(Bear selectedBear)
     {
+        interactionDialog = true;
         if (selectedBear.tired > 10)
             ActivateDialog("bearTired", selectedBear.gameName, true);
         else if (selectedBear.hungry > 10)
@@ -160,6 +162,12 @@ public class DialogManager : MonoBehaviour
         CameraMove.Singleton.blockMove = false;
         _selectedBear = null;
         camera.transform.position = beforeCamPosition;
+        if (interactionDialog)
+        {
+            if (QuestSystem.Singleton.GetEndTrigger() == "dialog")
+                QuestSystem.Singleton.MoveNextStep();
+        }
+        interactionDialog = false;
     }
 
     private void CameraBack()
@@ -249,7 +257,7 @@ public class DialogStep
 {
     public Traditions traditionBear;
     [HideInInspector] public string nameBear;
-    public string text;
+    [TextArea] public string text;
     [HideInInspector] public Sprite icon;
     public string questStart;
 
