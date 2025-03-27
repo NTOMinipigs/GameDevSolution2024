@@ -41,6 +41,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+
+    public void RefreshSeed() => inputFieldSeed.text = Random.Range(0, 100000).ToString();
+    
     public void StartGame() => SceneManager.LoadScene("Game");
 
     public void CreateNewGame()

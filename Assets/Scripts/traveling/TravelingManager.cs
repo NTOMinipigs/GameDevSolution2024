@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class TravelingManager : MonoBehaviour
 {
     public static TravelingManager Singleton { get; private set; }
-    private PlaceOfTravel[,] placesPos = new PlaceOfTravel[10, 8];
+    private PlaceOfTravel[,] placesPos = new PlaceOfTravel[13, 8];
     private PlaceOfTravel _activatedPlace; // Место, куда уже отправлены медведи
     private PlaceOfTravel _selectedPlace; // Выбранное место на карте
     private int _maxPlaces;
@@ -136,7 +136,7 @@ public class TravelingManager : MonoBehaviour
     {
         _activatedPlace = _selectedPlace;
         ColonyManager.Singleton.Food -= _activatedPlace.foodNeed;
-        ColonyManager.Singleton.BioFuel -= _activatedPlace.bioFuelNeed;
+        ColonyManager.Singleton.Biofuel -= _activatedPlace.bioFuelNeed;
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
         UpdateMap();
     }
