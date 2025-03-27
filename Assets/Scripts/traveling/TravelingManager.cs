@@ -89,6 +89,10 @@ public class TravelingManager : MonoBehaviour
                         for (int rewardsCount = 0; rewardsCount < Random.Range(1, 2 * placesPos[newX, newY].difficulty); rewardsCount++)
                             placesPos[newX, newY].rewards.Add(rewardsInPlaces[Random.Range(0, rewardsInPlaces.Length - 1)]);
 
+                        placesPos[newX, newY].timeToGoing = Random.Range(90, 160 * distance);
+                        placesPos[newX, newY].foodNeed = Random.Range(distance, 5 * distance);
+                        placesPos[newX, newY].bioFuelNeed = Random.Range(distance, 5 * (distance + 2));
+
                         selectedX = newX;
                         selectedY = newY;
                     }
@@ -116,17 +120,13 @@ public class TravelingManager : MonoBehaviour
         // Если какая-то менюха уже открыта
         if (GameMenuManager.Singleton.CheckOpenedWindows(!travelMenu.activeSelf)) return;
         if (QuestSystem.Singleton.GetEndTrigger() == "openMap")
-                QuestSystem.Singleton.MoveNextStep();
+            QuestSystem.Singleton.MoveNextStep();
         travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
         _infoOfPlaceMenu.gameObject.SetActive(false); // Закрытие информации о месте, если была открыта
         if (!travelMenu.activeSelf) return;
 
         UpdateMap();
         _blockOfTravel.gameObject.SetActive(canTravel);
-        //if (_blockOfTravel.activeSelf)
-        //_travelButton.interactable =
-        //(_activatedPlace.gameName == "" &&
-        //ColonyManager.Singleton.Food >= _activatedPlace.foodNeed); // Если исследование не идет
     }
 
     /// <summary>
@@ -134,9 +134,10 @@ public class TravelingManager : MonoBehaviour
     /// </summary>
     public void StartExpedition()
     {
-        //_activatedPlace = _selectedPlace;
-        //travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
-        _selectedPlace.placeIsChecked = true;
+        _activatedPlace = _selectedPlace;
+        ColonyManager.Singleton.Food -= _activatedPlace.foodNeed;
+        ColonyManager.Singleton.BioFuel -= _activatedPlace.bioFuelNeed;
+        travelMenu.gameObject.SetActive(!travelMenu.activeSelf);
         UpdateMap();
     }
 
@@ -154,12 +155,16 @@ public class TravelingManager : MonoBehaviour
         foreach (Reward reward in _selectedPlace.rewards)
             rewards += " +" + reward.typeOfReward.GetString() + " x" + reward.count + "\n";
         _textDescriptionLocation.text = _selectedPlace.description + "\nНаграды: \n" + rewards;
+
         if (_blockOfTravel.activeSelf)
         {
+            if (_blockOfTravel.activeSelf)
+                _travelButton.interactable = (_activatedPlace == null && ColonyManager.Singleton.Food >= _selectedPlace.foodNeed); // Если исследование не идет
+
             TextMeshProUGUI travelInfo =
                 _blockOfTravel.transform.Find("TextTravelInfo").GetComponent<TextMeshProUGUI>();
 
-            if (_activatedPlace != null)
+            if (_activatedPlace == null)
                 travelInfo.text = _selectedPlace.timeToGoing / 60 + " мин/-" + _selectedPlace.foodNeed + " еды/-" + _selectedPlace.bioFuelNeed + " топлива";
             else
                 travelInfo.text = "Экспедиция уже начата!";
@@ -170,7 +175,7 @@ public class TravelingManager : MonoBehaviour
     {
         foreach (Transform child in cellContainer.transform)
             Destroy(child.gameObject);
-            
+
         for (int y = 0; y < placesPos.GetLength(1); y++)
         {
             for (int x = 0; x < placesPos.GetLength(0); x++)

@@ -41,7 +41,7 @@ public class QuestSystem : MonoBehaviour
 
     public string GetEndTrigger()
     {
-        if (totalQuest != null)
+        if (totalQuest != null && totalStep < totalQuest.steps.Length)
             return totalQuest.steps[totalStep].endTrigger;
         return "";
     }
