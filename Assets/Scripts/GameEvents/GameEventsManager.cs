@@ -15,7 +15,8 @@ public class GameEventsManager : MonoBehaviour
     [Header("Event menu")] public GameObject gameEventsMenu;
     [SerializeField] private TextMeshProUGUI textEventName, textEventDescription;
 
-    [Header("GameEvents")] [SerializeField]
+    [Header("GameEvents")]
+    [SerializeField]
     private GameEvent[] allGameEvents = new GameEvent[0];
 
     private readonly List<string> _onceGameEventsWasRead = new List<string>();
@@ -86,10 +87,10 @@ public class GameEventsManager : MonoBehaviour
             TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster, selectedEvent.eventDifficult) + "\n",
             TypeOfEvent.ChangeBearCharacter => ChangeBearCharacter() + "\n"
         };
-        
+
         if (selectedEvent.eventRewards.Length > 0)
             textReward += ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards);
-        
+
         ActivateEventMenu(selectedEvent, textReward);
     }
 
@@ -101,7 +102,7 @@ public class GameEventsManager : MonoBehaviour
     private string ActivateDisaster(TypeOfDisaster disaster, int eventDifficult)
     {
         string textReward = "";
-        switch(disaster)
+        switch (disaster)
         {
             case TypeOfDisaster.PlusTemperature:
                 textReward = ChangeTemperature(true, eventDifficult);
@@ -186,25 +187,26 @@ public class GameEventsManager : MonoBehaviour
             _hoursToNextEvent--;
             if (_hoursToNextEvent == 0) // Если пора активировать ивент
             {
-                GameEvent newEvent = allGameEvents[Random.Range(0, allGameEvents.Length)];
-                bool canActivateEvent = true;
-                if (newEvent.onceEvent) // Если ивент одноразовый
-                {
-                    foreach (string eventCheckName in _onceGameEventsWasRead)
-                    {
-                        if (eventCheckName == newEvent.eventName)
-                            canActivateEvent = false;
-                    }
-
-                    // Если не нашелся - то добавляем
-                    if (canActivateEvent)
-                        _onceGameEventsWasRead.Add(newEvent.gameName);
-                }
-
                 _hoursToNextEvent = Random.Range(5, 20);
+                if (QuestSystem.Singleton.totalStep == QuestSystem.Singleton.totalQuest.steps.Length - 1)
+                {
+                    GameEvent newEvent = allGameEvents[Random.Range(0, allGameEvents.Length)];
+                    bool canActivateEvent = true;
+                    if (newEvent.onceEvent) // Если ивент одноразовый
+                    {
+                        foreach (string eventCheckName in _onceGameEventsWasRead)
+                        {
+                            if (eventCheckName == newEvent.eventName)
+                                canActivateEvent = false;
+                        }
 
-                if (canActivateEvent)
-                    ActivateEvent(newEvent);
+                        // Если не нашелся - то добавляем
+                        if (canActivateEvent)
+                            _onceGameEventsWasRead.Add(newEvent.gameName);
+                    }
+                    if (canActivateEvent)
+                        ActivateEvent(newEvent);
+                }
             }
 
             // Начало нового дня
@@ -236,10 +238,10 @@ public class GameEventsManager : MonoBehaviour
         }
 
         _textTime.text = worldHours.ToString("D2") + ":" + worldMinuts.ToString("D2");
-        
+
         SystemSaver.Singleton.gameSave.hours = worldHours;
         SystemSaver.Singleton.gameSave.minutes = worldMinuts;
-        
+
         yield return new WaitForSeconds(3f); // Частота обновления дня
         StartCoroutine(WorldTimeChange());
     }

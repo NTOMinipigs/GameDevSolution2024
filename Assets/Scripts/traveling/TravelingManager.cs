@@ -179,7 +179,7 @@ public class TravelingManager : MonoBehaviour
                 {
                     var cell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity, cellContainer.transform);
                     cell.GetComponent<Image>().sprite = placesPos[x, y].placeCellIcon;
-                    cell.transform.localPosition = new Vector3(x * 115, y * 125, 0);
+                    cell.transform.localPosition = new Vector3(x * 120, y * 125, 0);
 
                     // Проверяем, является ли клетка соседней к дому
                     cell.GetComponent<Button>().interactable = (x + 1 == homeX || x - 1 == homeX || x == homeX) && (y + 1 == homeY || y - 1 == homeY || y == homeY);

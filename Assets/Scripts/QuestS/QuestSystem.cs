@@ -80,8 +80,8 @@ public class QuestSystem : MonoBehaviour
                 return;
             }
             DoStep(totalStep);
+            UpdateQuestUI();
         }
-        UpdateQuestUI();
     }
 
     private void DoStep(int step)

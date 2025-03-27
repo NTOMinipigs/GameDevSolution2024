@@ -84,8 +84,6 @@ public class DialogManager : MonoBehaviour
         if (GameMenuManager.Singleton.CheckOpenedWindows(blockWithOtherMenu)) // Если какая-то менюха уже открыта
             return;
 
-        MusicManager.Singleton.AudioLoops["snow_steps"].Play();
-
         if (_activatedDialog != null) return;
 
         _activatedDialog = GetDialog(dialogName);
@@ -95,6 +93,7 @@ public class DialogManager : MonoBehaviour
         if (gameNameBear != "")
             _selectedBear = ColonyManager.Singleton.GetBear(gameNameBear);
         DialogUpdateAction();
+        MusicManager.Singleton.AudioLoops["snow_steps"].Play();
     }
 
     // Старт диалога при взаимодействии с медведем
@@ -237,7 +236,7 @@ public class DialogManager : MonoBehaviour
             if (_animatingText)
             {
                 textDialog.text += tChar;
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.01f);
             }
         }
 
