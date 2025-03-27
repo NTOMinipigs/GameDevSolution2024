@@ -31,8 +31,8 @@ public class APIClient : MonoBehaviour
     /// </summary>
     private string _baseUri;
 
-    //private string _host = "final.2025.nti-gamedev.ru";
-    private string _host = "gamedev.justiks.ru";
+    private string _host = "final.2025.nti-gamedev.ru";
+    //private string _host = "gamedev.justiks.ru";
 
 
     // Singleton block
