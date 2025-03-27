@@ -83,8 +83,8 @@ public class GameEventsManager : MonoBehaviour
     {
         string textReward = selectedEvent.typeOfEvent switch
         {
-            TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster, selectedEvent.eventDifficult),
-            TypeOfEvent.ChangeBearCharacter => ChangeBearCharacter()
+            TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster, selectedEvent.eventDifficult) + "\n",
+            TypeOfEvent.ChangeBearCharacter => ChangeBearCharacter() + "\n"
         };
         
         if (selectedEvent.eventRewards.Length > 0)

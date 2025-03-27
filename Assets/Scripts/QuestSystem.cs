@@ -44,6 +44,7 @@ public class QuestSystem : MonoBehaviour
 
         CutsceneManager.Singleton.StartCutscene(CutsceneManager.Singleton.FirstCutscene);
         DialogManager.Singleton.ActivateDialog("afterPrehistory");
+        Tutorial.Singleton.ActivateTutorialMenu();
     }
 
     public void ActivateQuest(string questName)
@@ -92,6 +93,7 @@ public class QuestSystem : MonoBehaviour
             textDescription.text = totalQuest != null ? totalQuest.description : "";
             textStep.text = totalQuest != null ? totalQuest.steps[totalStep].stepName : "";
         }
+        totalQuestText.text = totalQuest.gameName + "\n----------------\n" + totalQuest.steps[totalStep].stepName;
     }
 
     private void Update()
