@@ -83,13 +83,12 @@ public class GameEventsManager : MonoBehaviour
     {
         string textReward = selectedEvent.typeOfEvent switch
         {
-            TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster),
-            TypeOfEvent.ChangeBearCharacter => ChangeBearCharacter(),
-            _ => throw new ArgumentOutOfRangeException()
+            TypeOfEvent.Disaster => ActivateDisaster(selectedEvent.disaster, selectedEvent.eventDifficult) + "\n",
+            TypeOfEvent.ChangeBearCharacter => ChangeBearCharacter() + "\n"
         };
         
         if (selectedEvent.eventRewards.Length > 0)
-            ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards);
+            textReward += ColonyManager.Singleton.GiveRewards(selectedEvent.eventRewards);
         
         ActivateEventMenu(selectedEvent, textReward);
     }
@@ -99,12 +98,18 @@ public class GameEventsManager : MonoBehaviour
     /// </summary>
     /// <param name="disaster">Само бедствие</param>
     /// <returns>Возращает строку с бедствием</returns>
-    private string ActivateDisaster(TypeOfDisaster disaster)
+    private string ActivateDisaster(TypeOfDisaster disaster, int eventDifficult)
     {
         string textReward = "";
-        if (disaster == TypeOfDisaster.ChangeOfTemperature)
-            textReward = ChangeTemperature();
-
+        switch(disaster)
+        {
+            case TypeOfDisaster.PlusTemperature:
+                textReward = ChangeTemperature(true, eventDifficult);
+                break;
+            case TypeOfDisaster.MinusTemperature:
+                textReward = ChangeTemperature(true, eventDifficult);
+                break;
+        }
         return textReward;
     }
 
@@ -121,12 +126,12 @@ public class GameEventsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Рандомно(от -10 до 10) изменить температуру
+    /// Изменяем температуру
     /// </summary>
     /// <returns></returns>
-    private string ChangeTemperature()
+    private string ChangeTemperature(bool temperatureIsPlus, int eventDifficult)
     {
-        float newTemperature = Random.Range(-10, 10);
+        float newTemperature = temperatureIsPlus ? Random.Range(eventDifficult, 20 * eventDifficult) : Random.Range(-20 * eventDifficult, -eventDifficult);
         WorldTemperature += newTemperature;
 
         // Конструкция чисто ради знака

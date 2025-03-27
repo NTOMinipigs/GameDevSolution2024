@@ -51,7 +51,7 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-Biofuel")] [SerializeField] private TextMeshProUGUI biofuelText;
+    [Header("-Biofuel")][SerializeField] private TextMeshProUGUI biofuelText;
     private float _biofuel;
 
     public float Biofuel
@@ -78,7 +78,7 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-Energy")] [SerializeField] private TextMeshProUGUI energyText;
+    [Header("-Energy")][SerializeField] private TextMeshProUGUI energyText;
     private float _energy;
 
     public float Energy
@@ -105,7 +105,8 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-materials")] [SerializeField]
+    [Header("-materials")]
+    [SerializeField]
     private TextMeshProUGUI materialsText;
 
     private float _materials;
@@ -161,7 +162,7 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
-    [Header("-food")] [SerializeField] private TextMeshProUGUI foodText;
+    [Header("-food")][SerializeField] private TextMeshProUGUI foodText;
     private float _food;
 
     public float Food
@@ -201,6 +202,16 @@ public class ColonyManager : MonoBehaviour
         }
     }
 
+    private float _seed;
+
+    public float Seed
+    {
+        get => _seed;
+        set
+        {
+            _seed = value;
+        }
+    }
     # endregion
 
     [Header("Bears")]
@@ -217,7 +228,8 @@ public class ColonyManager : MonoBehaviour
     public BearCharacter[] allBearCharacters = new BearCharacter[0];
     [SerializeField] private string[] menBearsFirstnames, womanBearsFirstnames, bearsLastnames = Array.Empty<string>();
 
-    [SerializeField] private SerializableBear[] spriteBeekeepers,
+    [SerializeField]
+    private SerializableBear[] spriteBeekeepers,
         spriteConstructors,
         spriteProgrammers,
         spriteBioengineers,
@@ -225,7 +237,8 @@ public class ColonyManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bearsCountText;
 
-    [SerializeField] private TextMeshProUGUI dronesText,
+    [SerializeField]
+    private TextMeshProUGUI dronesText,
         beekeepersText,
         constructorsText,
         programmersText,
@@ -285,7 +298,8 @@ public class ColonyManager : MonoBehaviour
             { "maxHoney", () => MaxHoney },
             { "maxBears", () => MaxBears },
             { "maxMaterialPlus", () => MaxMaterialsPlus },
-            { "maxEnergy", () => MaxEnergy }
+            { "maxEnergy", () => MaxEnergy},
+            {"seed", () => Seed }
         };
     }
 
@@ -553,7 +567,7 @@ public class ColonyManager : MonoBehaviour
                         if (CanCreateNewBear())
                         {
                             Bear newBear = GenerateNewBearWithRandomTradition();
-                            textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";  
+                            textReward += "+" + newBear.tradition.GetString() + " " + newBear.bearName + "\n";
                         }
                     }
                     break;

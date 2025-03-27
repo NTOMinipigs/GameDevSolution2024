@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// Места, которые можно посетить.
@@ -6,13 +7,37 @@ using UnityEngine;
 [System.Serializable]
 public class PlaceOfTravel
 {
-    public string gameName, nameOfPlace;
+    // Задается в редакторе/коде
+    [Header("MainInfo")]
+    public string nameOfPlace;
     [TextArea] public string description;
-    [TextArea] public string resultText;
-    public float foodNeed;
-    public float timeNow; // Сколько уже прошли
     public float timeToGoing; // Сколько надо
-    public bool placeIsChecked; // Уже проверили
-    [HideInInspector] public GameObject buttonInMap;
-    public Reward[] rewards = new Reward[0];
+    [TextArea] public string resultText;
+
+    // Задается в коде
+    [HideInInspector] public int difficulty;
+    [HideInInspector] public bool isHome;
+    [HideInInspector] public bool placeIsChecked; // Изучено?
+    [HideInInspector] public float foodNeed, bioFuelNeed;
+    [HideInInspector] public Sprite placeCellIcon;
+    [HideInInspector] public float timeNow; // Сколько уже прошли
+    [HideInInspector] public List<Reward> rewards = new List<Reward>();
+
+    public PlaceOfTravel()
+    {
+
+    }
+
+    public PlaceOfTravel(string NameOfPlace, string DescriptionOfPlace, float TimeToGoing)
+    {
+        nameOfPlace = NameOfPlace;
+        description = DescriptionOfPlace;
+        timeToGoing = TimeToGoing;
+    }
+
+    public PlaceOfTravel(string NameOfPlace, bool IsHome)
+    {
+        nameOfPlace = NameOfPlace;
+        isHome = IsHome;
+    }
 }

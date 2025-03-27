@@ -2569,6 +2569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  seed: 0
 --- !u!4 &663564592
 Transform:
   m_ObjectHideFlags: 0
@@ -4767,6 +4768,7 @@ MonoBehaviour:
   menuMods: {fileID: 1254249224}
   menuNewGame: {fileID: 1298216081}
   inputFieldNickname: {fileID: 97118614}
+  inputFieldSeed: {fileID: 1626741550}
   textInfo: {fileID: 2138410979}
   buttonResume: {fileID: 537398706}
 --- !u!4 &1258667951
