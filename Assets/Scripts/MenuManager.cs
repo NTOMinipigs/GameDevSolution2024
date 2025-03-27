@@ -17,10 +17,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Preference preference; // Нужно сделать загрузку и сохранение
     [SerializeField] private Player player;
     [SerializeField] private APIClient apiClient;
+    private bool gameExists;
+
     [Header("UI")]
     [SerializeField] private GameObject enterToGameCanvas;
     [SerializeField] private GameObject authCanvas;
-    [SerializeField] private GameObject menuMain, menuNickname, menuMods, menuNewGame, editorMenu;
+    [SerializeField] private GameObject menuMain, menuNickname, menuMods, menuNewGame, editorMenu, warningNewGame;
     [SerializeField] private TMP_InputField inputFieldNickname, inputFieldSeed;
     [SerializeField] private TextMeshProUGUI textInfo;
     [SerializeField] private Button buttonResume;
@@ -40,14 +42,34 @@ public class MenuManager : MonoBehaviour
     }
 
     public void StartGame() => SceneManager.LoadScene("Game");
+
     public void CreateNewGame()
     {
         if (inputFieldSeed.text == "")
             return;
 
+        if (gameExists)
+        {
+            // Если предупреждение было закрыто - открываем
+            if (!warningNewGame.activeSelf)
+            {
+                warningNewGame.SetActive(true);
+                return;
+            }
+            else // Стираем все
+            {
+                apiClient.DeletePlayerRequest(player.playerName);
+                SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
+                systemSaver.DeleteGame();
+            }
+
+        }
+
         player.seed = int.Parse(inputFieldSeed.text);
         StartGame();
     }
+
+    public void DisableWarningMenu() => warningNewGame.SetActive(false);
 
     public void ManageCreateGameMenu()
     {
@@ -60,15 +82,13 @@ public class MenuManager : MonoBehaviour
     {
         menuMods.SetActive(!menuMods.activeSelf);
         menuMain.SetActive(!menuMods.activeSelf);
-        
+
         // Обновляем превьюшки модов в мод меню
 
         // Удаляю все превьюшки в контенте 
         foreach (Transform child in UGCManager.Singleton.UGCViewsContent.transform)
-        {
             Destroy(child.gameObject);
-        }
-        
+
         UGCManager.Singleton.ShowAllUGC();
     }
 
@@ -83,9 +103,8 @@ public class MenuManager : MonoBehaviour
         SystemSaver systemSaver = gameObject.GetComponent<SystemSaver>();
 
         bool loadResult = systemSaver.LoadGame();
-        // Если файл сохранения не найден
-        if (loadResult)
-            buttonResume.interactable = true;
+        gameExists = loadResult;
+        buttonResume.interactable = gameExists;
     }
 
     public async void ActivateNickname() // Вызывать при первом старте?

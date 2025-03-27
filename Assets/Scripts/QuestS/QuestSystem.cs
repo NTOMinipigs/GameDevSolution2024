@@ -26,7 +26,7 @@ public class QuestSystem : MonoBehaviour
 
     private void Start()
     {
-        UpdateQuestUI();
+        totalQuestText.text = "";
     }
 
     public Quest FindQuest(string questName)

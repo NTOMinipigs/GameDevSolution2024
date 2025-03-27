@@ -73,4 +73,7 @@ public class SystemSaver : MonoBehaviour
         Debug.LogWarning("Файл сохранения не найден.");
         return false;
     }
+
+    public void DeleteGame() => File.Delete(GetFilePath());
+    
 }
