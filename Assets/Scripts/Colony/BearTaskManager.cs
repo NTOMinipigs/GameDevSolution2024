@@ -71,6 +71,10 @@ public class BearTaskManager
             buildingController.isBuild = true;
             buildingController.isReady = true;
             BuildingSystem.Singleton.SetBuildSettings(buildingController);
+
+            if (QuestSystem.Singleton.GetEndTrigger() == buildingController.gameObject.name)
+                QuestSystem.Singleton.MoveNextStep();
+
             if (buildingController.Building is Building building) // Настройки для зданий
             {
                 ColonyManager.Singleton.Energy -= building.energyNeed;
