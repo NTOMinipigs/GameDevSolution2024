@@ -105,17 +105,32 @@ public enum TypeOfDisaster
 public static class EnumExtensions
 {
     /// <summary>
-    /// Замена ToString метода с расширением
+    /// Возвращает строковое представление enum значения из атрибута Description или стандартное имя
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
+    /// <param name="value">Значение перечисления</param>
+    /// <returns>Строковое представление значения</returns>
     public static string GetString(this Enum value)
     {
-        FieldInfo field = value.GetType().GetField(value.ToString()); // Получаем филд
-        DescriptionAttribute attribute = 
-            Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute; // Ищем у него аттрибут
-        // Если аттрибут Description, используй его методы. Иначе вызываем ToString
-        return attribute == null ? value.ToString() : attribute.Description;
+        if (value == null) return string.Empty;
+
+        try
+        {
+            // Получаем информацию о поле
+            FieldInfo field = value.GetType().GetField(value.ToString());
+            if (field == null) return value.ToString();
+
+            // Ищем атрибут Description
+            DescriptionAttribute attribute = 
+                Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
+
+            // Если атрибут Description найден, используем его значение, иначе вызываем ToString
+            return attribute?.Description ?? value.ToString();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Ошибка при получении строкового представления для {value}: {ex.Message}");
+            return value.ToString();
+        }
     }
 }
 
